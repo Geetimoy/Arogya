@@ -1,0 +1,160 @@
+.app-top {
+  padding: 15px;
+  box-shadow: 0px 2px 6px #e7e7e7;
+}
+
+.top-header-notification{
+  position: absolute;
+  top: -4px;
+  right: 10px;
+  background: #c30000;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  line-height: 15px;
+  color: #fff;
+  font-size: 10px;
+}
+
+.app-body{
+  padding:25px 15px;
+}
+
+.app-body svg{
+  font-size: 38px;
+}
+
+.app-body svg{
+  color:#9f9f9f;
+}
+
+.app-body h5{
+  color:#c30000
+}
+
+.red-box{
+  background-color: #c30000;
+  color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.red-box svg{
+  color: #fff;
+  font-size: 28px;
+}
+
+.red-box p{
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.app-footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  /* height: 50px; */
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(0,0,0,.15);
+  background: #fff;
+}
+
+.app-footer svg{
+  display: block;
+  margin: 0 auto;
+}
+
+.app-footer .action-items{
+  padding:15px 0;
+}
+
+.app-footer .action-items a{
+  color: #717171;
+  text-decoration: none;
+  line-height: 10px;
+}
+
+.app-footer .action-items a span{
+  font-size: 12px;
+}
+
+.my-element + .left-scroll-menu{
+  padding: 20px;
+}
+
+.my-element+.left-scroll-menu{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #333547;
+  color: #b4c9de;
+  transform: translateX(-100%);
+  transition: all .4s;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.my-element.active+.left-scroll-menu{
+  transform: translateX(0);
+}
+
+ul, li{
+  list-style: none;
+}
+
+.left-scroll-menu ul{
+  margin: 30px 0;
+  padding: 0;
+}
+
+.left-scroll-menu ul li{
+  padding: 12.5px 20px;
+}
+
+.left-scroll-menu ul li.mm-active {
+  color: #b4c9de !important;
+  background-color: #383b4e;
+}
+
+.left-scroll-menu ul li a{
+  color:#b4c9de;
+  text-decoration: none;
+  margin-left: 7px;
+}
+
+.drop-menu{
+  display: none;
+}
+
+.my-element2.active + .drop-menu{
+  display: block;
+  position: absolute;
+  top: 60px;
+  right: 15px;
+  background: #fff;
+  padding: 0 0;
+  box-shadow: 0px 0px 4px #d5d5d5;
+  border-radius: 4px;
+  min-width: 100px;
+  width: auto;
+}
+
+.my-element2.active + .drop-menu ul{
+  padding: 0 0;
+  margin-bottom: 0;
+}
+
+.my-element2.active + .drop-menu ul li{
+  padding: 5px 10px;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.my-element2.active + .drop-menu ul li a{
+  text-decoration: none;
+  color: #717171;
+}
