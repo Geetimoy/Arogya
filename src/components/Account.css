@@ -19,3 +19,8 @@
 .row [class^="col-"]{
   margin-bottom: 20px;
 }
+
+.button-box a{
+  text-decoration: none;
+  color: #000;
+}

@@ -1,0 +1,27 @@
+.app-body h5.title{
+  color: #000;
+}
+
+.btns-group{
+  border-top: 1px solid #e7e7e7;
+  padding: 20px 0 0 0;
+  margin: 20px 0 0 0;
+}
+
+.btns-group button{
+  min-width: 123px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: none;
+  background-color: #dc3545;
+  color: #fff;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
