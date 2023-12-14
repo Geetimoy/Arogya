@@ -13,7 +13,7 @@ function Account(){
   return(
     <>
     <AppTop></AppTop>
-    <div className='container mt-4'>
+    <div className='app-body'>
       <div className='row'>
         <div className='col-6'>
           <div className='button-box'>

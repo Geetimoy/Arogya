@@ -1,0 +1,1 @@
+export const API_URL="https://telehealth.serviceplace.org.in/telehealth-dev/mobile-app-api";

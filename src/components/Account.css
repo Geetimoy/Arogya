@@ -5,7 +5,7 @@
   min-height: 121px;
 }
 
-.button-box svg{
+.app-body .button-box svg{
   font-size: 36px;
   color: #b21c19;
   margin-bottom: 10px;

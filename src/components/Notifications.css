@@ -1,0 +1,25 @@
+.notifications .otp{
+  display: block;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.notifications .otp svg{
+  color: #fff;
+}
+
+.green{
+  background: #0f5203;
+}
+
+.red{
+  background: #a10000;
+}
+
+.black{
+  background: #000;
+}
