@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import logo from '../logo.png';
 
+import './AppTop.css'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,18 +31,21 @@ function AppTop(){
             <FontAwesomeIcon icon={faBars} />
           </div>
           <div className='left-scroll-menu'>
-            <div className='d-flex'>
+            <div className='offcanvas-header'>
+              <div className='d-flex align-items-center'>
               <div className='scroll-back' onClick={handleClick}>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </div>
-              <h5 className='mb-0 mx-3'>Hello Volunteer!</h5>
+              <img src={logo} alt='' style={{height:'40px'}} className='mx-2' />
+              <h5 className='mb-0 mx-2'>Hello Volunteer!</h5>
+              </div>
             </div>
             <ul>
-              <li className='mm-active'><FontAwesomeIcon icon={faUser} /> <Link to={"./myprofile"}>My Profile</Link></li>
-              <li><FontAwesomeIcon icon={faUsers} /> <Link to={"./patientprofile"}>Patient Profiles</Link></li>
-              <li><FontAwesomeIcon icon={faFemale} /> <Link to={"./janani"}>Janani</Link></li>
-              <li><FontAwesomeIcon icon={faChild} /> <Link to={"./childmalnutrition"}>Child Malnutrition</Link></li>
-              <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"./apointments"}>Appointments</Link></li>
+              <li className='mm-active'><FontAwesomeIcon icon={faUser} /> <Link to={"/account"}>My Profile</Link></li>
+              <li><FontAwesomeIcon icon={faUsers} /> <Link to={"/patientprofile"}>Patient Profiles</Link></li>
+              <li><FontAwesomeIcon icon={faFemale} /> <Link to={"/janani"}>Janani</Link></li>
+              <li><FontAwesomeIcon icon={faChild} /> <Link to={"/childmalnutrition"}>Child Malnutrition</Link></li>
+              <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/apointments"}>Appointments</Link></li>
             </ul>
           </div>
           <img src={logo} alt='' style={{height:'40px'}} className='mx-2' />
@@ -54,9 +59,11 @@ function AppTop(){
           <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
           <div className='drop-menu'>
               <ul>
-                <li><Link to={"customer-support"}>Customer Support</Link></li>
+                <li><Link to={"customer-support"}>About ServicePlace</Link></li>
+                <li><Link to={"customer-support"}>About Born2Help</Link></li>
                 <li><Link to={"contactus"}>Contact Us</Link></li>
-                <li><Link to={"offers"}>Offers</Link></li>
+                <li><Link to={"offers"}>Feedback</Link></li>
+                <li><Link to={"help"}>Help</Link></li>
                 <li><Link to={"logout"}>Logout</Link></li>
               </ul>
           </div>

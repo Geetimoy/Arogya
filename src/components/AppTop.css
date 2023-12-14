@@ -1,0 +1,78 @@
+.my-element + .left-scroll-menu .offcanvas-header{
+  padding: 20px;
+}
+
+.my-element+.left-scroll-menu{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #333547;
+  color: #b4c9de;
+  transform: translateX(-100%);
+  transition: all .4s;
+  height: 100%;
+  width: 80%;
+  z-index: 1;
+}
+
+.my-element.active+.left-scroll-menu{
+  transform: translateX(0);
+}
+
+ul, li{
+  list-style: none;
+}
+
+.left-scroll-menu ul{
+  margin: 0px 0;
+  padding: 0;
+}
+
+.left-scroll-menu ul li{
+  padding: 12.5px 20px;
+  border-bottom: 1px solid #434557;
+}
+
+.left-scroll-menu ul li.mm-active {
+  color: #b4c9de !important;
+  background-color: #383b4e;
+}
+
+.left-scroll-menu ul li a{
+  color:#b4c9de;
+  text-decoration: none;
+  margin-left: 7px;
+}
+
+
+.drop-menu{
+  display: none;
+}
+
+.my-element2.active + .drop-menu{
+  display: block;
+  position: absolute;
+  top: 60px;
+  right: 15px;
+  background: #fff;
+  padding: 0 0;
+  box-shadow: 0px 0px 4px #d5d5d5;
+  border-radius: 4px;
+  min-width: 100px;
+  width: auto;
+}
+
+.my-element2.active + .drop-menu ul{
+  padding: 0 0;
+  margin-bottom: 0;
+}
+
+.my-element2.active + .drop-menu ul li{
+  padding: 5px 10px;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.my-element2.active + .drop-menu ul li a{
+  text-decoration: none;
+  color: #717171;
+}

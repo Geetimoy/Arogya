@@ -10,7 +10,7 @@ import { faUser, faHome, faHandHolding } from '@fortawesome/free-solid-svg-icons
           <div className='d-flex align-items-center justify-content-around'>
             <Link to="/dashboard"><FontAwesomeIcon icon={faHome} /> <span>Home </span></Link>
             <Link to="/services"><FontAwesomeIcon icon={faHandHolding} /> <span>Services </span></Link>
-            <Link to="/account"><FontAwesomeIcon icon={faUser} /> <span>Person</span></Link>
+            <Link to="/person"><FontAwesomeIcon icon={faUser} /> <span>Person</span></Link>
           </div>
         </div>
       </div>

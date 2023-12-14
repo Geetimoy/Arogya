@@ -1,0 +1,10 @@
+.verification{
+  /* height: 100vh; */
+  justify-content: flex-start;
+}
+
+.verification input[type="text"]{
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e7e7e7;
+}
