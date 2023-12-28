@@ -18,6 +18,9 @@ import Notifications from './components/Notifications';
 import ContactUs from './components/ContactUs';
 import TermsCondition from './components/TermsCondition';
 import AboutServicePlace from './components/AboutServicePlace';
+import AboutBorn2Help from './components/AboutBorn2Help';
+import Feedback from './components/Feedback';
+import Help from './components/Help';
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
             <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="/TermsCondition" exact element={<TermsCondition />} />
             <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />
+            <Route path="/AboutBorn2Help" exact element={<AboutBorn2Help />} />
+            <Route path="/Offers" exact element={<Feedback />} />
+            <Route path="/Help" exact element={<Help />} />
           </Routes>
         </BrowserRouter>
       </div>
