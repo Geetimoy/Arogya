@@ -61,7 +61,7 @@ function AppTop(){
           <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
           <div className='drop-menu'>
               <ul>
-                <li><Link to={"aboutserviceplace"}>About ServicePlace</Link></li>
+                <li><Link to={"aboutserviceplace"}>About Service Place</Link></li>
                 <li><Link to={"aboutborn2help"}>About Born2Help</Link></li>
                 <li><Link to={"contactus"}>Contact Us</Link></li>
                 <li><Link to={"offers"}>Feedback</Link></li>

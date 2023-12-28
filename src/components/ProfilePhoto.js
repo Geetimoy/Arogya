@@ -11,7 +11,7 @@ import profile from '../assets/images/profile.jpg';
     <>
       <AppTop></AppTop>
         <div className='app-body profile-photo'>
-          <h5 className='title'>Update Profile Photo</h5>
+          <h5 className='title'>Update Profile Photos</h5>
           <p>You can change your existing photo here. Same photo will reflect thorughout the Arogya - Telemedicine Application.</p>
           <form class="edit-user-profile-photo-form" name="edit_user_profile_photo_form" id="edit_user_profile_photo_form">
             <div className='row'>

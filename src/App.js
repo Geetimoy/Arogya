@@ -17,6 +17,7 @@ import Services from './components/Services';
 import Notifications from './components/Notifications';
 import ContactUs from './components/ContactUs';
 import TermsCondition from './components/TermsCondition';
+import AboutServicePlace from './components/AboutServicePlace';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/Notifications" exact element={<Notifications />} />
             <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="/TermsCondition" exact element={<TermsCondition />} />
+            <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />
           </Routes>
         </BrowserRouter>
       </div>
