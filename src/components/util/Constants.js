@@ -1,1 +1,1 @@
-export const API_URL="https://telehealth.serviceplace.org.in/telehealth-dev/mobile-app-api";
+export const API_URL = "https://globalapis.serviceplace.org.in/v1";
