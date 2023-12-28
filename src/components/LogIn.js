@@ -1,6 +1,6 @@
 // import { Link, useNavigate } from "react-router-dom";
 // import { useState } from 'react';
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CryptoJS from "crypto-js";
 
 import "./LogIn.css";
@@ -21,7 +21,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { API_URL } from "./util/Constants";
 
+import AlertContext from "../context/alert/AlertContext";
+import Alert from "./util/Alert";
+
 function LogIn() {
+
+  const alertContext = useContext(AlertContext);
+
   const convertToMD5 = (str) => {
     const md5Hash = CryptoJS.MD5(str).toString(CryptoJS.enc.Hex);
     return md5Hash;
@@ -36,6 +42,11 @@ function LogIn() {
     } else {
       return "Desktop".toUpperCase();
     }
+  };
+
+  const toastCenter = useRef(null);
+  const showMessage = (event, ref, severity) => {
+    alertContext.setAlertMessage({show:true, type: "success", message: "Result Added Successfully", heading: "Info"});
   };
 
   const [location, setLocation] = useState({
@@ -157,6 +168,7 @@ function LogIn() {
 
   return (
     <div className="container">
+      {alertContext.alertMessage.show && <Alert type={alertContext.alertMessage.type} message={alertContext.alertMessage.message} heading={alertContext.alertMessage.heading}/>}
       <div className="login-container">
         <div className="mt-3">
           <Link to="/">
@@ -216,6 +228,14 @@ function LogIn() {
                 Contact Admin
               </Link>
             </p>
+
+            {/* <button
+              type="button"
+              className="p-button-danger"
+              onClick={(e) => showMessage(e, toastCenter, "error")}
+            >
+              Show Message
+            </button> */}
 
             <div className="text-center login-logo">
               <img

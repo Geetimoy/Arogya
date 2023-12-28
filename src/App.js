@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route,} from "react-router-dom";
 
 import './App.css';
@@ -18,9 +18,11 @@ import Notifications from './components/Notifications';
 import ContactUs from './components/ContactUs';
 import TermsCondition from './components/TermsCondition';
 import AboutServicePlace from './components/AboutServicePlace';
+import AlertState from './context/alert/AlertState';
 
 function App() {
   return (
+    <AlertState>
       <div className='container-fluids'>
         <BrowserRouter>
           <Routes>
@@ -42,6 +44,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
+    </AlertState>
   );
 }
 
