@@ -10,6 +10,7 @@ function AboutServicePlace(){
       <AppTop></AppTop>
       <div className="app-body">
         <h5 className='title mb-0'>About Service Place</h5>
+        <p>Test</p>
       </div>
       <Appfooter></Appfooter>
     </>
