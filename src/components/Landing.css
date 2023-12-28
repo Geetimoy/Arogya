@@ -2,3 +2,12 @@
   max-width: 375px;
   margin: 0 auto;
 }
+
+.App-header h2{
+  font-size: 22px;
+  color: #212529;
+}
+
+.App-header img{
+  max-width: 150px;
+}

@@ -1,3 +1,8 @@
+.app-top {
+  padding: 15px;
+  box-shadow: 0px 2px 6px #e7e7e7;
+}
+
 .my-element + .left-scroll-menu .offcanvas-header{
   padding: 20px;
 }
@@ -75,4 +80,22 @@ ul, li{
 .my-element2.active + .drop-menu ul li a{
   text-decoration: none;
   color: #717171;
+}
+
+.top-header-notification{
+  position: absolute;
+  top: -4px;
+  right: 10px;
+  /* background: #c30000; */
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  line-height: 15px;
+  color: #fff;
+  font-size: 10px;
+}
+
+.app-top-right a{
+  color: #333547;
 }

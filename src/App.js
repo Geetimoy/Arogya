@@ -13,9 +13,10 @@ import BasicInformation from './components/BasicInformation';
 import Verification from './components/Verification';
 import ForgotPassword from './components/ForgotPassword';
 import SignUp from './components/SignUp';
-import Person from './components/Person';
 import Services from './components/Services';
 import Notifications from './components/Notifications';
+import ContactUs from './components/ContactUs';
+import TermsCondition from './components/TermsCondition';
 
 function App() {
   return (
@@ -32,9 +33,10 @@ function App() {
             <Route path="/Verification" exact element={<Verification />} />
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
             <Route path="/SignUp" exact element={<SignUp />} />
-            <Route path="/Person" exact element={<Person />} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/Notifications" exact element={<Notifications />} />
+            <Route path="/ContactUs" exact element={<ContactUs />} />
+            <Route path="/TermsCondition" exact element={<TermsCondition />} />
           </Routes>
         </BrowserRouter>
       </div>

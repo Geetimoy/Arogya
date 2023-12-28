@@ -7,9 +7,28 @@
   pointer-events: none;
 }
 
-.footerLogo img{
-  height: 70px;
+body{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
 }
+
+.form-group label{
+  color: #818181;
+}
+
+.primary-color{
+  color: #31b44c!important;
+}
+
+.primary-bg-color{
+  background-color: #31b44c!important;
+}
+
+.primary-bg-color:hover,
+.primary-bg-color:active{
+  background-color: #2aa142!important;
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

@@ -31,14 +31,14 @@ function SignUp(){
               <div className="custom-control custom-checkbox">
                 <input type="checkbox" id="smart_menu" className="checkbox style-0 custom-control-input" />
                   <label className="custom-control-label" htmlFor="smart_menu">
-                    <span>I agree to <Link to = "/termscondition">Terms and Condition</Link></span>
+                    <span>I agree to <Link to = "/termscondition" className='primary-color'>Terms and Condition</Link></span>
                   </label>
               </div>
             </div>
-            <div className='btn btn-danger mb-3 mt-3 w-100'><Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>SIGN UP</Link></div>
+            <div className='btn primary-bg-color mb-3 mt-3 w-100'><Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>SIGN UP</Link></div>
           </form>
           <div className='back-to-login'>
-            Already have an account? <Link to="/login"> Log In</Link>
+            Already have an account? <Link to="/login" className='primary-color'> Log In</Link>
           </div>
         </div>
         

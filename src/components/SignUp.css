@@ -49,12 +49,13 @@
 
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #b21c19;
+  /* background-color: #b21c19; */
+  background-color: #818181;
 }
 
 .custom-control-input:checked ~ .custom-control-label:before {
-  border-color: #b21c19;
-  background-color: #b21c19;
+  border-color: #818181;
+  background-color: #818181;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
