@@ -18,18 +18,18 @@ function Dashboard() {
     <>
     
     <AppTop></AppTop>
-    <div className='app-body'>
+    <div className='app-body dashboard'>
       <div className='d-flex justify-content-between mb-4'>
           <div className='d-flex align-items-center'>
             <FontAwesomeIcon icon={faUser} />
-            <h5 className='mb-0 mx-3'>Hello Volunteer!</h5>
+            <h5 className='mb-0 mx-3 primary-color'>Hello Volunteer!</h5>
           </div>
           <div>
             <img src={serviceplace} alt='' style={{height:'50px'}} />
           </div>
       </div>
       <h4 className='mb-3'>Volunteer Abc</h4>
-      <div className='red-box'>
+      <div className='red-box primary-bg-color'>
           <div className='d-flex align-items-center'>
             <FontAwesomeIcon icon={faPhone} />
             <div className='mx-3'>
@@ -38,7 +38,7 @@ function Dashboard() {
             </div>
           </div>
       </div>
-      <div className='red-box'>
+      <div className='red-box primary-bg-color'>
           <div className='d-flex align-items-center'>
           <FontAwesomeIcon icon={faEnvelope} />
             <div className='mx-3'>

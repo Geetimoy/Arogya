@@ -2,6 +2,55 @@
   font-size: 16px;
 }
 
+.normal-box{
+  padding: 10px;
+  text-align: left;
+  box-shadow: 0px 0px 4px #e7e7e7;
+  margin: 20px 0;
+}
+
+.normal-box span{
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  color: #818181;
+  display: block;
+}
+
 .basic-info .form-group{
   margin-bottom: 20px;
+}
+
+.basic-info form label {
+  color: #818181;
+  position: absolute;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.basic-info form input {
+  padding-top: 1.825rem;
+  padding-bottom: 0.625rem;
+}
+
+.pos-relative{
+  position: relative!important;
+}
+
+.custom-radio .custom-control-label::before {
+  border-radius: 50%;
+}
+
+.custom-control-inline {
+  display: inline-flex;
+  margin-right: 1rem;
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::after {
+  background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e);
+}
+
+.basic-info label.no-style{
+  padding: 0;
+  font-size: 16px;
+  position: relative;
 }

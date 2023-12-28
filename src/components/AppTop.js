@@ -53,14 +53,16 @@ function AppTop(){
         </div>
         <div className='app-top-right d-flex'> 
           <div className='position-relative'>
+            <Link to="/notifications">
             <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-            <span className='top-header-notification'>3</span>
+            <span className='top-header-notification primary-bg-color'>3</span>
+            </Link>
           </div> 
           <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
           <div className='drop-menu'>
               <ul>
-                <li><Link to={"customer-support"}>About ServicePlace</Link></li>
-                <li><Link to={"customer-support"}>About Born2Help</Link></li>
+                <li><Link to={"aboutserviceplace"}>About ServicePlace</Link></li>
+                <li><Link to={"aboutborn2help"}>About Born2Help</Link></li>
                 <li><Link to={"contactus"}>Contact Us</Link></li>
                 <li><Link to={"offers"}>Feedback</Link></li>
                 <li><Link to={"help"}>Help</Link></li>

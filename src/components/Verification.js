@@ -26,7 +26,7 @@ function Verification(){
                   <input type="text" />
                   <input type="text" />
                 </div>
-                <div className='btn btn-danger mb-5 mt-5 w-100'><Link to ="/login" className='m-auto text-light text-decoration-none d-block'>VERIFY</Link></div>
+                <div className='btn primary-bg-color mb-5 mt-5 w-100'><Link to ="/login" className='m-auto text-light text-decoration-none d-block'>VERIFY</Link></div>
             </form>
           </div>
         </div>
