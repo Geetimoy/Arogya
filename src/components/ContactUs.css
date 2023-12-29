@@ -1,0 +1,20 @@
+.contact-us .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-us form label {
+  color: #818181;
+  position: absolute;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.contact-us form input {
+  padding-top: 1.825rem;
+  padding-bottom: 0.625rem;
+}
+
+.contact-us form select {
+  padding-top: 1.825rem;
+  padding-bottom: 0.625rem;
+}
