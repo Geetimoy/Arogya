@@ -1,28 +1,47 @@
-import React, { useRef } from 'react'
-import { Toast } from "primereact/toast";
-import "primereact/resources/themes/saga-blue/theme.css";
-import "primereact/resources/primereact.min.css";
+import React, { useContext } from 'react'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AlertContext from '../../context/alert/AlertContext';
 
 export default function Alert(props) {
 
-  const toastSection = useRef(null);
+  const alertContext = useContext(AlertContext);
 
-  const showMessage = (type, heading, message) => { 
-    toastSection.current.show({
-      severity: type,
-      summary: heading,
-      detail: message,
-      life: 3000,
-    });
+  const onCloseToast = () => {
+    alertContext.setAlertMessage({show:false, type: "success", message: ""});
+  }
+
+  const showToastMessage = () => { 
+
+    if(props.type==="success"){
+      toast.success(props.message, {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+        onClose: onCloseToast,
+        toastId: "success"
+      });
+    }
+    else{
+      toast.error(props.message, {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+        onClose: onCloseToast,
+        toastId: "error"
+      });
+    }
+    
   };
 
-  if(props.message && props.message !== ""){ 
-    showMessage(props.type, props.heading, props.message);
+  toast.dismiss();
+
+  if(props.message && props.message !== ""){
+    showToastMessage();
   }
 
   return (
     <div>
-      <Toast ref={toastSection} position="top-center"/>
+      <ToastContainer />
     </div>
   )
+
 }

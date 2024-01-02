@@ -66,7 +66,7 @@ function AppTop(){
                 <li><Link to={"/contactus"}>Contact Us</Link></li>
                 <li><Link to={"/offers"}>Feedback</Link></li>
                 <li><Link to={"/help"}>Help</Link></li>
-                <li><Link to={"logout"}>Logout</Link></li>
+                <li><Link to={"/logout"}>Logout</Link></li>
               </ul>
           </div>
         </div>

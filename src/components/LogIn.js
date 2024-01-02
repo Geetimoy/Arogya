@@ -1,6 +1,6 @@
 // import { Link, useNavigate } from "react-router-dom";
 // import { useState } from 'react';
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 
 import "./LogIn.css";
@@ -19,14 +19,15 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { API_URL } from "./util/Constants";
+import { API_URL, ENCYPTION_KEY } from "./util/Constants";
 
 import AlertContext from "../context/alert/AlertContext";
-import Alert from "./util/Alert";
+import LoginContext from "../context/login/LoginContext";
 
 function LogIn() {
 
   const alertContext = useContext(AlertContext);
+  const loginContext = useContext(LoginContext);
 
   const convertToMD5 = (str) => {
     const md5Hash = CryptoJS.MD5(str).toString(CryptoJS.enc.Hex);
@@ -42,11 +43,6 @@ function LogIn() {
     } else {
       return "Desktop".toUpperCase();
     }
-  };
-
-  const toastCenter = useRef(null);
-  const showMessage = (event, ref, severity) => {
-    alertContext.setAlertMessage({show:true, type: "success", message: "Result Added Successfully", heading: "Info"});
   };
 
   const [location, setLocation] = useState({
@@ -153,10 +149,20 @@ function LogIn() {
         body: JSON.stringify(jsonData),
       });
       let result = await response.json();
+      console.log(result);
       if (result.success) {
-        redirect("/dashboard");
+        var loginDetails = result.data.results;
+        alertContext.setAlertMessage({show:true, type: "success", message: "Login successful"});
+        setTimeout(() => {
+          var encryptedLoginDetails = CryptoJS.AES.encrypt(JSON.stringify(loginDetails), ENCYPTION_KEY);
+          //var decryptedLoginDetails = CryptoJS.AES.decrypt(encryptedLoginDetails, ENCYPTION_KEY);
+          //console.log(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+          localStorage.setItem('cred', encryptedLoginDetails);
+          loginContext.updateLoginState(true);
+          redirect('/dashboard');
+        }, 3000);
       } else {
-        alert("Login Failed!");
+        alertContext.setAlertMessage({show:true, type: "error", message: "Login failed!"});
       }
     }
   };
@@ -168,7 +174,6 @@ function LogIn() {
 
   return (
     <div className="container">
-      {alertContext.alertMessage.show && <Alert type={alertContext.alertMessage.type} message={alertContext.alertMessage.message} heading={alertContext.alertMessage.heading}/>}
       <div className="login-container">
         <div className="mt-3">
           <Link to="/">
@@ -228,14 +233,6 @@ function LogIn() {
                 Contact Admin
               </Link>
             </p>
-
-            {/* <button
-              type="button"
-              className="p-button-danger"
-              onClick={(e) => showMessage(e, toastCenter, "error")}
-            >
-              Show Message
-            </button> */}
 
             <div className="text-center login-logo">
               <img
