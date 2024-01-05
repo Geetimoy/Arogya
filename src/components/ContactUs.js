@@ -3,18 +3,20 @@ import AppTop from "./AppTop";
 
 import './ContactUs.css'
 
+
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 function ContactUs(){
   return(
     <>
       <AppTop></AppTop>
       <div className="app-body contact-us">
-        <h5 className="title">Conatct Us</h5>
-        <p className="mb-0"><strong>Read Me</strong></p>
-        <p>To report any problem, please fill this form below. Our Support Team or Admin Team will look into the issue(s) as soon as possile.</p>
+        <h5 className="title">Contact Us</h5>
+        
         <p className="mb-0"><strong>Contact Person: </strong></p>
         <ul className="p-0">
           <li>Contact Number: 9577793751</li>
-          <li>Email: arindam.deka7@gmail.com</li>
+          <li>Contact Email: arindam.deka7@gmail.com</li>
         </ul>
         <h5 className="title">Create New Case / Issue / Problem</h5>
         <form className="contactus-form">
@@ -24,7 +26,7 @@ function ContactUs(){
             </div>
           </div>
           <div className="form-group">
-            <label for="name">Problem Type: </label>
+            <label htmlFor="problem">Problem Type: </label>
             <select id="" name="" className="form-control">
               <option value="">Select</option>
               <option value="1">Can't book new appoinment</option>
@@ -33,12 +35,12 @@ function ContactUs(){
             </select>
           </div>
           <div className="form-group">
-            <label for="name">Subject: </label>
+            <label htmlFor="subject">Subject: </label>
             <input type="text" className="form-control" name="" id=""></input>
           </div>
           <div className="form-group">
-            <label for="name">Describe / Explain Problem: </label>
-            <textarea name="" id="" rows="3"  className="form-control"></textarea>
+            <label htmlFor="describe">Describe / Explain Problem: </label>
+            <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe your Issue/Problem"></textarea>
           </div>
           <div className='btns-group d-flex justify-content-center'>
             <button type="button" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>

@@ -1,17 +1,45 @@
+import React, { useState, useEffect } from "react";
+
 import AppTop from "./AppTop";
 import Appfooter from "./AppFooter";
 
 import "./AboutServicePlace.css"
 
 function AboutServicePlace(){
+
+  const [post, setPost] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=1")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setPost(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
   return(
     
     <>
       <AppTop></AppTop>
+      
       <div className="app-body">
         <h5 className='title'>About Service Place</h5>
-        <p>Nam non augue sed augue convallis rhoncus. Quisque auctor justo ac rutrum tempor. Quisque mattis mattis augue, a egestas mauris aliquam ac. Praesent non odio mi. Nam fermentum, turpis vitae rutrum interdum, massa dolor ultricies sapien, vel sodales dolor justo non orci. </p>
+        <p>Integer sagittis enim at nulla imperdiet porttitor. Cras ultrices, urna quis tincidunt porta, mauris nisl pretium nibh, vitae lacinia quam dui et augue. </p>
+
+        {/* {post.map((post) => {
+          return (
+            <div>
+              <h5 className='title'>{post.title}</h5>
+              <p>{post.body}</p>
+            </div>
+          );
+        })} */}
       </div>
+      
       <Appfooter></Appfooter>
     </>
     
