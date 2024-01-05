@@ -1,0 +1,29 @@
+.feedback p.small{
+  font-size: 12px;
+}
+
+.feedback .feedback-form .normal-box button{
+  margin-bottom:8px;
+  margin-right: 8px;
+}
+
+.feedback .feedback-form label {
+  color: #818181;
+  position: absolute;
+  padding: 10px;
+  font-size: 12px;
+  z-index: 1;
+}
+
+.feedback .feedback-form textarea {
+  padding-top: 1.825rem;
+}
+
+.use-app button{
+  font-size: 14px;
+  padding: 5px 10px;
+}
+
+.normal-box .rating-star span{
+  display: inline-block;
+}

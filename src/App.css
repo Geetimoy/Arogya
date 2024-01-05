@@ -29,6 +29,24 @@ body {
     background-color: #2aa142!important;
 }
 
+.btn-outline-info{
+    color: #2aa142;
+    border-color: #2aa142;
+}
+
+.btn-outline-info:hover{
+    color: #fff;
+    background-color: #2aa142;
+    border: 1px solid #2aa142;
+}
+
+.btn:first-child:active,
+:not(.btn-check)+.btn:active{
+    color: #fff;
+    background-color: #2aa142;
+    border: 1px solid #2aa142;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .App-logo {
         animation: App-logo-spin infinite 20s linear;

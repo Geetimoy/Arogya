@@ -217,7 +217,7 @@ function LogIn() {
               </Link>
             </p>
             <div className="text-center mb-4">
-              <button type="submit" className="btn btn-danger w-100">
+              <button type="submit" className="btn primary-bg-color text-light w-100">
                 Login
               </button>
             </div>

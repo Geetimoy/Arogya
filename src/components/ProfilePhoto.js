@@ -16,11 +16,8 @@ import profile from '../assets/images/profile.jpg';
           You can change your existing photo here. Same photo will reflect
           thorughout the Arogya - Telemedicine Application.
         </p>
-        <form
-          class="edit-user-profile-photo-form"
-          name="edit_user_profile_photo_form"
-          id="edit_user_profile_photo_form"
-        >
+        <form class="edit-user-profile-photo-form" name="edit_user_profile_photo_form"
+          id="edit_user_profile_photo_form">
           <div className="row">
             <div className="col-12">
               <div className="mb-3">
@@ -34,12 +31,8 @@ import profile from '../assets/images/profile.jpg';
               </div>
 
               <div className="btns-group d-flex justify-content-center">
-                <button
-                  type="button"
-                  id="edit_user_photo_form_submit"
-                  name="edit_user_photo_form_submit"
-                  className="btn btn-primary primary-bg-color border-0 mx-2"
-                >
+                <button type="button" id="edit_user_photo_form_submit" name="edit_user_photo_form_submit"
+                  className="btn btn-primary primary-bg-color border-0 mx-2">
                   Update Photo
                 </button>
                 <button

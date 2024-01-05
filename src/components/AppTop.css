@@ -1,10 +1,16 @@
 .app-top {
   padding: 15px;
   box-shadow: 0px 2px 6px #e7e7e7;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: #fff;
+  z-index: 1;
 }
 
 .my-element + .left-scroll-menu .offcanvas-header{
   padding: 20px;
+  background: #333547;
 }
 
 .my-element+.left-scroll-menu{
@@ -31,6 +37,7 @@ ul, li{
 .left-scroll-menu ul{
   margin: 0px 0;
   padding: 0;
+  background-color: #383b4e;
 }
 
 .left-scroll-menu ul li{
