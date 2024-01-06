@@ -23,11 +23,13 @@ import { API_URL, ENCYPTION_KEY } from "./util/Constants";
 
 import AlertContext from "../context/alert/AlertContext";
 import LoginContext from "../context/login/LoginContext";
+import SystemContext from "../context/system/SystemContext";
 
 function LogIn() {
 
   const alertContext = useContext(AlertContext);
   const loginContext = useContext(LoginContext);
+  const systemContext = useContext(SystemContext);
 
   const convertToMD5 = (str) => {
     const md5Hash = CryptoJS.MD5(str).toString(CryptoJS.enc.Hex);
@@ -44,38 +46,6 @@ function LogIn() {
       return "Desktop".toUpperCase();
     }
   };
-
-  const [location, setLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-
-  useEffect(() => {
-    const getLocation = () => {
-      if (!navigator.geolocation) {
-        alert("Geolocation is not supported by your browser.");
-        return;
-      }
-
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            setLocation({ latitude, longitude });
-          },
-          (error) => {
-            console.error(`Error getting location: ${error.message}`);
-          }
-        );
-      } else {
-        console.error("Geolocation is not supported by your browser");
-      }
-    };
-
-    getLocation();
-
-    // eslint-disable-next-line
-  }, []);
 
   const redirect = useNavigate();
 
@@ -123,7 +93,7 @@ function LogIn() {
     return errorCounter;
   };
 
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = async (e) => { console.log(systemContext.systemDetails);
     e.preventDefault();
     let errorCounter = validateFrom();
 
@@ -132,8 +102,8 @@ function LogIn() {
     } else {
       let jsonData = {};
 
-      jsonData["user_lat"] = location["latitude"];
-      jsonData["user_long"] = location["longitude"];
+      jsonData["user_lat"] = localStorage.getItem('latitude');
+      jsonData["user_long"] = localStorage.getItem('longitude');
       jsonData["device_token"] =
         "fpDnSllATPC2-RQURuALJy:APA91bHjjUGG7g88GHiu2qz1Gm9PCjCbEQvOTFpU74Ffcwt9JPSi-03eLb-LqWmKhJG2TZgZGaUuolEU7G_IBVKoo2OLf5Ge_KwsMpJ0_g0lFYnR5TjgoCTTokp9s-IpaoX1AUMI-hMu";
       jsonData["device_type"] = "ANDROID"; //getDeviceType();
@@ -149,7 +119,7 @@ function LogIn() {
         body: JSON.stringify(jsonData),
       });
       let result = await response.json();
-      console.log(result);
+     
       if (result.success) {
         var loginDetails = result.data.results;
         alertContext.setAlertMessage({show:true, type: "success", message: "Login successful"});

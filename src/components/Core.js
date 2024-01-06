@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 
 import Landing from './Landing';
@@ -22,12 +22,85 @@ import Help from './Help';
 import Logout from './Logout';
 import LoginContext from '../context/login/LoginContext';
 import AlertContext from '../context/alert/AlertContext';
+import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
+import { API_URL } from './util/Constants';
 
 export default function Core() {
 
-  const loginContext = useContext(LoginContext);
-  const alertContext = useContext(AlertContext);
+  const domainName = window.location.hostname;
+  const [systemId, setSystemId] = useState(null);
+
+  const loginContext  = useContext(LoginContext);
+  const alertContext  = useContext(AlertContext);
+  const systemContext = useContext(SystemContext);
+
+  useEffect(() => {
+    const getLocation = () => {
+      if (!navigator.geolocation) {
+        console.error("Geolocation is not supported by your browser.");
+        return;
+      }
+
+      if ("geolocation" in navigator) { 
+        navigator.geolocation.getCurrentPosition(
+          (position) => { 
+            const { latitude, longitude } = position.coords;
+            localStorage.setItem('latitude', latitude);
+            localStorage.setItem('longitude', longitude);
+          },
+          (error) => {
+            console.error(`Error getting location: ${error.message}`);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by your browser");
+      }
+    };
+
+    getLocation();
+
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
+    if(domainName === "b2h.serviceplace.org.in"){
+      setSystemId("b2h.serviceplace.org.in");
+    }
+    else if(domainName === "rgvn.serviceplace.org.in"){
+      setSystemId("rgvn.serviceplace.org.in");
+    }
+    else if(domainName === "ukhra.serviceplace.org.in"){
+      setSystemId("ukhra.serviceplace.org.in");
+    }
+    else{
+      setSystemId("telehealth.serviceplace.org.in");
+    }
+  
+
+    if(systemId){
+      fetchSystemDetails(systemId);
+    } 
+
+    // eslint-disable-next-line
+  }, [systemId]);
+
+  const fetchSystemDetails = async(systemId) => {
+    let jsonData = {'system_id': systemId};
+    const response = await fetch(`${API_URL}/appCoreSettings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    });
+
+    let result = await response.json();
+    let systemDetailsArray = result['data'].results;
+    
+    systemContext.updateSystemDetails(systemDetailsArray);
+  }
+  
 
   const isLoggedIn = loginContext.loginState.is_logged_in;
 
@@ -43,11 +116,8 @@ export default function Core() {
             <Route path="/ChangePassword" exact element={<ChangePassword />} />
             <Route path="/BasicInfo" exact element={<BasicInformation />} />
             <Route path="/Verification" exact element={<Verification />} />
-            <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
-            <Route path="/SignUp" exact element={<SignUp />} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/Notifications" exact element={<Notifications />} />
-            <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="/TermsCondition" exact element={<TermsCondition />} />
             <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />
             <Route path="/AboutBorn2Help" exact element={<AboutBorn2Help />} />
@@ -61,6 +131,9 @@ export default function Core() {
           (isLoggedIn === false) && <Routes>
             <Route path="/" exact element={<Landing />} />
             <Route path="/logIn" exact element={<LogIn />} />
+            <Route path="/SignUp" exact element={<SignUp />} />
+            <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
+            <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
           </Routes>
         }

@@ -44,7 +44,7 @@ function ContactUs(){
           </div>
           <div className='btns-group d-flex justify-content-center'>
             <button type="button" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
-            <button type="button" class="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button>
+            <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button>
           </div>
         </form>
       </div>
