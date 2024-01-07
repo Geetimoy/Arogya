@@ -5,10 +5,19 @@ import './ChangePassword.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faQuestionCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { API_URL, ENCYPTION_KEY } from "./util/Constants";
-import { useState } from "react";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+import { useContext, useState } from "react";
+import CryptoJS from "crypto-js";
+import AlertContext from "../context/alert/AlertContext";
 
 function ChangePassword() {
+
+  const alertContext = useContext(AlertContext);
+
+  const convertToMD5 = (str) => {
+    const md5Hash = CryptoJS.MD5(str).toString(CryptoJS.enc.Hex);
+    return md5Hash;
+  };
 
   const [formData, setFormData] = useState({
     currentPassword: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -45,8 +54,14 @@ function ChangePassword() {
         errorCounter++;
       }
       else{
-        formData[element].errorMessage = "";
-        formData[element].errorClass = "";
+        if((element === "confirmPassword") && (formData[element].value.trim() !== "") && (formData[element].value.trim() !== formData['newPassword'].value.trim())){
+          formData[element].errorMessage = "Confirm Password does not match with New Password!";
+          formData[element].errorClass = "form-error";
+        }
+        else{
+          formData[element].errorMessage = "";
+          formData[element].errorClass = "";
+        }
       }
     })
     setFormData({...formData, ...formData});
@@ -61,11 +76,33 @@ function ChangePassword() {
     }
     else{
 
-      let jsonData = {};
-      Object.keys(formData).map((key) => { return jsonData[key] = formData[key].value; });
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
+      let jsonData = {};
+
+      jsonData['user_login_id'] = decryptedLoginDetails.login_id;
+      jsonData['device_type']   = DEVICE_TYPE;
+      jsonData['user_lat']      = localStorage.getItem('latitude');
+      jsonData['user_long']     = localStorage.getItem('longitude');
+      jsonData['device_token']  = DEVICE_TOKEN;
+
+      Object.keys(formData).map((key) => { return jsonData[key] = convertToMD5(formData[key].value); });
+
+      const response = await fetch(`${API_URL}/ChangePassword`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      let result = await response.json();
       
-      
+      if (result.success) {
+        alertContext.setAlertMessage({show:true, type: "success", message: "Password changed successfully"});
+      } else {
+        alertContext.setAlertMessage({show:true, type: "error", message: "Password change failed!"});
+      }
+
     }
   }
 
