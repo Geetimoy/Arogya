@@ -88,7 +88,7 @@ function ChangePassword() {
 
       Object.keys(formData).map((key) => { return jsonData[key] = convertToMD5(formData[key].value); });
 
-      const response = await fetch(`${API_URL}/ChangePassword`, {
+      const response = await fetch(`${API_URL}/changePassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,8 +98,10 @@ function ChangePassword() {
       let result = await response.json();
       
       if (result.success) {
+        resetForm();
         alertContext.setAlertMessage({show:true, type: "success", message: "Password changed successfully"});
-      } else {
+      } 
+      else {
         alertContext.setAlertMessage({show:true, type: "error", message: "Password change failed!"});
       }
 

@@ -7,13 +7,19 @@ import serviceplace from '../assets/images/serviceplace-logo.png';
 import footerlogo from '../assets/images/rgvn-logo.png';
 
 import { Link } from "react-router-dom";
+import SystemContext from '../context/system/SystemContext';
+import { useContext } from 'react';
 
 function Landing() {
+  const systemContext = useContext(SystemContext);
+
+  console.log(systemContext.systemDetails.thp_system_colors);
+
   return(
     <div className='splash-container'>
       <div className='container'>
         <header className="App-header">
-          <img src={logotelehealth} className="mb-3" alt="logo" />
+          <img src={systemContext.systemDetails.thp_app_logo_url} className="mb-3" alt="logo" />
           <h2>Welcome to Arogya</h2>
           <div className='btn primary-bg-color mb-5 mt-5 w-100'><Link to ="/login" className='m-auto text-light text-decoration-none d-block'>Get Started</Link></div>
         </header>
