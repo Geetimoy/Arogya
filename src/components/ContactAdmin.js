@@ -24,8 +24,7 @@ function ContactAdmin(){
           <p className='mt-4'>Back me to <Link to="/login" className="primary-color">Login</Link> page or <Link to="/register" className="primary-color">Register</Link> page</p>
           <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
             <div className="text-center login-logo">
-              <img
-                src={footerlogo}
+              <img src={footerlogo}
                 style={{ height: "80px" }}
                 className="mx-3"
                 alt=""
