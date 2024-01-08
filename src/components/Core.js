@@ -20,6 +20,7 @@ import AboutBorn2Help from './AboutBorn2Help';
 import Feedback from './Feedback';
 import Help from './Help';
 import Logout from './Logout';
+import ContactAdmin from './ContactAdmin';
 import LoginContext from '../context/login/LoginContext';
 import AlertContext from '../context/alert/AlertContext';
 import SystemContext from '../context/system/SystemContext';
@@ -134,6 +135,7 @@ export default function Core() {
             <Route path="/SignUp" exact element={<SignUp />} />
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
             <Route path="/ContactUs" exact element={<ContactUs />} />
+            <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
           </Routes>
         }

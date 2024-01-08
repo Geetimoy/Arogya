@@ -193,17 +193,17 @@ function LogIn() {
             </div>
             <p className="text-center link-red mb-3">
               Don't have an account yet?
-              <Link to="/signup" className="primary-color">
+              <Link to="/signup" className="primary-color mx-1">
                 Sign Up
               </Link>
             </p>
             <p className="text-center link-red mb-3">
               Having Trouble?
-              <Link to="/contactus" className="primary-color">
+              <Link to="/contactadmin" className="primary-color mx-1">
                 Contact Admin
               </Link>
             </p>
-
+            <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
             <div className="text-center login-logo">
               <img
                 src={footerlogo}
