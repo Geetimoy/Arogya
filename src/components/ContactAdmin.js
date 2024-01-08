@@ -27,10 +27,8 @@ function ContactAdmin(){
               <img src={footerlogo}
                 style={{ height: "80px" }}
                 className="mx-3"
-                alt=""
-              />
-              <img
-                src={serviceplace}
+                alt="" />
+              <img src={serviceplace}
                 style={{ height: "80px" }}
                 className="mx-3"
                 alt=""
