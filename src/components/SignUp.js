@@ -3,6 +3,8 @@ import './SignUp.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltLeft, faEye } from '@fortawesome/free-solid-svg-icons';
 
+import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
+
 import {Link} from "react-router-dom";
 
 function SignUp(){
@@ -10,13 +12,15 @@ function SignUp(){
     <div className='container'>
       <div className='login-container'>
         <div className='mt-3'> 
-          <Link to="/"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
+          <Link to="/login"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
           <span className='m-2'>Sign Up</span>
         </div>
         <div className='login-box signup'>
+          <img src={logotelehealth} className="m-auto mb-3" alt="logo" />
           <h5 className='title'>Getting Started</h5>
           <p>Create an account to continue your all activities</p>
           <form>
+            <p className='text-end mandatory'><span>*</span> marks are mandatory</p>
             <div className='form-group'>
               <input type="text" id="name" name="name" className='form-control' value="Name" />
             </div>
@@ -37,9 +41,9 @@ function SignUp(){
             </div>
             <div className='btn primary-bg-color mb-3 mt-3 w-100'><Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>SIGN UP</Link></div>
           </form>
-          <div className='back-to-login'>
+          {/* <div className='back-to-login'>
             Already have an account? <Link to="/login" className='primary-color'> Log In</Link>
-          </div>
+          </div> */}
         </div>
         
       </div>

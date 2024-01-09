@@ -58,9 +58,9 @@ function ForgotPassword(){
               />
             </div>
           </form>
-          <div className='back-to-login'>
+          {/* <div className='back-to-login'>
               <Link to="/login" className='primary-color'>BACK TO LOGIN</Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

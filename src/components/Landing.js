@@ -1,7 +1,7 @@
 import './Landing.css';
 
 // import logo from '../logo.png';
-import logotelehealth from '../assets/images/rgvn-telehealth-logo.png';
+//import logotelehealth from '../assets/images/rgvn-telehealth-logo.png';
 //import born2help from '../assets/images/born2help-logo.png';
 import serviceplace from '../assets/images/serviceplace-logo.png';
 import footerlogo from '../assets/images/rgvn-logo.png';
