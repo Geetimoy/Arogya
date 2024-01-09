@@ -25,7 +25,7 @@ function AboutServicePlace(){
     
     <>
       <AppTop></AppTop>
-      
+    
       <div className="app-body">
         <h5 className='title'>About Service Place</h5>
         <p>Integer sagittis enim at nulla imperdiet porttitor. Cras ultrices, urna quis tincidunt porta, mauris nisl pretium nibh, vitae lacinia quam dui et augue. </p>
