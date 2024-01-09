@@ -5,11 +5,6 @@ import CryptoJS from "crypto-js";
 
 import "./LogIn.css";
 
-// import logo from '../logo.png';
-import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
-import serviceplace from "../assets/images/serviceplace-logo.png";
-import footerlogo from "../assets/images/rgvn-logo.png";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -19,7 +14,7 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { API_URL, ENCYPTION_KEY } from "./util/Constants";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import AlertContext from "../context/alert/AlertContext";
 import LoginContext from "../context/login/LoginContext";
@@ -93,7 +88,7 @@ function LogIn() {
     return errorCounter;
   };
 
-  const handleLoginSubmit = async (e) => { console.log(systemContext.systemDetails);
+  const handleLoginSubmit = async (e) => { //console.log(systemContext.systemDetails);
     e.preventDefault();
     let errorCounter = validateFrom();
 
@@ -104,9 +99,8 @@ function LogIn() {
 
       jsonData["user_lat"] = localStorage.getItem('latitude');
       jsonData["user_long"] = localStorage.getItem('longitude');
-      jsonData["device_token"] =
-        "fpDnSllATPC2-RQURuALJy:APA91bHjjUGG7g88GHiu2qz1Gm9PCjCbEQvOTFpU74Ffcwt9JPSi-03eLb-LqWmKhJG2TZgZGaUuolEU7G_IBVKoo2OLf5Ge_KwsMpJ0_g0lFYnR5TjgoCTTokp9s-IpaoX1AUMI-hMu";
-      jsonData["device_type"] = "ANDROID"; //getDeviceType();
+      jsonData["device_token"] = DEVICE_TOKEN;
+      jsonData["device_type"] = DEVICE_TYPE; //getDeviceType();
       jsonData["login_id"] = formData["username"];
       jsonData["password"] = convertToMD5(formData["userpassword"]);
       jsonData["system_id"] = "telehealth.serviceplace.org.in";
@@ -153,7 +147,7 @@ function LogIn() {
           <span className="m-2">Log In</span>
         </div>
         <div className="login-box">
-          <img src={logotelehealth} className="mb-3" alt="logo" />
+          <img src={systemContext.systemDetails.thp_app_logo_url} className="mb-3" alt="logo" />
           <h2>Welcome Back!</h2>
           <p>Login to your Account</p>
           <form onSubmit={handleLoginSubmit}>
@@ -207,13 +201,13 @@ function LogIn() {
             <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
             <div className="text-center login-logo">
               <img
-                src={footerlogo}
+                src={systemContext.systemDetails.thp_ngo_logo_url}
                 style={{ height: "80px" }}
                 className="mx-3"
                 alt=""
               />
               <img
-                src={serviceplace}
+                src={systemContext.systemDetails.thp_sp_global_logo_url}
                 style={{ height: "80px" }}
                 className="mx-3"
                 alt=""

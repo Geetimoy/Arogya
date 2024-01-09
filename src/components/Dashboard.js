@@ -1,7 +1,8 @@
-
+import React, { useContext } from "react";
 import './Dashboard.css';
 
-import serviceplace from '../assets/images/serviceplace-logo.png';
+import CryptoJS from "crypto-js";
+import { ENCYPTION_KEY } from './util/Constants';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -10,9 +11,12 @@ import { faUser, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Appfooter from './AppFooter';
 import AppTop from './AppTop';
 
+import SystemContext from "../context/system/SystemContext";
+
 function Dashboard() {
  
-
+  const systemContext = useContext(SystemContext);
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
    return(
     <>
@@ -22,10 +26,10 @@ function Dashboard() {
       <div className='d-flex justify-content-between mb-4'>
           <div className='d-flex align-items-center'>
             <FontAwesomeIcon icon={faUser} />
-            <h5 className='mb-0 mx-3 primary-color'>Hello Volunteer!</h5>
+            <h5 className='mb-0 mx-3 primary-color'>Hello {decryptedLoginDetails.user_name}!</h5>
           </div>
           <div>
-            <img src={serviceplace} alt='' style={{height:'50px'}} />
+            <img src={systemContext.systemDetails.thp_sp_global_logo_url} alt='' style={{height:'50px'}} />
           </div>
       </div>
       <h4 className='mb-3'>Volunteer Abc</h4>

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
-import logo from '../logo.png';
+import CryptoJS from "crypto-js";
+import { ENCYPTION_KEY } from './util/Constants';
 
 import './AppTop.css'
 
@@ -9,7 +10,13 @@ import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFem
 
 import { Link } from "react-router-dom";
 
+import SystemContext from "../context/system/SystemContext";
+
 function AppTop(){
+
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+  const systemContext = useContext(SystemContext);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -36,8 +43,8 @@ function AppTop(){
               <div className='scroll-back' onClick={handleClick}>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </div>
-              <img src={logo} alt='' style={{height:'40px'}} className='mx-2' />
-              <h5 className='mb-0 mx-2'>Hello Volunteer!</h5>
+              <img src={systemContext.systemDetails.thp_app_logo_url} alt='' style={{height:'40px'}} className='mx-2' />
+              <h5 className='mb-0 mx-2'>Hello {decryptedLoginDetails.user_name}!</h5>
               </div>
             </div>
             <ul>
@@ -48,7 +55,7 @@ function AppTop(){
               <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/apointments"}>Appointments</Link></li>
             </ul>
           </div>
-          <img src={logo} alt='' style={{height:'40px'}} className='mx-2' />
+          <img src={systemContext.systemDetails.thp_app_logo_url} alt='' style={{height:'40px'}} className='mx-2' />
           <h5 className='mx-2 mb-0'>Arogya </h5>
         </div>
         <div className='app-top-right d-flex'> 

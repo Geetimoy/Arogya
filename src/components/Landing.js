@@ -25,8 +25,8 @@ function Landing() {
         </header>
       
         <div className='footerLogo d-flex justify-content-between'>
-          <img src={footerlogo} className='' alt=''/>
-          <img src={serviceplace} className='' alt=''/>
+          <img src={systemContext.systemDetails.thp_ngo_logo_url} className='' alt=''/>
+          <img src={systemContext.systemDetails.thp_sp_global_logo_url} className='' alt=''/>
         </div>
       </div>
     </div>
