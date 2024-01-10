@@ -126,6 +126,7 @@ export default function Core() {
             <Route path="/Help" exact element={<Help />} />
             <Route exact path="/logout" element={<Logout/>}></Route>
             <Route path="*" element={<Navigate to="/dashboard"/>}></Route>
+            <Route path="/ContactUs" exact element={<ContactUs />} />
           </Routes>
         }
         {
@@ -134,7 +135,6 @@ export default function Core() {
             <Route path="/logIn" exact element={<LogIn />} />
             <Route path="/SignUp" exact element={<SignUp />} />
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
-            <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
           </Routes>

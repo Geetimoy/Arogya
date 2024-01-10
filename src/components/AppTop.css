@@ -5,7 +5,7 @@
   width: 100%;
   top: 0;
   background: #fff;
-  z-index: 1;
+  z-index: 2;
 }
 
 .my-element + .left-scroll-menu .offcanvas-header{
