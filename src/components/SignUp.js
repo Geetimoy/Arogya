@@ -9,12 +9,16 @@ import { faLongArrowAltLeft, faEye, faQuestionCircle, faKey, faEyeSlash } from '
 
 import {Link} from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from "../context/alert/AlertContext";
 import { useContext, useState } from 'react';
 import CryptoJS from "crypto-js";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+
 
 function SignUp(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext = useContext(AlertContext);
 
   const [passwordType, setPasswordType] = useState(true);
   const changePasswordType = () => {
@@ -56,22 +60,68 @@ function SignUp(){
         errorCounter++;
       }
       else{
-        formData[element].errorMessage = "";
-        formData[element].errorClass = "";
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if((element === "userEmail") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
+          formData[element].errorMessage = "Please enter a valid email!";
+          formData[element].errorClass = "form-error";
+        }
+        else{
+          formData[element].errorMessage = "";
+          formData[element].errorClass = "";
+        }
       }
     })
     setFormData({...formData, ...formData});
     return errorCounter;
   }
 
+  const resetForm = () => {
+    Object.keys(formData).forEach((element) => {
+      formData[element].value = "";
+      formData[element].errorMessage = "";
+      formData[element].errorClass = "";
+    })
+    setFormData({...formData, ...formData});
+  }
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let errorCounter = validateForm();
+    let errorCounter = validateForm(); console.log(errorCounter);
     if(errorCounter > 0){
       return false;
     }
     else{
 
+      let jsonData = {};
+
+      jsonData['user_account_type']     = formData['userType'].value;
+      jsonData['user_display_name']     = formData['userName'].value;
+      jsonData['user_login_id']         = formData['userId'].value;
+      jsonData['user_contact_number']   = formData['userContactNumber'].value;
+      jsonData['user_email_id']         = formData['userEmail'].value;
+      jsonData['user_web_password']     = convertToMD5(formData['userPassword'].value);
+      jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData['device_type']           = DEVICE_TOKEN;
+      jsonData['device_token']          = DEVICE_TYPE;
+      jsonData['user_lat']              = localStorage.getItem('latitude');
+      jsonData['user_long']             = localStorage.getItem('longitude');
+      jsonData['service_area_ids']      = formData['userServiceArea'].value;
+
+      const response = await fetch(`${API_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      let result = await response.json();
+      if(result.success){
+        resetForm();
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
     }
   }
 
@@ -88,7 +138,7 @@ function SignUp(){
           <p>Create an account to continue your all activities</p>
           <form onSubmit={handleFormSubmit}>
             <p className='text-end mandatory'><span className='text-danger'>*</span> marks are mandatory</p>
-            <div className='form-group'>
+            <div className={`form-group ${formData["userType"].errorClass}`}>
               <label htmlFor="userType"> Register As <span className='text-danger'> *</span></label>
               <select className="form-control" id="userType" name="userType" onChange={handleChange} defaultValue={formData["userType"].value}>
                 <option value="">Select</option>
@@ -97,29 +147,35 @@ function SignUp(){
                 <option value="5">Doctor</option>
                 <option value="6">Pharmacy</option>
               </select>
+              <small className="error-mesg">{formData["userType"].errorMessage}</small>
             </div>
-            <div className='form-group'>
+            <div className={`form-group ${formData["userName"].errorClass}`}>
               <label htmlFor="userName"> Name <span className='text-danger'> *</span></label>
               <input type="text" id="userName" name="userName" className='form-control' placeholder='Enter Name' value={formData["userName"].value} onChange={handleChange}/>
+              <small className="error-mesg">{formData["userName"].errorMessage}</small>
             </div>
-            <div className='form-group'>
+            <div className={`form-group ${formData["userId"].errorClass}`}>
               <label htmlFor="userId"> User ID <span className='text-danger'> *</span></label>
               <input type="text" id="userId" name="userId" className='form-control' placeholder='Enter user id' value={formData["userId"].value} onChange={handleChange}/>
+              <small className="error-mesg">{formData["userId"].errorMessage}</small>
             </div>
-            <div className='form-group'>
+            <div className={`form-group ${formData["userContactNumber"].errorClass}`}>
               <label htmlFor="userContactNumber"> Contact Number/Mobile Number <span className='text-danger'> *</span></label>
               <input type="text" id="userContactNumber" name="userContactNumber" className='form-control' placeholder='Enter contact or mobile number' value={formData["userContactNumber"].value} onChange={handleChange}/>
+              <small className="error-mesg">{formData["userContactNumber"].errorMessage}</small>
             </div>
-            <div className='form-group'>
+            <div className={`form-group ${formData["userEmail"].errorClass}`}>
               <label htmlFor="userEmail"> Email ID <span className='text-danger'> *</span></label>
               <input type="text" id="userEmail" name="userEmail" className='form-control' placeholder='Enter email id' value={formData["userEmail"].value} onChange={handleChange}/>
+              <small className="error-mesg">{formData["userEmail"].errorMessage}</small>
             </div>
-            <div className='form-group'>
+            <div className={`form-group ${formData["userPassword"].errorClass}`}>
               <label htmlFor="userPassword"> Password <span className='text-danger'> *</span> <FontAwesomeIcon icon={faKey} /> <FontAwesomeIcon icon={faQuestionCircle} /></label>
               <input type={passwordType ? `password` : `text`} id="userPassword" name="userPassword" className='form-control' placeholder='Enter Password' value={formData["userPassword"].value} onChange={handleChange}/>
               <div className='icon-font' onClick={changePasswordType}><FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} /></div>
+              <small className="error-mesg">{formData["userPassword"].errorMessage}</small>
             </div>
-            <div className='form-group'>
+            <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
               <label htmlFor="userServiceArea"> Area <span className='text-danger'> *</span></label>
               <select className="form-control" id="userServiceArea" name="userServiceArea" onChange={handleChange} defaultValue={formData["userServiceArea"].value}>
                 <option value="">Select</option>
@@ -128,6 +184,7 @@ function SignUp(){
                 <option value="3">Umananda Temple, Guwahati</option>
                 <option value="4">Morigaon</option>
               </select>
+              <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
             </div>
             {/* <div className='form-group'>
               <div className="custom-control custom-checkbox">

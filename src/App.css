@@ -82,7 +82,8 @@ body {
 }
 
 .form-error input,
-.form-error textarea {
+.form-error textarea,
+.form-error select {
     color: #ff0000;
     border: 1px solid #ff0000;
 }
