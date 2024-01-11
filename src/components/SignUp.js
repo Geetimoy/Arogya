@@ -84,7 +84,7 @@ function SignUp(){
         </div>
         <div className='login-box signup'>
           <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt="logo" />
-          <h5 className='title'>Getting Started</h5>
+          
           <p>Create an account to continue your all activities</p>
           <form onSubmit={handleFormSubmit}>
             <p className='text-end mandatory'><span className='text-danger'>*</span> marks are mandatory</p>
@@ -115,7 +115,7 @@ function SignUp(){
               <input type="text" id="userEmail" name="userEmail" className='form-control' placeholder='Enter email id' value={formData["userEmail"].value} onChange={handleChange}/>
             </div>
             <div className='form-group'>
-              <label htmlFor="userPassword"> Web Password/PIN <span className='text-danger'> *</span> <FontAwesomeIcon icon={faKey} /> <FontAwesomeIcon icon={faQuestionCircle} /></label>
+              <label htmlFor="userPassword"> Password <span className='text-danger'> *</span> <FontAwesomeIcon icon={faKey} /> <FontAwesomeIcon icon={faQuestionCircle} /></label>
               <input type={passwordType ? `password` : `text`} id="userPassword" name="userPassword" className='form-control' placeholder='Enter Password' value={formData["userPassword"].value} onChange={handleChange}/>
               <div className='icon-font' onClick={changePasswordType}><FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} /></div>
             </div>
@@ -137,16 +137,17 @@ function SignUp(){
                   </label>
               </div>
             </div> */}
-            <div className='btn primary-bg-color mb-3 mt-3 w-100'>
-              <Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>Register</Link>
+            <div className='mb-3 mt-3'>
+              {/* <Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>Register</Link> */}
+              <button type="submit" className='btn primary-bg-color text-light w-100'>Register</button>
             </div>
             <div>
               <p>By registering you read & agreed to the RGVN & ServicePlace <Link to ="/termscondition" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>
             </div>
             <p className="text-center link-red mb-3">
-              Don't have an account yet? 
-              <Link to="/signup" className="primary-color mx-1">
-                Sign Up
+              Already have an account ?
+              <Link to="/login" className="primary-color mx-1">
+                Login
               </Link>
             </p>
             <p className="text-center link-red mb-3">
@@ -157,18 +158,18 @@ function SignUp(){
             </p>
             <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
             <div className="text-center login-logo">
-              <img
+              <Link to="https://www.serviceplace.org/" target='_blank'><img
                 src={systemContext.systemDetails.thp_ngo_logo_url}
                 style={{ height: "80px" }}
                 className="mx-3"
                 alt=""
-              />
-              <img
+              /></Link>
+              <Link to="https://www.serviceplace.org/" target="_blank"><img
                 src={systemContext.systemDetails.thp_sp_global_logo_url}
                 style={{ height: "80px" }}
                 className="mx-3"
                 alt=""
-              />
+              /></Link>
             </div>
           </form>
           {/* <div className='back-to-login'>

@@ -119,7 +119,7 @@ export default function Core() {
             <Route path="/Verification" exact element={<Verification />} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/Notifications" exact element={<Notifications />} />
-            <Route path="/TermsCondition" exact element={<TermsCondition />} />
+            
             <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />
             <Route path="/AboutBorn2Help" exact element={<AboutBorn2Help />} />
             <Route path="/Offers" exact element={<Feedback />} />
@@ -134,6 +134,7 @@ export default function Core() {
             <Route path="/" exact element={<Landing />} />
             <Route path="/logIn" exact element={<LogIn />} />
             <Route path="/SignUp" exact element={<SignUp />} />
+            <Route path="/TermsCondition" exact element={<TermsCondition />} />
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
             <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
