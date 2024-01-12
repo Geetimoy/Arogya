@@ -69,9 +69,11 @@ function AppTop(){
           <div className='drop-menu'>
               <ul>
                 <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
-                <li><Link to={"/aboutborn2help"}>About Born2Help</Link></li>
+                {
+                  (systemContext.systemDetails.thp_system_id != 0) && <li><Link to={"/aboutngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
+                }
                 <li><Link to={"/contactus"}>Contact Us</Link></li>
-                <li><Link to={"/offers"}>Feedback</Link></li>
+                <li><Link to={"/feedback"}>Feedback</Link></li>
                 <li><Link to={"/help"}>Help</Link></li>
                 <li><Link to={"/logout"}>Logout</Link></li>
               </ul>
