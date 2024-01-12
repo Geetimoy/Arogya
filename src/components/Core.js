@@ -15,6 +15,7 @@ import Services from './Services';
 import Notifications from './Notifications';
 import ContactUs from './ContactUs';
 import TermsCondition from './TermsCondition';
+import Disclaimer from './Disclaimer';
 import AboutServicePlace from './AboutServicePlace';
 import AboutBorn2Help from './AboutBorn2Help';
 import Feedback from './Feedback';
@@ -136,6 +137,7 @@ export default function Core() {
             <Route path="/logIn" exact element={<LogIn />} />
             <Route path="/SignUp" exact element={<SignUp />} />
             <Route path="/TermsCondition" exact element={<TermsCondition />} />
+            <Route path="/Disclaimer" exact element={<Disclaimer />} />
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
             <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>

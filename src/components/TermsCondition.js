@@ -7,8 +7,13 @@ import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
 import './TermsCondition.css'
 
 import { Link } from "react-router-dom";
+import SystemContext from "../context/system/SystemContext";
+import { useContext } from 'react';
 
 function TermsCondition (){
+
+  const systemContext = useContext(SystemContext);
+
   return(
     <div className='container'>
       <div className='login-container'>
@@ -50,20 +55,35 @@ function TermsCondition (){
               <p>VI. PRIVACY
               RGVN believes strongly in protecting user privacy and providing you with notice of MuscleUP Nutrition 's use of data. Please refer to RGVN privacy policy, incorporated by reference herein, that is posted on the Website &amp; App.</p>
               <p>VI. AGREEMENT TO BE BOUND
-By using this Website &amp; App or ordering Products, you acknowledge that you have read and agree to be bound by this Agreement and all terms and conditions on this Website &amp; App. </p>
-<p>VIII. GENERAL
-Force Majeure. RGVN will not be deemed in default hereunder or held responsible for any cessation, interruption or delay in the performance of its obligations hereunder due to earthquake, flood, fire, storm, natural disaster, act of God, war, terrorism, armed conflict, labor strike, lockout, or boycott.
-Cessation of Operation. RGVN may at any time, in its sole discretion and without advance notice to you, cease operation of the Website &amp; App and distribution of the Products.</p>
-<p>Entire Agreement. This Agreement comprises the entire agreement between you and RGVN and supersedes any prior agreements pertaining to the subject matter contained herein.</p>
-<p>Effect of Waiver. The failure of RGVN to exercise or enforce any right or provision of this Agreement will not constitute a waiver of such right or provision. If any provision of this Agreement is found by a court of competent jurisdiction to be invalid, the parties nevertheless agree that the court should endeavor to give effect to the parties' intentions as reflected in the provision, and the other provisions of this Agreement remain in full force and effect.</p>
-<p>Governing Law; Jurisdiction. This Website &amp; App originates from the Guwahati, Assam. This Agreement will be governed by the laws of the State of Assam without regard to its conflict of law principles to the contrary. Neither you nor RGVN will commence or prosecute any suit, proceeding or claim to enforce the provisions of this Agreement, to recover damages for breach of or default of this Agreement, or otherwise arising under or by reason of this Agreement, other than in courts located in State of Assam. By using this Website &amp; App or ordering Products, you consent to the jurisdiction and venue of such courts in connection with any action, suit, proceeding or claim arising under or by reason of this Agreement. You hereby waive any right to trial by jury arising out of this Agreement and any related documents.</p>
-<p>Statute of Limitation. You agree that regardless of any statute or law to the contrary, any claim or cause of action arising out of or related to use of the Website &amp; App or Products or this Agreement must be filed within one (1) year after such claim or cause of action arose or be forever barred.</p>
-<p>Waiver of Class Action Rights. BY ENTERING INTO THIS AGREEMENT, YOU HEREBY IRREVOCABLY WAIVE ANY RIGHT YOU MAY HAVE TO JOIN CLAIMS WITH THOSE OF OTHER IN THE FORM OF A CLASS ACTION OR SIMILAR PROCEDURAL DEVICE. ANY CLAIMS ARISING OUT OF, RELATING TO, OR CONNECTION WITH THIS AGREEMENT MUST BE ASSERTED INDIVIDUALLY.</p>
-<p>Termination. RGVN reserves the right to terminate your access to the Website &amp; App if it reasonably believes, in its sole discretion, that you have breached any of the terms and conditions of this Agreement. Following termination, you will not be permitted to use the Website &amp; App and RGVN may, in its sole discretion and without advance notice to you, cancel any outstanding orders for Products. If your access to the Website &amp; App is terminated, RGVN reserves the right to exercise whatever means it deems necessary to prevent unauthorized access of the Website &amp; App. This Agreement will survive indefinitely unless and until RGVN chooses, in its sole discretion and without advance to you, to terminate it.</p>
-<p>Domestic Use. RGVN makes no representation that the Website &amp; App or Products are appropriate or available for use in locations outside India. Users who access the Website &amp; App from outside India do so at their own risk and initiative and must bear all responsibility for compliance with any applicable local laws.</p>
-<p>Assignment. You may not assign your rights and obligations under this Agreement to anyone. RGVN may assign its rights and obligations under this Agreement in its sole discretion and without advance notice to you.
-BY USING THIS WEBSITE OR ORDERING PRODUCTS FROM THIS WEBSITE YOU AGREE 
-TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p>
+                By using this Website &amp; App or ordering Products, you acknowledge that you have read and agree to be bound by this Agreement and all terms and conditions on this Website &amp; App. </p>
+              <p>VIII. GENERAL
+                Force Majeure. RGVN will not be deemed in default hereunder or held responsible for any cessation, interruption or delay in the performance of its obligations hereunder due to earthquake, flood, fire, storm, natural disaster, act of God, war, terrorism, armed conflict, labor strike, lockout, or boycott.
+                Cessation of Operation. RGVN may at any time, in its sole discretion and without advance notice to you, cease operation of the Website &amp; App and distribution of the Products.</p>
+              <p>Entire Agreement. This Agreement comprises the entire agreement between you and RGVN and supersedes any prior agreements pertaining to the subject matter contained herein.</p>
+              <p>Effect of Waiver. The failure of RGVN to exercise or enforce any right or provision of this Agreement will not constitute a waiver of such right or provision. If any provision of this Agreement is found by a court of competent jurisdiction to be invalid, the parties nevertheless agree that the court should endeavor to give effect to the parties' intentions as reflected in the provision, and the other provisions of this Agreement remain in full force and effect.</p>
+              <p>Governing Law; Jurisdiction. This Website &amp; App originates from the Guwahati, Assam. This Agreement will be governed by the laws of the State of Assam without regard to its conflict of law principles to the contrary. Neither you nor RGVN will commence or prosecute any suit, proceeding or claim to enforce the provisions of this Agreement, to recover damages for breach of or default of this Agreement, or otherwise arising under or by reason of this Agreement, other than in courts located in State of Assam. By using this Website &amp; App or ordering Products, you consent to the jurisdiction and venue of such courts in connection with any action, suit, proceeding or claim arising under or by reason of this Agreement. You hereby waive any right to trial by jury arising out of this Agreement and any related documents.</p>
+              <p>Statute of Limitation. You agree that regardless of any statute or law to the contrary, any claim or cause of action arising out of or related to use of the Website &amp; App or Products or this Agreement must be filed within one (1) year after such claim or cause of action arose or be forever barred.</p>
+              <p>Waiver of Class Action Rights. BY ENTERING INTO THIS AGREEMENT, YOU HEREBY IRREVOCABLY WAIVE ANY RIGHT YOU MAY HAVE TO JOIN CLAIMS WITH THOSE OF OTHER IN THE FORM OF A CLASS ACTION OR SIMILAR PROCEDURAL DEVICE. ANY CLAIMS ARISING OUT OF, RELATING TO, OR CONNECTION WITH THIS AGREEMENT MUST BE ASSERTED INDIVIDUALLY.</p>
+              <p>Termination. RGVN reserves the right to terminate your access to the Website &amp; App if it reasonably believes, in its sole discretion, that you have breached any of the terms and conditions of this Agreement. Following termination, you will not be permitted to use the Website &amp; App and RGVN may, in its sole discretion and without advance notice to you, cancel any outstanding orders for Products. If your access to the Website &amp; App is terminated, RGVN reserves the right to exercise whatever means it deems necessary to prevent unauthorized access of the Website &amp; App. This Agreement will survive indefinitely unless and until RGVN chooses, in its sole discretion and without advance to you, to terminate it.</p>
+              <p>Domestic Use. RGVN makes no representation that the Website &amp; App or Products are appropriate or available for use in locations outside India. Users who access the Website &amp; App from outside India do so at their own risk and initiative and must bear all responsibility for compliance with any applicable local laws.</p>
+              <p>Assignment. You may not assign your rights and obligations under this Agreement to anyone. RGVN may assign its rights and obligations under this Agreement in its sole discretion and without advance notice to you.
+                BY USING THIS WEBSITE OR ORDERING PRODUCTS FROM THIS WEBSITE YOU AGREE 
+                TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p>
+              <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
+              <div className="text-center login-logo">
+              <Link to="https://www.serviceplace.org/" target='_blank'><img
+                src={systemContext.systemDetails.thp_ngo_logo_url}
+                style={{ height: "80px" }}
+                className="mx-3"
+                alt=""
+              /></Link>
+              <Link to="https://www.serviceplace.org/" target="_blank"><img
+                src={systemContext.systemDetails.thp_sp_global_logo_url}
+                style={{ height: "80px" }}
+                className="mx-3"
+                alt=""
+              /></Link>
+            </div>
         </div>
       </div>
     </div>

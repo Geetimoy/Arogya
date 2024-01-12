@@ -26,15 +26,10 @@ function ContactAdmin(){
           <p className='mt-4'>Back me to <Link to="/login" className="primary-color">login</Link> page or <Link to="/signup" className="primary-color">register</Link> page</p>
           <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
             <div className="text-center login-logo w-100">
-              <img src={footerlogo}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt="" />
-              <img src={serviceplace}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt=""
-              />
+              <Link to="https://www.serviceplace.org/" target='_blank'><img src={footerlogo}
+                style={{ height: "80px" }} className="mx-3" alt="" /></Link>
+              <Link to="https://www.serviceplace.org/" target='_blank'><img src={serviceplace}
+                style={{ height: "80px" }} className="mx-3" alt="" /></Link>
             </div>
         </div>
       </div>

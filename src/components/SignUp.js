@@ -177,9 +177,9 @@ function SignUp(){
             </div>
             <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
               <label htmlFor="userServiceArea"> Area <span className='text-danger'> *</span></label>
-              <select className="form-control" id="userServiceArea" name="userServiceArea" onChange={handleChange} defaultValue={formData["userServiceArea"].value}>
-                <option value="">Select</option>
-                <option value="1">Guwahati Zoo,Fancy bazar</option>
+              <select className="form-control" id="userServiceArea" multiple name="userServiceArea" onChange={handleChange} defaultValue={formData["userServiceArea"].value}>
+                {/* <option value="">Select</option> */}
+                <option selected value="1">Guwahati Zoo,Fancy bazar</option>
                 <option value="2">Navagraha Temple, Guwahati</option>
                 <option value="3">Umananda Temple, Guwahati</option>
                 <option value="4">Morigaon</option>

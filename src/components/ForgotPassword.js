@@ -44,23 +44,15 @@ function ForgotPassword(){
             <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
 
             <div className="text-center login-logo">
-              <img
+            <Link to="https://www.serviceplace.org/" target='_blank'><img
                 src={footerlogo}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt=""
-              />
-              <img
+                style={{ height: "80px" }} className="mx-3" alt="" /></Link>
+              <Link to="https://www.serviceplace.org/" target='_blank'><img
                 src={serviceplace}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt=""
-              />
+                style={{ height: "80px" }} className="mx-3" alt="" /></Link>
             </div>
           </form>
-          {/* <div className='back-to-login'>
-              <Link to="/login" className='primary-color'>BACK TO LOGIN</Link>
-          </div> */}
+          
         </div>
       </div>
     </div>
