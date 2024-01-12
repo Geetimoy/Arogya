@@ -57,6 +57,7 @@ function ChangePassword() {
         if((element === "confirmPassword") && (formData[element].value.trim() !== "") && (formData[element].value.trim() !== formData['newPassword'].value.trim())){
           formData[element].errorMessage = "Confirm Password does not match with New Password!";
           formData[element].errorClass = "form-error";
+          errorCounter++;
         }
         else{
           formData[element].errorMessage = "";

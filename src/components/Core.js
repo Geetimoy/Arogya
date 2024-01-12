@@ -100,7 +100,7 @@ export default function Core() {
     let result = await response.json();
     let systemDetailsArray = result['data'].results;
     systemDetailsArray['system_id'] = systemId;
-    
+    document.title = systemDetailsArray['thp_system_name'];
     systemContext.updateSystemDetails(systemDetailsArray);
   }
   
