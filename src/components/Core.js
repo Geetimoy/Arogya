@@ -30,7 +30,8 @@ import { API_URL } from './util/Constants';
 
 export default function Core() {
 
-  const domainName = window.location.hostname;
+  //const domainName = window.location.hostname;
+  const domainName = 'ukhra.serviceplace.org.in';
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
@@ -128,8 +129,8 @@ export default function Core() {
             <Route path="/Offers" exact element={<Feedback />} />
             <Route path="/Help" exact element={<Help />} />
             <Route exact path="/logout" element={<Logout/>}></Route>
-            <Route path="*" element={<Navigate to="/dashboard"/>}></Route>
             <Route path="/ContactUs" exact element={<ContactUs />} />
+            <Route path="*" element={<Navigate to="/dashboard"/>}></Route>
           </Routes>
         }
         {

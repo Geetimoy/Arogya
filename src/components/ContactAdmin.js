@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltLeft, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 
-import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
-import serviceplace from "../assets/images/serviceplace-logo.png";
-import footerlogo from "../assets/images/rgvn-logo.png";
+//import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
+//import serviceplace from "../assets/images/serviceplace-logo.png";
+//import footerlogo from "../assets/images/rgvn-logo.png";
 import { useContext } from 'react';
 import './ContactAdmin.css'
 import SystemContext from "../context/system/SystemContext";
