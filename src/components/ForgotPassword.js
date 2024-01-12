@@ -3,13 +3,17 @@ import './ForgotPassword.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
-import serviceplace from "../assets/images/serviceplace-logo.png";
-import footerlogo from "../assets/images/rgvn-logo.png";
+//import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
+//import serviceplace from "../assets/images/serviceplace-logo.png";
+//import footerlogo from "../assets/images/rgvn-logo.png";
 
 import { Link } from "react-router-dom";
+import SystemContext from "../context/system/SystemContext";
+import { useContext } from 'react';
 
 function ForgotPassword(){
+
+  const systemContext = useContext(SystemContext);
 
   return(
     <div className='container'>
@@ -19,7 +23,7 @@ function ForgotPassword(){
           <span className='m-2'>Change Password</span>
         </div>
         <div className='login-box change-password'>
-          <img src={logotelehealth} className="mb-3" alt="logo" />
+          <img src={systemContext.systemDetails.thp_app_logo_url} className="mb-3" alt={systemContext.systemDetails.thp_system_name} />
           <h5 className='title'>Reset Password</h5>
           <p>Enter your User ID and an OTP will be sent to your registered Email ID & Mobile Number </p>
           <form>
@@ -41,15 +45,11 @@ function ForgotPassword(){
                 Contact Admin
               </Link>
             </p>
-            <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
+            <p className='text-center'>&copy; 2024 {systemContext.systemDetails.thp_domain_name}. Powered by <Link to={systemContext.systemDetails.thp_main_ngo_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_system_name}</Link></p>
 
             <div className="text-center login-logo">
-            <Link to="https://www.serviceplace.org/" target='_blank'><img
-                src={footerlogo}
-                style={{ height: "80px" }} className="mx-3" alt="" /></Link>
-              <Link to="https://www.serviceplace.org/" target='_blank'><img
-                src={serviceplace}
-                style={{ height: "80px" }} className="mx-3" alt="" /></Link>
+              <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
+              <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
             </div>
           </form>
           

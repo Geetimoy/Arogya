@@ -12,7 +12,7 @@ import SystemContext from "../context/system/SystemContext";
 import AlertContext from "../context/alert/AlertContext";
 import { useContext, useState } from 'react';
 import CryptoJS from "crypto-js";
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 
 function SignUp(){
@@ -133,7 +133,7 @@ function SignUp(){
           <span className='m-2'>Sign Up</span>
         </div>
         <div className='login-box signup'>
-          <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt="logo" />
+          <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />
           
           <p>Create an account to continue your all activities</p>
           <form onSubmit={handleFormSubmit}>
@@ -213,19 +213,19 @@ function SignUp(){
                 Contact Admin
               </Link>
             </p>
-            <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
+            <p className='text-center'>&copy; 2024 {systemContext.systemDetails.thp_domain_name}. Powered by <Link to={systemContext.systemDetails.thp_main_ngo_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_system_name}</Link></p>
             <div className="text-center login-logo">
-              <Link to="https://www.serviceplace.org/" target='_blank'><img
+              <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img
                 src={systemContext.systemDetails.thp_ngo_logo_url}
                 style={{ height: "80px" }}
                 className="mx-3"
-                alt=""
+                alt={systemContext.systemDetails.thp_system_name}
               /></Link>
-              <Link to="https://www.serviceplace.org/" target="_blank"><img
+              <Link to={systemContext.systemDetails.thp_main_ngo_url} target="_blank"><img
                 src={systemContext.systemDetails.thp_sp_global_logo_url}
                 style={{ height: "80px" }}
                 className="mx-3"
-                alt=""
+                alt={systemContext.systemDetails.thp_system_name}
               /></Link>
             </div>
           </form>

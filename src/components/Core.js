@@ -104,6 +104,7 @@ export default function Core() {
     systemContext.updateSystemDetails(systemDetailsArray);
   }
   
+  console.log(systemContext.systemDetails);
 
   const isLoggedIn = loginContext.loginState.is_logged_in;
 

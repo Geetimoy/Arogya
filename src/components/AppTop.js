@@ -56,7 +56,7 @@ function AppTop(){
             </ul>
           </div>
           <img src={systemContext.systemDetails.thp_app_logo_url} alt='' style={{height:'40px'}} className='mx-2' />
-          <h5 className='mx-2 mb-0'>Arogya </h5>
+          <h5 className='mx-2 mb-0'>{systemContext.systemDetails.thp_system_name} </h5>
         </div>
         <div className='app-top-right d-flex'> 
           <div className='position-relative'>
