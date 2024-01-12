@@ -100,10 +100,10 @@ function ChangePassword() {
       
       if (result.success) {
         resetForm();
-        alertContext.setAlertMessage({show:true, type: "success", message: "Password changed successfully"});
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
       } 
       else {
-        alertContext.setAlertMessage({show:true, type: "error", message: "Password change failed!"});
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
       }
 
     }
