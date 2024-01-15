@@ -32,6 +32,7 @@ function AboutServicePlace(){
             
             const responseData = await response.json();
             // console.log(responseData.data.results[0]);
+            
             setData(responseData.data.results[0]);
             // console.log('Hi');
             console.log(data);
@@ -67,7 +68,7 @@ function AboutServicePlace(){
       <div className="app-body">
         <h5 className='title'>{data.page_title}</h5>
         {/* <h5>{systemContext.systemDetails.thp_domain_name}</h5> */}
-        <p>{data.page_content} </p>
+        <p dangerouslySetInnerHTML={{ __html: data.page_content }}></p>
 
         {/* {post.map((post) => {
           return (
