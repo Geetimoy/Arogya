@@ -45,6 +45,8 @@ function AboutBorn2Help(){
         };
     
         fetchData();
+
+        // eslint-disable-next-line
       }, []);
 
 

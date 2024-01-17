@@ -97,13 +97,13 @@ function LogIn() {
     } else {
       let jsonData = {};
 
-      jsonData["user_lat"] = localStorage.getItem('latitude');
-      jsonData["user_long"] = localStorage.getItem('longitude');
-      jsonData["device_token"] = DEVICE_TOKEN;
-      jsonData["device_type"] = DEVICE_TYPE; //getDeviceType();
-      jsonData["login_id"] = formData["username"];
-      jsonData["password"] = convertToMD5(formData["userpassword"]);
-      jsonData["system_id"] = "telehealth.serviceplace.org.in";
+      jsonData["user_lat"]      = localStorage.getItem('latitude');
+      jsonData["user_long"]     = localStorage.getItem('longitude');
+      jsonData["device_token"]  = DEVICE_TOKEN;
+      jsonData["device_type"]   = DEVICE_TYPE; //getDeviceType();
+      jsonData["login_id"]      = formData["username"];
+      jsonData["password"]      = convertToMD5(formData["userpassword"]);
+      jsonData['system_id']     = systemContext.systemDetails.system_id;
       
 
       const response = await fetch(`${API_URL}/login`, {

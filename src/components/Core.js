@@ -31,7 +31,7 @@ import { API_URL } from './util/Constants';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'ukhra.serviceplace.org.in';
+  const domainName = 'telehealth.serviceplace.org.in';
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
@@ -139,6 +139,7 @@ export default function Core() {
   useEffect(() => {
     getCurrentDomain();
     setPrimaryColorByDomain();
+    // eslint-disable-next-line
   }, [domain]);
   
   console.log(systemContext.systemDetails);

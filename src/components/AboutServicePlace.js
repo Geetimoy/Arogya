@@ -50,6 +50,7 @@ function AboutServicePlace(){
         };
     
         fetchData();
+        // eslint-disable-next-line
       }, []);
 
   // const [post, setPost] = useState([]);
