@@ -75,6 +75,18 @@
   padding-left: 7px;
 }
 
+.react-dropdown-select{
+  border-radius: 6px!important;
+  border-color: #dee2e6!important;
+}
+
+.react-dropdown-select-option{
+  min-height: 24px;
+  height: auto;
+  z-index: 1;
+  padding: 0 3px 0 5px;
+}
+
 .signup form label {
   color: #818181;
   position: absolute;
