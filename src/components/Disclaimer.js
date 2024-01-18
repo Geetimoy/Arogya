@@ -1,15 +1,56 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
+//import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
 
 import { Link } from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
+
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 function Disclaimer(){
 
   const systemContext = useContext(SystemContext);
+  const [data, setData] = useState({page_content:'', page_title:''});
+
+  let jsonData = {};
+      jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData['device_type']           = DEVICE_TOKEN;
+      jsonData['device_token']          = DEVICE_TYPE;
+      jsonData['user_lat']              = localStorage.getItem('latitude');
+      jsonData['user_long']             = localStorage.getItem('longitude');
+      jsonData["page_key"] = localStorage.getItem('page_key');
+      //jsonData["system_id"] = "telehealth.serviceplace.org.in";
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`${API_URL}/staticPage`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+            
+            const responseData = await response.json();
+             console.log(responseData.data.results[0]);
+            
+            setData(responseData.data.results[0]);
+            // console.log('Hi');
+            console.log(data);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          } finally {
+            // setLoading(false);
+          }
+        };
+    
+        fetchData();
+
+        // eslint-disable-next-line
+      }, []);
 
   return(
     <div className='container'>
@@ -19,7 +60,8 @@ function Disclaimer(){
           <span className='m-2'>Disclaimer</span>
         </div>
         <div className='login-box disclaimer'>
-          <img src={logotelehealth} className="mb-3" alt="logo" />
+          {/* <img src={logotelehealth} className="mb-3" alt="logo" /> */}
+          <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />
           <p><strong>Community-based TeleHealth Information Release</strong></p>
           <ul className='px-1'>
             <li className='d-flex mb-2'>

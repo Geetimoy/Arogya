@@ -70,7 +70,7 @@ function AppTop(){
               <ul>
                 <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
                 {
-                  (systemContext.systemDetails.thp_system_id != 0) && <li><Link to={"/aboutngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
+                  (systemContext.systemDetails.thp_system_id !== 0) && <li><Link to={"/aboutngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
                 }
                 <li><Link to={"/contactus"}>Contact Us</Link></li>
                 <li><Link to={"/feedback"}>Feedback</Link></li>

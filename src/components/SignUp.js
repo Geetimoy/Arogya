@@ -11,6 +11,8 @@ import {Link} from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 import AlertContext from "../context/alert/AlertContext";
 import { useContext, useState } from 'react';
+
+import Dropdown from 'react-dropdown-select';
 import CryptoJS from "crypto-js";
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
@@ -83,6 +85,21 @@ function SignUp(){
     })
     setFormData({...formData, ...formData});
   }
+
+  const options = [
+    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
+    { label: 'Navagraha Temple, Guwahati', value: '2' },
+    { label: 'Umananda Temple, Guwahati', value: '3' },
+    { label: 'Morigaon', value: '4' },
+  ];
+
+  // Define the selectedOptions state and the corresponding setter function
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleChange1 = (values) => {
+    setSelectedOptions(values);
+  };
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -186,6 +203,13 @@ function SignUp(){
               </select>
               <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
             </div>
+            <div className='form-group'>
+              <label>Area <span className='text-danger'> *</span></label>
+              <Dropdown className='form-control' multi options={options} values={selectedOptions} onChange={handleChange1} />
+            </div>
+            
+
+            
             {/* <div className='form-group'>
               <div className="custom-control custom-checkbox">
                 <input type="checkbox" id="smart_menu" className="checkbox style-0 custom-control-input" />

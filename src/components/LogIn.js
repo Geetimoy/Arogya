@@ -97,13 +97,13 @@ function LogIn() {
     } else {
       let jsonData = {};
 
-      jsonData["user_lat"] = localStorage.getItem('latitude');
-      jsonData["user_long"] = localStorage.getItem('longitude');
-      jsonData["device_token"] = DEVICE_TOKEN;
-      jsonData["device_type"] = DEVICE_TYPE; //getDeviceType();
-      jsonData["login_id"] = formData["username"];
-      jsonData["password"] = convertToMD5(formData["userpassword"]);
-      jsonData["system_id"] = "telehealth.serviceplace.org.in";
+      jsonData["user_lat"]      = localStorage.getItem('latitude');
+      jsonData["user_long"]     = localStorage.getItem('longitude');
+      jsonData["device_token"]  = DEVICE_TOKEN;
+      jsonData["device_type"]   = DEVICE_TYPE; //getDeviceType();
+      jsonData["login_id"]      = formData["username"];
+      jsonData["password"]      = convertToMD5(formData["userpassword"]);
+      jsonData['system_id']     = systemContext.systemDetails.system_id;
       
 
       const response = await fetch(`${API_URL}/login`, {
@@ -152,7 +152,7 @@ function LogIn() {
           <p>Login to your Account</p>
           <form onSubmit={handleLoginSubmit}>
             <div className={`form-group ${errorClass.username}`}>
-              <label htmlFor="username"> User id / Email </label>
+              <label htmlFor="username"> User ID </label>
               <input
                 type="text"
                 id="username"

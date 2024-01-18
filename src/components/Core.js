@@ -31,6 +31,9 @@ import { API_URL } from './util/Constants';
 export default function Core() {
 
   //const domainName = window.location.hostname;
+  // const domainName = 'telehealth.serviceplace.org.in';
+  // const domainName = 'b2h.serviceplace.org.in';
+  // const domainName = 'rgvn.serviceplace.org.in';
   const domainName = 'ukhra.serviceplace.org.in';
   const [systemId, setSystemId] = useState(null);
 
@@ -104,6 +107,43 @@ export default function Core() {
     document.title = systemDetailsArray['thp_system_name'];
     systemContext.updateSystemDetails(systemDetailsArray);
   }
+
+  const [domain, setDomain] = useState('');
+  const [primaryColor, setPrimaryColor] = useState('#2aa142'); // Default color
+
+  // Function to get the current domain
+  const getCurrentDomain = () => {
+    const currentDomain = window.location.hostname;
+    setDomain(currentDomain);
+  };
+
+  // Function to set the primary color based on the domain
+  const setPrimaryColorByDomain = () => {
+    switch (domain) {
+      case 'telehealth.serviceplace.org.in':
+        setPrimaryColor('#2aa142');
+        break;
+      case 'ukhra.serviceplace.org.in':
+        setPrimaryColor('#f79645');
+        break;
+      case 'rgvn.serviceplace.org.in':
+        setPrimaryColor('#2aa142');
+        break;
+      case 'b2h.serviceplace.org.in':
+        setPrimaryColor('#c00000');
+        break;
+      default:
+        setPrimaryColor('#2aa142'); // Default color: black
+        break;
+    }
+  };
+
+  // Effect to get the current domain and set the primary color
+  useEffect(() => {
+    getCurrentDomain();
+    setPrimaryColorByDomain();
+    // eslint-disable-next-line
+  }, [domain]);
   
   console.log(systemContext.systemDetails);
 
