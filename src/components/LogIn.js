@@ -152,7 +152,7 @@ function LogIn() {
           <p>Login to your Account</p>
           <form onSubmit={handleLoginSubmit}>
             <div className={`form-group ${errorClass.username}`}>
-              <label htmlFor="username"> User id / Email </label>
+              <label htmlFor="username"> User ID </label>
               <input
                 type="text"
                 id="username"

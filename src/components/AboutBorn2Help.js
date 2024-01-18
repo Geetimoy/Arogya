@@ -17,7 +17,7 @@ function AboutBorn2Help(){
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
       jsonData["page_key"] = localStorage.getItem('page_key');
-      jsonData["system_id"] = "telehealth.serviceplace.org.in";
+      //jsonData["system_id"] = "telehealth.serviceplace.org.in";
 
 
       useEffect(() => {

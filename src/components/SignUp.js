@@ -203,10 +203,10 @@ function SignUp(){
               </select>
               <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
             </div>
-            {/* <div className='form-group'>
+            <div className='form-group'>
               <label>Area <span className='text-danger'> *</span></label>
               <Dropdown className='form-control' multi options={options} values={selectedOptions} onChange={handleChange1} />
-            </div> */}
+            </div>
             
 
             
