@@ -7,17 +7,18 @@ import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 //import serviceplace from "../assets/images/serviceplace-logo.png";
 //import footerlogo from "../assets/images/rgvn-logo.png";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 import AlertContext from "../context/alert/AlertContext";
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 import { useContext, useState } from "react";
-import CryptoJS from "crypto-js";
 
 function ForgotPassword(){
 
   const systemContext = useContext(SystemContext);
   const alertContext = useContext(AlertContext);
+
+  const redirect = useNavigate();
 
   const [formData, setFormData] = useState({
     userId: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -89,6 +90,9 @@ function ForgotPassword(){
       if (result.success) {
         resetForm();
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setTimeout(() => {
+          redirect('/Verification');
+        }, 3000);
       } 
       else {
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});

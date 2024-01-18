@@ -160,7 +160,6 @@ export default function Core() {
             <Route path="/ProfilePhoto" exact element={<ProfilePhoto />} />
             <Route path="/ChangePassword" exact element={<ChangePassword />} />
             <Route path="/BasicInfo" exact element={<BasicInformation />} />
-            <Route path="/Verification" exact element={<Verification />} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/Notifications" exact element={<Notifications />} />
             
@@ -182,6 +181,7 @@ export default function Core() {
             <Route path="/Disclaimer" exact element={<Disclaimer />} />
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
             <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
+            <Route path="/Verification" exact element={<Verification />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
           </Routes>
         }
