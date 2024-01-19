@@ -34,7 +34,7 @@ export default function Core() {
   // const domainName = 'telehealth.serviceplace.org.in';
   // const domainName = 'b2h.serviceplace.org.in';
   // const domainName = 'rgvn.serviceplace.org.in';
-  const domainName = 'ukhra.serviceplace.org.in';
+  const domainName = 'telehealth.serviceplace.org.in';
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
@@ -162,7 +162,6 @@ export default function Core() {
             <Route path="/BasicInfo" exact element={<BasicInformation />} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/Notifications" exact element={<Notifications />} />
-            
             <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />
             <Route path="/AboutBorn2Help" exact element={<AboutBorn2Help />} />
             <Route path="/Offers" exact element={<Feedback />} />
