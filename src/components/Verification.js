@@ -6,9 +6,26 @@ import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 import SystemContext from "../context/system/SystemContext";
 import AlertContext from "../context/alert/AlertContext";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+import { useParams, useNavigate } from 'react-router-dom';
 
 function Verification(){
+
+
+  //const { loginId } = useParams();
+  const [urlParam, setUrlParam] = useState(useParams());
+  const redirect    = useNavigate();
+
+  useEffect(() => {
+    if(urlParam.loginId){
+      
+    }
+    else{
+      redirect('/forgotpassword');
+    }
+    // eslint-disable-next-line
+  }, [urlParam])
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -46,8 +63,34 @@ function Verification(){
     }
     else{
 
-      
+      var otp = formData['digit1'].value+''+formData['digit2'].value+''+formData['digit3'].value+''+formData['digit4'].value;
+      var otp = parseInt(otp);
 
+      let jsonData = {};
+
+      jsonData['system_id']     = systemContext.systemDetails.system_id;
+      jsonData['device_type']   = DEVICE_TYPE;
+      jsonData['device_token']  = DEVICE_TOKEN;
+      jsonData['user_lat']      = localStorage.getItem('latitude');
+      jsonData['user_long']     = localStorage.getItem('longitude');
+      jsonData['user_login_id'] = urlParam.loginId;
+      jsonData['otp']           = otp;
+      
+      const response = await fetch(`${API_URL}/forgotPasswordValidateOTP`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      let result = await response.json();
+      
+      if (result.success) {
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      } 
+      else {
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
     }
   }
 
@@ -64,10 +107,10 @@ function Verification(){
             <p>Kindly Enter the 4 digit verification code</p>
             <form onSubmit={handleFormSubmit}>
               <div className='d-flex justify-content-around'>
-                <input type="text" maxlength="1" name="digit1" id="digit1" onChange={handleChange}/>
-                <input type="text" maxlength="1" name="digit2" id="digit2" onChange={handleChange}/>
-                <input type="text" maxlength="1" name="digit3" id="digit3" onChange={handleChange}/>
-                <input type="text" maxlength="1" name="digit4" id="digit4" onChange={handleChange}/>
+                <input type="text" maxLength="1" name="digit1" id="digit1" onChange={handleChange} value={formData["digit1"].value}/>
+                <input type="text" maxLength="1" name="digit2" id="digit2" onChange={handleChange} value={formData["digit2"].value}/>
+                <input type="text" maxLength="1" name="digit3" id="digit3" onChange={handleChange} value={formData["digit3"].value}/>
+                <input type="text" maxLength="1" name="digit4" id="digit4" onChange={handleChange} value={formData["digit4"].value}/>
               </div>
               <div className='btn primary-bg-color mb-5 mt-5 w-100'>
                 <button type="submit" className='btn primary-bg-color text-light w-100'>VERIFY</button>
