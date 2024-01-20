@@ -26,7 +26,7 @@ import LoginContext from '../context/login/LoginContext';
 import AlertContext from '../context/alert/AlertContext';
 import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
-import { API_URL } from './util/Constants';
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 
 export default function Core() {
 
@@ -92,7 +92,15 @@ export default function Core() {
   }, [systemId]);
 
   const fetchSystemDetails = async(systemId) => {
-    let jsonData = {'system_id': systemId};
+    
+    let jsonData = {
+      'system_id':    systemId,
+      'device_type':  DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+      'user_lat':     localStorage.getItem('latitude'),
+      'user_long':    localStorage.getItem('longitude')
+    };
+
     const response = await fetch(`${API_URL}/appCoreSettings`, {
       method: "POST",
       headers: {
@@ -145,7 +153,7 @@ export default function Core() {
     // eslint-disable-next-line
   }, [domain]);
   
-  console.log(systemContext.systemDetails);
+  //console.log(systemContext.systemDetails);
 
   const isLoggedIn = loginContext.loginState.is_logged_in;
 
