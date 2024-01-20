@@ -88,16 +88,14 @@ function ForgotPassword(){
       let result = await response.json();
       
       if (result.success) {
-        resetForm();
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
         setTimeout(() => {
-          redirect('/Verification');
+          redirect('/Verification/'+formData["userId"].value);
         }, 3000);
       } 
       else {
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
       }
-
     }
   }
 
