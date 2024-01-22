@@ -1,11 +1,46 @@
 import Appfooter from './AppFooter';
 import AppTop from './AppTop';
 
+import Slider from "@mui/material/Slider";
+import Cropper from "react-easy-crop";
+//import getCroppedImg from '../cropper/Crop';
+
 import './ProfilePhoto.css'
 
 import profile from '../assets/images/profile.jpg';
+import profileplaceholder from '../assets/images/profileplaceholder.jpg';
+import { useCallback, useRef, useState } from 'react';
  
- function ProfilePhoto(){
+function ProfilePhoto(){
+
+  // For File Upload and Crop
+  const inputFileRef = useRef(null);
+  const triggerInputFileCLick = (event) => {
+    inputFileRef.current.click();
+  }
+  
+  const handleImageUpload = async (e) => {
+    //setImage(URL.createObjectURL(e.target.files[0]));
+    const selectedFile = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64Image = e.target.result;
+      setImage(base64Image);
+    };
+    reader.readAsDataURL(selectedFile);
+  };
+  const aspectRatio = 1;
+  const [cropWidth, cropHeight] = [250, 250];
+  const [image, setImage] = useState(profileplaceholder);
+  const [crop, setCrop]   = useState({ x: 0, y: 0 });
+  const [zoom, setZoom]   = useState(1);
+  const [rotation, setRotation] = useState(0);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
 
   return (
     <>
@@ -16,7 +51,7 @@ import profile from '../assets/images/profile.jpg';
           You can change your existing photo here. Same photo will reflect
           thorughout the Arogya - Telemedicine Application.
         </p>
-        <form class="edit-user-profile-photo-form" name="edit_user_profile_photo_form"
+        <form className="edit-user-profile-photo-form" name="edit_user_profile_photo_form"
           id="edit_user_profile_photo_form">
           <div className="row">
             <div className="col-12">
@@ -27,6 +62,56 @@ import profile from '../assets/images/profile.jpg';
                       <img src={profile} alt="" />
                     </div>
                   </div>
+
+                  <div className="col-12">
+                    <div className="container" style={{ width: "250px", height: "250px" }}>
+                      <div className="crop-container">
+                        <Cropper
+                          image={image}
+                          crop={crop}
+                          rotation={rotation}
+                          zoom={zoom}
+                          zoomSpeed={4}
+                          maxZoom={3}
+                          zoomWithScroll={true}
+                          showGrid={true}
+                          aspect={aspectRatio}
+                          onCropChange={setCrop}
+                          onCropComplete={onCropComplete}
+                          onZoomChange={setZoom}
+                          onRotationChange={setRotation}
+                        />
+                      </div>
+                    </div>
+                    <div className="controls">
+                      <label>
+                        Rotate
+                        <Slider
+                          value={rotation}
+                          min={0}
+                          max={360}
+                          step={1}
+                          aria-labelledby="rotate"
+                          onChange={(e, rotation) => setRotation(rotation)}
+                          className="range"
+                        />
+                      </label>
+                      <label>
+                        Zoom
+                        <Slider
+                          value={zoom}
+                          min={1}
+                          max={3}
+                          step={0.1}
+                          aria-labelledby="zoom"
+                          onChange={(e, zoom) => setZoom(zoom)}
+                          className="range"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
 
@@ -35,10 +120,7 @@ import profile from '../assets/images/profile.jpg';
                   className="btn btn-primary primary-bg-color border-0 mx-2">
                   Update Photo
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-primary primary-bg-color border-0 mx-2"
-                >
+                <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">
                   Cancel
                 </button>
               </div>
