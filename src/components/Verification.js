@@ -95,11 +95,10 @@ function Verification(){
   }
 
   return(
-    <>
       <div className='container'>
         <div className='login-container'>
           <div className='mt-3'> 
-            <Link to="/"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
+            <Link to="/forgotpassword"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
             <span className='m-2'>Verification</span>
           </div>
           <div className='login-box verification'>
@@ -119,9 +118,6 @@ function Verification(){
           </div>
         </div>
       </div>
-      
-
-    </>
   );
 
 }

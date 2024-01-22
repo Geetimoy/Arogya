@@ -105,7 +105,7 @@ function ForgotPassword(){
       <div className='login-container'>
         <div className='mt-3'> 
           <Link to="/login"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
-          <span className='m-2'>Change Password</span>
+          <span className='m-2'>Forgot Password</span>
         </div>
         <div className='login-box change-password'>
           <img src={systemContext.systemDetails.thp_app_logo_url} className="mb-3" alt={systemContext.systemDetails.thp_system_name} />

@@ -9,6 +9,7 @@ import ProfilePhoto from './ProfilePhoto';
 import ChangePassword from './ChangePassword';
 import BasicInformation from './BasicInformation';
 import Verification from './Verification';
+import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SignUp from './SignUp';
 import Services from './Services';
@@ -31,7 +32,7 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  // const domainName = 'telehealth.serviceplace.org.in';
+   //const domainName = 'ukhra.serviceplace.org.in';
   // const domainName = 'b2h.serviceplace.org.in';
   // const domainName = 'rgvn.serviceplace.org.in';
   const domainName = 'telehealth.serviceplace.org.in';
@@ -118,27 +119,32 @@ export default function Core() {
 
   const [domain, setDomain] = useState('');
   const [primaryColor, setPrimaryColor] = useState('#2aa142'); // Default color
+  const [primaryBgColor, setPrimaryBgColor] = useState('#2aa142'); 
 
   // Function to get the current domain
   const getCurrentDomain = () => {
-    const currentDomain = window.location.hostname;
-    setDomain(currentDomain);
+  const currentDomain = window.location.hostname;
+  setDomain(currentDomain);
   };
 
   // Function to set the primary color based on the domain
-  const setPrimaryColorByDomain = () => {
+  const setColorByDomain = () => {
     switch (domain) {
       case 'telehealth.serviceplace.org.in':
         setPrimaryColor('#2aa142');
+        setPrimaryBgColor('#2aa142');
         break;
       case 'ukhra.serviceplace.org.in':
         setPrimaryColor('#f79645');
+        setPrimaryBgColor('#f79645');
         break;
       case 'rgvn.serviceplace.org.in':
         setPrimaryColor('#2aa142');
+        setPrimaryBgColor('#2aa142');
         break;
       case 'b2h.serviceplace.org.in':
-        setPrimaryColor('#c00000');
+        setPrimaryColor('#c10000');
+        setPrimaryBgColor('#c10000');
         break;
       default:
         setPrimaryColor('#2aa142'); // Default color: black
@@ -149,9 +155,26 @@ export default function Core() {
   // Effect to get the current domain and set the primary color
   useEffect(() => {
     getCurrentDomain();
-    setPrimaryColorByDomain();
-    // eslint-disable-next-line
+    setColorByDomain();
+   // eslint-disable-next-line
   }, [domain]);
+
+  // useEffect(() => {
+  //   // Function to fetch color dynamically based on the domain
+  //   const fetchColorPreference = async () => {
+  //     try {
+  //       // Replace 'example.com' with the actual domain or extract it from window.location
+  //       //const domain = 'ukhra.serviceplace.org.in';
+  //       const response = await fetch(`${API_URL}/appCoreSettings`);
+  //       const data = await response.json();
+  //       setPrimaryBgColor(data.color);
+  //     } catch (error) {
+  //       console.error('Failed to fetch color preference:', error);
+  //     }
+  //   };
+
+  //   fetchColorPreference();
+  // }, []); // Run once when the component mounts
   
   //console.log(systemContext.systemDetails);
 
@@ -190,6 +213,7 @@ export default function Core() {
             <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
             <Route path="/Verification/:loginId" exact element={<Verification />} />
             <Route path="/Verification" exact element={<Verification />} />
+            <Route path="/ResetPassword" exact element={<ResetPassword />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
           </Routes>
         }
