@@ -13,7 +13,7 @@ import { useContext } from 'react';
 function Landing() {
   const systemContext = useContext(SystemContext);
 
-  console.log(systemContext.systemDetails.thp_system_colors);
+  //console.log(systemContext.systemDetails.thp_system_colors);
 
   return(
     <div className='splash-container'>

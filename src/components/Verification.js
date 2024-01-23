@@ -64,7 +64,7 @@ function Verification(){
     else{
 
       var otp = formData['digit1'].value+''+formData['digit2'].value+''+formData['digit3'].value+''+formData['digit4'].value;
-      var otp = parseInt(otp);
+      otp = parseInt(otp);
 
       let jsonData = {};
 
