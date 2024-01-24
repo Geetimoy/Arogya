@@ -18,10 +18,12 @@ body {
 
 .primary-color {
     color: #31b44c!important;
+    /* color: var(--base-a-text-fg)!important; */
 }
 
 .primary-bg-color {
     background-color: #31b44c!important;
+    /* background-color:var(--base-a-bg)!important; */
 }
 
 .primary-bg-color:hover,
@@ -86,4 +88,161 @@ body {
 .form-error select {
     color: #ff0000;
     border: 1px solid #ff0000;
+}
+
+.serviceplace-container-class .primary-color{
+    color: #01aef0!important; 
+}
+
+.serviceplace-container-class .primary-bg-color {
+    background-color: #01aef0!important;
+}
+
+.serviceplace-container-class .primary-bg-color:hover,
+.serviceplace-container-class .primary-bg-color:active {
+    background-color: #009fdc!important;
+}
+
+.serviceplace-container-class .btn-outline-info{
+    color: #009fdc;
+    border-color: #009fdc;
+}
+
+.serviceplace-container-class .btn-outline-info:hover{
+    background-color: #009fdc;
+    border: 1px solid #009fdc;
+}
+
+.serviceplace-container-class .btn:first-child:active,
+.serviceplace-container-class :not(.btn-check)+.btn:active{
+    background-color: #009fdc;
+    border: 1px solid #009fdc;
+}
+
+
+
+
+.telehealth-container-class .primary-color{
+    color: #2aa142!important; 
+}
+
+.telehealth-container-class .primary-bg-color {
+    background-color: #2aa142!important;
+}
+
+.telehealth-container-class .primary-bg-color:hover,
+.telehealth-container-class .primary-bg-color:active {
+    background-color: #2aa142!important;
+}
+
+.telehealth-container-class .btn-outline-info{
+    color: #2aa142;
+    border-color: #2aa142;
+}
+
+.telehealth-container-class .btn-outline-info:hover{
+    background-color: #2aa142;
+    border: 1px solid #2aa142;
+}
+
+.telehealth-container-class .btn:first-child:active,
+.telehealth-container-class :not(.btn-check)+.btn:active{
+    background-color: #2aa142;
+    border: 1px solid #2aa142;
+}
+
+
+
+
+.ukhra-container-class .primary-color{
+    color: #f79645!important; 
+}
+
+.ukhra-container-class .primary-bg-color {
+    background-color: #f79645!important;
+}
+
+.ukhra-container-class .primary-bg-color:hover,
+.ukhra-container-class .primary-bg-color:active {
+    background-color: #f38529!important;
+}
+
+.ukhra-container-class .btn-outline-info{
+    color: #f38529;
+    border-color: #f38529;
+}
+
+.ukhra-container-class .btn-outline-info:hover{
+    background-color: #f38529;
+    border: 1px solid #f38529;
+}
+
+.ukhra-container-class .btn:first-child:active,
+.ukhra-container-class :not(.btn-check)+.btn:active{
+    background-color: #f38529;
+    border: 1px solid #f38529;
+}
+
+
+
+.rgvn-container-class .primary-color{
+    color: #2aa142!important; 
+}
+
+.rgvn-container-class .primary-bg-color {
+    background-color: #2aa142!important;
+}
+
+.rgvn-container-class .primary-bg-color:hover,
+.rgvn-container-class .primary-bg-color:active {
+    background-color: #2aa142!important;
+}
+
+.rgvn-container-class .btn-outline-info{
+    color: #2aa142;
+    border-color: #2aa142;
+}
+
+.rgvn-container-class .btn-outline-info:hover{
+    background-color: #2aa142;
+    border: 1px solid #2aa142;
+}
+
+.rgvn-container-class .btn:first-child:active,
+.rgvn-container-class :not(.btn-check)+.btn:active{
+    background-color: #2aa142;
+    border: 1px solid #2aa142;
+}
+
+
+
+
+
+.b2h-container-class .primary-color{
+    color: #c10000!important; 
+}
+
+.b2h-container-class .primary-bg-color {
+    background-color: #c10000!important;
+}
+
+.b2h-container-class .primary-bg-color:hover,
+.b2h-container-class .primary-bg-color:active {
+    background-color: #a30707!important;
+}
+
+.b2h-container-class .btn-outline-info{
+    color: #a30707;
+    border-color: #a30707;
+}
+
+.b2h-container-class .btn-outline-info:hover{
+    background-color: #a30707;
+    border: 1px solid #a30707;
+}
+
+.b2h-container-class .btn:first-child:active,
+.b2h-container-class :not(.btn-check)+.btn:active{
+    background-color: #a30707;
+    border: 1px solid #a30707;
 }

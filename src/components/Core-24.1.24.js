@@ -32,10 +32,10 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  //const domainName = 'ukhra.serviceplace.org.in';
+  const domainName = 'ukhra.serviceplace.org.in';
   // const domainName = 'b2h.serviceplace.org.in';
   // const domainName = 'rgvn.serviceplace.org.in';
-  const domainName = 'telehealth.serviceplace.org.in';
+  //const domainName = 'telehealth.serviceplace.org.in';
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
@@ -138,7 +138,7 @@ export default function Core() {
         break;
       case 'ukhra.serviceplace.org.in':
         setPrimaryColor('#f79645');
-        setPrimaryBgColor('#f79645');
+        setPrimaryBgColor('#2aa142');
         break;
       case 'rgvn.serviceplace.org.in':
         setPrimaryColor('#2aa142');
@@ -184,7 +184,7 @@ export default function Core() {
 
   return (
     <BrowserRouter>
-      <div className='container-fluids serviceplace-container-class'>
+      <div className='container-fluids'>
         {alertContext.alertMessage.show && <Alert type={alertContext.alertMessage.type} message={alertContext.alertMessage.message}/>}
         {
           (isLoggedIn === true) && <Routes>

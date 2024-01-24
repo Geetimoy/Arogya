@@ -177,18 +177,12 @@ function LogIn(props) {
               <small className="error-mesg">{errorMessage.userpassword}</small>
             </div>
             <p className="text-center link-red">
-              {/* <Link to="/forgotpassword"  style={{color:`${props.colorname}`}}>
-                Forgot Password?
-              </Link> */}
-              <Link to="/forgotpassword"  className="primary-color">
+              <Link to="/forgotpassword"  style={{color:`${props.colorname}`}}>
                 Forgot Password?
               </Link>
             </p>
             <div className="text-center mb-4">
-              {/* <button type="submit" className="btn text-light w-100" style={{backgroundColor:`${props.bgcolor}`}}>
-                Login
-              </button> */}
-              <button type="submit" className="btn text-light w-100 primary-bg-color">
+              <button type="submit" className="btn text-light w-100" style={{backgroundColor:`${props.bgcolor}`}}>
                 Login
               </button>
             </div>
