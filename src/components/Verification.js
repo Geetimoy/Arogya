@@ -40,6 +40,17 @@ function Verification(){
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({...formData, [name]: {...formData[name], value:value}});
+    var inputIndex = parseInt(name.replace("digit", ""));
+    if(value != ''){
+      if(document.querySelector(`input[name=digit${inputIndex + 1}]`)){
+        document.querySelector(`input[name=digit${inputIndex + 1}]`).focus();
+      }
+    }
+    else{
+      if(document.querySelector(`input[name=digit${inputIndex - 1}]`)){
+        document.querySelector(`input[name=digit${inputIndex - 1}]`).focus();
+      }
+    }
   }
 
   const validateForm = () => {
@@ -87,6 +98,9 @@ function Verification(){
       
       if (result.success) {
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setTimeout(() => {
+          redirect('/ResetPassword/'+urlParam.loginId);
+        }, 3000);
       } 
       else {
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
