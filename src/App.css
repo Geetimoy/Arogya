@@ -17,18 +17,18 @@ body {
 }
 
 .primary-color {
-    color: #31b44c!important;
+    color: #31b44c;
     /* color: var(--base-a-text-fg)!important; */
 }
 
 .primary-bg-color {
-    background-color: #31b44c!important;
+    background-color: #31b44c;
     /* background-color:var(--base-a-bg)!important; */
 }
 
 .primary-bg-color:hover,
 .primary-bg-color:active {
-    background-color: #2aa142!important;
+    background-color: #2aa142;
 }
 
 .btn-outline-info{
@@ -123,16 +123,16 @@ body {
 
 
 .telehealth-container-class .primary-color{
-    color: #2aa142!important; 
+    color: #2aa142; 
 }
 
 .telehealth-container-class .primary-bg-color {
-    background-color: #2aa142!important;
+    background-color: #2aa142;
 }
 
 .telehealth-container-class .primary-bg-color:hover,
 .telehealth-container-class .primary-bg-color:active {
-    background-color: #2aa142!important;
+    background-color: #2aa142;
 }
 
 .telehealth-container-class .btn-outline-info{
@@ -155,16 +155,16 @@ body {
 
 
 .ukhra-container-class .primary-color{
-    color: #f79645!important; 
+    color: #f79645; 
 }
 
 .ukhra-container-class .primary-bg-color {
-    background-color: #f79645!important;
+    background-color: #f79645;
 }
 
 .ukhra-container-class .primary-bg-color:hover,
 .ukhra-container-class .primary-bg-color:active {
-    background-color: #f38529!important;
+    background-color: #f38529;
 }
 
 .ukhra-container-class .btn-outline-info{
@@ -186,16 +186,16 @@ body {
 
 
 .rgvn-container-class .primary-color{
-    color: #2aa142!important; 
+    color: #2aa142; 
 }
 
 .rgvn-container-class .primary-bg-color {
-    background-color: #2aa142!important;
+    background-color: #2aa142;
 }
 
 .rgvn-container-class .primary-bg-color:hover,
 .rgvn-container-class .primary-bg-color:active {
-    background-color: #2aa142!important;
+    background-color: #2aa142;
 }
 
 .rgvn-container-class .btn-outline-info{
@@ -219,16 +219,16 @@ body {
 
 
 .b2h-container-class .primary-color{
-    color: #c10000!important; 
+    color: #c10000; 
 }
 
 .b2h-container-class .primary-bg-color {
-    background-color: #c10000!important;
+    background-color: #c10000;
 }
 
 .b2h-container-class .primary-bg-color:hover,
 .b2h-container-class .primary-bg-color:active {
-    background-color: #a30707!important;
+    background-color: #a30707;
 }
 
 .b2h-container-class .btn-outline-info{

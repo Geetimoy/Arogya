@@ -180,6 +180,26 @@ export default function Core() {
   
   //console.log(systemContext.systemDetails);
 
+
+  // Add class on parent div based on Domain
+  var parentDiv = document.querySelector('.container-fluids');
+
+  if (parentDiv){
+      // Check if the domain matches a specific condition
+      if (domainName === "telehealth.serviceplace.org.in") {
+        parentDiv.classList.add('serviceplace-container-class');
+      } else if (domainName === "b2h.serviceplace.org.in") {
+        parentDiv.classList.add('b2h-container-class');
+      } else if (domainName === "rgvn.serviceplace.org.in"){
+        parentDiv.classList.add('rgvn-container-class');
+      } else if (domainName === "ukhra.serviceplace.org.in"){
+        parentDiv.classList.add('ukhra-container-class');
+      } 
+  } else {
+    console.error("Parent div not found!");
+}
+  
+
   const isLoggedIn = loginContext.loginState.is_logged_in;
 
   useEffect(()=>{
@@ -188,7 +208,7 @@ export default function Core() {
 
   return (
     <BrowserRouter>
-      <div className='container-fluids serviceplace-container-class'>
+      <div className='container-fluids'>
         {alertContext.alertMessage.show && <Alert type={alertContext.alertMessage.type} message={alertContext.alertMessage.message}/>}
         {
           (isLoggedIn === true) && <Routes>
