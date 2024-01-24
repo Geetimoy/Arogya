@@ -182,6 +182,10 @@ export default function Core() {
 
   const isLoggedIn = loginContext.loginState.is_logged_in;
 
+  useEffect(()=>{
+    console.log(systemContext.systemDetails.thp_system_colors);
+  }, [])
+
   return (
     <BrowserRouter>
       <div className='container-fluids serviceplace-container-class'>
