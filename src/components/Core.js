@@ -22,6 +22,7 @@ import AboutBorn2Help from './AboutBorn2Help';
 import Feedback from './Feedback';
 import Help from './Help';
 import Logout from './Logout';
+import AboutNgo from './AboutNgo';
 import ContactAdmin from './ContactAdmin';
 import LoginContext from '../context/login/LoginContext';
 import AlertContext from '../context/alert/AlertContext';
@@ -32,10 +33,10 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  //const domainName = 'ukhra.serviceplace.org.in';
+  const domainName = 'ukhra.serviceplace.org.in';
   // const domainName = 'b2h.serviceplace.org.in';
   // const domainName = 'rgvn.serviceplace.org.in';
-  const domainName = 'telehealth.serviceplace.org.in';
+  //const domainName = 'telehealth.serviceplace.org.in';
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
@@ -221,6 +222,7 @@ export default function Core() {
             <Route path="/Notifications" exact element={<Notifications />} />
             <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />
             <Route path="/AboutBorn2Help" exact element={<AboutBorn2Help />} />
+            <Route path="/About-Ngo" exact element={<AboutNgo />} />
             <Route path="/Offers" exact element={<Feedback />} />
             <Route path="/Help" exact element={<Help />} />
             <Route exact path="/logout" element={<Logout/>}></Route>
