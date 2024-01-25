@@ -181,26 +181,21 @@ export default function Core() {
   
   //console.log(systemContext.systemDetails);
 
+  var containerClass = "serviceplace-container-class";
 
-  // Add class on parent div based on Domain
-  var parentDiv = document.querySelector('.container-fluids');
-
-  if (parentDiv){
-      // Check if the domain matches a specific condition
-      if (domainName === "telehealth.serviceplace.org.in") {
-        parentDiv.classList.add('serviceplace-container-class');
-      } else if (domainName === "b2h.serviceplace.org.in") {
-        parentDiv.classList.add('b2h-container-class');
-      } else if (domainName === "rgvn.serviceplace.org.in"){
-        parentDiv.classList.add('rgvn-container-class');
-      } else if (domainName === "ukhra.serviceplace.org.in"){
-        parentDiv.classList.add('ukhra-container-class');
-      } 
-  } else {
-    console.error("Parent div not found!");
-}
+  if (domainName === "telehealth.serviceplace.org.in") {
+    containerClass = 'serviceplace-container-class';
+  } 
+  else if (domainName === "b2h.serviceplace.org.in") {
+    containerClass = 'b2h-container-class';
+  } 
+  else if (domainName === "rgvn.serviceplace.org.in"){
+    containerClass = 'rgvn-container-class';
+  } 
+  else if (domainName === "ukhra.serviceplace.org.in"){
+    containerClass = 'ukhra-container-class';
+  } 
   
-
   const isLoggedIn = loginContext.loginState.is_logged_in;
 
   useEffect(()=>{
@@ -209,7 +204,7 @@ export default function Core() {
 
   return (
     <BrowserRouter>
-      <div className='container-fluids'>
+      <div className={`container-fluids ${containerClass}`}>
         {alertContext.alertMessage.show && <Alert type={alertContext.alertMessage.type} message={alertContext.alertMessage.message}/>}
         {
           (isLoggedIn === true) && <Routes>
@@ -241,7 +236,7 @@ export default function Core() {
             <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
             <Route path="/Verification/:loginId" exact element={<Verification />} />
             <Route path="/Verification" exact element={<Verification />} />
-            <Route path="/ResetPassword" exact element={<ResetPassword />} />
+            <Route path="/ResetPassword/:loginId" exact element={<ResetPassword />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
           </Routes>
         }
