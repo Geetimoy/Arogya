@@ -29,6 +29,7 @@ import AlertContext from '../context/alert/AlertContext';
 import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
+import SignUpVerification from './SignUpVerification';
 
 export default function Core() {
 
@@ -235,7 +236,7 @@ export default function Core() {
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
             <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
             <Route path="/Verification/:loginId" exact element={<Verification />} />
-            <Route path="/Verification" exact element={<Verification />} />
+            <Route path="/Signup-Verification/:loginId" exact element={<SignUpVerification />} />
             <Route path="/ResetPassword/:loginId" exact element={<ResetPassword />} />
             <Route path="*" element={<Navigate to="/"/>}></Route>
           </Routes>
