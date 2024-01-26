@@ -7,7 +7,7 @@ import { faLongArrowAltLeft, faEye, faQuestionCircle, faKey, faEyeSlash } from '
 //import serviceplace from "../assets/images/serviceplace-logo.png";
 //import footerlogo from "../assets/images/rgvn-logo.png";
 
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 import AlertContext from "../context/alert/AlertContext";
 import { useContext, useState } from 'react';
@@ -18,6 +18,8 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 
 function SignUp(){
+
+  const redirect = useNavigate();
 
   const systemContext = useContext(SystemContext);
   const alertContext = useContext(AlertContext);
@@ -135,6 +137,9 @@ function SignUp(){
       if(result.success){
         resetForm();
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setTimeout(() => {
+          redirect('/Signup-Verification/'+formData['userId'].value);
+        }, 3000);
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
