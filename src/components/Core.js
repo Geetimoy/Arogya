@@ -33,10 +33,10 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'ukhra.serviceplace.org.in';
+  //const domainName = 'ukhra.serviceplace.org.in';
   // const domainName = 'b2h.serviceplace.org.in';
   // const domainName = 'rgvn.serviceplace.org.in';
-  //const domainName = 'telehealth.serviceplace.org.in';
+  const domainName = 'telehealth.serviceplace.org.in';
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
