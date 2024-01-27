@@ -114,7 +114,7 @@ function TermsCondition (){
               <p>Assignment. You may not assign your rights and obligations under this Agreement to anyone. RGVN may assign its rights and obligations under this Agreement in its sole discretion and without advance notice to you.
                 BY USING THIS WEBSITE OR ORDERING PRODUCTS FROM THIS WEBSITE YOU AGREE 
                 TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p>
-              <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
+              <p className='text-center'>&copy; {(new Date().getFullYear())} rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
               <div className="text-center login-logo w-100">
               <Link to="https://www.serviceplace.org/" target='_blank'><img
                 src={systemContext.systemDetails.thp_ngo_logo_url}

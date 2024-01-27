@@ -99,13 +99,26 @@ function SignUp(){
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleChange1 = (values) => {
+    console.log(values);
+    var selectedArea = [];
+    if(values.length > 0){
+      values.forEach((item, index) => {
+        selectedArea.push(item.value);
+      })
+    }
+    if(selectedArea.length > 0){
+      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
     setSelectedOptions(values);
   };
 
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let errorCounter = validateForm(); console.log(errorCounter);
+    let errorCounter = validateForm();
     if(errorCounter > 0){
       return false;
     }
@@ -197,20 +210,20 @@ function SignUp(){
               <div className='icon-font' onClick={changePasswordType}><FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} /></div>
               <small className="error-mesg">{formData["userPassword"].errorMessage}</small>
             </div>
-            <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
+            {/* <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
               <label htmlFor="userServiceArea"> Area <span className='text-danger'> *</span></label>
               <select className="form-control" id="userServiceArea" multiple name="userServiceArea" onChange={handleChange} defaultValue={formData["userServiceArea"].value}>
-                {/* <option value="">Select</option> */}
                 <option selected value="1">Guwahati Zoo,Fancy bazar</option>
                 <option value="2">Navagraha Temple, Guwahati</option>
                 <option value="3">Umananda Temple, Guwahati</option>
                 <option value="4">Morigaon</option>
               </select>
               <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
-            </div>
-            <div className='form-group'>
+            </div> */}
+            <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
               <label>Area <span className='text-danger'> *</span></label>
               <Dropdown className='form-control' multi options={options} values={selectedOptions} onChange={handleChange1} />
+              <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
             </div>
             
 
@@ -242,7 +255,7 @@ function SignUp(){
                 Contact Admin
               </Link>
             </p>
-            <p className='text-center'>&copy; 2024 {systemContext.systemDetails.thp_domain_name}. Powered by <Link to={systemContext.systemDetails.thp_main_ngo_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_system_name}</Link></p>
+            <p className='text-center'>&copy; {(new Date().getFullYear())} {systemContext.systemDetails.thp_domain_name}. Powered by <Link to={systemContext.systemDetails.thp_main_ngo_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_system_name}</Link></p>
             <div className="text-center login-logo">
               <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img
                 src={systemContext.systemDetails.thp_ngo_logo_url}

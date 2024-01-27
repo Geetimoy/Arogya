@@ -100,7 +100,7 @@ function Disclaimer(){
                 Sign Up
               </Link>
             </p>
-            <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
+            <p className='text-center'>&copy; {(new Date().getFullYear())} rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
             <div className="text-center login-logo">
             <Link to="https://www.serviceplace.org/" target='_blank'><img
                 src={systemContext.systemDetails.thp_ngo_logo_url}
