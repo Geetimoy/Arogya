@@ -2,8 +2,8 @@ import Appfooter from './AppFooter';
 import AppTop from './AppTop';
 import './Notifications.css';
 
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+//import Tab from 'react-bootstrap/Tab';
+//import Tabs from 'react-bootstrap/Tabs';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd, faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
