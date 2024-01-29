@@ -117,7 +117,7 @@ function Verification(){
           </div>
           <div className='login-box verification'>
             <h5 className='title'>Verify Code</h5>
-            <p>Kindly Enter the 4 digit verification code</p>
+            <p>Kindly enter the 4 digit verification code</p>
             <form onSubmit={handleFormSubmit}>
               <div className='d-flex justify-content-around'>
                 <input type="text" maxLength="1" name="digit1" id="digit1" onChange={handleChange} value={formData["digit1"].value}/>

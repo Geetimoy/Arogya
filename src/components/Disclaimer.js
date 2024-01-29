@@ -3,6 +3,8 @@ import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
 //import logotelehealth from "../assets/images/rgvn-telehealth-logo.png";
 
+import './Disclaimer.css'
+
 import { Link } from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 import { useContext, useState, useEffect } from 'react';
@@ -15,13 +17,16 @@ function Disclaimer(){
   const [data, setData] = useState({page_content:'', page_title:''});
 
   let jsonData = {};
-      jsonData['system_id']             = systemContext.systemDetails.system_id;
+      //jsonData['system_id']             = systemContext.systemDetails.system_id;
       jsonData['device_type']           = DEVICE_TOKEN;
       jsonData['device_token']          = DEVICE_TYPE;
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
-      jsonData["page_key"] = localStorage.getItem('page_key');
-      //jsonData["system_id"] = "telehealth.serviceplace.org.in";
+
+      //jsonData["page_key"] = localStorage.getItem('page_key');
+
+      jsonData["page_key"] = "SEVAA_UKHRA_DISCLAIMER";
+      jsonData["system_id"] = "ukhra.serviceplace.org.in";
 
       useEffect(() => {
         const fetchData = async () => {
@@ -62,8 +67,8 @@ function Disclaimer(){
         <div className='login-box disclaimer'>
           {/* <img src={logotelehealth} className="mb-3" alt="logo" /> */}
           <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />
-          <p><strong>Community-based TeleHealth Information Release</strong></p>
-          <ul className='px-1'>
+          {/* <p><strong>Community-based TeleHealth Information Release</strong></p> */}
+          {/* <ul className='px-1'>
             <li className='d-flex mb-2'>
               <input tabindex="-1" id="disclaimer_check1" className="form-check-input" type="checkbox" />
               <label for="disclaimer_check1" className="form-check-label mx-2">I have read and agree to all of the points listed below.</label>
@@ -84,10 +89,12 @@ function Disclaimer(){
               <input tabindex="-5" id="disclaimer_check5" className="form-check-input" type="checkbox" />
               <label for="disclaimer_check5" className="form-check-label mx-2">I agree to urgent medical transportation if needed, using whatever means available, even if an ambulance is not available for timely medical action.</label>
             </li>
-          </ul>
-          <div className='mb-3 mt-3 w-100'>
+          </ul> */}
+          <h5 className='title'>{data.page_title}</h5>
+          <p dangerouslySetInnerHTML={{ __html: data.page_content }}></p>
+          {/* <div className='mb-3 mt-3 w-100'>
             <button type="submit" className='btn primary-bg-color text-light w-100'>Yes I agree</button>
-          </div>
+          </div> */}
           <p className="text-center link-red mb-3">
               Already have an account ?
               <Link to="/login" className="primary-color mx-1">

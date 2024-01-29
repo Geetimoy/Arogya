@@ -19,7 +19,7 @@ function ContactAdmin(){
       <div className='login-container'>
         <div className='mt-3'> 
           <Link to="/login"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
-          <span className='m-2'>Contact Administrator</span>
+          <span className='m-2'>Contact Admin</span>
         </div>
         <div className='login-box contact-admin'>
           <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />

@@ -18,14 +18,15 @@ function TermsCondition (){
   const [data, setData] = useState({page_content:'', page_title:''});
 
   let jsonData = {};
-      jsonData['system_id']             = systemContext.systemDetails.system_id;
+      // jsonData['system_id']             = systemContext.systemDetails.system_id;
       jsonData['device_type']           = DEVICE_TOKEN;
       jsonData['device_token']          = DEVICE_TYPE;
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
 
-      jsonData["page_key"] = localStorage.getItem('page_key');
-      //jsonData["system_id"] = "telehealth.serviceplace.org.in";
+      // jsonData["page_key"] = localStorage.getItem('page_key');
+      jsonData["page_key"] = "SEVAA_UKHRA_TERMS_OF_USE";
+      jsonData["system_id"] = "ukhra.serviceplace.org.in";
 
       useEffect(() => {
         const fetchData = async () => {
@@ -67,9 +68,9 @@ function TermsCondition (){
           <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />
 
           <h5 className='title'>{data.page_title}</h5>
-
-          <p>LAST REVISION: 26-March-2023</p>
-          <p>PLEASE READ THIS TERMS OF USE AGREEMENT CAREFULLY. BY USING THIS WEBSITE OR MOBILE APP, YOU AGREE TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p>
+          <p dangerouslySetInnerHTML={{ __html: data.page_content }}></p>
+          {/* <p>LAST REVISION: 26-March-2023</p> */}
+          {/* <p>PLEASE READ THIS TERMS OF USE AGREEMENT CAREFULLY. BY USING THIS WEBSITE OR MOBILE APP, YOU AGREE TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p>
           <p>This Terms of Service Agreement (the "Agreement") governs your use of this website or the Mobile App, https://rgvn.serviceplace.org.in/telehealth/ (the "Website & App"), RGVN ("Business Name") offer of products for purchase on this Website, or your purchase of products available on this Website. This Agreement includes, and incorporates by this reference, the policies and guidelines referenced below. RGVN reserves the right to change or revise the terms and conditions of this Agreement at any time by posting any changes or a revised Agreement on this Website & App. RGVN will alert you that changes or revisions have been made by indicating on the top of this Agreement the date it was last revised. The changed or revised Agreement will be effective immediately after it is posted on this Website & App. Your use of the Website & App following the posting any such changes or of a revised Agreement will constitute your acceptance of any such changes or revisions. RGVN encourages you to review this Agreement whenever you visit the Website & App to make sure that you understand the terms and conditions governing use of the Website & App. This Agreement does not alter in any way the terms or conditions of any other written agreement you may have with RGVN for other products or services. If you do not agree to this Agreement (including any referenced policies or guidelines), please immediately terminate your use of the Website & App. If you would like to print this Agreement, please click the print button on your browser toolbar.</p>
           <p>I. PRODUCTS</p>
           <p>Terms of Offer. This Website &amp; App offers for sale certain products (the "Products"). By placing an order for Products through this Website &amp; App, you agree to the terms set forth in this Agreement. 
@@ -113,7 +114,7 @@ function TermsCondition (){
               <p>Domestic Use. RGVN makes no representation that the Website &amp; App or Products are appropriate or available for use in locations outside India. Users who access the Website &amp; App from outside India do so at their own risk and initiative and must bear all responsibility for compliance with any applicable local laws.</p>
               <p>Assignment. You may not assign your rights and obligations under this Agreement to anyone. RGVN may assign its rights and obligations under this Agreement in its sole discretion and without advance notice to you.
                 BY USING THIS WEBSITE OR ORDERING PRODUCTS FROM THIS WEBSITE YOU AGREE 
-                TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p>
+                TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p> */}
               <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
               <div className="text-center login-logo w-100">
               <Link to="https://www.serviceplace.org/" target='_blank'><img
