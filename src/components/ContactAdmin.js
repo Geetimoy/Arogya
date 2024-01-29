@@ -27,9 +27,9 @@ function ContactAdmin(){
           <div className='email-phone'><p className='text-left'><FontAwesomeIcon icon={faEnvelope} /> <strong>Email ID:</strong> <Link to="mailto:serviceplace@gmail.com" className='primary-color'> serviceplace@gmail.com</Link></p></div>
           <p><FontAwesomeIcon icon={faPhone} /> <strong>Mobile:</strong> <Link to="tel:9986269411" className='primary-color'>9986269411</Link></p>
           <p className='mt-4'>Back me to <Link to="/login" className="primary-color">login</Link> page or <Link to="/signup" className="primary-color">register</Link> page</p>
-          <p className='text-center'>&copy; 2024 {systemContext.systemDetails.thp_domain_name}. Powered by <Link to={systemContext.systemDetails.thp_main_ngo_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_system_name}</Link></p>
+          <p className='text-center'>&copy; {(new Date().getFullYear())} {systemContext.systemDetails.thp_domain_name}. {(systemContext.systemDetails.thp_system_id > 0) && <span>Powered by <Link to={systemContext.systemDetails.thp_main_ngo_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_system_name}</Link></span>}</p>
             <div className="text-center login-logo w-100">
-              <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
+              {(systemContext.systemDetails.thp_system_id > 0) && <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>}
               <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
             </div>
         </div>

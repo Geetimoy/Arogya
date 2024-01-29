@@ -41,7 +41,7 @@ function Verification(){
     const { name, value } = e.target;
     setFormData({...formData, [name]: {...formData[name], value:value}});
     var inputIndex = parseInt(name.replace("digit", ""));
-    if(value != ''){
+    if(value !== ''){
       if(document.querySelector(`input[name=digit${inputIndex + 1}]`)){
         document.querySelector(`input[name=digit${inputIndex + 1}]`).focus();
       }

@@ -114,21 +114,11 @@ function TermsCondition (){
               <p>Domestic Use. RGVN makes no representation that the Website &amp; App or Products are appropriate or available for use in locations outside India. Users who access the Website &amp; App from outside India do so at their own risk and initiative and must bear all responsibility for compliance with any applicable local laws.</p>
               <p>Assignment. You may not assign your rights and obligations under this Agreement to anyone. RGVN may assign its rights and obligations under this Agreement in its sole discretion and without advance notice to you.
                 BY USING THIS WEBSITE OR ORDERING PRODUCTS FROM THIS WEBSITE YOU AGREE 
-                TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p> */}
+                TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.</p>
               <p className='text-center'>&copy; 2024 rgvn.org. Powered by <Link to="https://www.serviceplace.org/" target="_blank" className="primary-color">ServicePlace.Org</Link></p>
               <div className="text-center login-logo w-100">
-              <Link to="https://www.serviceplace.org/" target='_blank'><img
-                src={systemContext.systemDetails.thp_ngo_logo_url}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt=""
-              /></Link>
-              <Link to="https://www.serviceplace.org/" target="_blank"><img
-                src={systemContext.systemDetails.thp_sp_global_logo_url}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt=""
-              /></Link>
+              {(systemContext.systemDetails.thp_system_id > 0) && <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>}
+              <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
             </div>
         </div>
       </div>
