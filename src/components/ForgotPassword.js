@@ -90,7 +90,7 @@ function ForgotPassword(){
       if (result.success) {
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
         setTimeout(() => {
-          redirect('/Verification/'+formData["userId"].value);
+          redirect('/verification/'+formData["userId"].value);
         }, 3000);
       } 
       else {

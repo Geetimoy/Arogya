@@ -241,7 +241,7 @@ function SignUp(){
               <button type="submit" className='btn primary-bg-color text-light w-100'>Register</button>
             </div>
             <div>
-              <p>By registering you read & agreed to the RGVN & ServicePlace <Link to ="/termscondition" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>
+              <p>By registering you read & agreed to the RGVN & ServicePlace <Link to ="/termsofuse" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>
             </div>
             <p className="text-center link-red mb-3">
               Already have an account ?

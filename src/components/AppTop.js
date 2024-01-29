@@ -6,7 +6,7 @@ import { ENCYPTION_KEY } from './util/Constants';
 import './AppTop.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
@@ -53,6 +53,7 @@ function AppTop(){
               <li><FontAwesomeIcon icon={faFemale} /> <Link to={"/janani"}>Janani</Link></li>
               <li><FontAwesomeIcon icon={faChild} /> <Link to={"/childmalnutrition"}>Child Malnutrition</Link></li>
               <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/apointments"}>Appointments</Link></li>
+              <li><FontAwesomeIcon icon={faSignOutAlt} /> <Link to={"/logout"}>Logout</Link></li>
             </ul>
           </div>
           <img src={systemContext.systemDetails.thp_app_logo_url} alt='' style={{height:'40px'}} className='mx-2' />
