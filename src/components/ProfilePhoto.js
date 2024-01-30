@@ -58,71 +58,75 @@ function ProfilePhoto(){
               <div className="mb-3">
                 <div className="row">
                   <div className="col-12">
-                    <div className="current-image">
+                    {/* <div className="current-image">
                       <img src={profile} alt="" />
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="container" style={{ width: "250px", height: "250px" }}>
-                      <div className="crop-container">
-                        <Cropper
-                          image={image}
-                          crop={crop}
-                          rotation={rotation}
-                          zoom={zoom}
-                          zoomSpeed={4}
-                          maxZoom={3}
-                          zoomWithScroll={true}
-                          showGrid={true}
-                          aspect={aspectRatio}
-                          onCropChange={setCrop}
-                          onCropComplete={onCropComplete}
-                          onZoomChange={setZoom}
-                          onRotationChange={setRotation}
-                        />
+                    </div> */}
+                    <div className="current-image">
+                      <div className="container" style={{ width: "150px", height: "150px" }}>
+                        <div className="crop-container">
+                          <Cropper
+                            image={image}
+                            crop={crop}
+                            rotation={rotation}
+                            zoom={zoom}
+                            zoomSpeed={4}
+                            maxZoom={3}
+                            zoomWithScroll={true}
+                            showGrid={true}
+                            aspect={aspectRatio}
+                            onCropChange={setCrop}
+                            onCropComplete={onCropComplete}
+                            onZoomChange={setZoom}
+                            onRotationChange={setRotation}
+                          />
+                        </div>
+                      </div>
+                      <div className="controls">
+                        <label>
+                          Rotate
+                          <Slider
+                            value={rotation}
+                            min={0}
+                            max={360}
+                            step={1}
+                            aria-labelledby="rotate"
+                            onChange={(e, rotation) => setRotation(rotation)}
+                            className="range"
+                          />
+                        </label>
+                        <label>
+                          Zoom
+                          <Slider
+                            value={zoom}
+                            min={1}
+                            max={3}
+                            step={0.1}
+                            aria-labelledby="zoom"
+                            onChange={(e, zoom) => setZoom(zoom)}
+                            className="range"
+                          />
+                        </label>
                       </div>
                     </div>
-                    <div className="controls">
-                      <label>
-                        Rotate
-                        <Slider
-                          value={rotation}
-                          min={0}
-                          max={360}
-                          step={1}
-                          aria-labelledby="rotate"
-                          onChange={(e, rotation) => setRotation(rotation)}
-                          className="range"
-                        />
-                      </label>
-                      <label>
-                        Zoom
-                        <Slider
-                          value={zoom}
-                          min={1}
-                          max={3}
-                          step={0.1}
-                          aria-labelledby="zoom"
-                          onChange={(e, zoom) => setZoom(zoom)}
-                          className="range"
-                        />
-                      </label>
+                    <div className="btns-group d-flex justify-content-center">
+                      <button type="button" id="edit_user_photo_form_submit" name="edit_user_photo_form_submit"
+                        className="btn btn-primary primary-bg-color border-0 mx-2" onClick={triggerInputFileCLick}>
+                        Update Photo
+                        <input
+                            type="file"
+                            ref={inputFileRef}
+                            name="cover"
+                            onChange={handleImageUpload}
+                            accept="img/*"
+                            style={{ display: "none" }}
+                          />
+                      </button>
+                      <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">
+                        Cancel
+                      </button>
                     </div>
                   </div>
-
-
                 </div>
-              </div>
-
-              <div className="btns-group d-flex justify-content-center">
-                <button type="button" id="edit_user_photo_form_submit" name="edit_user_photo_form_submit"
-                  className="btn btn-primary primary-bg-color border-0 mx-2">
-                  Update Photo
-                </button>
-                <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">
-                  Cancel
-                </button>
               </div>
             </div>
           </div>
