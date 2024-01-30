@@ -44,7 +44,7 @@ function Notifications(){
             Tab content for Others
           </Tab>
         </Tabs> */}
-        <div className='rounded jumbotron p-4 text-center'>
+        <div className='rounded jumbotron p-3 text-center'>
           <div className='notification-category d-flex justify-content-between'>
             <div>
               <span className='otp green'>***</span>
@@ -58,10 +58,10 @@ function Notifications(){
               <span className='otp black'><FontAwesomeIcon icon={faEnvelopeOpen} /></span>
               Others
             </div>
-            <div>
+            {/* <div>
               <span className='otp green'><FontAwesomeIcon icon={faEnvelopeOpen} /></span>
               Services
-            </div>
+            </div> */}
           </div>
         </div>
         <div className='notify-otp'>
