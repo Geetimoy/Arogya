@@ -23,6 +23,7 @@ import Feedback from './Feedback';
 import Help from './Help';
 import Logout from './Logout';
 import AboutNgo from './AboutNgo';
+import Settings from './Settings';
 import ContactAdmin from './ContactAdmin';
 import LoginContext from '../context/login/LoginContext';
 import AlertContext from '../context/alert/AlertContext';
@@ -222,6 +223,7 @@ export default function Core() {
             <Route path="/About-Ngo" exact element={<AboutNgo />} />
             <Route path="/Feedback" exact element={<Feedback />} />
             <Route path="/Help" exact element={<Help />} />
+            <Route path="/Settings" exact element={<Settings />} />
             <Route exact path="/logout" element={<Logout/>}></Route>
             <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="*" element={<Navigate to="/dashboard"/>}></Route>

@@ -12,6 +12,16 @@
   color: #fff;
 }
 
+.notification-category{
+  max-width: 345px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.notification-category>div{
+  min-width: 100px;
+}
+
 .green{
   background: #0f5203;
 }
@@ -22,4 +32,35 @@
 
 .black{
   background: #000;
+}
+
+.notify-otp .thumb img{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.notification-time{
+  color: #bdbdbd;
+  font-size: 13px;
+  font-weight: 600;
+  width: 55px;
+  margin-left: 20px;
+}
+
+.notification-category::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.notification-category::-webkit-scrollbar
+{
+	height: 3px;
+	background-color: #F5F5F5;
+}
+
+.notification-category::-webkit-scrollbar-thumb
+{
+	background-color: #5a5a5a;
 }

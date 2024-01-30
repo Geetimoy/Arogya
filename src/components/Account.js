@@ -28,7 +28,7 @@ function Account(){
               <li><FontAwesomeIcon icon={faInfoCircle} /> <Link to ="/basicinfo">Update Basic Information</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
               <li><FontAwesomeIcon icon={faImage} /> <Link to ="/profilephoto">Update Profile Photo</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>              
               <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/uploadcerificate">Upload Certificate</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
-              <li><FontAwesomeIcon icon={faBell} /> <Link to ="/notifications">Notifications</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
+              <li><FontAwesomeIcon icon={faBell} /> <Link to ="/settings">Settings</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
               <li><FontAwesomeIcon icon={faLock} /> <Link to ="/changepassword">Change Password</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
             </ul>
           </div>
