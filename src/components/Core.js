@@ -204,6 +204,7 @@ export default function Core() {
 
   useEffect(()=>{
     console.log(systemContext.systemDetails.thp_system_colors);
+    // eslint-disable-next-line
   }, [])
 
   return (

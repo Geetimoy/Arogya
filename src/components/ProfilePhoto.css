@@ -9,7 +9,7 @@
 }
 
 .btns-group button{
-  min-width: 123px;
+  min-width: 100px;
 }
 
 input[type="file"] {
@@ -57,8 +57,7 @@ input[type="file"] {
 } */
 
 .current-image{
-  width: 250px;
-  width: 250px;
+  width: 100%;
   padding: 2px;
   margin: 0 auto;
 }
@@ -94,7 +93,10 @@ input[type="file"] {
 .controls {
   display: flex;
   flex-direction: column;
-  /*width: 100%;*/
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
   /*position: absolute;*/
+  margin-top:20px;
   bottom: -15px;
 }

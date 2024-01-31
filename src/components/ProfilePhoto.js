@@ -41,6 +41,10 @@ function ProfilePhoto(){
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    
+  }
 
   return (
     <>
@@ -62,7 +66,7 @@ function ProfilePhoto(){
                       <img src={profile} alt="" />
                     </div> */}
                     <div className="current-image">
-                      <div className="container" style={{ width: "150px", height: "150px" }}>
+                      <div className="container" style={{ width: "300px", height: "300px" }}>
                         <div className="crop-container">
                           <Cropper
                             image={image}
@@ -110,8 +114,8 @@ function ProfilePhoto(){
                     </div>
                     <div className="btns-group d-flex justify-content-center">
                       <button type="button" id="edit_user_photo_form_submit" name="edit_user_photo_form_submit"
-                        className="btn btn-primary primary-bg-color border-0 mx-2" onClick={triggerInputFileCLick}>
-                        Update Photo
+                        className="btn btn-primary primary-bg-color border-0 mx-1" onClick={triggerInputFileCLick}>
+                        Upload
                         <input
                             type="file"
                             ref={inputFileRef}
@@ -121,7 +125,10 @@ function ProfilePhoto(){
                             style={{ display: "none" }}
                           />
                       </button>
-                      <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">
+                      <button type="button" className="btn btn-primary primary-bg-color border-0 mx-1" onClick={handleFormSubmit}>
+                        Save
+                      </button>
+                      <button type="button" className="btn btn-primary primary-bg-color border-0 mx-1">
                         Cancel
                       </button>
                     </div>
