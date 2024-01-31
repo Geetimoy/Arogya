@@ -10,6 +10,8 @@ import { useContext, useState } from "react";
 import CryptoJS from "crypto-js";
 import AlertContext from "../context/alert/AlertContext";
 
+import { Link } from "react-router-dom";
+
 function ChangePassword() {
 
   const alertContext = useContext(AlertContext);
@@ -149,7 +151,7 @@ function ChangePassword() {
           </div>
           <div className='btns-group d-flex justify-content-center'>
             <button type="submit" className="btn btn-primary primary-bg-color border-0 mx-2" onClick={handleFormSubmit}>Update Password</button>
-            <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2" onClick={resetForm}>Cancel</button>
+            <Link to="/account" className="btn btn-primary primary-bg-color border-0 mx-2 min-width-100">Cancel</Link>
           </div>
         </form>
       </div>

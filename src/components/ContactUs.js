@@ -2,11 +2,15 @@ import Appfooter from "./AppFooter";
 import AppTop from "./AppTop";
 
 import './ContactUs.css'
-
+import { useContext } from 'react';
+import SystemContext from "../context/system/SystemContext";
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function ContactUs(){
+
+  const systemContext = useContext(SystemContext);
+
   return(
     <>
       <AppTop></AppTop>
@@ -15,8 +19,8 @@ function ContactUs(){
         
         <p className="mb-0"><strong>Contact Person: </strong></p>
         <ul className="p-0">
-          <li>Contact Number: 9577793751</li>
-          <li>Contact Email: arindam.deka7@gmail.com</li>
+          <li>Contact Number: {systemContext.systemDetails.thp_ngo_contact_number}</li>
+          <li>Contact Email: {systemContext.systemDetails.thp_ngo_contact_email}</li>
         </ul>
         <h5 className="title">Create New Case / Issue / Problem</h5>
         <form className="contactus-form">

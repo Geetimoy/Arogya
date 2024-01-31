@@ -32,12 +32,12 @@ function Dashboard() {
             <img src={systemContext.systemDetails.thp_sp_global_logo_url} alt='' style={{height:'50px'}} />
           </div>
       </div>
-      <h4 className='mb-3'>Volunteer Abc</h4>
+      {/* <h4 className='mb-3'>Volunteer Abc</h4> */}
       <div className='red-box primary-bg-color'>
           <div className='d-flex align-items-center'>
             <FontAwesomeIcon icon={faPhone} />
             <div className='mx-3'>
-              <h6 className='mb-2'>Call Born2Help Arogya Office</h6>
+              <h6 className='mb-2'>Call {systemContext.systemDetails.thp_system_name} Office</h6>
               <p className='mb-0'>Give a call for any query</p>
             </div>
           </div>
@@ -46,7 +46,7 @@ function Dashboard() {
           <div className='d-flex align-items-center'>
           <FontAwesomeIcon icon={faEnvelope} />
             <div className='mx-3'>
-              <h6 className='mb-2'>Email Born2Help Arogya </h6>
+              <h6 className='mb-2'>Email {systemContext.systemDetails.thp_system_name} </h6>
               <p className='mb-0'>Send us a Email and we will get back to you within 2 days</p>
             </div>
           </div>
