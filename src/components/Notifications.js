@@ -8,8 +8,6 @@ import './Notifications.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd, faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 
-import  imagePlaceholder  from "../assets/images/profileplaceholder.jpg";
-
 
 //import logo from '../logo.png';
 
@@ -68,7 +66,7 @@ function Notifications(){
           <div className='rounded jumbotron p-3 mt-3 mb-3'>
             <div className='d-flex'> 
               <div className='thumb me-3'>
-                <img src={imagePlaceholder}  alt="" />
+                <img src='/assets/images/profileplaceholder.jpg'  alt="" />
               </div>
               <div>
                 <p className='mb-2'><strong>OTP for Registration verify at teleHealth- SEEVA UKHRA</strong></p>
@@ -82,7 +80,7 @@ function Notifications(){
           <div className='rounded jumbotron p-3 mt-3 mb-3'>
           <div className='d-flex'> 
               <div className='thumb me-3'>
-                <img src={imagePlaceholder}  alt="" />
+                <img src='/assets/images/profileplaceholder.jpg'  alt="" />
               </div>
               <div>
                 <p className='mb-2'><strong>Reminder: </strong></p>
@@ -98,7 +96,7 @@ function Notifications(){
           <div className='rounded jumbotron p-3 mt-3 mb-3'>
           <div className='d-flex'> 
               <div className='thumb me-3'>
-                <img src={imagePlaceholder}  alt="" />
+                <img src='/assets/images/profileplaceholder.jpg'  alt="" />
               </div>
               <div>
                 <p className='mb-2'><strong>OTP for Registration verify at teleHealth- SEEVA UKHRA</strong></p>

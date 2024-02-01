@@ -1,17 +1,23 @@
+import React, { useContext } from "react";
 import Appfooter from './AppFooter';
 import InnerAppTop from './InnerAppTop';
+import getCroppedImg from "../cropper/Crop";
 
 import Slider from "@mui/material/Slider";
 import Cropper from "react-easy-crop";
-//import getCroppedImg from '../cropper/Crop';
+import AlertContext from '../context/alert/AlertContext';
+import SystemContext from "../context/system/SystemContext";
 
 import './ProfilePhoto.css'
+import CryptoJS from "crypto-js";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
-import profile from '../assets/images/profile.jpg';
-import profileplaceholder from '../assets/images/profileplaceholder.jpg';
 import { useCallback, useRef, useState } from 'react';
  
 function ProfilePhoto(){
+
+  const alertContext  = useContext(AlertContext);
+  const systemContext = useContext(SystemContext);
 
   // For File Upload and Crop
   const inputFileRef = useRef(null);
@@ -20,7 +26,6 @@ function ProfilePhoto(){
   }
   
   const handleImageUpload = async (e) => {
-    //setImage(URL.createObjectURL(e.target.files[0]));
     const selectedFile = e.target.files[0];
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -31,7 +36,7 @@ function ProfilePhoto(){
   };
   const aspectRatio = 1;
   const [cropWidth, cropHeight] = [250, 250];
-  const [image, setImage] = useState(profileplaceholder);
+  const [image, setImage] = useState('/assets/images/profileplaceholder.jpg');
   const [crop, setCrop]   = useState({ x: 0, y: 0 });
   const [zoom, setZoom]   = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -43,7 +48,44 @@ function ProfilePhoto(){
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+    if(image.indexOf("profileplaceholder.jpg") >= 0){
+      alertContext.setAlertMessage({show:true, type: "error", message: "Please select a profile image!"});
+    }
+    else{
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+      let currentCroppedImage = await getCroppedImg(image, croppedAreaPixels, rotation, cropWidth, cropHeight);
+      let imageConfig = {
+        'crop_area': croppedAreaPixels,
+        'rotation': rotation,
+        'zoom': zoom,
+        'crop': crop
+      }
+      let jsonData = {};
+      jsonData['user_login_id']   = decryptedLoginDetails.login_id;
+      jsonData['device_type']     = DEVICE_TYPE;
+      jsonData['user_lat']        = localStorage.getItem('latitude');
+      jsonData['user_long']       = localStorage.getItem('longitude');
+      jsonData['device_token']    = DEVICE_TOKEN;
+      jsonData['source_image']     = image;
+      jsonData['cropped_image']    = currentCroppedImage;
+      jsonData['image_info']       = JSON.stringify(imageConfig);
+      //console.log(jsonData);return false;
+      const response = await fetch(`${API_URL}/profilePhotoSave`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      let result = await response.json();
+
+      if (result.success) {
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      } 
+      else {
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+    }
   }
 
   return (
