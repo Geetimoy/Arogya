@@ -26,3 +26,12 @@ span.close{
   margin-top: 12px;
   cursor: pointer;
 }
+
+.upload-certifiate h5{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.upload-certifiate h5+span{
+  font-size: 12px;
+}

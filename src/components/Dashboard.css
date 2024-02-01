@@ -30,4 +30,8 @@
   line-height: 18px;
 }
 
+ul.list-style li{
+  list-style: disc;
+}
+
 

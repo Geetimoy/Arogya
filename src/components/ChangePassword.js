@@ -1,5 +1,5 @@
 import Appfooter from "./AppFooter";
-import AppTop from "./AppTop";
+import InnerAppTop from "./InnerAppTop";
 
 import './ChangePassword.css'
 
@@ -126,7 +126,7 @@ function ChangePassword() {
 
   return(
     <>
-      <AppTop></AppTop>
+      <InnerAppTop></InnerAppTop>
       <div className='app-body login-box'>
         <h5 className="title">Change Password</h5>
         <p>You can change your existing password here. Same pasword you have to use to login from telemedicine mobile app.</p>

@@ -1,5 +1,5 @@
 import Appfooter from './AppFooter';
-import AppTop from './AppTop';
+import InnerAppTop from './InnerAppTop';
 
 import Slider from "@mui/material/Slider";
 import Cropper from "react-easy-crop";
@@ -48,7 +48,7 @@ function ProfilePhoto(){
 
   return (
     <>
-      <AppTop></AppTop>
+      <InnerAppTop></InnerAppTop>
       <div className="app-body profile-photo">
         <h5 className="title">Update Profile Photo</h5>
         <p>

@@ -1,5 +1,5 @@
 import Appfooter from "./AppFooter";
-import AppTop from "./AppTop";
+import InnerAppTop from "./InnerAppTop";
 
 import './BasicInformation.css'
 
@@ -9,7 +9,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 function BasicInformation(){
   return(
     <>
-      <AppTop></AppTop>
+      <InnerAppTop></InnerAppTop>
         <div className="app-body basic-info">
           <h5 className="title">Update Basic Information</h5>
           <p>To update your profile information</p>

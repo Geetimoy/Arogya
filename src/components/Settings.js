@@ -1,12 +1,12 @@
 import Appfooter from "./AppFooter";
-import AppTop from "./AppTop";
+import InnerAppTop from "./InnerAppTop";
 
 import './Settings.css';
 
 function Settings(){
   return(
     <>
-      <AppTop></AppTop>
+      <InnerAppTop></InnerAppTop>
       <div className="app-body settings">
           <h5 className='title brdr-btm'>Notifications</h5>
           <div className="mb-4">

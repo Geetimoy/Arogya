@@ -44,3 +44,11 @@
   right: -6px;
   color: #000;
 }
+
+.red-text{
+  color: #c00303;
+}
+
+.green-text{
+  color: rgb(0, 145, 55);
+}
