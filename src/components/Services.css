@@ -12,6 +12,7 @@
 .app-body .button-box img{
   font-size: 36px;
   margin-bottom: 10px;
+  min-height: 50px;
 }
 
 .button-box h6{

@@ -13,10 +13,27 @@ import AppTop from './AppTop';
 
 import SystemContext from "../context/system/SystemContext";
 
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+import banner1 from '../assets/images/banner1.jpg';
+import banner2 from '../assets/images/banner2.jpg';
+import banner3 from '../assets/images/banner3.jpg'
+
 function Dashboard() {
  
   const systemContext = useContext(SystemContext);
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    arrows:false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
    return(
     <>
@@ -59,6 +76,20 @@ function Dashboard() {
         <li>Nam tristique justo sed purus facilisis imperdiet.</li>
         <li>Ut ac dolor ac purus commodo dictum ut nec purus.</li>
         </ul>
+      </div>
+      <div className="banner">
+        <Slider {...settings}>
+          <div>
+            <img src={banner1} alt="" />
+          </div>
+          <div>
+            <img src={banner2} alt="" />
+          </div>
+          <div>
+            <img src={banner3} alt="" />
+          </div>
+          {/* Add more slides here */}
+        </Slider>
       </div>
     </div>
 
