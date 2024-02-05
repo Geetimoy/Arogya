@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 import Appfooter from "./AppFooter";
 import AppTop from "./AppTop";
 
@@ -6,6 +8,14 @@ import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md';
 import './Feedback.css'
 
 function Feedback(){
+
+  const [activeButton, setActiveButton] = useState(null);
+
+  const handleButtonClick = (buttonId) => {
+    setActiveButton(buttonId);
+  };
+
+
   return(
     <>
       <AppTop></AppTop>
@@ -20,11 +30,12 @@ function Feedback(){
               <div className="col-lg-12">
                 <div className="normal-box mt-2"><span className="mb-2">How easy was the app to use:</span>
                   <div className="use-app">
-                    <button type="button" class="btn btn-outline-info">Very Easy</button>
-                    <button type="button" class="btn btn-outline-info">Easy</button>
-                    <button type="button" class="btn btn-outline-info">Not Easy or Difficult</button>
-                    <button type="button" class="btn btn-outline-info">Difficult</button>
-                    <button type="button" class="btn btn-outline-info">Very Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 1 ? 'active' : ''}`} onClick={() => handleButtonClick(1)} >Very Easy</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 2 ? 'active' : ''}`} onClick={() => handleButtonClick(2)}>Very Easy</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 3 ? 'active' : ''}`} onClick={() => handleButtonClick(3)}>Easy</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 4 ? 'active' : ''}`} onClick={() => handleButtonClick(4)}>Not Easy or Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 5 ? 'active' : ''}`} onClick={() => handleButtonClick(5)}>Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 6 ? 'active' : ''}`} onClick={() => handleButtonClick(6)}>Very Difficult</button>
                   </div>
                 </div>
               </div>

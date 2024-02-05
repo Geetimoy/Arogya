@@ -27,3 +27,13 @@
 .normal-box .rating-star span{
   display: inline-block;
 }
+
+.serviceplace-container-class .feedback .normal-box .use-app .btn-outline-info:hover,
+.serviceplace-container-class .feedback .normal-box .use-app .btn-outline-info.active{
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.serviceplace-container-class .feedback .normal-box .use-app .btn-outline-info.active{
+  background-color: #009fdc;
+}
