@@ -7,11 +7,40 @@ import './Notifications.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd, faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
+import { useContext, useEffect, useState } from 'react';
+import CryptoJS from "crypto-js";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+import SystemContext from "../context/system/SystemContext";
 
 
 //import logo from '../logo.png';
 
 function Notifications(){
+
+  const systemContext = useContext(SystemContext);
+  const [notificationList, setNotificationList] = useState({});
+
+  useEffect(() => {
+
+    var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {
+      'system_id': systemContext.systemDetails.system_id,
+      'device_type': DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+      'user_lat': localStorage.getItem('latitude'),
+      'user_long': localStorage.getItem('longitude'),
+      'user_account_key': loginDetails.account_key,
+      'user_account_type': loginDetails.account_type
+    };
+
+    
+
+    console.log(jsonData);
+
+    // eslint-disable-next-line
+  }, [notificationList]);
 
   return(
     

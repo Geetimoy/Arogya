@@ -24,6 +24,10 @@ function ProfilePhoto(){
   const triggerInputFileCLick = (event) => {
     inputFileRef.current.click();
   }
+
+  const cancelPhotoUpload = () => {
+
+  }
   
   const handleImageUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -61,11 +65,11 @@ function ProfilePhoto(){
         'crop': crop
       }
       let jsonData = {};
-      jsonData['user_login_id']   = decryptedLoginDetails.login_id;
-      jsonData['device_type']     = DEVICE_TYPE;
-      jsonData['user_lat']        = localStorage.getItem('latitude');
-      jsonData['user_long']       = localStorage.getItem('longitude');
-      jsonData['device_token']    = DEVICE_TOKEN;
+      jsonData['user_login_id']    = decryptedLoginDetails.login_id;
+      jsonData['device_type']      = DEVICE_TYPE;
+      jsonData['user_lat']         = localStorage.getItem('latitude');
+      jsonData['user_long']        = localStorage.getItem('longitude');
+      jsonData['device_token']     = DEVICE_TOKEN;
       jsonData['source_image']     = image;
       jsonData['cropped_image']    = currentCroppedImage;
       jsonData['image_info']       = JSON.stringify(imageConfig);
@@ -170,7 +174,7 @@ function ProfilePhoto(){
                       <button type="button" className="btn btn-primary primary-bg-color border-0 mx-1" onClick={handleFormSubmit}>
                         Save
                       </button>
-                      <button type="button" className="btn btn-primary primary-bg-color border-0 mx-1">
+                      <button type="button" className="btn btn-primary primary-bg-color border-0 mx-1" onClick={cancelPhotoUpload}>
                         Cancel
                       </button>
                     </div>
