@@ -20,13 +20,13 @@ function Notifications(){
   const systemContext = useContext(SystemContext);
   const [notificationList, setNotificationList] = useState({});
 
-  useEffect(() => {
-
+  const fetchNotifications = async(systemId) => {
+    
     var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
     var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
-
+    console.log(systemId)
     let jsonData = {
-      'system_id': systemContext.systemDetails.system_id,
+      'system_id': systemId,
       'device_type': DEVICE_TYPE,
       'device_token': DEVICE_TOKEN,
       'user_lat': localStorage.getItem('latitude'),
@@ -35,12 +35,26 @@ function Notifications(){
       'user_account_type': loginDetails.account_type
     };
 
-    
+    const response = await fetch(`${API_URL}/myNotifications`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    });
 
-    console.log(jsonData);
+    let result = await response.json();
+    if(result.success){
+      setNotificationList(result.data);
+    }
+  }
 
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      fetchNotifications(systemContext.systemDetails.system_id);
+    }
     // eslint-disable-next-line
-  }, [notificationList]);
+  }, [systemContext.systemDetails.system_id, notificationList]);
 
   return(
     

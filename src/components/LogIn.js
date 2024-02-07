@@ -103,6 +103,7 @@ function LogIn(props) {
       jsonData["device_type"]   = DEVICE_TYPE; //getDeviceType();
       jsonData["login_id"]      = formData["username"];
       jsonData["password"]      = convertToMD5(formData["userpassword"]);
+      jsonData["account_type"]  = 4;
       jsonData['system_id']     = systemContext.systemDetails.system_id;
       
 

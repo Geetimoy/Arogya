@@ -38,7 +38,7 @@ export default function Core() {
   //const domainName = window.location.hostname;
   //const domainName = 'ukhra.serviceplace.org.in'; //NGO, system_id=3
   // const domainName = 'b2h.serviceplace.org.in'; //NGO, system_id=1
-   //const domainName = 'rgvn.serviceplace.org.in';//NGO, system_id=2
+  //const domainName = 'rgvn.serviceplace.org.in';//NGO, system_id=2
   const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
   const [systemId, setSystemId] = useState(null);
 
@@ -130,7 +130,7 @@ export default function Core() {
   // Function to get the current domain
   const getCurrentDomain = () => {
   const currentDomain = window.location.hostname;
-  console.log(currentDomain);
+  //console.log(currentDomain);
   setDomain(domainName);
   };
 
@@ -203,7 +203,7 @@ export default function Core() {
   const isLoggedIn = loginContext.loginState.is_logged_in;
 
   useEffect(()=>{
-    console.log(systemContext.systemDetails.thp_system_colors);
+    //console.log(systemContext.systemDetails.thp_system_colors);
     // eslint-disable-next-line
   }, [])
 
