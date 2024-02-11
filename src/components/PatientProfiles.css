@@ -1,0 +1,15 @@
+.patient-profiles .button-box{
+  position: relative;
+}
+
+.patient-profiles .button-box img{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.three-dot{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

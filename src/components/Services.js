@@ -36,9 +36,9 @@ function Services(){
             </div> */}
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments">
+                <Link to="/patientprofiles">
                 <img src={patientprofile} alt='' />
-                <h6>Patient Profile</h6></Link>
+                <h6>Patient Profiles</h6></Link>
               </div>
             </div>
             <div className='col-6'>
