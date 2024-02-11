@@ -64,3 +64,10 @@
 {
 	background-color: #5a5a5a;
 }
+
+.read .notification-title{
+  font-weight: 600px;
+}
+.unread .notification-title{
+  font-weight: 600px;
+}

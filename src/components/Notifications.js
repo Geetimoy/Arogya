@@ -18,7 +18,7 @@ import SystemContext from "../context/system/SystemContext";
 function Notifications(){
 
   const systemContext = useContext(SystemContext);
-  const [notificationList, setNotificationList] = useState({});
+  const [notificationList, setNotificationList] = useState([]);
 
   const fetchNotifications = async(systemId) => {
     
@@ -43,9 +43,12 @@ function Notifications(){
       body: JSON.stringify(jsonData)
     });
 
-    let result = await response.json();
+    var jsonValue = '{"success":true,"status":200,"msg":"My notifications data fetched","data":{"row":[{"thp_system_id":"0","sender_email_id":"sp-tech@serviceplace.org.in","sender_account_id":"1","sender_account_key":"THP@Ad321","receiver_email_id":"sab9195@gmail.com","receiver_mobile_no":"Sab","receiver_account_id":"101","receiver_account_key":"0up23298f7211","receiver_account_type":"3","email_template_key":"OTP_REGISTRATION_VERIFY","is_email_sent":"1","is_sms_sent":"1","custom_field":"test","custom_field_value":"test","notification_id":"14","device_type":"ANDROID","device_type_descr":"Android","device_token":"1232456","push_title":"OTP for Registration Verify at {{NGO_MAIL_SUBJECT_NAME}}","push_text":null,"push_img_url":null,"push_icon_url":"https:\/\/rgvn.serviceplace.org.in\/telehealth-uat\/public\/assets\/images\/default-push-icon-url.png","push_redirect_url":null,"sent_date":"2023-10-25 12:04:41+00","sent_date_descr":"2023-10-25 12:04","sent_status":"1","read_status":"1","read_date":null,"read_date_descr":null,"last_update":"2023-10-25 12:04"}],"numRows":1}}';
+
+    let result = JSON.parse(jsonValue);
+    console.log(result);
     if(result.success){
-      setNotificationList(result.data);
+      setNotificationList(result.data.row);
     }
   }
 
@@ -54,7 +57,11 @@ function Notifications(){
       fetchNotifications(systemContext.systemDetails.system_id);
     }
     // eslint-disable-next-line
-  }, [systemContext.systemDetails.system_id, notificationList]);
+  }, [systemContext.systemDetails.system_id]);
+
+  const readNotification = (notificationId) => {
+    
+  }
 
   return(
     
@@ -106,50 +113,24 @@ function Notifications(){
           </div>
         </div>
         <div className='notify-otp'>
-          <div className='rounded jumbotron p-3 mt-3 mb-3'>
-            <div className='d-flex'> 
-              <div className='thumb me-3'>
-                <img src='/assets/images/profileplaceholder.jpg'  alt="" />
-              </div>
-              <div>
-                <p className='mb-2'><strong>OTP for Registration verify at teleHealth- SEEVA UKHRA</strong></p>
-                Dear user, 8982 is the OTP for your mobile number verification.
-              </div>
-              <div className='notification-time'>
-                  12:00PM
-              </div>
-            </div>
-          </div>
-          <div className='rounded jumbotron p-3 mt-3 mb-3'>
-          <div className='d-flex'> 
-              <div className='thumb me-3'>
-                <img src='/assets/images/profileplaceholder.jpg'  alt="" />
-              </div>
-              <div>
-                <p className='mb-2'><strong>Reminder: </strong></p>
-                You have an upcoming appointment with Dr. Debashis Mukherjee on 12th Feb 2024 at 11.00AM. 
-                To cancel or change your appointment date, reply to this message with ‘Reschedule’ or ‘Cancel’ correspondingly, or contact us at 9475932030.
-              </div>
-              <div className='notification-time'>
-                  02:00PM
+          {notificationList && notificationList.map((notification, index) => (
+            <div className={`rounded jumbotron p-3 mt-3 mb-3 ${(notification.read_status === '1') ? 'read' : 'unread'}`} key={notification.notification_id} onClick={() => readNotification(notification.notification_id)}>
+              <div className='d-flex'> 
+                <div className='thumb me-3'>
+                  <img src={notification.push_icon_url}  alt={notification.push_title} />
+                </div>
+                <div>
+                  <p className='mb-2 notification-title'>
+                    {notification.push_title}
+                  </p>
+                  {notification.push_text}
+                </div>
+                <div className='notification-time'>
+                  {notification.last_update}
+                </div>
               </div>
             </div>
-          </div>
-          <div className='d-flex justify-content-end'>Yesterday</div>
-          <div className='rounded jumbotron p-3 mt-3 mb-3'>
-          <div className='d-flex'> 
-              <div className='thumb me-3'>
-                <img src='/assets/images/profileplaceholder.jpg'  alt="" />
-              </div>
-              <div>
-                <p className='mb-2'><strong>OTP for Registration verify at teleHealth- SEEVA UKHRA</strong></p>
-                Dear user, 8982 is the OTP for your mobile number verification.
-              </div>
-              <div className='notification-time'>
-                  09:00AM
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       <Appfooter></Appfooter>
