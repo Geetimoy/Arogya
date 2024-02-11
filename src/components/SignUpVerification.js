@@ -85,7 +85,7 @@ function SignUpVerification(){
       jsonData['user_login_id'] = urlParam.loginId;
       jsonData['otp']           = otp;
       
-      const response = await fetch(`${API_URL}/forgotPasswordValidateOTP`, {
+      const response = await fetch(`${API_URL}/registerValidateOTP`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,7 @@ function SignUpVerification(){
       if (result.success) {
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
         setTimeout(() => {
-          redirect('/ResetPassword/'+urlParam.loginId);
+          redirect('/login');
         }, 3000);
       } 
       else {

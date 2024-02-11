@@ -79,14 +79,14 @@ function SignUp(){
     return errorCounter;
   }
 
-  const resetForm = () => {
+  /*const resetForm = () => {
     Object.keys(formData).forEach((element) => {
       formData[element].value = "";
       formData[element].errorMessage = "";
       formData[element].errorClass = "";
     })
     setFormData({...formData, ...formData});
-  }
+  }*/
 
   const options = [
     { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
@@ -99,7 +99,7 @@ function SignUp(){
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleChange1 = (values) => {
-    console.log(values);
+    //console.log(values);
     var selectedArea = [];
     if(values.length > 0){
       values.forEach((item, index) => {
@@ -138,7 +138,8 @@ function SignUp(){
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
       jsonData['service_area_ids']      = formData['userServiceArea'].value;
-
+      jsonData['account_created_by']    = 'SELF';
+      
       const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: {
@@ -148,7 +149,6 @@ function SignUp(){
       });
       let result = await response.json();
       if(result.success){
-        resetForm();
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
         setTimeout(() => {
           redirect('/Signup-Verification/'+formData['userId'].value);
