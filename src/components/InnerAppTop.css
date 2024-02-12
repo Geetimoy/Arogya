@@ -3,5 +3,9 @@
 }
 
 .inner-app-top svg{
+  color: #333547;
+}
+
+.inner-app-top .scroll-back svg{
   color: #818181;
 }

@@ -1,3 +1,6 @@
+.patient-profiles{
+  position: relative;
+}
 .patient-profiles .button-box{
   position: relative;
 }
@@ -12,4 +15,10 @@
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+.add-patient{
+  position: absolute;
+  top: 18px;
+  right: 15px;
 }

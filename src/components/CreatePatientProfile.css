@@ -1,0 +1,29 @@
+.create-patient-profiles .form-group {
+  position: relative;
+}
+
+.create-patient-profiles .form-group {
+  margin-bottom: 20px;
+}
+
+.create-patient-profiles form label {
+  color: #818181;
+  position: absolute;
+  padding: 10px;
+  font-size: 12px;
+  z-index: 1;
+}
+
+.create-patient-profiles form input {
+  padding-top: 1.825rem;
+  padding-bottom: 0.625rem;
+}
+
+.create-patient-profiles form select {
+  padding-top: 1.825rem;
+  padding-bottom: 0.625rem;
+  position: relative;
+  appearance: auto;
+  color: #818181;
+  padding-left: 7px;
+}

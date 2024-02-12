@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './PatientProfiles.css'
 
 import Appfooter from './AppFooter';
-import InnerAppTop from './InnerAppTop';
+import ServicesAppTop from './ServicesAppTop';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
@@ -22,10 +22,11 @@ function Patientprofiles(){
 
   return(
     <>
-      <InnerAppTop></InnerAppTop>
+      <ServicesAppTop></ServicesAppTop>
       <div className="app-body patient-profiles">
         <h5 className="title">Patient Profiles</h5>
-        <div className='search-patient mb-3'>
+        <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary'>Add Patient</Link></div>
+        <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search a patient' />
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
