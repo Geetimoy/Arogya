@@ -1,12 +1,15 @@
-.create-patient-profiles .form-group {
+.create-patient-profiles .form-group,
+.form-all .form-group {
   position: relative;
 }
 
-.create-patient-profiles .form-group {
+.create-patient-profiles .form-group,
+.form-all .form-group {
   margin-bottom: 20px;
 }
 
-.create-patient-profiles form label {
+.create-patient-profiles form label,
+.form-all form label {
   color: #818181;
   position: absolute;
   padding: 10px;
@@ -14,16 +17,23 @@
   z-index: 1;
 }
 
-.create-patient-profiles form input {
+.create-patient-profiles form input,
+.form-all form input {
   padding-top: 1.825rem;
   padding-bottom: 0.625rem;
 }
 
-.create-patient-profiles form select {
+.create-patient-profiles form select,
+.form-all form select {
   padding-top: 1.825rem;
   padding-bottom: 0.625rem;
   position: relative;
   appearance: auto;
   color: #818181;
   padding-left: 7px;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

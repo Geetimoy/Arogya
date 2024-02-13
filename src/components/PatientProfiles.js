@@ -41,7 +41,7 @@ function Patientprofiles(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="#">
+              <Link to="/viewpatientdetails">
                 <img src={patientprofile} alt='' />
                 <h6>Test Janani</h6>
               </Link>
@@ -55,7 +55,7 @@ function Patientprofiles(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="#">
+              <Link to="/viewpatientdetails">
                 <img src={patientprofile} alt='' />
                 <h6>Test Janani 2</h6>
               </Link>
