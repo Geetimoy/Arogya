@@ -11,14 +11,20 @@ import { useContext, useEffect, useState } from 'react';
 import CryptoJS from "crypto-js";
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 import SystemContext from "../context/system/SystemContext";
+import 'bootstrap/dist/css/bootstrap.min.css';  
+import {Modal, Button} from 'react-bootstrap';  
 
 
 //import logo from '../logo.png';
 
 function Notifications(){
-
+  
   const systemContext = useContext(SystemContext);
   const [notificationList, setNotificationList] = useState([]);
+  const [showModal, setShowModal] = useState(false); 
+
+  const modalClose  = () => setShowModal(false);  
+  const modalShow   = () => setShowModal(true);  
 
   const fetchNotifications = async(systemId) => {
     
@@ -60,7 +66,7 @@ function Notifications(){
   }, [systemContext.systemDetails.system_id]);
 
   const readNotification = (notificationId) => {
-    
+    modalShow();
   }
 
   return(
@@ -132,6 +138,18 @@ function Notifications(){
             </div>
           ))}
         </div>
+        <Modal show={showModal} onHide={modalClose}>  
+          <Modal.Header closeButton>  
+            <Modal.Title>Title for Modal</Modal.Title>  
+          </Modal.Header>  
+          <Modal.Body>  
+            <p>Body Content.</p>  
+          </Modal.Body>  
+          <Modal.Footer>  
+            <Button variant="secondary" onClick={modalClose}>Close Modal</Button>  
+            <Button variant="primary">Save changes</Button>  
+          </Modal.Footer>  
+        </Modal>
       </div>
       <Appfooter></Appfooter>
     </>

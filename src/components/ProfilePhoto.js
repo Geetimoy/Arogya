@@ -64,16 +64,20 @@ function ProfilePhoto(){
         'zoom': zoom,
         'crop': crop
       }
+
       let jsonData = {};
-      jsonData['user_login_id']    = decryptedLoginDetails.login_id;
+      jsonData['system_id']        = systemContext.systemDetails.system_id;
       jsonData['device_type']      = DEVICE_TYPE;
+      jsonData['device_token']     = DEVICE_TOKEN;
       jsonData['user_lat']         = localStorage.getItem('latitude');
       jsonData['user_long']        = localStorage.getItem('longitude');
-      jsonData['device_token']     = DEVICE_TOKEN;
+      jsonData['account_key']      = decryptedLoginDetails.account_key;
+      jsonData['account_type']     = decryptedLoginDetails.account_type;
+      jsonData['user_login_id']    = decryptedLoginDetails.login_id;
+      jsonData['image_info']       = JSON.stringify(imageConfig);
       jsonData['source_image']     = image;
       jsonData['cropped_image']    = currentCroppedImage;
-      jsonData['image_info']       = JSON.stringify(imageConfig);
-      //console.log(jsonData);return false;
+      
       const response = await fetch(`${API_URL}/profilePhotoSave`, {
         method: "POST",
         headers: {
