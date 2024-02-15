@@ -50,7 +50,7 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments"><img src={appointmentscheduling} alt='' />
+                <Link to="/bookings"><img src={appointmentscheduling} alt='' />
                 <h6>Appointment Scheduling</h6></Link>
               </div>
             </div>

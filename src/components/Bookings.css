@@ -1,0 +1,19 @@
+.bookings{
+  position: relative;
+}
+
+.bookings .button-box{
+  padding: 10px;
+  text-align: left;
+}
+
+.bookings .button-box span{
+  color: #a80707;
+  font-weight: 500;
+}
+
+.add-booking{
+  position: absolute;
+  top: 18px;
+  right: 15px;
+}
