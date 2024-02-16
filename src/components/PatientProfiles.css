@@ -18,7 +18,5 @@
 }
 
 .add-patient{
-  position: absolute;
-  top: 18px;
-  right: 15px;
+  text-align: right;
 }

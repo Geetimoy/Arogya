@@ -1,26 +1,19 @@
 import { useState, useContext } from 'react';
 
-import './PatientProfiles.css'
-
-import Appfooter from './AppFooter';
-
+import Appfooter from "./AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
 import patientprofile from '../assets/images/profile.png';
 
+import './SelectPatient.css';
+
 import SystemContext from "../context/system/SystemContext";
 
-function Patientprofiles(){
-
-  const [isActive, setIsActive] = useState(false);
-
-  const handleClick = () => {
-    setIsActive(!isActive); // Toggle the state
-  };
+function SelectPatient(){
 
   const systemContext = useContext(SystemContext);
 
@@ -36,11 +29,11 @@ function Patientprofiles(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/services" className=''>
+              <Link to="/bookings" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Patient Profiles </h5>
+            <h5 className='mx-2 mb-0'>Select Patient </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -65,18 +58,11 @@ function Patientprofiles(){
           </div>
         </div>
       </div>
-      <div className="app-body patient-profiles">
-        <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary'>Add Patient</Link></div>
-        <div className='search-patient mt-3 mb-3'>
-          <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search a patient' />
-            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
-          </div>
-        </div>
+      <div className="app-body select-patient">
         <div className='row'>
           <div className='col-6'>
             <div className='button-box'>
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
+             
               <div className='drop-menu'>
                 <ul>
                   <li><Link to={"#"}>Close Patient</Link></li>
@@ -104,9 +90,10 @@ function Patientprofiles(){
           </div>
         </div>
       </div>
-      <Appfooter></Appfooter> 
+      <Appfooter></Appfooter>
     </>
   );
 }
 
-export default Patientprofiles;
+
+export default SelectPatient;
