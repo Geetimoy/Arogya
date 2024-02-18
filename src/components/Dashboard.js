@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import './Dashboard.css';
 
 import CryptoJS from "crypto-js";
@@ -17,9 +17,11 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import banner1 from '../assets/images/banner1.jpg';
-import banner2 from '../assets/images/banner2.jpg';
-import banner3 from '../assets/images/banner3.jpg'
+// import banner1 from '../assets/images/banner1.jpg';
+// import banner2 from '../assets/images/banner2.jpg';
+// import banner3 from '../assets/images/banner3.jpg'
+
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 function Dashboard() {
  
@@ -34,6 +36,46 @@ function Dashboard() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  const [imageData, setImageData] = useState({banner1:'', banner2:''});
+
+  let jsonData = {};
+      jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData['device_type']           = DEVICE_TOKEN;
+      jsonData['device_token']          = DEVICE_TYPE;
+      jsonData['user_lat']              = localStorage.getItem('latitude');
+      jsonData['user_long']             = localStorage.getItem('longitude');
+      jsonData["system_id"] = "ukhra.serviceplace.org.in";
+
+  useEffect(() => {
+    const fetchImageData = async () => {
+      try {
+        //console.log(jsonData);
+        const response = await fetch(`${API_URL}/homeBanners`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+        
+        const responseData = await response.json();
+        
+        
+        setImageData(responseData.data);
+        console.log (JSON.stringify(responseData.data));
+        // console.log('Hi');
+        console.log("data=" + responseData.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        // setLoading(false);
+      }
+    };
+
+    fetchImageData();
+    // eslint-disable-next-line
+  }, []);
 
    return(
     <>
@@ -80,13 +122,13 @@ function Dashboard() {
       <div className="banner">
         <Slider {...settings}>
           <div>
-            <img src={banner1} alt="" />
+            <img src={imageData.banner1} alt="" />
           </div>
           <div>
-            <img src={banner2} alt="" />
+            <img src={imageData.banner2} alt="" />
           </div>
           <div>
-            <img src={banner3} alt="" />
+            <img src={imageData.banner1} alt="" />
           </div>
           {/* Add more slides here */}
         </Slider>
