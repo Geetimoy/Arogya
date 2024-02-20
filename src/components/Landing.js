@@ -24,9 +24,9 @@ function Landing() {
           <div className='btn primary-bg-color mb-5 mt-5 w-100'><Link to ="/login" className='m-auto text-light text-decoration-none d-block'>Get Started</Link></div>
         </header>
       
-        <div className='footerLogo d-flex justify-content-between'>
-          <img src={systemContext.systemDetails.thp_ngo_logo_url} className='' alt=''/>
-          <img src={systemContext.systemDetails.thp_sp_global_logo_url} className='' alt=''/>
+        <div className='footerLogo text-center'>
+          <img src={systemContext.systemDetails.thp_ngo_logo_url} className='mx-3' alt=''/>
+          <img src={systemContext.systemDetails.thp_sp_global_logo_url} className='mx-3' alt=''/>
         </div>
       </div>
     </div>

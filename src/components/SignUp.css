@@ -94,3 +94,8 @@
   font-size: 12px;
   z-index: 1;
 }
+
+
+.login-box.signup form .react-dropdown-select-option + input{
+  padding-top: 0;
+}

@@ -117,7 +117,7 @@ function ForgotPassword(){
               <input type="text" name="userId" id="userId" className='form-control' placeholder="Enter user id" onChange={handleChange} value={formData["userId"].value}/>
               <small className="error-mesg">{formData["userId"].errorMessage}</small>
             </div>
-            <div className='btn primary-bg-color mb-3 mt-3 w-100'>
+            <div className='mb-3 mt-3 w-100'>
               <button type="submit" className='btn primary-bg-color text-light w-100'>Submit</button>
             </div>
             <p className='mb-4'>I remember my password! Back me to <Link to="/login" className="primary-color">login</Link> page </p>
@@ -133,11 +133,10 @@ function ForgotPassword(){
                 Contact Admin
               </Link>
             </p>
-            <p className='text-center'>&copy; {(new Date().getFullYear())} {systemContext.systemDetails.thp_domain_name}. {systemContext.systemDetails.thp_domain_name}. {(systemContext.systemDetails.thp_system_id > 0) && <span>Powered by <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_sp_global_name}</Link></span>}</p>
-
+            <p className='text-center'>&copy; {(new Date().getFullYear())}  {systemContext.systemDetails.thp_domain_name}. {(systemContext.systemDetails.thp_system_id > 0) && <span>Powered by <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_sp_global_name}</Link></span>}</p>
             <div className="text-center login-logo">
               {(systemContext.systemDetails.thp_system_id > 0) && <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>}
-              <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
+              <Link to={systemContext.systemDetails.thp_sp_global_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
             </div>
           </form>
           

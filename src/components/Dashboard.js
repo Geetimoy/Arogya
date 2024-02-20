@@ -127,9 +127,9 @@ function Dashboard() {
           <div>
             <img src={imageData.banner2} alt="" />
           </div>
-          <div>
+          {/* <div>
             <img src={imageData.banner1} alt="" />
-          </div>
+          </div> */}
           {/* Add more slides here */}
         </Slider>
       </div>
