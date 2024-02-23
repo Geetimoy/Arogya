@@ -1,3 +1,6 @@
+import CryptoJS from "crypto-js";
+import { ENCYPTION_KEY } from './util/Constants';
+
 import Appfooter from './AppFooter';
 import AppTop from './AppTop';
 import './Account.css'
@@ -11,6 +14,8 @@ import { Link } from 'react-router-dom';
 
 function Account(){
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   return(
     <>
     <AppTop></AppTop>
@@ -22,7 +27,7 @@ function Account(){
                 <img src={profilephoto} className='thumb' alt=''/>
                 <Link to ="/profilephoto"><FontAwesomeIcon icon={faCamera} color='primary-color' /></Link>
               </div>
-              <h5 className='title mb-0'>John Doe</h5>
+              <h5 className='title mb-0'>{decryptedLoginDetails.user_name}</h5>
               <div className='status float-end'><span className='red-text'><b>Status: Pending</b></span></div>
             </div>
             <ul>

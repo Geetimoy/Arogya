@@ -110,15 +110,6 @@ function Dashboard() {
             </div>
           </div>
       </div>
-      <div className="reminder">
-        <h5 className='mb-2'>Reminder</h5>
-        <ul className="list-style">
-        <li>Donec blandit velit eu nunc auctor rutrum.</li>
-        <li>Vivamus ac ex non ipsum facilisis malesuada.</li>
-        <li>Nam tristique justo sed purus facilisis imperdiet.</li>
-        <li>Ut ac dolor ac purus commodo dictum ut nec purus.</li>
-        </ul>
-      </div>
       <div className="banner">
         <Slider {...settings}>
           <div>
@@ -133,6 +124,16 @@ function Dashboard() {
           {/* Add more slides here */}
         </Slider>
       </div>
+      <div className="reminder">
+        <h5 className='mb-2'>Reminder</h5>
+        <ul className="list-style">
+        <li>Donec blandit velit eu nunc auctor rutrum.</li>
+        <li>Vivamus ac ex non ipsum facilisis malesuada.</li>
+        <li>Nam tristique justo sed purus facilisis imperdiet.</li>
+        <li>Ut ac dolor ac purus commodo dictum ut nec purus.</li>
+        </ul>
+      </div>
+      
     </div>
 
     <Appfooter></Appfooter>
