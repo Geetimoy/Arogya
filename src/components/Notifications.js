@@ -116,10 +116,10 @@ function Notifications(){
               <span className='otp black'><FontAwesomeIcon icon={faEnvelopeOpen} /></span>
               Others
             </div>
-            {/* <div>
+            <div>
               <span className='otp green'><FontAwesomeIcon icon={faEnvelopeOpen} /></span>
               Services
-            </div> */}
+            </div>
           </div>
         </div>
         <div className='notify-otp'>

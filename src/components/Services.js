@@ -12,6 +12,8 @@ import requestsupply from '../assets/images/icon-request-supply.png';
 import rxpharmacy from '../assets/images/icon-rx-pharmacy.png';
 import uploadrx from '../assets/images/icon-upload-rx.png';
 import uploadsupply from '../assets/images/icon-upload-supply.png';
+import youngwoman from '../assets/images/woman.png';
+import malnutrition from '../assets/images/malnutrition.png';
 import testreport from '../assets/images/icon-upload-test-report.png';
 
 function Services(){
@@ -43,6 +45,18 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
+                <Link to="/viewappointments"><img src={malnutrition} alt='' />
+                <h6>Child Malnutrition</h6></Link>
+              </div>
+            </div>
+            <div className='col-6'>
+              <div className='button-box'>
+                <Link to="/viewappointments"><img src={youngwoman} alt='' />
+                <h6>Young Womens (11yrs to 18yrs)</h6></Link>
+              </div>
+            </div>
+            <div className='col-6'>
+              <div className='button-box'>
                 <Link to="/viewappointments">
                 <img src={janani} alt='' />
                 <h6>Janani</h6></Link>
@@ -56,16 +70,17 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments"><img src={testreport} alt='' />
-                <h6>Upload Test Report</h6></Link>
-              </div>
-            </div>
-            <div className='col-6'>
-              <div className='button-box'>
                 <Link to="/viewappointments"><img src={uploadrx} alt='' />
                 <h6>Upload Rx</h6></Link>
               </div>
             </div>
+            <div className='col-6'>
+              <div className='button-box'>
+                <Link to="/viewappointments"><img src={testreport} alt='' />
+                <h6>Upload Test Report</h6></Link>
+              </div>
+            </div>
+           
             <div className='col-6'>
               <div className='button-box'>
                 <Link to="/viewappointments"><img src={rxpharmacy} alt='' />
@@ -84,12 +99,8 @@ function Services(){
                 <h6>Upload Supply Dispensing</h6></Link>
               </div>
             </div>
-            <div className='col-6'>
-              <div className='button-box'>
-                <Link to="/viewappointments"><img src={uploadsupply} alt='' />
-                <h6>Young Women(11yrs to 18yrs)</h6></Link>
-              </div>
-            </div>
+            
+           
           </div>
         </div>
       <Appfooter></Appfooter>
