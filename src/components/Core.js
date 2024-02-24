@@ -80,23 +80,47 @@ export default function Core() {
   }, [])
 
   useEffect(() => {
+
     if(domainName === "b2h.serviceplace.org.in"){
       setSystemId("b2h.serviceplace.org.in");
+      var faviconFolder = '/b2b-favicon/';
     }
     else if(domainName === "rgvn.serviceplace.org.in"){
       setSystemId("rgvn.serviceplace.org.in");
+      var faviconFolder = '/rgvn-favicon/';
     }
     else if(domainName === "ukhra.serviceplace.org.in"){
       setSystemId("ukhra.serviceplace.org.in");
+      var faviconFolder = '/telehealth-favicon/';
     }
     else{
       setSystemId("telehealth.serviceplace.org.in");
+      var faviconFolder = '/ukhra-favicon/';
     }
-  
+    
+    document.querySelector("link[rel='icon']").setAttribute("href", faviconFolder+'favicon.ico');
+    document.querySelector("link[rel='apple-touch-icon']").setAttribute("href", faviconFolder+'logo192.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='57x57']").setAttribute("href", faviconFolder+'apple-icon-57x57.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='60x60']").setAttribute("href", faviconFolder+'apple-icon-60x60.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='72x72']").setAttribute("href", faviconFolder+'apple-icon-72x72.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='76x76']").setAttribute("href", faviconFolder+'apple-icon-76x76.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='114x114']").setAttribute("href", faviconFolder+'apple-icon-114x114.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='120x120']").setAttribute("href", faviconFolder+'apple-icon-120x120.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='144x144']").setAttribute("href", faviconFolder+'apple-icon-144x144.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='152x152']").setAttribute("href", faviconFolder+'apple-icon-152x152.png');
+    document.querySelector("link[rel='apple-touch-icon'][sizes='180x180']").setAttribute("href", faviconFolder+'apple-icon-180x180.png');
+    document.querySelector("link[rel='icon'][sizes='192x192']").setAttribute("href", faviconFolder+'android-icon-192x192.png');
+    document.querySelector("link[rel='icon'][sizes='32x32']").setAttribute("href", faviconFolder+'favicon-32x32.png');
+    document.querySelector("link[rel='icon'][sizes='96x96']").setAttribute("href", faviconFolder+'favicon-96x96.png');
+    document.querySelector("link[rel='icon'][sizes='16x16']").setAttribute("href", faviconFolder+'favicon-16x16.png');
+
 
     if(systemId){
       fetchSystemDetails(systemId);
     } 
+
+
+
 
     // eslint-disable-next-line
   }, [systemId]);
