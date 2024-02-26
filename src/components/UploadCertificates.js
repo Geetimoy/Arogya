@@ -19,12 +19,15 @@ function UploadCertificates(){
 
   const [isMActive, setIsMActive] = useState(false);
 
+  const [fileList, setFileList] = useState({});
+
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
 
-  const uploadCertificateChange = (elem) => {
-    console.log(elem);
+  const uploadCertificateChange = (event, elem) => {
+    setFileList({...fileList, [elem]: event.target.files[0]});
+    console.log(fileList);
   };
   
   return(
@@ -66,13 +69,13 @@ function UploadCertificates(){
         <div className='d-flex justify-content-between align-items-center'><h5></h5><span>Max 5 files, 500 KB each</span></div>
         <div className="upload-certificate-list">
           <div className="rounded jumbotron p-3 mt-3 mb-3">
-
-            {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className="form-group brdr-btm parent">
-              <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={() => uploadCertificateChange('certificate_'+(i+1))}/>
-              <label>Upload Certificate {i+1}</label>
-              <span className="close float-end">&#10006;</span>
-            </div>)}
-
+            <form encType="multipart/form-data">
+              {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className="form-group brdr-btm parent">
+                <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1))}/>
+                <label>Upload Certificate {i+1}</label>
+                <span className="close float-end">&#10006;</span>
+              </div>)}
+            </form>
             {/* <div className="form-group">
             <button type="button" id="" name="" class="btn btn-primary primary-bg-color border-0 mx-2">Update Photo<input type="file" name="cover" accept="img/*" style={{ display: "none" }} /></button>
             </div> */}
