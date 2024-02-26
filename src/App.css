@@ -162,8 +162,13 @@ body {
     background-color: #f79645;
 }
 
+.ukhra-container-class input[type="file"]::-webkit-file-upload-button{
+    background: #f79645;
+}
+
 .ukhra-container-class .primary-bg-color:hover,
-.ukhra-container-class .primary-bg-color:active {
+.ukhra-container-class .primary-bg-color:active,
+.ukhra-container-class input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #f38529;
 }
 

@@ -34,18 +34,24 @@
   background: #000;
 }
 
-.notify-otp .thumb img{
+.notify-otp .thumb{
   width: 35px;
   height: 35px;
   border-radius: 50%;
 }
 
+.notification-content{
+  width: 200px;
+  font-size: 14px;
+}
+
 .notification-time{
   color: #bdbdbd;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  width: 55px;
-  margin-left: 20px;
+  width: 100px;
+  margin-left: 10px;
+  text-align: right;
 }
 
 .notification-category::-webkit-scrollbar-track

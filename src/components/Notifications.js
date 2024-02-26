@@ -130,7 +130,7 @@ function Notifications(){
                 <div className='thumb me-3'>
                   <img src={notification.push_icon_url}  alt={notification.push_title} />
                 </div>
-                <div>
+                <div className='notification-content'>
                   <p className='mb-2 notification-title'>
                     {notification.push_title}
                   </p>
@@ -138,6 +138,7 @@ function Notifications(){
                 </div>
                 <div className='notification-time'>
                   {notification.last_update}
+                  <p>Yesterday</p>
                 </div>
               </div>
             </div>
