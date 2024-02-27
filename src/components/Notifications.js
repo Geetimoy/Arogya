@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from 'react';
 import CryptoJS from "crypto-js";
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 import SystemContext from "../context/system/SystemContext";
-import 'bootstrap/dist/css/bootstrap.min.css';  
+//import 'bootstrap/dist/css/bootstrap.min.css';  
 import {Modal, Button} from 'react-bootstrap';  
 
 

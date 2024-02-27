@@ -90,6 +90,8 @@ body {
     border: 1px solid #ff0000;
 }
 
+/* SERVICEPLACE */
+
 .serviceplace-container-class .primary-color{
     color: #01aef0!important; 
 }
@@ -98,8 +100,13 @@ body {
     background-color: #01aef0!important;
 }
 
+.serviceplace-container-class input[type="file"]::-webkit-file-upload-button{
+    background: #01aef0;
+}
+
 .serviceplace-container-class .primary-bg-color:hover,
-.serviceplace-container-class .primary-bg-color:active {
+.serviceplace-container-class .primary-bg-color:active,
+.serviceplace-container-class input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #009fdc!important;
 }
 
@@ -120,7 +127,7 @@ body {
 }
 
 
-
+/* TELEHEALTH */
 
 .telehealth-container-class .primary-color{
     color: #2aa142; 
@@ -130,8 +137,13 @@ body {
     background-color: #2aa142;
 }
 
+.telehealth-container-class input[type="file"]::-webkit-file-upload-button{
+    background: #2aa142; 
+}
+
 .telehealth-container-class .primary-bg-color:hover,
-.telehealth-container-class .primary-bg-color:active {
+.telehealth-container-class .primary-bg-color:active,
+.telehealth-container-class input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #2aa142;
 }
 
@@ -152,7 +164,7 @@ body {
 }
 
 
-
+/* UKHRA */
 
 .ukhra-container-class .primary-color{
     color: #f79645; 
@@ -188,7 +200,7 @@ body {
     border: 1px solid #f38529;
 }
 
-
+/* RGVN */
 
 .rgvn-container-class .primary-color{
     color: #2aa142; 
@@ -198,8 +210,13 @@ body {
     background-color: #2aa142;
 }
 
+.rgvn-container-class input[type="file"]::-webkit-file-upload-button{
+    background: #2aa142;
+}
+
 .rgvn-container-class .primary-bg-color:hover,
-.rgvn-container-class .primary-bg-color:active {
+.rgvn-container-class .primary-bg-color:active,
+.rgvn-container-class input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #2aa142;
 }
 
@@ -221,7 +238,7 @@ body {
 
 
 
-
+/* B2B */
 
 .b2h-container-class .primary-color{
     color: #c10000; 
@@ -231,8 +248,13 @@ body {
     background-color: #c10000;
 }
 
+.b2h-container-class input[type="file"]::-webkit-file-upload-button{
+    background: #c10000;
+}
+
 .b2h-container-class .primary-bg-color:hover,
-.b2h-container-class .primary-bg-color:active {
+.b2h-container-class .primary-bg-color:active,
+.b2h-container-class input[type="file"]::-webkit-file-upload-button:hover{
     background-color: #a30707;
 }
 
