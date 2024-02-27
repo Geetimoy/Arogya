@@ -91,7 +91,6 @@ body {
 }
 
 /* SERVICEPLACE */
-
 .serviceplace-container-class .primary-color{
     color: #01aef0!important; 
 }
@@ -126,9 +125,7 @@ body {
     border: 1px solid #009fdc;
 }
 
-
 /* TELEHEALTH */
-
 .telehealth-container-class .primary-color{
     color: #2aa142; 
 }
@@ -163,9 +160,7 @@ body {
     border: 1px solid #2aa142;
 }
 
-
 /* UKHRA */
-
 .ukhra-container-class .primary-color{
     color: #f79645; 
 }
@@ -201,7 +196,6 @@ body {
 }
 
 /* RGVN */
-
 .rgvn-container-class .primary-color{
     color: #2aa142; 
 }
@@ -236,10 +230,7 @@ body {
     border: 1px solid #2aa142;
 }
 
-
-
 /* B2B */
-
 .b2h-container-class .primary-color{
     color: #c10000; 
 }
