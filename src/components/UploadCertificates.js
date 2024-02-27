@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import Appfooter from "./AppFooter";
 
@@ -19,15 +19,27 @@ function UploadCertificates(){
 
   const [isMActive, setIsMActive] = useState(false);
 
-  const [fileList, setFileList] = useState({});
+  const [fileToUpload, setFileToUpload] = useState(null);
+
+  const [fileUpload, setFileUpload] = useState({
+    certificate_1 : {'upload': false},
+    certificate_2 : {'upload': false},
+    certificate_3 : {'upload': false},
+    certificate_4 : {'upload': false},
+    certificate_5 : {'upload': false}
+  });
+
+  useEffect(() => {
+    setFileUpload({...fileUpload, 'certificate_1': {...fileUpload['certificate_1'], upload:true}});
+  }, [fileUpload])
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
 
-  const uploadCertificateChange = (event, elem) => {
-    setFileList({...fileList, [elem]: event.target.files[0]});
-    console.log(fileList);
+  const uploadCertificateChange = (event, elem, index) => {
+    setFileToUpload(event.target.files[0]);
+    console.log(fileToUpload);
   };
   
   return(
@@ -70,8 +82,8 @@ function UploadCertificates(){
         <div className="upload-certificate-list">
           <div className="rounded jumbotron p-3 mt-3 mb-3">
             <form encType="multipart/form-data">
-              {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className="form-group brdr-btm parent">
-                <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1))}/>
+              {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className={`form-group brdr-btm parent ${(fileUpload['certificate_'+(i+1)].upload === true) ? '' : 'upload-disabled'}`}>
+                <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
                 <label>Upload Certificate {i+1}</label>
                 <span className="close float-end">&#10006;</span>
               </div>)}
