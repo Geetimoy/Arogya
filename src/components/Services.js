@@ -76,7 +76,7 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments"><img src={testreport} alt='' />
+                <Link to="/testreports"><img src={testreport} alt='' />
                 <h6>Upload Test Report</h6></Link>
               </div>
             </div>
