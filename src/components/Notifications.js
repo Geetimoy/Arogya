@@ -30,7 +30,7 @@ function Notifications(){
     
     var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
     var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
-    console.log(systemId)
+    
     let jsonData = {
       'system_id': systemId,
       'device_type': DEVICE_TYPE,

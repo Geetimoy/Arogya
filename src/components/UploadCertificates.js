@@ -7,6 +7,8 @@ import { MAX_CERTICATE_UPLOAD } from './util/Constants';
 import './UploadCertificates.css';
 
 import SystemContext from "../context/system/SystemContext";
+import CryptoJS from "crypto-js";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
@@ -19,8 +21,6 @@ function UploadCertificates(){
 
   const [isMActive, setIsMActive] = useState(false);
 
-  const [fileToUpload, setFileToUpload] = useState(null);
-
   const [fileUpload, setFileUpload] = useState({
     certificate_1 : {'upload': false},
     certificate_2 : {'upload': false},
@@ -31,15 +31,37 @@ function UploadCertificates(){
 
   useEffect(() => {
     setFileUpload({...fileUpload, 'certificate_1': {...fileUpload['certificate_1'], upload:true}});
-  }, [fileUpload])
+  }, [])
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
 
-  const uploadCertificateChange = (event, elem, index) => {
-    setFileToUpload(event.target.files[0]);
-    console.log(fileToUpload);
+  const uploadCertificateChange = async (event, elem, index) => {
+    var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+
+    const formData = new FormData();
+    formData.append("system_id", systemContext.systemDetails.system_id);
+    formData.append("device_type", DEVICE_TYPE);
+    formData.append("device_token", DEVICE_TOKEN);
+    formData.append("user_lat", localStorage.getItem('latitude'));
+    formData.append("user_long", localStorage.getItem('longitude'));
+    formData.append("user_account_key", loginDetails.account_key);
+    formData.append("user_account_type", loginDetails.account_type);
+    formData.append("file", event.target.files[0]);
+    formData.append("file_seq", elem);
+
+    const response = await fetch(`${API_URL}/uploadCertificate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: formData,
+    });
+
+    console.log(response);
+
   };
   
   return(
