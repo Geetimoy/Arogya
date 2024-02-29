@@ -7,6 +7,7 @@ import { MAX_CERTICATE_UPLOAD } from './util/Constants';
 import './UploadCertificates.css';
 
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from "../context/alert/AlertContext";
 import CryptoJS from "crypto-js";
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
@@ -18,20 +19,21 @@ import { Link } from "react-router-dom";
 function UploadCertificates(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [isMActive, setIsMActive] = useState(false);
 
   const [fileUpload, setFileUpload] = useState({
-    certificate_1 : {'upload': false},
-    certificate_2 : {'upload': false},
-    certificate_3 : {'upload': false},
-    certificate_4 : {'upload': false},
-    certificate_5 : {'upload': false}
+    certificate_1 : {'upload': false, 'fileName': ''},
+    certificate_2 : {'upload': false, 'fileName': ''},
+    certificate_3 : {'upload': false, 'fileName': ''},
+    certificate_4 : {'upload': false, 'fileName': ''},
+    certificate_5 : {'upload': false, 'fileName': ''}
   });
 
   useEffect(() => {
-    setFileUpload({...fileUpload, 'certificate_1': {...fileUpload['certificate_1'], upload:true}});
-  }, [])
+    setFileUpload({...fileUpload, 'certificate_1': {...fileUpload['certificate_1'], upload:true, fileName:''}});
+  }, []);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -41,27 +43,51 @@ function UploadCertificates(){
     var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
     var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
 
-    const formData = new FormData();
-    formData.append("system_id", systemContext.systemDetails.system_id);
-    formData.append("device_type", DEVICE_TYPE);
-    formData.append("device_token", DEVICE_TOKEN);
-    formData.append("user_lat", localStorage.getItem('latitude'));
-    formData.append("user_long", localStorage.getItem('longitude'));
-    formData.append("user_account_key", loginDetails.account_key);
-    formData.append("user_account_type", loginDetails.account_type);
-    formData.append("file", event.target.files[0]);
-    formData.append("file_seq", elem);
+    if(event.target.files[0]){
 
-    const response = await fetch(`${API_URL}/uploadCertificate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: formData,
-    });
+      fileUpload[elem].upload   = true;
+      fileUpload[elem].fileName = event.target.files[0].name;
+      setFileUpload({...fileUpload, ...fileUpload});
 
-    console.log(response);
+      const formData = new FormData();
+      formData.append("system_id", systemContext.systemDetails.system_id);
+      formData.append("device_type", DEVICE_TYPE);
+      formData.append("device_token", DEVICE_TOKEN);
+      formData.append("user_lat", localStorage.getItem('latitude'));
+      formData.append("user_long", localStorage.getItem('longitude'));
+      formData.append("user_account_key", loginDetails.account_key);
+      formData.append("user_account_type", loginDetails.account_type);
+      formData.append("file", event.target.files[0]);
+      formData.append("file_seq", elem);
 
+      // const response = await fetch(`${API_URL}/uploadCertificate`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: formData,
+      // });
+
+      var result = {
+        'msg': 'File Uploaded Successfully',
+        'success': true
+      }
+
+      if(result.success){
+        const nextElem = 'certificate_'+(index+1);
+        if(fileUpload[nextElem]){
+          fileUpload[nextElem].upload   = true;
+          fileUpload[nextElem].fileName = '';
+          setFileUpload({...fileUpload, ...fileUpload});
+        }
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    }
+    
   };
   
   return(
@@ -106,7 +132,7 @@ function UploadCertificates(){
             <form encType="multipart/form-data">
               {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className={`form-group brdr-btm parent ${(fileUpload['certificate_'+(i+1)].upload === true) ? '' : 'upload-disabled'}`}>
                 <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
-                <label>Upload Certificate {i+1}</label>
+                <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Certificate '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
                 <span className="close float-end">&#10006;</span>
               </div>)}
             </form>
