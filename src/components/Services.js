@@ -51,8 +51,8 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments"><img src={youngwoman} alt='' />
-                <h6>Young Womens (11yrs to 18yrs)</h6></Link>
+                <Link to="/youngwomens"><img src={youngwoman} alt='' />
+                <h6>Young Women's (11yrs to 18yrs)</h6></Link>
               </div>
             </div>
             <div className='col-6'>

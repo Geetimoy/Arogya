@@ -8,11 +8,7 @@ import { Link } from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 import Appfooter from './AppFooter';
 
-import patientprescription from '../assets/images/demo-test-report.jpg';
-
-import './TestReports.css'
-
-function TestReports(){
+function YoungWomens(){
   const systemContext = useContext(SystemContext);
 
   const [isMActive, setIsMActive] = useState(false);
@@ -31,7 +27,7 @@ function TestReports(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Test Reports </h5>
+            <h5 className='mx-2 mb-0'>Young Women's </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -56,32 +52,13 @@ function TestReports(){
           </div>
         </div>
       </div>
-      <div className="app-body test-reports">
-        <div className='search-prescription mt-3 mb-3'>
-          <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search a prescription' />
-            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <img src={patientprescription} alt='' className='w-100' />
-              <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
-            </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <img src={patientprescription} alt='' className='w-100' />
-              <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
-            </div>
-          </div>
-        </div>
+      <div className="app-body young-womens">
+
       </div>
       <Appfooter></Appfooter>
     </>
-  );
+  )
 }
 
 
-export default TestReports;
+export default YoungWomens;
