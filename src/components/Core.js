@@ -43,10 +43,10 @@ import SignUpVerification from './SignUpVerification';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'ukhra.serviceplace.org.in'; //NGO, system_id=3
+  //const domainName = 'ukhra.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2h.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvn.serviceplace.org.in';//NGO, system_id=2
-  //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
+  const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
@@ -278,7 +278,7 @@ export default function Core() {
             <Route path="/TermsOfUse" exact element={<TermsOfUse />} />
             <Route path="/Disclaimer" exact element={<Disclaimer />} />
             <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
-            <Route path="/ContactAdmin" exact element={<ContactAdmin />} />
+            <Route path="/Contact-Admin" exact element={<ContactAdmin />} />
             <Route path="/Verification/:loginId" exact element={<Verification />} />
             <Route path="/Signup-Verification/:loginId" exact element={<SignUpVerification />} />
             <Route path="/ResetPassword/:loginId" exact element={<ResetPassword />} />

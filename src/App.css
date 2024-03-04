@@ -125,6 +125,14 @@ body {
     border: 1px solid #009fdc;
 }
 
+body:has(.serviceplace-container-class) .modal .modal-footer .primary-bg-color{
+    background-color: #009fdc;
+}
+
+body:has(.serviceplace-container-class) .modal .modal-footer .primary-bg-color:hover{
+    background-color: #009fdc;
+}
+
 /* TELEHEALTH */
 .telehealth-container-class .primary-color{
     color: #2aa142; 
@@ -160,6 +168,16 @@ body {
     border: 1px solid #2aa142;
 }
 
+body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color{
+    background-color: #2aa142;
+}
+
+body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color:hover{
+    background-color: #2aa142;
+}
+
+
+
 /* UKHRA */
 .ukhra-container-class .primary-color{
     color: #f79645; 
@@ -193,6 +211,14 @@ body {
 .ukhra-container-class :not(.btn-check)+.btn:active{
     background-color: #f38529;
     border: 1px solid #f38529;
+}
+
+body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color{
+    background-color: #f38529;
+}
+
+body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color:hover{
+    background-color: #f38529;
 }
 
 /* RGVN */
@@ -230,6 +256,14 @@ body {
     border: 1px solid #2aa142;
 }
 
+body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color{
+    background-color: #2aa142;
+}
+
+body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color:hover{
+    background-color: #2aa142;
+}
+
 /* B2B */
 .b2h-container-class .primary-color{
     color: #c10000; 
@@ -263,4 +297,12 @@ body {
 .b2h-container-class :not(.btn-check)+.btn:active{
     background-color: #a30707;
     border: 1px solid #a30707;
+}
+
+body:has(.b2h-container-class) .modal .modal-footer .primary-bg-color{
+    background-color: #a30707;
+}
+
+body:has(.b2h-container-class) .modal .modal-footer .primary-bg-color:hover{
+    background-color: #a30707;
 }

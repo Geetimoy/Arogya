@@ -103,7 +103,7 @@ function Notifications(){
             Tab content for Others
           </Tab>
         </Tabs> */}
-        <div className='rounded jumbotron p-3 text-center'>
+        {/* <div className='rounded jumbotron p-3 text-center'>
           <div className='notification-category d-flex justify-content-between'>
             <div>
               <span className='otp green'>***</span>
@@ -122,7 +122,7 @@ function Notifications(){
               Services
             </div>
           </div>
-        </div>
+        </div> */}
         <div className='notify-otp'>
           {notificationList && notificationList.map((notification, index) => (
             <div className={`rounded jumbotron p-3 mt-3 mb-3 ${(notification.read_status === '1') ? 'read' : 'unread'}`} key={notification.notification_id} onClick={() => readNotification(notification.notification_id)}>
@@ -145,15 +145,13 @@ function Notifications(){
           ))}
         </div>
         <Modal show={showModal} onHide={modalClose}>  
-          <Modal.Header closeButton>  
-            <Modal.Title>Title for Modal</Modal.Title>  
-          </Modal.Header>  
+          
           <Modal.Body>  
-            <p>Body Content.</p>  
+            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>  
           </Modal.Body>  
-          <Modal.Footer>  
-            <Button variant="secondary" onClick={modalClose}>Close</Button>  
-            <Button variant="primary">Mark as Read</Button>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light border-0'>Mark as Read</Button>  
           </Modal.Footer>  
         </Modal>
       </div>

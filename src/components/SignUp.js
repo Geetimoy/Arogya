@@ -251,7 +251,7 @@ function SignUp(){
             </p>
             <p className="text-center link-red mb-3">
               Having Trouble? 
-              <Link to="/contactadmin" className="primary-color mx-1">
+              <Link to="/contact-admin" className="primary-color mx-1">
                 Contact Admin
               </Link>
             </p>

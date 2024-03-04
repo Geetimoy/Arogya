@@ -153,7 +153,7 @@ function LogIn(props) {
           <p>Login to your Account</p>
           <form onSubmit={handleLoginSubmit}>
             <div className={`form-group ${errorClass.username}`}>
-              <label htmlFor="username"> User ID </label>
+              <label htmlFor="username"> User ID <span className='text-danger'> *</span></label>
               <input
                 type="text"
                 id="username"
@@ -164,7 +164,7 @@ function LogIn(props) {
               <small className="error-mesg"> {errorMessage.username} </small>
             </div>
             <div className={`form-group ${errorClass.username}`}>
-              <label htmlFor="userpassword"> Password </label>
+              <label htmlFor="userpassword"> Password <span className='text-danger'> *</span></label>
               <input
                 type={passwordType ? `password` : `text`}
                 id="userpassword"
@@ -201,7 +201,7 @@ function LogIn(props) {
             </p>
             <p className="text-center link-red mb-3">
               Having Trouble?
-              <Link to="/contactadmin" className="primary-color mx-1">
+              <Link to="/contact-admin" className="primary-color mx-1">
                 Contact Admin
               </Link>
             </p>

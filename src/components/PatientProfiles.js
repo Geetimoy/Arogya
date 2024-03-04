@@ -79,6 +79,10 @@ function Patientprofiles(){
               <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
               <div className='drop-menu'>
                 <ul>
+                  <li><Link to={"#"}>Edit Basic Information</Link></li>
+                  <li><Link to={"#"}>Edit Basic Medical History</Link></li>
+                  <li><Link to={"#"}>Upload Prescription</Link></li>
+                  <li><Link to={"#"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>

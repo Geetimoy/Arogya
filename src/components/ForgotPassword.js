@@ -113,7 +113,7 @@ function ForgotPassword(){
           <p>Enter your User ID and an OTP will be sent to your registered Email ID & Mobile Number </p>
           <form onSubmit={handleFormSubmit}> 
             <div className={`form-group ${formData["userId"].errorClass}`}>
-              <label htmlFor='user_id'>User ID</label>
+              <label htmlFor='user_id'>User ID <span className='text-danger'> *</span></label>
               <input type="text" name="userId" id="userId" className='form-control' placeholder="Enter user id" onChange={handleChange} value={formData["userId"].value}/>
               <small className="error-mesg">{formData["userId"].errorMessage}</small>
             </div>

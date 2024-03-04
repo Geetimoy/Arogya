@@ -145,7 +145,7 @@ function ProfilePhoto(){
       <div className="app-body profile-photo">
         <p>
           You can change your existing photo here. Same photo will reflect
-          thorughout the Arogya - Telemedicine Application.
+          thorughout the Application.
         </p>
         <form className="edit-user-profile-photo-form" name="edit_user_profile_photo_form"
           id="edit_user_profile_photo_form">

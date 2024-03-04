@@ -20,3 +20,20 @@
 .add-patient{
   text-align: right;
 }
+
+.patient-profiles .button-box .drop-menu{
+  top: 28px;
+}
+
+.patient-profiles .button-box .drop-menu ul{
+  padding: 10px 0;
+}
+
+.patient-profiles .button-box .drop-menu ul li{
+  text-align: left;
+}
+
+.patient-profiles .button-box .drop-menu ul li a{
+  padding: 0;
+  font-size: 14px;
+}
