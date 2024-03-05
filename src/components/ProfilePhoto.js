@@ -98,7 +98,8 @@ function ProfilePhoto(){
       });
       let result = await response.json();
 
-      if (result.success) {
+      if (result.success) { 
+        setImage(result.source_image);
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
       } 
       else {
