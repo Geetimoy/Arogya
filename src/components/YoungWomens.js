@@ -5,11 +5,19 @@ import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/
 
 import { Link } from "react-router-dom";
 
+import patientprofile from '../assets/images/profile.png';
+
 import SystemContext from "../context/system/SystemContext";
 import Appfooter from './AppFooter';
 
 function YoungWomens(){
   const systemContext = useContext(SystemContext);
+
+  const [isActive, setIsActive] = useState(false);
+
+  const handleClick = () => {
+    setIsActive(!isActive); // Toggle the state
+  };
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -52,8 +60,48 @@ function YoungWomens(){
           </div>
         </div>
       </div>
-      <div className="app-body young-womens">
-
+      <div className="app-body young-womens profile-listing">
+        <div className='add-patient'><Link to="/create-young-women" className='btn btn-sm btn-primary'>Add Young Women's</Link></div>
+        <div className='search-patient mt-3 mb-3'>
+          <div className='input-group'>
+            <input type="text" className='form-control' placeholder='Search Young Womens' />
+            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-6'>
+            <div className='button-box'>
+              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                <ul>
+                  <li><Link to={"patient-basicinfo"}>Edit Basic Information</Link></li>
+                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
+                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"#"}>Close Patient</Link></li>
+                </ul>
+              </div>
+              <Link to="/viewpatientdetails">
+                <img src={patientprofile} alt='' />
+                <h6>Young Womens 1</h6>
+              </Link>
+            </div>
+          </div>
+          <div className='col-6'>
+            <div className='button-box'>
+              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                <ul>
+                  <li><Link to={"#"}>Close Patient</Link></li>
+                </ul>
+              </div>
+              <Link to="/viewpatientdetails">
+                <img src={patientprofile} alt='' />
+                <h6>Young Womens 2</h6>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
       <Appfooter></Appfooter>
     </>

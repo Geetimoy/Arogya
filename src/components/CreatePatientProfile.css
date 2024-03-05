@@ -17,6 +17,14 @@
   z-index: 1;
 }
 
+.form-all form .custom-checkbox label {
+  color: #818181;
+  position: absolute;
+  padding: 0px;
+  font-size: 16px;
+  z-index: 1;
+}
+
 .create-patient-profiles form input,
 .form-all form input {
   padding-top: 1.825rem;

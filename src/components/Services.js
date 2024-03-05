@@ -45,7 +45,7 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments"><img src={malnutrition} alt='' />
+                <Link to="/patientprofiles"><img src={malnutrition} alt='' />
                 <h6>Child Malnutrition</h6></Link>
               </div>
             </div>
@@ -57,7 +57,7 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments">
+                <Link to="/patientprofiles">
                 <img src={janani} alt='' />
                 <h6>Janani</h6></Link>
               </div>
@@ -70,7 +70,7 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/viewappointments"><img src={uploadrx} alt='' />
+                <Link to="/upload-prescription"><img src={uploadrx} alt='' />
                 <h6>Upload Rx</h6></Link>
               </div>
             </div>

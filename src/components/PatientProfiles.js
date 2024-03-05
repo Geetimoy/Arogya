@@ -65,7 +65,7 @@ function Patientprofiles(){
           </div>
         </div>
       </div>
-      <div className="app-body patient-profiles">
+      <div className="app-body patient-profiles profile-listing">
         <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary'>Add Patient</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
@@ -79,10 +79,10 @@ function Patientprofiles(){
               <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
               <div className='drop-menu'>
                 <ul>
-                  <li><Link to={"#"}>Edit Basic Information</Link></li>
-                  <li><Link to={"#"}>Edit Basic Medical History</Link></li>
-                  <li><Link to={"#"}>Upload Prescription</Link></li>
-                  <li><Link to={"#"}>Upload Test Reports</Link></li>
+                  <li><Link to={"patient-basicinfo"}>Edit Basic Information</Link></li>
+                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
+                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
