@@ -16,12 +16,11 @@ function AboutServicePlace(){
   const [data, setData] = useState({page_content:'', page_title:''});
   
   let jsonData = {};
-      jsonData['system_id']             = systemContext.systemDetails.system_id;
-      jsonData['device_type']           = DEVICE_TOKEN;
-      jsonData['device_token']          = DEVICE_TYPE;
+      //jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData['device_type']           = DEVICE_TYPE;
+      jsonData['device_token']          = DEVICE_TOKEN;
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
-
       jsonData["page_key"] = localStorage.getItem('page_key');
       jsonData["system_id"] = "telehealth.serviceplace.org.in";
 

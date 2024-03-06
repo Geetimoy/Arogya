@@ -1,16 +1,18 @@
 import { useState, useContext } from 'react';
 
+import Appfooter from "./AppFooter";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import youngwomenprofile from '../assets/images/profile-girl.png';
+import childprofile from '../assets/images/profile-child.png';
 
 import SystemContext from "../context/system/SystemContext";
-import Appfooter from './AppFooter';
 
-function YoungWomens(){
+function ChildMalnutrion(){
+
   const systemContext = useContext(SystemContext);
 
   const [isActive, setIsActive] = useState(false);
@@ -25,6 +27,7 @@ function YoungWomens(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -35,7 +38,7 @@ function YoungWomens(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Young Women's </h5>
+            <h5 className='mx-2 mb-0'>Child Malnutrition </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -61,10 +64,10 @@ function YoungWomens(){
         </div>
       </div>
       <div className="app-body young-womens profile-listing">
-        <div className='add-patient'><Link to="/create-young-women" className='btn btn-sm btn-primary'>Add Young Women's</Link></div>
+        <div className='add-patient'><Link to="/create-child-malnutrition" className='btn btn-sm btn-primary'>Add Child Malnutrition</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Young Womens' />
+            <input type="text" className='form-control' placeholder='Search Child Malnutrition' />
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
@@ -78,12 +81,12 @@ function YoungWomens(){
                   <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
                   <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Close Young Women's</Link></li>
+                  <li><Link to={"#"}>Close Child Malnutrition</Link></li>
                 </ul>
               </div>
               <Link to="/viewpatientdetails">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Young Womens 1</h6>
+                <img src={childprofile} alt='' />
+                <h6>Child Malnutrition 1</h6>
               </Link>
             </div>
           </div>
@@ -96,8 +99,8 @@ function YoungWomens(){
                 </ul>
               </div>
               <Link to="/viewpatientdetails">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Young Womens 2</h6>
+                <img src={childprofile} alt='' />
+                <h6>Child Malnutrition 2</h6>
               </Link>
             </div>
           </div>
@@ -105,8 +108,8 @@ function YoungWomens(){
       </div>
       <Appfooter></Appfooter>
     </>
-  )
+  );
 }
 
 
-export default YoungWomens;
+export default ChildMalnutrion;

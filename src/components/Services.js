@@ -45,7 +45,7 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/patientprofiles"><img src={malnutrition} alt='' />
+                <Link to="/child-malnutrition"><img src={malnutrition} alt='' />
                 <h6>Child Malnutrition</h6></Link>
               </div>
             </div>
@@ -57,7 +57,7 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/patientprofiles">
+                <Link to="/janani">
                 <img src={janani} alt='' />
                 <h6>Janani</h6></Link>
               </div>

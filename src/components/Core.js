@@ -17,6 +17,8 @@ import PatientProfiles from './PatientProfiles';
 import ViewPatientDetails from './ViewPatientDetails';
 import CreatePatientProfile from './CreatePatientProfile';
 import YoungWomens from './YoungWomens';
+import Janani from './Janani';
+import ChildMalnutrition from './ChildMalnutrition';
 import CreateYoungWomen from './CreateYoungWomen';
 import TestReports from './TestReports';
 import Bookings from './Bookings';
@@ -255,6 +257,8 @@ export default function Core() {
             <Route path="/ViewPatientDetails" exact element={<ViewPatientDetails />} />
             <Route path="/CreatePatientProfile" exact element={<CreatePatientProfile />} />
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
+            <Route path="/Janani" exact element={<Janani />} />
+            <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/Create-Young-Women" exact element={<CreateYoungWomen />} />
             <Route path="/TestReports" exact element={<TestReports />} />
             <Route path="/Bookings" exact element={<Bookings />} />
