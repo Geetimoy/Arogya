@@ -27,7 +27,7 @@ function CraeteYoungWomen(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Create Young Women Profiles </h5>
+            <h5 className='mx-2 mb-0'>Create Young Women Profile </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -54,16 +54,13 @@ function CraeteYoungWomen(){
       </div>
       <div className='app-body form-all create-young-woman'>
        
-        <p><small>Add Young Women Information</small></p>
+        <p><small>Add Young Women Informations</small></p>
         <form className="mt-3" name="" id="">
           <div className="form-group">
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="" id="" placeholder="Full Name" />
           </div>
-          <div className="form-group">
-            <label htmlFor="name">User ID <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="User ID" />
-          </div>
+          
           <div className="form-group">
             <label className="no-style"><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
             <select className="form-control">
@@ -74,8 +71,7 @@ function CraeteYoungWomen(){
           <div className="form-group">
             <label className="no-style"><span className="d-block">Gender  <span className="text-danger">*</span></span></label>
             <select className="form-control">
-              <option value="1" selected="">Male</option>
-              <option value="2">Female</option>
+              <option value="1">Female</option>
             </select>
           </div>
           <div className="form-group">

@@ -15,6 +15,12 @@ function Feedback(){
     setActiveButton(buttonId);
   };
 
+  const [activeStar, setActiveStar] = useState(null);
+
+  const handleClick = () => {
+    setActiveStar(!activeStar); // Toggle the state
+  };
+
 
   return(
     <>
@@ -46,13 +52,12 @@ function Feedback(){
                     <span className="">Not at all likely</span>
                     <span>
                       <div className="rating-symbol mx-2">
-                        <MdOutlineStar size={21} color="#626ed4" />
-                        <MdOutlineStar size={21} color="#626ed4" />
-                        <MdOutlineStarBorder size={21} color="#626ed4" />
-                        <MdOutlineStarBorder size={21} color="#626ed4" />
-                        <MdOutlineStarBorder size={21} color="#626ed4" />
+                        <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} />
+                        <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} />
+                        <MdOutlineStar size={21} className='star' />
+                        <MdOutlineStarBorder size={21} className='star' />
+                        <MdOutlineStarBorder size={21} className='star' />
                       </div>
-                      
                     </span>
                     <span className="">Extremely likely</span>
                   </div>

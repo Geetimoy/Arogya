@@ -125,6 +125,15 @@ body {
     border: 1px solid #009fdc;
 }
 
+.serviceplace-container-class .feedback-form .normal-box .use-app .btn.active{
+    background-color: #009fdc;
+    color: #fff;
+}
+
+.serviceplace-container-class .rating-symbol .star {
+    color: #009fdc;
+}
+
 body:has(.serviceplace-container-class) .modal .modal-footer .primary-bg-color{
     background-color: #009fdc;
 }
@@ -168,6 +177,15 @@ body:has(.serviceplace-container-class) .modal .modal-footer .primary-bg-color:h
     border: 1px solid #2aa142;
 }
 
+.telehealth-container-class .feedback-form .normal-box .use-app .btn.active{
+    background-color: #2aa142;
+    color: #fff;
+}
+
+.telehealth-container-class .rating-symbol .star {
+    color: #2aa142;
+}
+
 body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color{
     background-color: #2aa142;
 }
@@ -180,45 +198,54 @@ body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color:hov
 
 /* UKHRA */
 .ukhra-container-class .primary-color{
-    color: #f79645; 
+    color: #af1e25; 
 }
 
 .ukhra-container-class .primary-bg-color {
-    background-color: #f79645;
+    background-color: #af1e25;
 }
 
 .ukhra-container-class input[type="file"]::-webkit-file-upload-button{
-    background: #f79645;
+    background: #af1e25;
 }
 
 .ukhra-container-class .primary-bg-color:hover,
 .ukhra-container-class .primary-bg-color:active,
 .ukhra-container-class input[type="file"]::-webkit-file-upload-button:hover {
-    background-color: #f38529;
+    background-color: #952025;
 }
 
 .ukhra-container-class .btn-outline-info{
-    color: #f38529;
-    border-color: #f38529;
+    color: #952025;
+    border-color: #952025;
 }
 
 .ukhra-container-class .btn-outline-info:hover{
-    background-color: #f38529;
-    border: 1px solid #f38529;
+    background-color: #952025;
+    border: 1px solid #952025;
 }
 
 .ukhra-container-class .btn:first-child:active,
 .ukhra-container-class :not(.btn-check)+.btn:active{
-    background-color: #f38529;
-    border: 1px solid #f38529;
+    background-color: #952025;
+    border: 1px solid #952025;
+}
+
+.ukhra-container-class .feedback-form .normal-box .use-app .btn.active{
+    background-color: #952025;
+    color: #fff;
+}
+
+.ukhra-container-class .rating-symbol .star {
+    color: #af1e25;
 }
 
 body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color{
-    background-color: #f38529;
+    background-color: #952025;
 }
 
 body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color:hover{
-    background-color: #f38529;
+    background-color: #952025;
 }
 
 /* RGVN */
@@ -254,6 +281,15 @@ body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color:hover{
 .rgvn-container-class :not(.btn-check)+.btn:active{
     background-color: #2aa142;
     border: 1px solid #2aa142;
+}
+
+.rgvn-container-class .feedback-form .normal-box .use-app .btn.active{
+    background-color: #2aa142;
+    color: #fff;
+}
+
+.rgvn-container-class .rating-symbol .star {
+    color: #2aa142;
 }
 
 body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color{
@@ -297,6 +333,15 @@ body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color:hover{
 .b2h-container-class :not(.btn-check)+.btn:active{
     background-color: #a30707;
     border: 1px solid #a30707;
+}
+
+.b2h-container-class .feedback-form .normal-box .use-app .btn.active{
+    background-color: #a30707;
+    color: #fff;
+}
+
+.b2h-container-class .rating-symbol .star {
+    color: #a30707;
 }
 
 body:has(.b2h-container-class) .modal .modal-footer .primary-bg-color{

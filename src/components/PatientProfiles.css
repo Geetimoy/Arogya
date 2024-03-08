@@ -17,8 +17,8 @@
   top: 10px;
 }
 
-.add-patient{
-  text-align: right;
+.add-patient span{
+  font-weight: 600;
 }
 
 .profile-listing .button-box .drop-menu{
