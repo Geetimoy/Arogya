@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Appfooter from './AppFooter';
 import getCroppedImg from "../cropper/Crop";
 
@@ -24,7 +24,8 @@ function ProfilePhoto(){
   const systemContext = useContext(SystemContext);
 
 
-  const [isMActive, setIsMActive] = useState(false);
+  const [isMActive, setIsMActive]     = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -107,6 +108,52 @@ function ProfilePhoto(){
       }
     }
   }
+
+  const getUserDetails = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["user_account_key"]  = decryptedLoginDetails.account_key;
+    jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+    jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/userProfile`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    let userDetails = result1.data.results;
+
+    setUserDetails(result1.data.results);
+
+    if(userDetails.profile_image_url != ""){
+
+      var sourceImageUrl = userDetails.profile_image_url.replace('/shared/', '/sources/');
+      //setImage(sourceImageUrl);
+
+    }
+
+  }
+
+  useEffect(() => {
+
+    if(systemContext.systemDetails.system_id){
+      getUserDetails();
+    }
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id])
 
   return (
     <>
