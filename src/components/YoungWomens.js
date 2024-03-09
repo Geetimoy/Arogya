@@ -61,7 +61,9 @@ function YoungWomens(){
         </div>
       </div>
       <div className="app-body young-womens profile-listing">
-        <div className='add-patient'><Link to="/create-young-women" className='btn btn-sm btn-primary'>Add Young Women's</Link></div>
+        <div className='add-patient align-items-center d-flex justify-content-between'>
+          <span>Total- 2</span>
+          <Link to="/create-young-women" className='btn btn-sm btn-primary'>Add Young Women</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Young Womens' />
@@ -78,12 +80,12 @@ function YoungWomens(){
                   <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
                   <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Close Young Women's</Link></li>
+                  <li><Link to={"#"}>Close Young Women</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
+              <Link to="javascript:void(0);">
                 <img src={youngwomenprofile} alt='' />
-                <h6>Young Womens 1</h6>
+                <h6>Young Women 1</h6>
               </Link>
             </div>
           </div>
@@ -95,9 +97,9 @@ function YoungWomens(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
+              <Link to="javascript:void(0);">
                 <img src={youngwomenprofile} alt='' />
-                <h6>Young Womens 2</h6>
+                <h6>Young Women 2</h6>
               </Link>
             </div>
           </div>
