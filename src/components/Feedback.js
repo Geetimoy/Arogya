@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import Appfooter from "./AppFooter";
 import AppTop from "./AppTop";
@@ -7,7 +7,15 @@ import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md';
 
 import './Feedback.css'
 
+import SystemContext from '../context/system/SystemContext';
+import AlertContext from "../context/alert/AlertContext";
+
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+
 function Feedback(){
+
+  const systemContext = useContext(SystemContext);
+  const alertContext = useContext(AlertContext);
 
   const [activeButton, setActiveButton] = useState(null);
 
@@ -21,6 +29,58 @@ function Feedback(){
     setActiveStar(!activeStar); // Toggle the state
   };
 
+   // State to manage form data
+   const [formData, setFormData] = useState({
+    patientid: '',
+    howeasy: '',
+    serviceexperience: '',
+    share: '',
+  });
+
+  // Function to handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // You can perform actions like API calls, state updates, etc. here
+    let jsonData = {};
+      
+      jsonData['system_id']             = "telehealth.serviceplace.org.in";
+      jsonData['device_type']           = DEVICE_TOKEN;
+      jsonData['device_token']          = DEVICE_TYPE;
+      jsonData['user_lat']              = localStorage.getItem('latitude');
+      jsonData['user_long']             = localStorage.getItem('longitude');
+
+      jsonData['account_key']           = "0uu232206c628";
+      jsonData['feedback_easy_or_difficult'] = "xyz";
+      jsonData['feedback_rating']       = "abcd";
+      jsonData['feedback_description']  = "hbndskjndkjndskndsjnds";
+      
+      const response = await fetch(`${API_URL}/feedback`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+
+      let result = await response.json();
+
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    //console.log('Form submitted with data:', formData);
+  };
+
 
   return(
     <>
@@ -28,7 +88,7 @@ function Feedback(){
         <div className="app-body feedback">
           <h5 className="title">Feedback</h5>
          
-          <form className="feedback-form">
+          <form className="feedback-form" onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-lg-12">
                 <div className="normal-box mt-2"><span>Patient ID:</span>UP0033445576</div>
@@ -36,12 +96,14 @@ function Feedback(){
               <div className="col-lg-12">
                 <div className="normal-box mt-2"><span className="mb-2">How easy was the app to use:</span>
                   <div className="use-app">
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 1 ? 'active' : ''}`} onClick={() => handleButtonClick(1)} >Very Easy</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 2 ? 'active' : ''}`} onClick={() => handleButtonClick(2)}>Very Easy</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 3 ? 'active' : ''}`} onClick={() => handleButtonClick(3)}>Easy</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 4 ? 'active' : ''}`} onClick={() => handleButtonClick(4)}>Not Easy or Difficult</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 5 ? 'active' : ''}`} onClick={() => handleButtonClick(5)}>Difficult</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 6 ? 'active' : ''}`} onClick={() => handleButtonClick(6)}>Very Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 1 ? 'active' : ''}`} onClick={() => handleButtonClick(1)} name='veryeasy' value={formData.veryeasy}
+          onChange={handleInputChange}>Very Easy</button>
+                    {/* <button type="button" className={`btn btn-outline-info ${activeButton === 2 ? 'active' : ''}`} onClick={() => handleButtonClick(2)}>Very Easy</button> */}
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 3 ? 'active' : ''}`} onClick={() => handleButtonClick(3)} name='easy' value={formData.easy}
+          onChange={handleInputChange}>Easy</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 4 ? 'active' : ''}`} onClick={() => handleButtonClick(4)} name='noteasy' value={formData.noteasy}>Not Easy or Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 5 ? 'active' : ''}`} onClick={() => handleButtonClick(5)} name='difficult' value={formData.difficult}>Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 6 ? 'active' : ''}`} onClick={() => handleButtonClick(6)} name='verydifficult' value={formData.verydifficult}>Very Difficult</button>
                   </div>
                 </div>
               </div>
@@ -65,8 +127,8 @@ function Feedback(){
               </div>
               <div className="col-lg-12">
                 <div className="form-group">
-                  <label htmlFor="name">Would you like to share any other comments: </label>
-                  <textarea name="" id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!"></textarea>
+                  <label htmlFor="comments">Would you like to share any other comments: </label>
+                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={formData.comments}></textarea>
                 </div>
               </div>
               <div className="col-lg-12">
