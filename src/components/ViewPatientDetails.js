@@ -65,8 +65,12 @@ function ViewPatientDetails(){
         </div>
       </div>
     <div className="app-body view-patient-profiles form-all">
-    
-    <h6 className="title">Basic Information <span className="float-end"><Link to="#" className={isDisabled ? 'disabled' : ''} onClick={handleButtonClick}><FontAwesomeIcon icon={faEdit} /></Link></span></h6>
+      <div className='d-flex justify-content-between'>
+        <h6 className="title">Basic Information </h6>
+        <div><span className='mx-2'><Link to="#" className='primary-color font-weight-500'>Edit Medical History</Link></span>
+          <span className="float-end"><Link to="#" className={isDisabled ? 'disabled' : ''} onClick={handleButtonClick}><FontAwesomeIcon icon={faEdit} /></Link></span>
+        </div>
+      </div>
     <form name="" id="" className={isDisabled ? 'disabled' : ''}>
           <div className="form-group">
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>

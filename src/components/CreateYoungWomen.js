@@ -57,8 +57,8 @@ function CraeteYoungWomen(){
         <p><small>Add Young Women Informations</small></p>
         <form className="mt-3" name="" id="">
           <div className="form-group">
-            <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Full Name" />
+            <label htmlFor="full_name">Full Name <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="full_name" id="" placeholder="Full Name" />
           </div>
           
           <div className="form-group">
@@ -75,8 +75,8 @@ function CraeteYoungWomen(){
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="name">Age <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Age" />
+            <label htmlFor="age">Age <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="age" id="" placeholder="Age" />
           </div>
           <div className="form-group">
             <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
@@ -86,36 +86,36 @@ function CraeteYoungWomen(){
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="name">Phone No <span className="text-danger">*</span></label>
-            <input type="tel" className="form-control" name="" id="" placeholder="Phone No" />
+            <label htmlFor="phone">Phone No <span className="text-danger">*</span></label>
+            <input type="tel" className="form-control" name="phone" id="" placeholder="Phone No" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">WhatsApp No </label>
-            <input type="tel" className="form-control" name="" id="" placeholder="WhatsApp No" />
+            <label htmlFor="whatsapp">WhatsApp No </label>
+            <input type="tel" className="form-control" name="whatsapp" id="" placeholder="WhatsApp No" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Email </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Email" />
+            <label htmlFor="email">Email </label>
+            <input type="text" className="form-control" name="email" id="" placeholder="Email" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Address <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Address" />
+            <label htmlFor="address">Address <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="address" id="" placeholder="Address" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Address 2 </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Address 2" />
+            <label htmlFor="add2">Address 2 </label>
+            <input type="text" className="form-control" name="add2" id="" placeholder="Address 2" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Landmark </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Landmark" />
+            <label htmlFor="landmark">Landmark </label>
+            <input type="text" className="form-control" name="landmark" id="" placeholder="Landmark" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Village/Town/City <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Village/Town/City" />
+            <label htmlFor="place">Village/Town/City <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="place" id="" placeholder="Village/Town/City" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Pincode </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Pincode" />
+            <label htmlFor="pincode">Pincode </label>
+            <input type="text" className="form-control" name="pincode" id="" placeholder="Pincode" />
           </div>
           <div className="form-group">
             <label className="no-style"><span className="d-block">Servie Area :</span></label>
@@ -125,8 +125,20 @@ function CraeteYoungWomen(){
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="name">Special Notes </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Special Notes" />
+            <label htmlFor="special_note">Special Notes </label>
+            <input type="text" className="form-control" name="special_note" id="" placeholder="Special Notes" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="school_name">School Name </label>
+            <input type="text" className="form-control" name="school_name" id="" placeholder="School Name" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="class">Class </label>
+            <input type="text" className="form-control" name="class" id="" placeholder="Class" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="class">Section </label>
+            <input type="text" className="form-control" name="section" id="" placeholder="Section" />
           </div>
           <div className='form-group'>
             <div className="custom-control custom-checkbox mb-3">

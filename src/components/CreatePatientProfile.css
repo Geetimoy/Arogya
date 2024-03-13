@@ -45,3 +45,7 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.font-weight-500{
+  font-weight: 500;
+}

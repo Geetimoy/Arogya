@@ -8,10 +8,19 @@
 }
 
 .bookings .button-box span{
-  color: #a80707;
+  /* color: #a80707; */
   font-weight: 500;
 }
 
 .add-booking{
   text-align: right;
+}
+
+.bookings .button-box .drop-menu ul li a {
+  padding: 0;
+  font-size: 14px;
+}
+
+.bookings .my-element2.active + .drop-menu{
+  top: 30px;
 }

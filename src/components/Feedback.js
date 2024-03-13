@@ -2,8 +2,9 @@ import React, { useState, useContext } from 'react';
 
 import Appfooter from "./AppFooter";
 import AppTop from "./AppTop";
+import Rating from "./Rating"
 
-import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md';
+//import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md';
 
 import './Feedback.css'
 
@@ -19,36 +20,51 @@ function Feedback(){
 
   const [activeButton, setActiveButton] = useState(null);
 
-  const handleButtonClick = (buttonId) => {
-    setActiveButton(buttonId);
+  const handleButtonClick = (value) => {
+    setActiveButton(value);
+    console.log(value)
   };
+
+  // const handleButtonClick = (buttonId) => {
+  //   setActiveButton(buttonId);
+  //   console.log(buttonId)
+  // };
 
   const [activeStar, setActiveStar] = useState(null);
 
-  const handleClick = () => {
-    setActiveStar(!activeStar); // Toggle the state
-  };
-
    // State to manage form data
-   const [formData, setFormData] = useState({
-    patientid: '',
-    howeasy: '',
-    serviceexperience: '',
-    share: '',
-  });
+  //  const [formData, setFormData] = useState({
+  //   patientid: '',
+  //   howeasy: '',
+  // });
+
+ 
+
+  const [rating, setRating] = useState(0);
+
+  const handleClick = (event) => {
+    setRating(event.target.value); // Toggle the state
+    console.log(rating);
+  };
 
   // Function to handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+  const [comments, setComments] = useState("");
+
+  const commentsChangeHandler = (event) =>{
+    setComments(event.target.value);
+    console.log(comments);
+  }
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can perform actions like API calls, state updates, etc. here
+    console.log('submit the form');
     let jsonData = {};
-      
       jsonData['system_id']             = "telehealth.serviceplace.org.in";
       jsonData['device_type']           = DEVICE_TOKEN;
       jsonData['device_token']          = DEVICE_TYPE;
@@ -56,9 +72,9 @@ function Feedback(){
       jsonData['user_long']             = localStorage.getItem('longitude');
 
       jsonData['account_key']           = "0uu232206c628";
-      jsonData['feedback_easy_or_difficult'] = "xyz";
-      jsonData['feedback_rating']       = "abcd";
-      jsonData['feedback_description']  = "hbndskjndkjndskndsjnds";
+      jsonData['feedback_easy_or_difficult'] = activeButton;
+      jsonData['feedback_rating']       = rating;
+      jsonData['feedback_description']  = comments;
       
       const response = await fetch(`${API_URL}/feedback`, {
         method: "POST",
@@ -96,14 +112,11 @@ function Feedback(){
               <div className="col-lg-12">
                 <div className="normal-box mt-2"><span className="mb-2">How easy was the app to use:</span>
                   <div className="use-app">
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 1 ? 'active' : ''}`} onClick={() => handleButtonClick(1)} name='veryeasy' value={formData.veryeasy}
-          onChange={handleInputChange}>Very Easy</button>
-                    {/* <button type="button" className={`btn btn-outline-info ${activeButton === 2 ? 'active' : ''}`} onClick={() => handleButtonClick(2)}>Very Easy</button> */}
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 3 ? 'active' : ''}`} onClick={() => handleButtonClick(3)} name='easy' value={formData.easy}
-          onChange={handleInputChange}>Easy</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 4 ? 'active' : ''}`} onClick={() => handleButtonClick(4)} name='noteasy' value={formData.noteasy}>Not Easy or Difficult</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 5 ? 'active' : ''}`} onClick={() => handleButtonClick(5)} name='difficult' value={formData.difficult}>Difficult</button>
-                    <button type="button" className={`btn btn-outline-info ${activeButton === 6 ? 'active' : ''}`} onClick={() => handleButtonClick(6)} name='verydifficult' value={formData.verydifficult}>Very Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 1 ? 'active' : ''}`} onClick={() => handleButtonClick(1)} name='veryeasy' value={"Very ease"}>Very Easy</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 2 ? 'active' : ''}`} onClick={() => handleButtonClick(2)} name='easy' value={"Easy"}>Easy</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 3 ? 'active' : ''}`} onClick={() => handleButtonClick(3)} name='noteasy' value={"Not easy"}>Not Easy or Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 4 ? 'active' : ''}`} onClick={() => handleButtonClick(4)} name='difficult' value={"Difficult"}>Difficult</button>
+                    <button type="button" className={`btn btn-outline-info ${activeButton === 5 ? 'active' : ''}`} onClick={() => handleButtonClick(5)} name='verydifficult' value={"Very difficult"}>Very Difficult</button>
                   </div>
                 </div>
               </div>
@@ -114,11 +127,12 @@ function Feedback(){
                     <span className="">Not at all likely</span>
                     <span>
                       <div className="rating-symbol mx-2">
-                        <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} />
-                        <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} />
-                        <MdOutlineStar size={21} className='star' />
-                        <MdOutlineStarBorder size={21} className='star' />
-                        <MdOutlineStarBorder size={21} className='star' />
+                        {/* <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} value={1} />
+                        <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} value={2} />
+                        <MdOutlineStar size={21} className='star' onClick={handleClick} value={3} />
+                        <MdOutlineStarBorder size={21} className='star' onClick={handleClick} value={4} />
+                        <MdOutlineStarBorder size={21} className='star' onClick={handleClick} value={5} /> */}
+                        <Rating></Rating>
                       </div>
                     </span>
                     <span className="">Extremely likely</span>
@@ -128,12 +142,12 @@ function Feedback(){
               <div className="col-lg-12">
                 <div className="form-group">
                   <label htmlFor="comments">Would you like to share any other comments: </label>
-                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={formData.comments}></textarea>
+                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
                 </div>
               </div>
               <div className="col-lg-12">
                 <div className='btns-group d-flex justify-content-center'>
-                  <button type="button" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
+                  <button type="submit" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
                   <button type="button" class="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button>
                 </div>
               </div>

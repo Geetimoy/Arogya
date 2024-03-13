@@ -16,6 +16,12 @@ function Bookings(){
 
   const systemContext = useContext(SystemContext);
 
+  const [isActive, setIsActive] = useState(false);
+
+  const handleClick = () => {
+    setIsActive(!isActive); // Toggle the state
+  };
+
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
@@ -61,8 +67,19 @@ function Bookings(){
         <div className="add-booking mb-3"><a class="btn btn-sm btn-primary" href="selectpatient">Add New Booking</a></div>
         <div className="row">
           <div className="col-12">
-            <div className="button-box mb-3">
-              <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
+            <div className="button-box pos-relative mb-3">
+              {/* <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span> */}
+              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                <ul>
+                <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"#"}>Cancel Booking</Link></li>
+                  <li><Link to={"#"}>Close Booking</Link></li>
+                  <li><Link to={"/view-review"}>View Review</Link></li>
+                  <li><Link to={"/write-review"}>Write Review</Link></li>
+                </ul>
+              </div>
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
               <p><span className="d-block">Doctor Name:</span> Doctor2</p>
               <p><span className="d-block">Specialization:</span> Test</p>

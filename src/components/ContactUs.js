@@ -33,8 +33,8 @@ function ContactUs(){
             <label htmlFor="problem">Problem Type: </label>
             <select id="" name="" className="form-control">
               <option value="">Select</option>
-              <option value="1">Can't book new appoinment</option>
-              <option value="2">Can't cancel an appoinment</option>
+              <option value="1">Can't book new appointment</option>
+              <option value="2">Can't cancel an appointment</option>
               <option value="3">Can't download prescription</option>
             </select>
           </div>

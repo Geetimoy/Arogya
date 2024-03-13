@@ -134,6 +134,10 @@ body {
     color: #009fdc;
 }
 
+.serviceplace-container-class .bookings .button-box span{
+    color: #009fdc;
+}
+
 body:has(.serviceplace-container-class) .modal .modal-footer .primary-bg-color{
     background-color: #009fdc;
 }
@@ -183,6 +187,10 @@ body:has(.serviceplace-container-class) .modal .modal-footer .primary-bg-color:h
 }
 
 .telehealth-container-class .rating-symbol .star {
+    color: #2aa142;
+}
+
+.telehealth-container-class .bookings .button-box span{
     color: #2aa142;
 }
 
@@ -240,6 +248,10 @@ body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color:hov
     color: #af1e25;
 }
 
+.ukhra-container-class .bookings .button-box span{
+    color: #af1e25;
+}
+
 body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color{
     background-color: #952025;
 }
@@ -292,6 +304,10 @@ body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color:hover{
     color: #2aa142;
 }
 
+.rgvn-container-class .bookings .button-box span{
+    color: #2aa142;
+}
+
 body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color{
     background-color: #2aa142;
 }
@@ -341,6 +357,10 @@ body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color:hover{
 }
 
 .b2h-container-class .rating-symbol .star {
+    color: #a30707;
+}
+
+.b2h-container-class .bookings .button-box span{
     color: #a30707;
 }
 
