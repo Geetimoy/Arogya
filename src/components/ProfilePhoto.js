@@ -116,14 +116,15 @@ function ProfilePhoto(){
     let jsonData = {};
 
     jsonData['system_id']         = systemContext.systemDetails.system_id;
-    jsonData["user_account_key"]  = decryptedLoginDetails.account_key;
+    jsonData["account_key"]       = decryptedLoginDetails.account_key;
+    jsonData["account_type"]      = decryptedLoginDetails.account_type;
     jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
     jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]      = DEVICE_TOKEN;
     jsonData["user_lat"]          = localStorage.getItem('latitude');
     jsonData["user_long"]         = localStorage.getItem('longitude');
     
-    const response1 = await fetch(`${API_URL}/userProfile`, {
+    const response1 = await fetch(`${API_URL}/getUserProfileDetails`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -132,15 +133,18 @@ function ProfilePhoto(){
     });
     let result1 = await response1.json();
 
-    let userDetails = result1.data.results;
+    let userDetails = result1.data;
 
     setUserDetails(result1.data.results);
 
-    if(userDetails.profile_image_url != ""){
-
-      var sourceImageUrl = userDetails.profile_image_url.replace('/shared/', '/sources/');
-      //setImage(sourceImageUrl);
-
+    if(userDetails.source_image !== ""){
+      var imageConfig = JSON.parse(userDetails.profile_photo);
+      setImage(userDetails.source_image+'?timestamp='+Math.random());
+      setCrop(imageConfig.crop);
+      setZoom(imageConfig.zoom);
+      setRotation(imageConfig.rotation);
+      setCroppedAreaPixels(imageConfig.crop_area);
+      setCroppedImage(userDetails.shared_image+'?timestamp='+Math.random());
     }
 
   }

@@ -1,20 +1,69 @@
 import CryptoJS from "crypto-js";
-import { ENCYPTION_KEY } from './util/Constants';
 
 import Appfooter from './AppFooter';
 import AppTop from './AppTop';
 import './Account.css'
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
  
-import profilephoto from '../assets/images/profile.jpg'
+//import profilephoto from '../assets/images/profile.jpg'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faImage, faLock, faCertificate, faAngleRight, faBell, faCamera, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from "react";
+import SystemContext from "../context/system/SystemContext";
 
 function Account(){
+  
+  const systemContext = useContext(SystemContext);
+
+  const [image, setImage] = useState('/assets/images/profile.jpg');
 
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+  const getUserDetails = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["account_key"]       = decryptedLoginDetails.account_key;
+    jsonData["account_type"]      = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+    jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getUserProfileDetails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    let userDetails = result1.data;
+
+    if(userDetails.shared_image !== ""){
+      setImage(userDetails.shared_image+'?timestamp='+Math.random());
+    }
+
+  }
+
+  useEffect(() => {
+
+    if(systemContext.systemDetails.system_id){
+      getUserDetails();
+    }
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id])
 
   return(
     <>
@@ -24,7 +73,7 @@ function Account(){
           <div className='col-lg-12'>
             <div className='rounded jumbotron p-4 text-center'>
               <div className='profile-thumb-box'>
-                <img src={profilephoto} className='thumb' alt=''/>
+                <img src={image} className='thumb' alt=''/>
                 <Link to ="/profilephoto"><FontAwesomeIcon icon={faCamera} color='primary-color' /></Link>
               </div>
               <h5 className='title mb-0'>{decryptedLoginDetails.user_name}</h5>
