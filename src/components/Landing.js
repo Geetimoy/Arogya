@@ -25,7 +25,7 @@ function Landing() {
         </header>
       
         <div className='footerLogo text-center'>
-          <img src={systemContext.systemDetails.thp_ngo_logo_url} className='mx-3' alt=''/>
+          {systemContext.systemDetails.system_id !== "telehealth.serviceplace.org.in" && <img src={systemContext.systemDetails.thp_ngo_logo_url} className='mx-3' alt=''/>}
           <img src={systemContext.systemDetails.thp_sp_global_logo_url} className='mx-3' alt=''/>
         </div>
       </div>
