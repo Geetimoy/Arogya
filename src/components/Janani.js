@@ -84,7 +84,7 @@ function Janani(){
                   <li><Link to={"#"}>Close Janani</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
+              <Link to="#">
                 <img src={youngwomenprofile} alt='' />
                 <h6>Janani 1</h6>
               </Link>
@@ -98,7 +98,7 @@ function Janani(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
+              <Link to="#">
                 <img src={youngwomenprofile} alt='' />
                 <h6>Janani 2</h6>
               </Link>

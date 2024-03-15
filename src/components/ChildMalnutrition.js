@@ -84,7 +84,7 @@ function ChildMalnutrion(){
                   <li><Link to={"#"}>Close Child Malnutrition</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
+              <Link to="#">
                 <img src={childprofile} alt='' />
                 <h6>Child Malnutrition 1</h6>
               </Link>
@@ -98,7 +98,7 @@ function ChildMalnutrion(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
+              <Link to="#">
                 <img src={childprofile} alt='' />
                 <h6>Child Malnutrition 2</h6>
               </Link>

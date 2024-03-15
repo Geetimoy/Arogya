@@ -42,9 +42,9 @@ function Feedback(){
 
   const [rating, setRating] = useState(0);
 
-  const handleClick = (event) => {
-    setRating(event.target.value); // Toggle the state
-    console.log(rating);
+  const handleStarClick = (data) => {
+    setRating(data); // Toggle the state
+    console.log(data);
   };
 
   // Function to handle input changes
@@ -127,12 +127,7 @@ function Feedback(){
                     <span className="">Not at all likely</span>
                     <span>
                       <div className="rating-symbol mx-2">
-                        {/* <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} value={1} />
-                        <MdOutlineStar size={21} className={`star ${activeStar ? 'active' : ''}`} onClick={handleClick} value={2} />
-                        <MdOutlineStar size={21} className='star' onClick={handleClick} value={3} />
-                        <MdOutlineStarBorder size={21} className='star' onClick={handleClick} value={4} />
-                        <MdOutlineStarBorder size={21} className='star' onClick={handleClick} value={5} /> */}
-                        <Rating></Rating>
+                        <Rating sendDataToParent={handleStarClick}></Rating>
                       </div>
                     </span>
                     <span className="">Extremely likely</span>
