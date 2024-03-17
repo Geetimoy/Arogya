@@ -126,7 +126,6 @@ function ContactUs(){
                 </option>
               ))}
             </select>
-            
           </div>
           <div className="form-group">
             <label htmlFor="subject">Subject: </label>
