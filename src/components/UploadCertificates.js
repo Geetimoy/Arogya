@@ -60,13 +60,12 @@ function UploadCertificates(){
       formData.append("file", event.target.files[0]);
       formData.append("file_seq", elem);
 
-      // const response = await fetch(`${API_URL}/uploadCertificate`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: formData,
-      // });
+      const response = await fetch(`${API_URL}/uploadCertificate`, {
+         method: "POST",
+         body: formData,
+      });
+
+      console.log(response);return false;
 
       var result = {
         'msg': 'File Uploaded Successfully',

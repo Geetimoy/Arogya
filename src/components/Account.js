@@ -20,6 +20,7 @@ function Account(){
   const systemContext = useContext(SystemContext);
 
   const [image, setImage] = useState('/assets/images/profile.jpg');
+  const [accountStatus, setAccountStatus] = useState('');
 
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -47,8 +48,10 @@ function Account(){
     });
     let result1 = await response1.json();
 
-    let userDetails = result1.data;
+    let userDetails = result1.data;console.log(userDetails);
 
+    setAccountStatus(userDetails.account_status_descr);
+    
     if(userDetails.shared_image !== ""){
       setImage(userDetails.shared_image+'?timestamp='+Math.random());
     }
@@ -77,7 +80,7 @@ function Account(){
                 <Link to ="/profilephoto"><FontAwesomeIcon icon={faCamera} color='primary-color' /></Link>
               </div>
               <h5 className='title mb-0'>{decryptedLoginDetails.user_name}</h5>
-              <div className='status float-end'><span className='red-text'><b>Status: Pending</b></span></div>
+              <div className='status float-end'><span className='red-text'><b>Status: {accountStatus}</b></span></div>
             </div>
             <ul>
               <li><FontAwesomeIcon icon={faInfoCircle} /> <Link to ="/basicinfo">Update Basic Information</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
