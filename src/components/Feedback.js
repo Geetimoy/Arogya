@@ -63,7 +63,7 @@ function Feedback(){
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit the form');
+    //console.log('submit the form');
     let jsonData = {};
       jsonData['system_id']             = "telehealth.serviceplace.org.in";
       jsonData['device_type']           = DEVICE_TOKEN;

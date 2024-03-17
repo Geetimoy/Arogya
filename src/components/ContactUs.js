@@ -2,14 +2,96 @@ import Appfooter from "./AppFooter";
 import AppTop from "./AppTop";
 
 import './ContactUs.css'
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from "../context/alert/AlertContext";
+
+import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function ContactUs(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext = useContext(AlertContext);
+
+  const [values, setValues] = useState("Select ...");
+
+  const [subject, setSubject] = useState("");
+
+  const [description, setDescription] = useState("");
+
+  const [problem, setProblem] = useState([
+    {
+      label: "Select ...",
+      value: "Select ..."
+    },
+    { label: "Can't book new appointment",
+      value: "Can't book new appointment"
+    },
+    { label: "Can't cancel an appointment", 
+    value: "Can't cancel an appointment" 
+    },
+    { label: "Can't download prescription", 
+    value: "Can't download prescription" 
+    }
+  ]);
+
+  // const handleSelectProblem = (e) =>{
+  //   setProblem(e.target.value);
+  //   // console.log(e.target.value);
+  // } 
+
+
+  const handleSubject =(e)=>{
+    setSubject(e.target.value);
+  }
+
+
+  const handleDescription =(e)=>{
+    setDescription(e.target.value);
+  }
+
+
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //console.log('submit the form');
+    let jsonData = {};
+      jsonData['system_id']             = "telehealth.serviceplace.org.in";
+      jsonData['device_type']           = DEVICE_TOKEN;
+      jsonData['device_token']          = DEVICE_TYPE;
+      jsonData['user_lat']              = localStorage.getItem('latitude');
+      jsonData['user_long']             = localStorage.getItem('longitude');
+
+      jsonData['account_key']           = "0uu232206c628";
+      jsonData['problem_type']          = 1;
+      jsonData['subject']               = subject;
+      jsonData['problem_description']   = values;
+      jsonData['service_type']          = 2;
+      jsonData['description']           = description;
+      
+      const response = await fetch(`${API_URL}/contactUs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+
+      let result = await response.json();
+
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    //console.log('Form submitted with data:', formData);
+  };
+
 
   return(
     <>
@@ -23,7 +105,7 @@ function ContactUs(){
           <li>Contact Email: {systemContext.systemDetails.thp_ngo_contact_email}</li>
         </ul>
         <h5 className="title">Create New Case / Issue / Problem</h5>
-        <form className="contactus-form">
+        <form className="contactus-form" onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-lg-12">
               <div className="normal-box mt-2"><span>Patient ID:</span>UP0033445576</div>
@@ -31,23 +113,31 @@ function ContactUs(){
           </div>
           <div className="form-group">
             <label htmlFor="problem">Problem Type: </label>
-            <select id="" name="" className="form-control">
+            {/* <select id="" name="" className="form-control" defaultValue={problem} onChange={handleSelectProblem}>
               <option value="">Select</option>
               <option value="1">Can't book new appointment</option>
               <option value="2">Can't cancel an appointment</option>
               <option value="3">Can't download prescription</option>
+            </select> */}
+            <select className="form-control" value={values} onChange={(e) => setValues(e.currentTarget.value)}>
+              {problem.map((val) => (
+                <option key={val.value} value={val.value}>
+                  {val.label}
+                </option>
+              ))}
             </select>
+            
           </div>
           <div className="form-group">
             <label htmlFor="subject">Subject: </label>
-            <input type="text" className="form-control" name="" id=""></input>
+            <input type="text" className="form-control" name="" id="" onChange={handleSubject}></input>
           </div>
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problem: </label>
-            <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe your Issue/Problem"></textarea>
+            <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe your Issue/Problem" onChange={handleDescription}></textarea>
           </div>
           <div className='btns-group d-flex justify-content-center'>
-            <button type="button" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
+            <button type="submit" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
             <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button>
           </div>
         </form>
