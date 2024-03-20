@@ -39,38 +39,52 @@ function UploadCertificates(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+  }
+
   const uploadCertificateChange = async (event, elem, index) => {
     var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
     var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
 
     if(event.target.files[0]){
 
+      var fileName        = event.target.files[0].name;
+      var fileExtension   = fileName.split('.').pop();
+
       fileUpload[elem].upload   = true;
       fileUpload[elem].fileName = event.target.files[0].name;
       setFileUpload({...fileUpload, ...fileUpload});
 
-      const formData = new FormData();
-      formData.append("system_id", systemContext.systemDetails.system_id);
-      formData.append("device_type", DEVICE_TYPE);
-      formData.append("device_token", DEVICE_TOKEN);
-      formData.append("user_lat", localStorage.getItem('latitude'));
-      formData.append("user_long", localStorage.getItem('longitude'));
-      formData.append("user_account_key", loginDetails.account_key);
-      formData.append("user_account_type", loginDetails.account_type);
-      formData.append("file", event.target.files[0]);
-      formData.append("file_seq", elem);
+      const uploadedFileBase64 = await convertFileToBase64(event.target.files[0]);
+      
+      let jsonData = {};
+
+      jsonData['system_id']         = systemContext.systemDetails.system_id;
+      jsonData["device_type"]       = DEVICE_TYPE;
+      jsonData["device_token"]      = DEVICE_TOKEN;
+      jsonData["user_lat"]          = localStorage.getItem('latitude');
+      jsonData["user_long"]         = localStorage.getItem('longitude');
+      jsonData["user_account_key"]  = loginDetails.account_key;
+      jsonData["user_account_type"] = loginDetails.account_type;
+      jsonData["file"]              = uploadedFileBase64;
+      jsonData["file_seq"]          = elem;
+      jsonData["file_extension"]    = fileExtension;
 
       const response = await fetch(`${API_URL}/uploadCertificate`, {
-         method: "POST",
-         body: formData,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
       });
 
-      console.log(response);return false;
-
-      var result = {
-        'msg': 'File Uploaded Successfully',
-        'success': true
-      }
+      let result = await response.json();
 
       if(result.success){
         const nextElem = 'certificate_'+(index+1);
