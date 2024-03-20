@@ -21,8 +21,10 @@ function AboutServicePlace(){
       jsonData['device_token']          = DEVICE_TOKEN;
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
-      jsonData["page_key"] = localStorage.getItem('page_key');
-      jsonData["system_id"] = "telehealth.serviceplace.org.in";
+
+      jsonData["page_key"]              = "ABOUT_SERVICE_PLACE";
+      jsonData["system_id"]             = "telehealth.serviceplace.org.in";
+      jsonData["page_id"]               = 1;
 
       useEffect(() => {
         const fetchData = async () => {

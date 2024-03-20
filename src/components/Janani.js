@@ -64,7 +64,7 @@ function Janani(){
         </div>
       </div>
       <div className="app-body janani profile-listing">
-        <div className='add-patient'><Link to="/create-janani" className='btn btn-sm btn-primary'>Add Janani</Link></div>
+        <div className='add-patient'><Link to="/create-janani" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Janani</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Janani' />

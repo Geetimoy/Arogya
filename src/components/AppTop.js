@@ -49,10 +49,10 @@ function AppTop(){
             </div>
             <ul>
               <li className='mm-active'><FontAwesomeIcon icon={faUser} /> <Link to={"/account"}>My Profile</Link></li>
-              <li><FontAwesomeIcon icon={faUsers} /> <Link to={"/patientprofile"}>Patient Profiles</Link></li>
+              <li><FontAwesomeIcon icon={faUsers} /> <Link to={"/patientprofiles"}>Patient Profiles</Link></li>
               <li><FontAwesomeIcon icon={faFemale} /> <Link to={"/janani"}>Janani</Link></li>
-              <li><FontAwesomeIcon icon={faChild} /> <Link to={"/childmalnutrition"}>Child Malnutrition</Link></li>
-              <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/apointments"}>Appointments</Link></li>
+              <li><FontAwesomeIcon icon={faChild} /> <Link to={"/child-malnutrition"}>Child Malnutrition</Link></li>
+              <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/bookings"}>Appointments</Link></li>
               <li><FontAwesomeIcon icon={faSignOutAlt} /> <Link to={"/logout"}>Logout</Link></li>
             </ul>
           </div>

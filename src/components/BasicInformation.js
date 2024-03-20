@@ -98,7 +98,7 @@ function BasicInformation(){
               <label className="pos-relative no-style">Gender  <span className="text-danger">*</span> </label>
               <div className="d-flex">
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_gender_m" name="edit_user_gender" class="custom-control-input"  checked="checked" />
+                  <input type="radio" id="edit_user_gender_m" name="edit_user_gender" class="custom-control-input" />
                   <label className="custom-control-label no-style" htmlFor="edit_user_gender_m">Male</label>
                 </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
@@ -168,12 +168,13 @@ function BasicInformation(){
             </div>
             <div className="form-group">
               <label>Special Notes :</label>
-              <input type="text" class="form-control" name="" id="" value="" />
+              <input type="text" class="form-control" name="" id="" placeholder="Special Notes" />
             </div>
 
             <div className='btns-group d-flex justify-content-center'>
               <button type="button" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Update My Profile</button>
-              <button type="button" class="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button>
+              
+              <Link to="/account"><button type="button" class="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button></Link>
             </div>
           </form>
         </div>

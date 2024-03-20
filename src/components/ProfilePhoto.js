@@ -272,9 +272,7 @@ function ProfilePhoto(){
                       <button type="button" className="btn btn-primary primary-bg-color border-0 mx-1" onClick={handleFormSubmit}>
                         Save
                       </button>
-                      <button type="button" className="btn btn-primary primary-bg-color border-0 mx-1" onClick={cancelPhotoUpload}>
-                        Cancel
-                      </button>
+                      <Link to="/account"><button type="button" className="btn btn-primary primary-bg-color border-0 mx-1">Cancel</button></Link>
                     </div>
                   </div>
                 </div>

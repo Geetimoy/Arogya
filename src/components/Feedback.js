@@ -13,6 +13,8 @@ import AlertContext from "../context/alert/AlertContext";
 
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
+import { Link } from "react-router-dom";
+
 function Feedback(){
 
   const systemContext = useContext(SystemContext);
@@ -143,7 +145,7 @@ function Feedback(){
               <div className="col-lg-12">
                 <div className='btns-group d-flex justify-content-center'>
                   <button type="submit" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
-                  <button type="button" class="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button>
+                  <Link to="/dashboard"><button type="button" class="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button></Link>
                 </div>
               </div>
             </div>
