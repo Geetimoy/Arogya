@@ -66,7 +66,7 @@ function Patientprofiles(){
         </div>
       </div>
       <div className="app-body patient-profiles profile-listing">
-        <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary'>Add Patient</Link></div>
+        <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search a patient' />

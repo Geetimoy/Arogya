@@ -10,6 +10,8 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Link } from "react-router-dom";
+
 function ContactUs(){
 
   const systemContext = useContext(SystemContext);
@@ -59,8 +61,8 @@ function ContactUs(){
     //console.log('submit the form');
     let jsonData = {};
       jsonData['system_id']             = "telehealth.serviceplace.org.in";
-      jsonData['device_type']           = DEVICE_TOKEN;
-      jsonData['device_token']          = DEVICE_TYPE;
+      jsonData['device_type']           = DEVICE_TYPE;
+      jsonData['device_token']          = DEVICE_TOKEN;
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
 
@@ -112,7 +114,7 @@ function ContactUs(){
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="problem">Problem Type: </label>
+            <label htmlFor="problem">Problem Type: <span className="text-danger">*</span></label>
             {/* <select id="" name="" className="form-control" defaultValue={problem} onChange={handleSelectProblem}>
               <option value="">Select</option>
               <option value="1">Can't book new appointment</option>
@@ -128,16 +130,16 @@ function ContactUs(){
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="subject">Subject: </label>
+            <label htmlFor="subject">Subject: <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="" id="" onChange={handleSubject}></input>
           </div>
           <div className="form-group">
-            <label htmlFor="describe">Describe / Explain Problem: </label>
+            <label htmlFor="describe">Describe / Explain Problem: <span className="text-danger">*</span></label>
             <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe your Issue/Problem" onChange={handleDescription}></textarea>
           </div>
           <div className='btns-group d-flex justify-content-center'>
             <button type="submit" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
-            <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button>
+            <Link to="/dashboard"><button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button></Link>
           </div>
         </form>
       </div>

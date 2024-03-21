@@ -57,23 +57,26 @@ function Settings(){
           </div>
       </div>
       <div className="app-body settings">
-          <h5 className='title brdr-btm'>Notifications</h5>
+          <div className='brdr-btm d-flex justify-content-between align-items-center'>
+            <h5 className='title mb-0'>Notifications</h5>
+            <Link to="javascript:void(0);" className="btn btn-sm btn-primary min-width-100 primary-bg-color border-0">Save</Link>
+          </div>
           <div className="mb-4">
-            <div class="form-check form-switch px-0 mb-2">
-              <input class="form-check-input float-end" type="checkbox" id="sms" name="darkmode" value="yes" />
-              <label class="form-check-label" for="sms"><strong>SMS</strong></label>
+            <div className="form-check form-switch px-0 mb-2">
+              <input className="form-check-input float-end" type="checkbox" id="sms" name="darkmode" value="yes" />
+              <label className="form-check-label" for="sms"><strong>SMS</strong></label>
             </div>
-            <div class="form-check form-switch px-0 mb-2">
-              <input class="form-check-input float-end" type="checkbox" id="email" name="darkmode" value="yes" />
-              <label class="form-check-label" for="email"><strong>Email</strong></label>
+            <div className="form-check form-switch px-0 mb-2">
+              <input className="form-check-input float-end" type="checkbox" id="email" name="darkmode" value="yes" />
+              <label className="form-check-label" for="email"><strong>Email</strong></label>
             </div>
-            <div class="form-check form-switch px-0 mb-2">
-              <input class="form-check-input float-end" type="checkbox" id="push" name="darkmode" value="yes" />
-              <label class="form-check-label" for="push"><strong>Push</strong></label>
+            <div className="form-check form-switch px-0 mb-2">
+              <input className="form-check-input float-end" type="checkbox" id="push" name="darkmode" value="yes" />
+              <label className="form-check-label" for="push"><strong>Push</strong></label>
             </div>
-            <div class="form-check form-switch px-0 mb-2">
-              <input class="form-check-input float-end" type="checkbox" id="call" name="darkmode" value="yes" />
-              <label class="form-check-label" for="call"><strong>Call</strong></label>
+            <div className="form-check form-switch px-0 mb-2">
+              <input className="form-check-input float-end" type="checkbox" id="call" name="darkmode" value="yes" />
+              <label className="form-check-label" for="call"><strong>Call</strong></label>
             </div>
           </div>
 
