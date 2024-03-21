@@ -1,12 +1,13 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import CryptoJS from "crypto-js";
-import { ENCYPTION_KEY } from './util/Constants';
 
 import './AppTop.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import { Link } from "react-router-dom";
 
@@ -15,6 +16,7 @@ import SystemContext from "../context/system/SystemContext";
 function AppTop(){
 
   const [totalNotifications, setTotalNotifications] = useState(0);
+
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   const systemContext = useContext(SystemContext);
@@ -30,6 +32,43 @@ function AppTop(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const setNotificationCount = async(systemId) => {
+    
+    var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {
+      'system_id': systemId,
+      'device_type': DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+      'user_lat': localStorage.getItem('latitude'),
+      'user_long': localStorage.getItem('longitude'),
+      'user_account_key': loginDetails.account_key,
+      'user_account_type': loginDetails.account_type
+    };
+
+    const response = await fetch(`${API_URL}/myNotifications`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      setTotalNotifications(result.data.row.length());
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      setNotificationCount(systemContext.systemDetails.system_id);
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
 
   return(
     <div className='app-top'>
