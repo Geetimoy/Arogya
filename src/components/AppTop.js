@@ -14,6 +14,7 @@ import SystemContext from "../context/system/SystemContext";
 
 function AppTop(){
 
+  const [totalNotifications, setTotalNotifications] = useState(0);
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   const systemContext = useContext(SystemContext);
@@ -63,7 +64,7 @@ function AppTop(){
           <div className='position-relative'>
             <Link to="/notifications">
             <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-            <span className='top-header-notification primary-bg-color'>3</span>
+            <span className='top-header-notification primary-bg-color'>{totalNotifications}</span>
             </Link>
           </div> 
           <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
