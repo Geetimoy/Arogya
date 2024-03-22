@@ -1,3 +1,7 @@
+.contact-us{
+  position: relative;
+}
+
 .contact-us .form-group {
   margin-bottom: 20px;
 }
@@ -27,4 +31,14 @@
 
 .contact-us form textarea {
   padding-top: 1.825rem;
+}
+
+.create-case{
+  position: absolute;
+  right: 15px;
+  top: 30px;
+}
+
+.contactus-form.hide{
+  display: none;
 }

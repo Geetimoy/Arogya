@@ -23,6 +23,8 @@ function ContactUs(){
 
   const [description, setDescription] = useState("");
 
+  const [isActive, setIsActive] = useState(true);
+
   const [problem, setProblem] = useState([
     {
       label: "Select ...",
@@ -53,6 +55,10 @@ function ContactUs(){
   const handleDescription =(e)=>{
     setDescription(e.target.value);
   }
+
+  const handleClick = () => {
+    setIsActive(!isActive); // Toggle the state
+  };
 
 
   // Function to handle form submission
@@ -106,8 +112,42 @@ function ContactUs(){
           <li>Contact Number: {systemContext.systemDetails.thp_ngo_contact_number}</li>
           <li>Contact Email: {systemContext.systemDetails.thp_ngo_contact_email}</li>
         </ul>
+        <Link to="" className="create-case primary-bg-color btn btn-primary border-0" onClick={handleClick}>Create New Case</Link>
+        <div className="row">
+          <div className="col-6">
+            <div className="normal-box mb-0">
+              <div className="d-flex justify-content-between">
+                <h6>Case ID-122</h6>
+                <span>Open</span>
+              </div>
+              <p>Various versions </p>
+              <div className="d-flex justify-content-end"><Link to=""><small>Reply</small></Link></div>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="normal-box mb-0">
+              <div className="d-flex justify-content-between">
+                <h6>Case ID -123</h6>
+                <span>Open</span>
+              </div>
+              <p>Various versions  </p>
+              <div className="d-flex justify-content-end"><Link to="" ><small>Reply</small></Link></div>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="normal-box mb-0">
+              <div className="d-flex justify-content-between">
+                <h6>Case ID -124</h6>
+                <span>Open</span>
+              </div>
+              <p>Various versions  </p>
+              <div className="d-flex justify-content-end"><Link to=""><small>Reply</small></Link></div>
+            </div>
+          </div>
+        </div>
+        
+        <form className={isActive ? 'contactus-form hide' : 'contactus-form mt-4'} onSubmit={handleSubmit}>
         <h5 className="title">Create New Case / Issue / Problem</h5>
-        <form className="contactus-form" onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-lg-12">
               <div className="normal-box mt-2"><span>Patient ID:</span>UP0033445576</div>
