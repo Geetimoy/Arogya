@@ -71,7 +71,6 @@ function ContactUs(){
       jsonData['device_token']          = DEVICE_TOKEN;
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
-
       jsonData['account_key']           = "0uu232206c628";
       jsonData['problem_type']          = 1;
       jsonData['subject']               = subject;
@@ -106,7 +105,6 @@ function ContactUs(){
       <AppTop></AppTop>
       <div className="app-body contact-us">
         <h5 className="title">Contact Us</h5>
-        
         <p className="mb-0"><strong>Contact Person: </strong></p>
         <ul className="p-0">
           <li>Contact Number: {systemContext.systemDetails.thp_ngo_contact_number}</li>
@@ -145,7 +143,6 @@ function ContactUs(){
             </div>
           </div>
         </div>
-        
         <form className={isActive ? 'contactus-form hide' : 'contactus-form mt-4'} onSubmit={handleSubmit}>
         <h5 className="title">Create New Case / Issue / Problem</h5>
           <div className="row">
