@@ -79,7 +79,7 @@ function Notifications(){
     <>
       <AppTop></AppTop>
       <div className='app-body notifications'>
-        <h5 className='title'>Notifications {notificationList.length}</h5>
+        <h5 className='title'>Notifications</h5>
         <div className='notify-otp'>
           {notificationList && notificationList.map((notification, index) => (
             <div className={`rounded jumbotron p-3 mt-3 mb-3 ${(notification.read_status === '1') ? 'read' : 'unread'}`} key={notification.notification_id} onClick={() => readNotification(notification.notification_id)}>
