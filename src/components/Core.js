@@ -200,24 +200,6 @@ export default function Core() {
    // eslint-disable-next-line
   }, [domain]);
 
-  // useEffect(() => {
-  //   // Function to fetch color dynamically based on the domain
-  //   const fetchColorPreference = async () => {
-  //     try {
-  //       // Replace 'example.com' with the actual domain or extract it from window.location
-  //       //const domain = 'ukhra.serviceplace.org.in';
-  //       const response = await fetch(`${API_URL}/appCoreSettings`);
-  //       const data = await response.json();
-  //       setPrimaryBgColor(data.color);
-  //     } catch (error) {
-  //       console.error('Failed to fetch color preference:', error);
-  //     }
-  //   };
-
-  //   fetchColorPreference();
-  // }, []); // Run once when the component mounts
-  
-  //console.log(systemContext.systemDetails);
 
   var containerClass = "serviceplace-container-class";
 
