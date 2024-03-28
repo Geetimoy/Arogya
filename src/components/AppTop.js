@@ -24,6 +24,7 @@ function AppTop(){
   const [isActive, setIsActive] = useState(false);
 
   const [isMActive, setIsMActive] = useState(false);
+  const [profileImage, setProfileImage] = useState('/assets/images/profile.jpg');
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
@@ -63,10 +64,46 @@ function AppTop(){
     }
   }
 
+  const getUserDetails = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["account_key"]       = decryptedLoginDetails.account_key;
+    jsonData["account_type"]      = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+    jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getUserProfileDetails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    let userDetails = result1.data;
+    
+    if(userDetails.shared_image !== ""){
+      setProfileImage(userDetails.shared_image+'?timestamp='+Math.random());
+    }
+
+  }
+
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
       setNotificationCount(systemContext.systemDetails.system_id);
+      getUserDetails();
     }
+
+
+
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
@@ -83,7 +120,7 @@ function AppTop(){
               <div className='scroll-back' onClick={handleClick}>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </div>
-              <img src={systemContext.systemDetails.thp_app_logo_url} alt='' style={{height:'40px'}} className='mx-2' />
+              <img src={profileImage} alt='' style={{height:'40px'}} className='mx-2' />
               <h5 className='mb-0 mx-2'>Hello {decryptedLoginDetails.user_name}!</h5>
               </div>
             </div>
