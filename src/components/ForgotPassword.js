@@ -118,7 +118,7 @@ function ForgotPassword(){
               <small className="error-mesg">{formData["userId"].errorMessage}</small>
             </div>
             <div className='mb-3 mt-3 w-100'>
-              <button type="submit" className='btn primary-bg-color text-light w-100'>Submit</button>
+              <button type="submit" className='btn primary-bg-color text-light w-100 border-0'>Submit</button>
             </div>
             <p className='mb-4'>I remember my password! Back me to <Link to="/login" className="primary-color">login</Link> page </p>
             <p className="text-center link-red mb-3">

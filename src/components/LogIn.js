@@ -189,7 +189,7 @@ function LogIn(props) {
               {/* <button type="submit" className="btn text-light w-100" style={{backgroundColor:`${props.bgcolor}`}}>
                 Login
               </button> */}
-              <button type="submit" className="btn text-light w-100 primary-bg-color">
+              <button type="submit" className="btn text-light w-100 primary-bg-color border-0">
                 Login
               </button>
             </div>

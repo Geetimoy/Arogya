@@ -127,7 +127,7 @@ function Dashboard() {
     <div className='app-body dashboard'>
       <div className='d-flex justify-content-between mb-4'>
           <div className='d-flex align-items-center'>
-            <img src={profileImage} className='thumb' alt='' style={{height:'50px', width:'50px'}}/>
+            <div className="profile-img"><img src={profileImage} className='thumb' alt='' style={{height:'50px', width:'50px'}}/></div>
             <h5 className='mb-0 mx-3 primary-color'>Hello {decryptedLoginDetails.user_name}!</h5>
           </div>
           <div>

@@ -238,7 +238,7 @@ function SignUp(){
             </div> */}
             <div className='mb-3 mt-3'>
               {/* <Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>Register</Link> */}
-              <button type="submit" className='btn primary-bg-color text-light w-100'>Register</button>
+              <button type="submit" className='btn primary-bg-color text-light w-100 border-0'>Register</button>
             </div>
             <div>
               <p>By registering you read & agreed to the RGVN & ServicePlace <Link to ="/termsofuse" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>

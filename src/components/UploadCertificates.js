@@ -12,7 +12,7 @@ import CryptoJS from "crypto-js";
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faEllipsisV, faLongArrowAltLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
@@ -142,11 +142,11 @@ function UploadCertificates(){
         <div className='d-flex justify-content-between align-items-center'><h5></h5><span>Max 5 files, 500 KB each</span></div>
         <div className="upload-certificate-list">
           <div className="rounded jumbotron p-3 mt-3 mb-3">
-            <form encType="multipart/form-data">
+            <form encType="multipart/form-data" className='choose-file'>
               {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className={`form-group brdr-btm parent ${(fileUpload['certificate_'+(i+1)].upload === true) ? '' : 'upload-disabled'}`}>
                 <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
                 <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Certificate '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
-                <span className="close float-end">&#10006;</span>
+                <span className="close float-end"><FontAwesomeIcon icon={faTrash} /></span>
               </div>)}
             </form>
             {/* <div className="form-group">

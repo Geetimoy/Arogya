@@ -11,7 +11,7 @@ input[type="file"]::-webkit-file-upload-button {
   font-size: 16px;
   outline: none;
   border: none;
-  padding: 10px 25px;
+  padding: 6px 10px;
   transition: all 1s ease;
 }
 
@@ -21,7 +21,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
 }
 
 span.close{
-  margin-top: 12px;
+  margin-top: 8px;
   cursor: pointer;
 }
 
@@ -39,4 +39,12 @@ span.close{
   cursor: not-allowed;
   pointer-events: none;
   text-decoration: none;
+}
+
+.choose-file label{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 200px;
+  overflow: hidden;
+  line-height: normal;
 }

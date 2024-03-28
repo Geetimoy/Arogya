@@ -125,8 +125,8 @@ function Verification(){
                 <input type="text" maxLength="1" name="digit3" id="digit3" onChange={handleChange} value={formData["digit3"].value}/>
                 <input type="text" maxLength="1" name="digit4" id="digit4" onChange={handleChange} value={formData["digit4"].value}/>
               </div>
-              <div className='btn primary-bg-color mb-5 mt-5 w-100'>
-                <button type="submit" className='btn primary-bg-color text-light w-100'>VERIFY</button>
+              <div className='mb-5 mt-5'>
+                <button type="submit" className='btn primary-bg-color text-light w-100 border-0'>VERIFY</button>
               </div>
             </form>
           </div>
