@@ -106,3 +106,9 @@ ul, li{
 .app-top-right a{
   color: #333547;
 }
+
+.app-top .profile-img{
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+}

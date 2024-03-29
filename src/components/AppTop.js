@@ -120,7 +120,7 @@ function AppTop(){
               <div className='scroll-back' onClick={handleClick}>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </div>
-              <img src={profileImage} alt='' style={{height:'40px'}} className='mx-2' />
+                <div className='profile-img'><img src={profileImage} alt='' style={{height:'40px'}} className='' /></div>
               <h5 className='mb-0 mx-2'>Hello {decryptedLoginDetails.user_name}!</h5>
               </div>
             </div>
