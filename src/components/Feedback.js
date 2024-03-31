@@ -1,8 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Appfooter from "./AppFooter";
 import AppTop from "./AppTop";
 import Rating from "./Rating"
+
+import CryptoJS from "crypto-js";
 
 //import { MdOutlineStar, MdOutlineStarBorder } from 'react-icons/md';
 
@@ -11,7 +13,7 @@ import './Feedback.css'
 import SystemContext from '../context/system/SystemContext';
 import AlertContext from "../context/alert/AlertContext";
 
-import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import { Link } from "react-router-dom";
 
@@ -27,20 +29,7 @@ function Feedback(){
     console.log(value)
   };
 
-  // const handleButtonClick = (buttonId) => {
-  //   setActiveButton(buttonId);
-  //   console.log(buttonId)
-  // };
-
   const [activeStar, setActiveStar] = useState(null);
-
-   // State to manage form data
-  //  const [formData, setFormData] = useState({
-  //   patientid: '',
-  //   howeasy: '',
-  // });
-
- 
 
   const [rating, setRating] = useState(0);
 
@@ -49,13 +38,10 @@ function Feedback(){
     console.log(data);
   };
 
-  // Function to handle input changes
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
-
   const [comments, setComments] = useState("");
+
+  const [accountTypeLabel, setAccountTypeLabel] = useState("User ID");
+  const [accountId, setAccountId]               = useState("XXXXXXXXXXX");
 
   const commentsChangeHandler = (event) =>{
     setComments(event.target.value);
@@ -99,6 +85,54 @@ function Feedback(){
     //console.log('Form submitted with data:', formData);
   };
 
+  const getUserDetails = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["account_key"]       = decryptedLoginDetails.account_key;
+    jsonData["account_type"]      = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+    jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getUserProfileDetails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    let userDetails = result1.data;
+
+    if(userDetails.account_type === 1) { setAccountTypeLabel("Admin ID");}
+    else if(userDetails.account_type === 2) { setAccountTypeLabel("Sub-Admin ID");}
+    else if(userDetails.account_type === 3) { setAccountTypeLabel("Patient ID");}
+    else if(userDetails.account_type === 4) { setAccountTypeLabel("Volunteer ID");}
+    else if(userDetails.account_type === 5) { setAccountTypeLabel("Doctor ID");}
+    else if(userDetails.account_type === 6) { setAccountTypeLabel("Pharmacy ID");}
+    else if(userDetails.account_type === 7) { setAccountTypeLabel("Center ID");}
+
+    setAccountId(userDetails.account_key.toUpperCase());
+
+  }
+
+  useEffect(() => {
+
+    if(systemContext.systemDetails.system_id){
+      getUserDetails();
+    }
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id])
+
 
   return(
     <>
@@ -109,7 +143,7 @@ function Feedback(){
           <form className="feedback-form" onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-lg-12">
-                <div className="normal-box mt-2"><span>Patient ID:</span>UP0033445576</div>
+                <div className="normal-box mt-2"><span>{accountTypeLabel}:</span>{accountId}</div>
               </div>
               <div className="col-lg-12">
                 <div className="normal-box mt-2"><span className="mb-2">How easy was the app to use:</span>
@@ -145,7 +179,7 @@ function Feedback(){
               <div className="col-lg-12">
                 <div className='btns-group d-flex justify-content-center'>
                   <button type="submit" id="" name="" className="btn btn-primary primary-bg-color border-0 mx-2">Submit</button>
-                  <Link to="/dashboard"><button type="button" class="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button></Link>
+                  <Link to="/dashboard"><button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button></Link>
                 </div>
               </div>
             </div>
