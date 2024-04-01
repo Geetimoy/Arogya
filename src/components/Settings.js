@@ -63,19 +63,19 @@ function Settings(){
           </div>
           <div className="mb-4">
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="sms" name="darkmode" value="yes" />
+              <input className="form-check-input float-end" type="checkbox" id="sms" name="darkmode" value="sms" />
               <label className="form-check-label" for="sms"><strong>SMS</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="email" name="darkmode" value="yes" />
+              <input className="form-check-input float-end" type="checkbox" id="email" name="darkmode" value="email" />
               <label className="form-check-label" for="email"><strong>Email</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="push" name="darkmode" value="yes" />
+              <input className="form-check-input float-end" type="checkbox" id="push" name="darkmode" value="push" />
               <label className="form-check-label" for="push"><strong>Push</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="call" name="darkmode" value="yes" />
+              <input className="form-check-input float-end" type="checkbox" id="call" name="darkmode" value="call" />
               <label className="form-check-label" for="call"><strong>Call</strong></label>
             </div>
           </div>
