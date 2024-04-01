@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 
 import Appfooter from "./AppFooter";
 
+import AlertContext from '../context/alert/AlertContext';
 import SystemContext from "../context/system/SystemContext";
 
 import './Settings.css';
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom";
 
 function Settings(){
 
+  const alertContext  = useContext(AlertContext);
   const systemContext = useContext(SystemContext);
 
   const [isMActive, setIsMActive] = useState(false);
@@ -59,7 +61,7 @@ function Settings(){
       <div className="app-body settings">
           <div className='brdr-btm d-flex justify-content-between align-items-center'>
             <h5 className='title mb-0'>Notifications</h5>
-            <Link to="javascript:void(0);" className="btn btn-primary min-width-100 primary-bg-color border-0">Save</Link>
+            <Link to="javascript:void(0);" className="btn btn-primary min-width-100 primary-bg-color border-0" onClick={saveNotification}>Save</Link>
           </div>
           <div className="mb-4">
             <div className="form-check form-switch px-0 mb-2">
