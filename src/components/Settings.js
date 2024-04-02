@@ -1,14 +1,18 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import Appfooter from "./AppFooter";
 
 import AlertContext from '../context/alert/AlertContext';
 import SystemContext from "../context/system/SystemContext";
 
+import CryptoJS from "crypto-js";
+
 import './Settings.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import { Link } from "react-router-dom";
 
@@ -19,9 +23,60 @@ function Settings(){
 
   const [isMActive, setIsMActive] = useState(false);
 
+  const [smsCheckbox, setSmsCheckbox]     = useState("");
+  const [emailCheckbox, setEmailCheckbox] = useState("");
+  const [pushCheckbox, setPushCheckbox]   = useState("");
+  const [callCheckbox, setCallCheckbox]   = useState("");
+
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const getUserDetails = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["account_key"]       = decryptedLoginDetails.account_key;
+    jsonData["account_type"]      = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+    jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/mySettings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    let systemDetails = result1.data.results;
+
+    var prefNotifyCommunicationArray = new Array();
+
+    if(systemDetails.pref_notify_communication){
+      prefNotifyCommunicationArray = systemDetails.pref_notify_communication.split(",");
+    }
+
+    console.log(prefNotifyCommunicationArray);
+
+  }
+
+  useEffect(() => {
+
+    if(systemContext.systemDetails.system_id){
+      getUserDetails();
+    }
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id])
 
   return(
     <>
