@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 
 import Appfooter from "./AppFooter";
 
@@ -23,10 +23,15 @@ function Settings(){
 
   const [isMActive, setIsMActive] = useState(false);
 
-  const [smsCheckbox, setSmsCheckbox]     = useState("");
-  const [emailCheckbox, setEmailCheckbox] = useState("");
-  const [pushCheckbox, setPushCheckbox]   = useState("");
-  const [callCheckbox, setCallCheckbox]   = useState("");
+  const [smsCheckbox, setSmsCheckbox]     = useState(false);
+  const [emailCheckbox, setEmailCheckbox] = useState(false);
+  const [pushCheckbox, setPushCheckbox]   = useState(false);
+  const [callCheckbox, setCallCheckbox]   = useState(false);
+
+  const smsCheckboxRef    = useRef(false);
+  const emailCheckboxRef  = useRef(false);
+  const pushCheckboxRef   = useRef(false);
+  const callCheckboxRef   = useRef(false);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -59,12 +64,22 @@ function Settings(){
     let systemDetails = result1.data.results;
 
     var prefNotifyCommunicationArray = new Array();
-
+    
     if(systemDetails.pref_notify_communication){
       prefNotifyCommunicationArray = systemDetails.pref_notify_communication.split(",");
+      if(prefNotifyCommunicationArray.includes('sms')){
+        smsCheckboxRef.current.checked = true;
+      }
+      if(prefNotifyCommunicationArray.includes('email')){
+        emailCheckboxRef.current.checked = true;
+      }
+      if(prefNotifyCommunicationArray.includes('push')){
+        pushCheckboxRef.current.checked = true;
+      }
+      if(prefNotifyCommunicationArray.includes('mobile')){
+        callCheckboxRef.current.checked = true;
+      } 
     }
-
-    console.log(prefNotifyCommunicationArray);
 
   }
 
@@ -77,6 +92,27 @@ function Settings(){
     // eslint-disable-next-line
     
   }, [systemContext.systemDetails.system_id])
+
+  const saveSettings = () =>{
+
+    let settingArray = new Array();
+    if(smsCheckboxRef.current.checked === true){
+      settingArray.push('sms');
+    }
+    if(emailCheckboxRef.current.checked === true){
+      settingArray.push('email');
+    }
+    if(pushCheckboxRef.current.checked === true){
+      settingArray.push('push');
+    }
+    if(callCheckboxRef.current.checked === true){
+      settingArray.push('mobile');
+    }
+
+    let settings =  settingArray.join();
+    console.log(settings);
+
+  }
 
   return(
     <>
@@ -116,23 +152,23 @@ function Settings(){
       <div className="app-body settings">
           <div className='brdr-btm d-flex justify-content-between align-items-center'>
             <h5 className='title mb-0'>Notifications</h5>
-            <Link to="javascript:void(0);" className="btn btn-primary min-width-100 primary-bg-color border-0" >Save</Link>
+            <Link to="javascript:void(0);" className="btn btn-primary min-width-100 primary-bg-color border-0" onClick={saveSettings}>Save</Link>
           </div>
           <div className="mb-4">
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="sms" name="darkmode" value="sms" />
+              <input ref={smsCheckboxRef} className="form-check-input float-end" type="checkbox" id="sms" name="darkmode" value="sms"/>
               <label className="form-check-label" for="sms"><strong>SMS</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="email" name="darkmode" value="email" />
+              <input ref={emailCheckboxRef} className="form-check-input float-end" type="checkbox" id="email" name="darkmode" value="email"/>
               <label className="form-check-label" for="email"><strong>Email</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="push" name="darkmode" value="push" />
+              <input ref={pushCheckboxRef} className="form-check-input float-end" type="checkbox" id="push" name="darkmode" value="push"/>
               <label className="form-check-label" for="push"><strong>Push</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
-              <input className="form-check-input float-end" type="checkbox" id="call" name="darkmode" value="call" />
+              <input ref={callCheckboxRef} className="form-check-input float-end" type="checkbox" id="call" name="darkmode" value="mobile"/>
               <label className="form-check-label" for="call"><strong>Call</strong></label>
             </div>
           </div>
