@@ -23,11 +23,6 @@ function Settings(){
 
   const [isMActive, setIsMActive] = useState(false);
 
-  const [smsCheckbox, setSmsCheckbox]     = useState(false);
-  const [emailCheckbox, setEmailCheckbox] = useState(false);
-  const [pushCheckbox, setPushCheckbox]   = useState(false);
-  const [callCheckbox, setCallCheckbox]   = useState(false);
-
   const smsCheckboxRef    = useRef(false);
   const emailCheckboxRef  = useRef(false);
   const pushCheckboxRef   = useRef(false);
