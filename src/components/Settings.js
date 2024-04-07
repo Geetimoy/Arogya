@@ -58,7 +58,7 @@ function Settings(){
 
     let systemDetails = result1.data.results;
 
-    var prefNotifyCommunicationArray = new Array();
+    var prefNotifyCommunicationArray = [];
     
     if(systemDetails.pref_notify_communication){
       prefNotifyCommunicationArray = systemDetails.pref_notify_communication.split(",");
@@ -78,6 +78,13 @@ function Settings(){
 
   }
 
+  
+  useEffect(() => {
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id])
+
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
@@ -86,11 +93,11 @@ function Settings(){
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id])
+  }, [getUserDetails])
 
-  const saveSettings = () =>{
+  const saveSettings = async () =>{
 
-    let settingArray = new Array();
+    let settingArray = [];
     if(smsCheckboxRef.current.checked === true){
       settingArray.push('sms');
     }
@@ -104,8 +111,36 @@ function Settings(){
       settingArray.push('mobile');
     }
 
-    let settings =  settingArray.join();
-    console.log(settings);
+    let settingsData =  settingArray.join();
+    
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData['device_type']               = DEVICE_TYPE;
+    jsonData['device_token']              = DEVICE_TOKEN;
+    jsonData['user_lat']                  = localStorage.getItem('latitude');
+    jsonData['user_long']                 = localStorage.getItem('longitude');
+    jsonData['account_key']               = decryptedLoginDetails.account_key;
+    jsonData['account_type']              = decryptedLoginDetails.account_type;
+    jsonData['user_login_id']             = decryptedLoginDetails.login_id;
+    jsonData['pref_notify_communication'] = settingsData;
+
+    const response = await fetch(`${API_URL}/mySettingsSave`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result = await response.json();
+
+    if (result.success) { 
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+    } 
+    else {
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
 
   }
 
@@ -147,24 +182,24 @@ function Settings(){
       <div className="app-body settings">
           <div className='brdr-btm d-flex justify-content-between align-items-center'>
             <h5 className='title mb-0'>Notifications</h5>
-            <Link to="javascript:void(0);" className="btn btn-primary min-width-100 primary-bg-color border-0" onClick={saveSettings}>Save</Link>
+            <Link to="#" className="btn btn-primary min-width-100 primary-bg-color border-0" onClick={saveSettings}>Save</Link>
           </div>
           <div className="mb-4">
             <div className="form-check form-switch px-0 mb-2">
               <input ref={smsCheckboxRef} className="form-check-input float-end" type="checkbox" id="sms" name="darkmode" value="sms"/>
-              <label className="form-check-label" for="sms"><strong>SMS</strong></label>
+              <label className="form-check-label" htmlFor="sms"><strong>SMS</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
               <input ref={emailCheckboxRef} className="form-check-input float-end" type="checkbox" id="email" name="darkmode" value="email"/>
-              <label className="form-check-label" for="email"><strong>Email</strong></label>
+              <label className="form-check-label" htmlFor="email"><strong>Email</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
               <input ref={pushCheckboxRef} className="form-check-input float-end" type="checkbox" id="push" name="darkmode" value="push"/>
-              <label className="form-check-label" for="push"><strong>Push</strong></label>
+              <label className="form-check-label" htmlFor="push"><strong>Push</strong></label>
             </div>
             <div className="form-check form-switch px-0 mb-2">
               <input ref={callCheckboxRef} className="form-check-input float-end" type="checkbox" id="call" name="darkmode" value="mobile"/>
-              <label className="form-check-label" for="call"><strong>Call</strong></label>
+              <label className="form-check-label" htmlFor="call"><strong>Call</strong></label>
             </div>
           </div>
 
