@@ -48,6 +48,45 @@ function UploadCertificates(){
     });
   }
 
+  const getUploadedCertificates = async () => {
+
+    if(systemContext.systemDetails.system_id){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+
+      jsonData['system_id']         = systemContext.systemDetails.system_id;
+      jsonData["account_key"]       = decryptedLoginDetails.account_key;
+      jsonData["account_type"]      = decryptedLoginDetails.account_type;
+      jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+      jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]      = DEVICE_TOKEN;
+      jsonData["user_lat"]          = localStorage.getItem('latitude');
+      jsonData["user_long"]         = localStorage.getItem('longitude');
+      
+      const response1 = await fetch(`${API_URL}/getUploadedCertificates`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      let result1 = await response1.json();
+      
+      
+
+    }
+    
+  }
+
+  useEffect(() => {
+
+    getUploadedCertificates();
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id])
+
   const uploadCertificateChange = async (event, elem, index) => {
     var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
     var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
@@ -143,11 +182,13 @@ function UploadCertificates(){
         <div className="upload-certificate-list">
           <div className="rounded jumbotron p-3 mt-3 mb-3">
             <form encType="multipart/form-data" className='choose-file'>
-              {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className={`form-group brdr-btm parent ${(fileUpload['certificate_'+(i+1)].upload === true) ? '' : 'upload-disabled'}`}>
-                <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
-                <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Certificate '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
-                <span className="close float-end"><FontAwesomeIcon icon={faTrash} /></span>
-              </div>)}
+              {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => 
+                <div key={i+1} className={`form-group brdr-btm parent ${(fileUpload['certificate_'+(i+1)].upload === true) ? '' : 'upload-disabled'}`}>
+                  <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
+                  <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Certificate '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
+                  <span className="close float-end"><FontAwesomeIcon icon={faTrash} /></span>
+                </div>
+              )}
             </form>
             {/* <div className="form-group">
             <button type="button" id="" name="" class="btn btn-primary primary-bg-color border-0 mx-2">Update Photo<input type="file" name="cover" accept="img/*" style={{ display: "none" }} /></button>
