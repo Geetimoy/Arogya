@@ -60,16 +60,16 @@ function CraeteYoungWomen(){
             <label htmlFor="full_name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="full_name" id="" placeholder="Full Name" />
           </div>
-          
           <div className="form-group">
-            <label className="no-style"><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
-            <select className="form-control">
-              <option value="1" selected="">BPL</option>
-              <option value="2">APL</option>
-            </select>
+            <label htmlFor="parent_name">Name of Parent/Guardian<span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="parent_name" id="" placeholder="Name of Parent/Guardian" />
           </div>
           <div className="form-group">
-            <label className="no-style"><span className="d-block">Gender  <span className="text-danger">*</span></span></label>
+            <label htmlFor="occupation">Occupation of Guardian <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="occupation" id="" placeholder="Occupation of Guardian" />
+          </div>
+          <div className="form-group">
+            <label className="no-style"><span className="d-block">Gender  </span></label>
             <select className="form-control">
               <option value="1">Female</option>
             </select>
@@ -102,11 +102,11 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" name="address" id="" placeholder="Address" />
           </div>
           <div className="form-group">
-            <label htmlFor="add2">Address 2 </label>
+            <label htmlFor="add2">Address 2 <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="add2" id="" placeholder="Address 2" />
           </div>
           <div className="form-group">
-            <label htmlFor="landmark">Landmark </label>
+            <label htmlFor="landmark">Landmark <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="landmark" id="" placeholder="Landmark" />
           </div>
           <div className="form-group">
@@ -114,7 +114,7 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" name="place" id="" placeholder="Village/Town/City" />
           </div>
           <div className="form-group">
-            <label htmlFor="pincode">Pincode </label>
+            <label htmlFor="pincode">Pincode <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="pincode" id="" placeholder="Pincode" />
           </div>
           <div className="form-group">
@@ -124,23 +124,61 @@ function CraeteYoungWomen(){
               <option value="2">B2B</option>
             </select>
           </div>
+          
+          <div className="form-group">
+            <label htmlFor="school_name">School Name <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="school_name" id="" placeholder="School Name" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="class">Class <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="class" id="" placeholder="Class" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="class">Section <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="section" id="" placeholder="Section" />
+          </div>
+
+
+          <div className="form-group">
+            <label htmlFor="premature_birth">Premature Birth? <span className="text-danger">*</span></label>
+            <select className="form-control">
+              <option value="1" selected="">Yes</option>
+              <option value="2">No</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="house">House<span className="text-danger">*</span></label>
+            <select className="form-control">
+              <option value="1" selected="">Mud House</option>
+              <option value="2">Paved House</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="drinking_water">Drinking Water<span className="text-danger">*</span></label>
+            <select className="form-control">
+              <option value="1" selected="">Tap</option>
+              <option value="2">Well</option>
+              <option value="3">Pond</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="toilet">Toilet<span className="text-danger">*</span></label>
+            <select className="form-control">
+              <option value="1" selected="">Open-field</option>
+              <option value="2">Country-latrine</option>
+              <option value="3">Flush-toilet</option>
+            </select>
+          </div>
+
+
           <div className="form-group">
             <label htmlFor="special_note">Special Notes </label>
             <input type="text" className="form-control" name="special_note" id="" placeholder="Special Notes" />
           </div>
-          <div className="form-group">
-            <label htmlFor="school_name">School Name </label>
-            <input type="text" className="form-control" name="school_name" id="" placeholder="School Name" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="class">Class </label>
-            <input type="text" className="form-control" name="class" id="" placeholder="Class" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="class">Section </label>
-            <input type="text" className="form-control" name="section" id="" placeholder="Section" />
-          </div>
-          <div className='form-group'>
+          {/* <div className='form-group'>
             <div className="custom-control custom-checkbox mb-3">
               <input type="checkbox" className="custom-control-input" id="customCheckChild" name="child" />
               <label className="custom-control-label" for="customCheckChild">Is Child?</label>
@@ -154,7 +192,7 @@ function CraeteYoungWomen(){
               <label className="custom-control-label" for="customCheckJanani">Is Janani?</label>
             </div>
 
-          </div>
+          </div> */}
           <div className='mb-3 mt-3'>
             <button type="submit" className='btn primary-bg-color text-light w-100'>Create Young Women Profiles</button>
           </div>
