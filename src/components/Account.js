@@ -48,7 +48,7 @@ function Account(){
     });
     let result1 = await response1.json();
 
-    let userDetails = result1.data;console.log(userDetails);
+    let userDetails = result1.data;
 
     setAccountStatus(userDetails.account_status_descr);
     

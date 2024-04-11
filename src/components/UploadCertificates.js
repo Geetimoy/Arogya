@@ -48,6 +48,85 @@ function UploadCertificates(){
     });
   }
 
+  const getUploadedCertificates = async () => {
+
+    if(systemContext.systemDetails.system_id){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+
+      jsonData['system_id']         = systemContext.systemDetails.system_id;
+      jsonData["account_key"]       = decryptedLoginDetails.account_key;
+      jsonData["account_type"]      = decryptedLoginDetails.account_type;
+      jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+      jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]      = DEVICE_TOKEN;
+      jsonData["user_lat"]          = localStorage.getItem('latitude');
+      jsonData["user_long"]         = localStorage.getItem('longitude');
+      
+      const response1 = await fetch(`${API_URL}/getUploadedCertificates`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      let result1 = await response1.json();
+      
+      if(result1.success){
+        var uploadedCertificate = result1.data;
+        if(uploadedCertificate.length > 0){
+          uploadedCertificate.forEach((file, index)=>{
+            var fileName = file.replace(/\.[^/.]+$/, "");
+            var sequence = fileName.replace(decryptedLoginDetails.account_key+'_', '');
+            fileUpload[sequence].upload   = true;
+            fileUpload[sequence].fileName = file;
+            setFileUpload({...fileUpload, ...fileUpload});
+            var nextFileIndex = index+1; 
+            if(nextFileIndex == uploadedCertificate.length)
+            {
+              nextFileIndex++;
+              if(nextFileIndex <= 5)
+              {
+                fileUpload['certificate_'+nextFileIndex].upload   = true;
+                fileUpload['certificate_'+nextFileIndex].fileName = '';
+                setFileUpload({...fileUpload, ...fileUpload});
+              }
+            }
+          })
+        }
+        else
+        {
+          for(var i = 1; i<=5; i++)
+          {
+            if(i == 1)
+            {
+              fileUpload['certificate_'+i].upload   = true;
+              fileUpload['certificate_'+i].fileName = '';
+              setFileUpload({...fileUpload, ...fileUpload});
+            }
+            else
+            {
+              fileUpload['certificate_'+i].upload   = false;
+              fileUpload['certificate_'+i].fileName = '';
+              setFileUpload({...fileUpload, ...fileUpload});
+            }
+          }
+        }
+      }
+
+    }
+    
+  }
+
+  useEffect(() => {
+
+    getUploadedCertificates();
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id])
+
   const uploadCertificateChange = async (event, elem, index) => {
     var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
     var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
@@ -87,12 +166,13 @@ function UploadCertificates(){
       let result = await response.json();
 
       if(result.success){
-        const nextElem = 'certificate_'+(index+1);
+        /*const nextElem = 'certificate_'+(index+1);
         if(fileUpload[nextElem]){
           fileUpload[nextElem].upload   = true;
           fileUpload[nextElem].fileName = '';
           setFileUpload({...fileUpload, ...fileUpload});
-        }
+        }*/
+        getUploadedCertificates();
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
       }
       else{
@@ -102,6 +182,42 @@ function UploadCertificates(){
     }
     
   };
+
+  const deleteCertificate = async (fileName) => {
+
+    var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["device_type"]       = DEVICE_TYPE;
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    jsonData["user_account_key"]  = loginDetails.account_key;
+    jsonData["user_account_type"] = loginDetails.account_type;
+    jsonData["file_name"]          = fileName;
+
+    const response = await fetch(`${API_URL}/deleteCertificate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      getUploadedCertificates();
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
   
   return(
     <>
@@ -143,11 +259,13 @@ function UploadCertificates(){
         <div className="upload-certificate-list">
           <div className="rounded jumbotron p-3 mt-3 mb-3">
             <form encType="multipart/form-data" className='choose-file'>
-              {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => <div key={i+1} className={`form-group brdr-btm parent ${(fileUpload['certificate_'+(i+1)].upload === true) ? '' : 'upload-disabled'}`}>
-                <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
-                <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Certificate '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
-                <span className="close float-end"><FontAwesomeIcon icon={faTrash} /></span>
-              </div>)}
+              {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => 
+                <div key={i+1} className={`form-group brdr-btm parent ${(fileUpload['certificate_'+(i+1)].upload === true) ? '' : 'upload-disabled'}`}>
+                  <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
+                  <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Certificate '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
+                  {(fileUpload['certificate_'+(i+1)].fileName !== '') && <span className="close float-end"><FontAwesomeIcon icon={faTrash} onClick={() => deleteCertificate(fileUpload['certificate_'+(i+1)].fileNames)}/></span>}
+                </div>
+              )}
             </form>
             {/* <div className="form-group">
             <button type="button" id="" name="" class="btn btn-primary primary-bg-color border-0 mx-2">Update Photo<input type="file" name="cover" accept="img/*" style={{ display: "none" }} /></button>
