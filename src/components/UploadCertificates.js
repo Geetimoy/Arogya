@@ -12,7 +12,7 @@ import CryptoJS from "crypto-js";
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsisV, faLongArrowAltLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faEllipsisV, faLongArrowAltLeft, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
@@ -30,6 +30,31 @@ function UploadCertificates(){
     certificate_4 : {'upload': true, 'fileName': ''},
     certificate_5 : {'upload': true, 'fileName': ''}
   });
+
+  var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+  var userDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+  var userFolder           = '';
+  if(userDetails.account_type == 1){
+    userFolder = 'admins';
+  }
+  else if(userDetails.account_type == 2){
+    userFolder = 'sub-admins';
+  }
+  else if(userDetails.account_type == 3){
+    userFolder = 'patients';
+  }
+  else if(userDetails.account_type == 4){
+    userFolder = 'volunteers';
+  }
+  else if(userDetails.account_type == 5){
+    userFolder = 'doctors';
+  }
+  else if(userDetails.account_type == 6){
+    userFolder = 'pharmacys';
+  }
+  else if(userDetails.account_type == 7){
+    userFolder = 'test-centers';
+  }
 
   // useEffect(() => {
   //   setFileUpload({...fileUpload, 'certificate_1': {...fileUpload['certificate_1'], upload:true, fileName:''}});
@@ -260,7 +285,7 @@ function UploadCertificates(){
                 <div key={i+1} className={`form-group brdr-btm parent`}>
                   <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
                   <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Certificate '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
-                  {(fileUpload['certificate_'+(i+1)].fileName !== '') && <span className="close float-end"><FontAwesomeIcon icon={faTrash} onClick={() => deleteCertificate(fileUpload['certificate_'+(i+1)].fileName)}/></span>}
+                  {(fileUpload['certificate_'+(i+1)].fileName !== '') && <span className="close float-end"><Link to={`${API_URL}/user-data/${userFolder}/${userDetails.account_key}/shared/${fileUpload['certificate_'+(i+1)].fileName}`} target="_blank" download><FontAwesomeIcon icon={faDownload}/></Link><FontAwesomeIcon style={{marginLeft: '10px'}} icon={faTrash} onClick={() => deleteCertificate(fileUpload['certificate_'+(i+1)].fileName)}/></span>}
                 </div>
               )}
             </form>
