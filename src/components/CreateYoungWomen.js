@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 import Appfooter from './AppFooter';
 
+import  './CreateYoungWoman.css'
+
 
 function CraeteYoungWomen(){
   const systemContext = useContext(SystemContext);
@@ -69,7 +71,7 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" name="occupation" id="" placeholder="Occupation of Guardian" />
           </div>
           <div className="form-group">
-            <label className="no-style"><span className="d-block">Gender  </span></label>
+            <label><span className="d-block">Gender  </span></label>
             <select className="form-control">
               <option value="1">Female</option>
             </select>
@@ -80,10 +82,16 @@ function CraeteYoungWomen(){
           </div>
           <div className="form-group">
             <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
-            <select className="form-control">
-              <option value="1" selected="">Yes</option>
-              <option value="2">No</option>
-            </select>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="personal_mobile_number_y" name="personal_mobile_number" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="personal_mobile_number_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="personal_mobile_number_n" name="personal_mobile_number" className="custom-control-input" value="f" />
+                <label className="custom-control-label no-style" htmlFor="personal_mobile_number_n">No</label>
+              </div>
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="phone">Phone No <span className="text-danger">*</span></label>
@@ -118,7 +126,7 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" name="pincode" id="" placeholder="Pincode" />
           </div>
           <div className="form-group">
-            <label className="no-style"><span className="d-block">Servie Area :</span></label>
+            <label><span className="d-block">Service Area :</span></label>
             <select className="form-control">
               <option value="1" selected="">Ukhra</option>
               <option value="2">B2B</option>
@@ -140,11 +148,21 @@ function CraeteYoungWomen(){
 
 
           <div className="form-group">
-            <label htmlFor="premature_birth">Premature Birth? <span className="text-danger">*</span></label>
-            <select className="form-control">
+            <label htmlFor="premature_birth" className='no-style'>Premature Birth? <span className="text-danger">*</span></label>
+            {/* <select className="form-control">
               <option value="1" selected="">Yes</option>
               <option value="2">No</option>
-            </select>
+            </select> */}
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_y" name="premature_birth" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_n" name="premature_birth" className="custom-control-input" value="f" />
+                <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
+              </div>
+            </div>
           </div>
 
           <div className="form-group">

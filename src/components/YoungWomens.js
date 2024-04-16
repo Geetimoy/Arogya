@@ -77,7 +77,7 @@ function YoungWomens(){
               <div className='drop-menu'>
                 <ul>
                   <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/basic-medical-history"}>Update Medical History</Link></li>
+                  <li><Link to={"/update-medical-history"}>Update Medical History</Link></li>
                   <li><Link to={"/update-awareness-survey"}>Update Awareness Survey</Link></li>
                   <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
