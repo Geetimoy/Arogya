@@ -14,6 +14,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Consta
 
 import SystemContext from "../context/system/SystemContext";
 
+import Dropdown from 'react-dropdown-select';
+
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -81,6 +83,33 @@ function BasicInformation(){
     setAccountDetails(userDetails);
 
   }
+
+  const options = [
+    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
+    { label: 'Navagraha Temple, Guwahati', value: '2' },
+    { label: 'Umananda Temple, Guwahati', value: '3' },
+    { label: 'Morigaon', value: '4' },
+  ];
+
+  // Define the selectedOptions state and the corresponding setter function
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleChange1 = (values) => {
+    //console.log(values);
+    var selectedArea = [];
+    if(values.length > 0){
+      values.forEach((item, index) => {
+        selectedArea.push(item.value);
+      })
+    }
+    if(selectedArea.length > 0){
+      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+    setSelectedOptions(values);
+  };
 
   useEffect(() => {
 
@@ -227,13 +256,15 @@ function BasicInformation(){
             </div>
             
             <div className="form-group">
-              <label className="no-style"><span className="d-block">Service Area :</span><small>(Multiple can pick)</small></label>
-              <select className="form-control" multiple name="basicInfoServiceArea">
+              {/* <label className="no-style"><span className="d-block">Service Area :</span><small>(Multiple can pick)</small></label> */}
+              <label>Service Area : <span className='text-danger'> *</span></label>
+              {/* <select className="form-control" multiple name="basicInfoServiceArea">
                 <option value="1">Guwahati Zoo,Fancy bazar</option>
                 <option value="2">Navagraha Temple, Guwahati</option>
                 <option value="3">Umananda Temple, Guwahati</option>
                 <option value="4">Morigaon</option>
-              </select>
+              </select> */}
+              <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
             </div>
             <div className="form-group">
               <label>Special Notes :</label>

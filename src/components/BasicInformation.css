@@ -25,11 +25,16 @@
   position: absolute;
   padding: 10px;
   font-size: 12px;
+  z-index: 1;
 }
 
 .basic-info form input {
   padding-top: 1.825rem;
   padding-bottom: 0.625rem;
+}
+
+.basic-info form .react-dropdown-select-option + input {
+  padding-top: 0;
 }
 
 .pos-relative{
