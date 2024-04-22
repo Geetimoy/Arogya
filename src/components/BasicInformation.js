@@ -30,24 +30,35 @@ function BasicInformation(){
   const [formData, setFormData] = useState({
     basicInfoName: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMobileNo: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoWhatsapp: {required: true, value:"", errorClass:"", errorMessage:""},
+    basicInfoWhatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
     basicInfoEmail: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoGender: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoDob: {required: true, value:"", errorClass:"", errorMessage:""},
+    basicInfoDob: {required: true, value:startDate, errorClass:"", errorMessage:""},
     basicInfoCommute: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMedicalExperience: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMedicalCertificate: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoAddress1: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoAddress2: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoLandmark: {required: true, value:"", errorClass:"", errorMessage:""},
+    basicInfoAddress2: {required: false, value:"", errorClass:"", errorMessage:""},
+    basicInfoLandmark: {required: false, value:"", errorClass:"", errorMessage:""},
     basicInfoTown: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoPostalCode: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoServiceArea: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoSpecialNotes: {required: true, value:"", errorClass:"", errorMessage:""}
+    basicInfoSpecialNotes: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
-  const selectDateHandler = (d) => {
-    setDate(d)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if(value.trim() !== ""){
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+  }
+
+  const selectDateHandler = (selectedDate) => { 
+    setDate(selectedDate);
+    setFormData({...formData, ['basicInfoDob']: {...formData['basicInfoDob'], value:selectedDate, errorClass:"", errorMessage:""}});
   }
 
   const handle2Click = () => {
@@ -103,10 +114,10 @@ function BasicInformation(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -119,7 +130,37 @@ function BasicInformation(){
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id])
+  }, [systemContext.systemDetails.system_id]);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    let errorCounter = validateForm();
+  }
+
+  const validateForm = () => {
+    const fieldName = Object.keys(formData);
+    let errorCounter = 0;
+    fieldName.forEach((element) => { console.log(formData[element].value);
+      if(formData[element].required && formData[element].value.toString().trim() === ""){
+        formData[element].errorMessage = "This field is required!";
+        formData[element].errorClass = "form-error";
+        errorCounter++;
+      }
+      else{
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if((element === "basicInfoEmail") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
+          formData[element].errorMessage = "Please enter a valid email!";
+          formData[element].errorClass = "form-error";
+        }
+        else{
+          formData[element].errorMessage = "";
+          formData[element].errorClass = "";
+        }
+      }
+    })
+    setFormData({...formData, ...formData});
+    return errorCounter;
+  }
 
   return(
     <>
@@ -175,87 +216,101 @@ function BasicInformation(){
             
           </div>
 
-          <form className="basic-information" name="basic_information" id="basic_information">
-            <div className="form-group">
+          <form className="basic-information" name="basic_information" id="basic_information" onSubmit={handleFormSubmit}>
+            <div className={`form-group ${formData["basicInfoName"].errorClass}`}>
               <label htmlFor="name">Name <span className="text-danger">*</span></label>
-              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" />
+              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoName"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoMobileNo"].errorClass}`}>
               <label> Mobile Number <span className="text-danger">*</span></label>
-              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9038888991" />
+              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9038888991" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoMobileNo"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoWhatsapp"].errorClass}`}>
               <label>WhatsApp :</label>
-              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9038888991" />
+              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9038888991" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoWhatsapp"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoEmail"].errorClass}`}>
               <label>Email ID <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoEmail" id="basicInfoEmail" placeholder="abcd@xyz.com" />
+              <input type="text" className="form-control" name="basicInfoEmail" id="basicInfoEmail" placeholder="abcd@xyz.com" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoEmail"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoGender"].errorClass}`}>
               <label className="pos-relative no-style">Gender  <span className="text-danger">*</span> </label>
               <div className="d-flex">
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_gender_m" name="basicInfoGender" className="custom-control-input" />
+                  <input type="radio" id="edit_user_gender_m" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="male"/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_gender_m">Male</label>
                 </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_gender_f" name="basicInfoGender" className="custom-control-input" />
+                  <input type="radio" id="edit_user_gender_f" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="female"/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_gender_f">Female</label>
                 </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_gender_o" name="basicInfoGender" className="custom-control-input" />
+                  <input type="radio" id="edit_user_gender_o" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="others"/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_gender_o">Others</label>
                 </div>
               </div>
+              <small className="error-mesg">{formData["basicInfoGender"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoDob"].errorClass}`}>
               <label style={{zIndex:1}}>Date of Birth (DOB)  <span className="text-danger">*</span> </label>
               <DatePicker className="form-control" dateFormat="yyyy-MM-dd" selected={startDate} onChange={selectDateHandler}/>
+              <small className="error-mesg">{formData["basicInfoDob"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoCommute"].errorClass}`}>
               <label>How You Commute  <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoCommute" id="basicInfoCommute" placeholder="Bike" />
+              <input type="text" className="form-control" name="basicInfoCommute" id="basicInfoCommute" placeholder="Bike" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoCommute"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoMedicalExperience"].errorClass}`}>
               <label>Medical Experiences   <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoMedicalExperience" id="basicInfoMedicalExperience" placeholder="" />
+              <input type="text" className="form-control" name="basicInfoMedicalExperience" id="basicInfoMedicalExperience" placeholder="" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoMedicalExperience"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoMedicalCertificate"].errorClass}`}>
               <label className="no-style">Do you have Medical Certificates?    <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> : </label>
               <div className="d-flex">
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_y" name="basicInfoMedicalCertificate" className="custom-control-input" />
+                  <input type="radio" id="edit_user_medical_certificates_y" name="basicInfoMedicalCertificate" className="custom-control-input" value="y" onChange={handleChange}/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Yes</label>
               </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_n" name="basicInfoMedicalCertificate" className="custom-control-input" value="f" />
+                  <input type="radio" id="edit_user_medical_certificates_n" name="basicInfoMedicalCertificate" className="custom-control-input" value="f" onChange={handleChange}/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">No</label>
                 </div>
               </div>
+              <small className="error-mesg">{formData["basicInfoMedicalCertificate"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoAddress1"].errorClass}`}>
               <label>Address 1   <span className="text-danger">*</span> : </label>
-              <input type="text" className="form-control" name="basicInfoAddress1" id="basicInfoAddress1" placeholder="" />
+              <input type="text" className="form-control" name="basicInfoAddress1" id="basicInfoAddress1" placeholder="" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoAddress1"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoAddress2"].errorClass}`}>
               <label>Address 2 :</label>
-              <input type="text" className="form-control" name="basicInfoAddress2" id="basicInfoAddress2" placeholder="" />
+              <input type="text" className="form-control" name="basicInfoAddress2" id="basicInfoAddress2" placeholder="" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoAddress2"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoLandmark"].errorClass}`}>
               <label>Nearest Landmark :</label>
-              <input type="text" className="form-control" name="basicInfoLandmark" id="basicInfoLandmark" placeholder="" />
+              <input type="text" className="form-control" name="basicInfoLandmark" id="basicInfoLandmark" placeholder="" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoLandmark"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoTown"].errorClass}`}>
               <label>Village / Town / City <span className="text-danger">*</span> :</label>
-              <input type="text" className="form-control" name="basicInfoTown" id="basicInfoTown" placeholder="" />
+              <input type="text" className="form-control" name="basicInfoTown" id="basicInfoTown" placeholder="" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoTown"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoPostalCode"].errorClass}`}>
               <label>Postal Code / Pincode <span className="text-danger">*</span> :</label>
-              <input type="text" className="form-control" name="basicInfoPostalCode" id="basicInfoPostalCode" placeholder="" />
+              <input type="text" className="form-control" name="basicInfoPostalCode" id="basicInfoPostalCode" placeholder="" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoPostalCode"].errorMessage}</small>
             </div>
             
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoServiceArea"].errorClass}`}>
               {/* <label className="no-style"><span className="d-block">Service Area :</span><small>(Multiple can pick)</small></label> */}
               <label>Service Area : <span className='text-danger'> *</span></label>
               {/* <select className="form-control" multiple name="basicInfoServiceArea">
@@ -265,14 +320,16 @@ function BasicInformation(){
                 <option value="4">Morigaon</option>
               </select> */}
               <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
+              <small className="error-mesg">{formData["basicInfoServiceArea"].errorMessage}</small>
             </div>
-            <div className="form-group">
+            <div className={`form-group ${formData["basicInfoSpecialNotes"].errorClass}`}>
               <label>Special Notes :</label>
-              <input type="text" className="form-control" name="basicInfoSpecialNotes" id="basicInfoSpecialNotes" placeholder="Special Notes" />
+              <input type="text" className="form-control" name="basicInfoSpecialNotes" id="basicInfoSpecialNotes" placeholder="Special Notes" onChange={handleChange}/>
+              <small className="error-mesg">{formData["basicInfoSpecialNotes"].errorMessage}</small>
             </div>
 
             <div className='btns-group d-flex justify-content-center'>
-              <button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Update My Profile</button>
+              <button type="submit" className="btn btn-primary primary-bg-color border-0 mx-2">Update My Profile</button>
               <Link to="/account"><button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button></Link>
             </div>
           </form>
