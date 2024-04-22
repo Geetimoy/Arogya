@@ -88,7 +88,7 @@ function Patientprofiles(){
               </div>
               <Link to="/viewpatientdetails">
                 <img src={patientprofile} alt='' />
-                <h6>Test Janani</h6>
+                <h6>Patient 1</h6>
               </Link>
             </div>
           </div>
@@ -102,7 +102,7 @@ function Patientprofiles(){
               </div>
               <Link to="/viewpatientdetails">
                 <img src={patientprofile} alt='' />
-                <h6>Test Janani 2</h6>
+                <h6>Patient 2</h6>
               </Link>
             </div>
           </div>

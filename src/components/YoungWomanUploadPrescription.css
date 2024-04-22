@@ -1,0 +1,4 @@
+.button-box .prescription img{
+  max-height: 135px;
+  object-fit: contain;
+}
