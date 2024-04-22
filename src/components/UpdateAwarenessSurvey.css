@@ -1,0 +1,39 @@
+.update-awareness-survey.form-all form label{
+  position: relative;
+}
+
+.rating-caption{
+  font-size: 12px;
+  color: #818181;
+}
+
+.rating-value{
+  font-size: 12px;
+}
+
+.rc-slider{
+  /* margin: 0 6px; */
+}
+
+.rc-slider-handle{
+  color: #3f5bd9;
+  border-color: #3f5bd9;
+}
+
+.rc-slider-handle:hover{
+  border-color: #3f5bd9;
+}
+
+.rc-slider-track, .rc-slider-tracks{
+  background-color: #3f5bd9;
+}
+
+.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+  border-color: #3f5bd9;
+  /* box-shadow: 0 0 0 5px #3f5bd9; */
+}
+
+.rc-slider-handle:focus-visible{
+  border-color: #3f5bd9;
+  box-shadow: 0 0 0 3px #3f5bd9;
+}
