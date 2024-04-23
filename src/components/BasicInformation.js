@@ -89,9 +89,50 @@ function BasicInformation(){
     });
     let result1 = await response1.json();
 
-    let userDetails = result1.data;console.log(userDetails);
+    let userDetails = result1.data;
+    console.log(userDetails);
 
     setAccountDetails(userDetails);
+    
+    setFormData({
+      basicInfoName: {required: true, value:"", errorClass:"", errorMessage:""},
+    });
+
+    formData['basicInfoName']         = {value:userDetails.display_name, errorClass:"", errorMessage:""};
+    formData['basicInfoMobileNo']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+    formData['basicInfoWhatsapp']     = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+    formData['basicInfoEmail']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
+    formData['basicInfoGender']       = {value:userDetails.gender, errorClass:"", errorMessage:""};
+    formData['basicInfoDob']          = {value:userDetails.age_entered_on, errorClass:"", errorMessage:""};
+    formData['basicInfoCommute']      = {value:userDetails.how_commute, errorClass:"", errorMessage:""};
+    formData['basicInfoMedicalExperience']  = {value:userDetails.medical_experiences, errorClass:"", errorMessage:""};
+    formData['basicInfoMedicalCertificate'] = {value:userDetails.medical_certificates, errorClass:"", errorMessage:""};
+    formData['basicInfoAddress1']     = {value:userDetails.addr_1, errorClass:"", errorMessage:""};
+    formData['basicInfoAddress2']     = {value:userDetails.addr_2, errorClass:"", errorMessage:""};
+    formData['basicInfoLandmark']     = {value:userDetails.addr_landmark, errorClass:"", errorMessage:""};
+    formData['basicInfoTown']         = {value:userDetails.city, errorClass:"", errorMessage:""};
+    formData['basicInfoPostalCode']   = {value:userDetails.postal_code, errorClass:"", errorMessage:""};
+    formData['basicInfoServiceArea']  = {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
+    formData['basicInfoSpecialNotes'] = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+
+    setFormData({...formData, ...formData});
+
+    /*setFormData({...formData, ['basicInfoName']: {...formData['basicInfoName'], value:userDetails.display_name, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoMobileNo']: {...formData['basicInfoMobileNo'], value:userDetails.contact_no, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoWhatsapp']: {...formData['basicInfoWhatsapp'], value:userDetails.whatsapp_no, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoEmail']: {...formData['basicInfoEmail'], value:userDetails.email_id, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoGender']: {...formData['basicInfoGender'], value:userDetails.gender, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoDob']: {...formData['basicInfoDob'], value:userDetails.age_entered_on, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoCommute']: {...formData['basicInfoCommute'], value:userDetails.how_commute, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoMedicalExperience']: {...formData['basicInfoMedicalExperience'], value:userDetails.medical_experiences, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoMedicalCertificate']: {...formData['basicInfoMedicalCertificate'], value:userDetails.medical_certificates, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoAddress1']: {...formData['basicInfoAddress1'], value:userDetails.addr_1, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoAddress2']: {...formData['basicInfoAddress2'], value:userDetails.addr_2, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoLandmark']: {...formData['basicInfoLandmark'], value:userDetails.addr_landmark, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoTown']: {...formData['basicInfoTown'], value:userDetails.city, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoPostalCode']: {...formData['basicInfoPostalCode'], value:userDetails.postal_code, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:userDetails.service_area_ids, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['basicInfoSpecialNotes']: {...formData['basicInfoSpecialNotes'], value:userDetails.special_notes, errorClass:"", errorMessage:""}});*/ 
 
   }
 
@@ -133,7 +174,7 @@ function BasicInformation(){
   }, [systemContext.systemDetails.system_id]);
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); console.log(formData);
     let errorCounter = validateForm();
   }
 
@@ -141,7 +182,7 @@ function BasicInformation(){
     const fieldName = Object.keys(formData);
     let errorCounter = 0;
     fieldName.forEach((element) => { console.log(formData[element].value);
-      if(formData[element].required && formData[element].value.toString().trim() === ""){
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
         formData[element].errorMessage = "This field is required!";
         formData[element].errorClass = "form-error";
         errorCounter++;
@@ -219,37 +260,37 @@ function BasicInformation(){
           <form className="basic-information" name="basic_information" id="basic_information" onSubmit={handleFormSubmit}>
             <div className={`form-group ${formData["basicInfoName"].errorClass}`}>
               <label htmlFor="name">Name <span className="text-danger">*</span></label>
-              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange} value={formData["basicInfoName"].value}/>
               <small className="error-mesg">{formData["basicInfoName"].errorMessage}</small>
             </div>
-            <div className={`form-group ${formData["basicInfoMobileNo"].errorClass}`}>
+            <div className={`form-group ${formData["basicInfoMobileNo"].errorClass}`}> 
               <label> Mobile Number <span className="text-danger">*</span></label>
-              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9038888991" onChange={handleChange}/>
+              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoMobileNo"].value}/>
               <small className="error-mesg">{formData["basicInfoMobileNo"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoWhatsapp"].errorClass}`}>
               <label>WhatsApp :</label>
-              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9038888991" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoWhatsapp"].value}/>
               <small className="error-mesg">{formData["basicInfoWhatsapp"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoEmail"].errorClass}`}>
               <label>Email ID <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoEmail" id="basicInfoEmail" placeholder="abcd@xyz.com" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoEmail" id="basicInfoEmail" placeholder="abcd@xyz.com" onChange={handleChange} value={formData["basicInfoEmail"].value}/>
               <small className="error-mesg">{formData["basicInfoEmail"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoGender"].errorClass}`}>
               <label className="pos-relative no-style">Gender  <span className="text-danger">*</span> </label>
               <div className="d-flex">
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_gender_m" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="male"/>
+                  <input type="radio" id="edit_user_gender_m" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="male" checked={(formData["basicInfoGender"].value === 'male') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_gender_m">Male</label>
                 </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_gender_f" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="female"/>
+                  <input type="radio" id="edit_user_gender_f" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="female" checked={(formData["basicInfoGender"].value === 'female') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_gender_f">Female</label>
                 </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_gender_o" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="others"/>
+                  <input type="radio" id="edit_user_gender_o" name="basicInfoGender" className="custom-control-input" onChange={handleChange} value="others" checked={(formData["basicInfoGender"].value === 'others') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_gender_o">Others</label>
                 </div>
               </div>
@@ -306,7 +347,7 @@ function BasicInformation(){
             </div>
             <div className={`form-group ${formData["basicInfoPostalCode"].errorClass}`}>
               <label>Postal Code / Pincode <span className="text-danger">*</span> :</label>
-              <input type="text" className="form-control" name="basicInfoPostalCode" id="basicInfoPostalCode" placeholder="" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoPostalCode" id="basicInfoPostalCode" placeholder="" onChange={handleChange} maxLength={6}/>
               <small className="error-mesg">{formData["basicInfoPostalCode"].errorMessage}</small>
             </div>
             
