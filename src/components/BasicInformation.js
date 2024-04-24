@@ -16,16 +16,21 @@ import SystemContext from "../context/system/SystemContext";
 
 import Dropdown from 'react-dropdown-select';
 
-import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css";
-
 function BasicInformation(){
 
   const systemContext = useContext(SystemContext);
 
   const [isMActive, setIsMActive]           = useState(false);
   const [accountDetails, setAccountDetails] = useState([]);
-  const [startDate, setDate]                = useState(new Date());
+  // Define the selectedOptions state and the corresponding setter function
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const options = [
+    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
+    { label: 'Navagraha Temple, Guwahati', value: '2' },
+    { label: 'Umananda Temple, Guwahati', value: '3' },
+    { label: 'Morigaon', value: '4' },
+  ];
+
 
   const [formData, setFormData] = useState({
     basicInfoName: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -33,7 +38,7 @@ function BasicInformation(){
     basicInfoWhatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
     basicInfoEmail: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoGender: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoDob: {required: true, value:startDate, errorClass:"", errorMessage:""},
+    basicInfoAge: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoCommute: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMedicalExperience: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMedicalCertificate: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -54,11 +59,6 @@ function BasicInformation(){
     else{
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
     }
-  }
-
-  const selectDateHandler = (selectedDate) => { 
-    setDate(selectedDate);
-    setFormData({...formData, ['basicInfoDob']: {...formData['basicInfoDob'], value:selectedDate, errorClass:"", errorMessage:""}});
   }
 
   const handle2Click = () => {
@@ -93,17 +93,13 @@ function BasicInformation(){
     console.log(userDetails);
 
     setAccountDetails(userDetails);
-    
-    setFormData({
-      basicInfoName: {required: true, value:"", errorClass:"", errorMessage:""},
-    });
 
     formData['basicInfoName']         = {value:userDetails.display_name, errorClass:"", errorMessage:""};
     formData['basicInfoMobileNo']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
     formData['basicInfoWhatsapp']     = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
     formData['basicInfoEmail']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
     formData['basicInfoGender']       = {value:userDetails.gender, errorClass:"", errorMessage:""};
-    formData['basicInfoDob']          = {value:userDetails.age_entered_on, errorClass:"", errorMessage:""};
+    formData['basicInfoAge']          = {value:userDetails.age, errorClass:"", errorMessage:""};
     formData['basicInfoCommute']      = {value:userDetails.how_commute, errorClass:"", errorMessage:""};
     formData['basicInfoMedicalExperience']  = {value:userDetails.medical_experiences, errorClass:"", errorMessage:""};
     formData['basicInfoMedicalCertificate'] = {value:userDetails.medical_certificates, errorClass:"", errorMessage:""};
@@ -116,35 +112,20 @@ function BasicInformation(){
     formData['basicInfoSpecialNotes'] = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
     setFormData({...formData, ...formData});
-
-    /*setFormData({...formData, ['basicInfoName']: {...formData['basicInfoName'], value:userDetails.display_name, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoMobileNo']: {...formData['basicInfoMobileNo'], value:userDetails.contact_no, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoWhatsapp']: {...formData['basicInfoWhatsapp'], value:userDetails.whatsapp_no, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoEmail']: {...formData['basicInfoEmail'], value:userDetails.email_id, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoGender']: {...formData['basicInfoGender'], value:userDetails.gender, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoDob']: {...formData['basicInfoDob'], value:userDetails.age_entered_on, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoCommute']: {...formData['basicInfoCommute'], value:userDetails.how_commute, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoMedicalExperience']: {...formData['basicInfoMedicalExperience'], value:userDetails.medical_experiences, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoMedicalCertificate']: {...formData['basicInfoMedicalCertificate'], value:userDetails.medical_certificates, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoAddress1']: {...formData['basicInfoAddress1'], value:userDetails.addr_1, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoAddress2']: {...formData['basicInfoAddress2'], value:userDetails.addr_2, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoLandmark']: {...formData['basicInfoLandmark'], value:userDetails.addr_landmark, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoTown']: {...formData['basicInfoTown'], value:userDetails.city, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoPostalCode']: {...formData['basicInfoPostalCode'], value:userDetails.postal_code, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:userDetails.service_area_ids, errorClass:"", errorMessage:""}});
-    setFormData({...formData, ['basicInfoSpecialNotes']: {...formData['basicInfoSpecialNotes'], value:userDetails.special_notes, errorClass:"", errorMessage:""}});*/ 
-
+    
+    if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+      var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+      var array1 = new Array();
+      serviceAreaArray.forEach((item)=>{
+        options.forEach((opt)=>{
+          if(opt.value == item){
+            array1.push(opt);
+          }
+        })
+      })
+      setSelectedOptions(array1);
+    }
   }
-
-  const options = [
-    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
-    { label: 'Navagraha Temple, Guwahati', value: '2' },
-    { label: 'Umananda Temple, Guwahati', value: '3' },
-    { label: 'Morigaon', value: '4' },
-  ];
-
-  // Define the selectedOptions state and the corresponding setter function
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleChange1 = (values) => {
     //console.log(values);
@@ -174,14 +155,49 @@ function BasicInformation(){
   }, [systemContext.systemDetails.system_id]);
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault(); console.log(formData);
+    e.preventDefault(); console.log(formData['basicInfoName'].value);
     let errorCounter = validateForm();
+    if(errorCounter == 0){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+
+      jsonData['system_id']         = systemContext.systemDetails.system_id;
+      jsonData["account_key"]       = decryptedLoginDetails.account_key;
+      jsonData["account_type"]      = decryptedLoginDetails.account_type;
+      jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+      jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]      = DEVICE_TOKEN;
+      jsonData["user_lat"]          = localStorage.getItem('latitude');
+      jsonData["user_long"]         = localStorage.getItem('longitude');
+
+      jsonData["basicInfoName"]             = formData['basicInfoName'].value;
+      jsonData["basicInfoMobileNo"]         = formData['basicInfoMobileNo'].value;
+      jsonData["basicInfoWhatsapp"]         = formData['basicInfoWhatsapp'].value;
+      jsonData["basicInfoEmail"]            = formData['basicInfoEmail'].value;
+      jsonData["basicInfoGender"]           = formData['basicInfoGender'].value;
+      jsonData["basicInfoAge"]              = formData['basicInfoAge'].value;
+      jsonData["basicInfoCommute"]          = formData['basicInfoCommute'].value;
+      jsonData["basicInfoMedicalExperience"]  = formData['basicInfoMedicalExperience'].value;
+      jsonData["basicInfoMedicalCertificate"] = formData['basicInfoMedicalCertificate'].value;
+      jsonData["basicInfoAddress1"]         = formData['basicInfoAddress1'].value;
+      jsonData["basicInfoAddress2"]         = formData['basicInfoAddress2'].value;
+      jsonData["basicInfoLandmark"]         = formData['basicInfoLandmark'].value;
+      jsonData["basicInfoTown"]             = formData['basicInfoTown'].value;
+      jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
+      jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
+      jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
+
+      console.log(jsonData);
+
+    }
   }
 
   const validateForm = () => {
     const fieldName = Object.keys(formData);
     let errorCounter = 0;
-    fieldName.forEach((element) => { console.log(formData[element].value);
+    fieldName.forEach((element) => {
       if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
         formData[element].errorMessage = "This field is required!";
         formData[element].errorClass = "form-error";
@@ -260,22 +276,22 @@ function BasicInformation(){
           <form className="basic-information" name="basic_information" id="basic_information" onSubmit={handleFormSubmit}>
             <div className={`form-group ${formData["basicInfoName"].errorClass}`}>
               <label htmlFor="name">Name <span className="text-danger">*</span></label>
-              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange} value={formData["basicInfoName"].value}/>
+              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange} value={formData["basicInfoName"].value ? formData["basicInfoName"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoName"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoMobileNo"].errorClass}`}> 
               <label> Mobile Number <span className="text-danger">*</span></label>
-              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoMobileNo"].value}/>
+              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoMobileNo"].value ? formData["basicInfoMobileNo"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoMobileNo"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoWhatsapp"].errorClass}`}>
               <label>WhatsApp :</label>
-              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoWhatsapp"].value}/>
+              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoWhatsapp"].value ? formData["basicInfoWhatsapp"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoWhatsapp"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoEmail"].errorClass}`}>
               <label>Email ID <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoEmail" id="basicInfoEmail" placeholder="abcd@xyz.com" onChange={handleChange} value={formData["basicInfoEmail"].value}/>
+              <input type="text" className="form-control" name="basicInfoEmail" id="basicInfoEmail" placeholder="abcd@xyz.com" onChange={handleChange} value={formData["basicInfoEmail"].value ? formData["basicInfoEmail"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoEmail"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoGender"].errorClass}`}>
@@ -296,30 +312,30 @@ function BasicInformation(){
               </div>
               <small className="error-mesg">{formData["basicInfoGender"].errorMessage}</small>
             </div>
-            <div className={`form-group ${formData["basicInfoDob"].errorClass}`}>
-              <label style={{zIndex:1}}>Date of Birth (DOB)  <span className="text-danger">*</span> </label>
-              <DatePicker className="form-control" dateFormat="yyyy-MM-dd" selected={startDate} onChange={selectDateHandler}/>
-              <small className="error-mesg">{formData["basicInfoDob"].errorMessage}</small>
+            <div className={`form-group ${formData["basicInfoAge"].errorClass}`}>
+              <label style={{zIndex:1}}>Age  <span className="text-danger">*</span> </label>
+              <input type="text" className="form-control" name="basicInfoAge" id="basicInfoAge" onChange={handleChange} maxLength={3} value={formData["basicInfoAge"].value ? formData["basicInfoAge"].value : ''}/>
+              <small className="error-mesg">{formData["basicInfoAge"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoCommute"].errorClass}`}>
               <label>How You Commute  <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoCommute" id="basicInfoCommute" placeholder="Bike" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoCommute" id="basicInfoCommute" placeholder="Bike" onChange={handleChange} value={formData["basicInfoCommute"].value ? formData["basicInfoCommute"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoCommute"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoMedicalExperience"].errorClass}`}>
               <label>Medical Experiences   <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoMedicalExperience" id="basicInfoMedicalExperience" placeholder="" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoMedicalExperience" id="basicInfoMedicalExperience" placeholder="" onChange={handleChange} value={formData["basicInfoMedicalExperience"].value ? formData["basicInfoMedicalExperience"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoMedicalExperience"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoMedicalCertificate"].errorClass}`}>
               <label className="no-style">Do you have Medical Certificates?    <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> : </label>
               <div className="d-flex">
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_y" name="basicInfoMedicalCertificate" className="custom-control-input" value="y" onChange={handleChange}/>
+                  <input type="radio" id="edit_user_medical_certificates_y" name="basicInfoMedicalCertificate" className="custom-control-input" value="yes" onChange={handleChange} checked={(formData["basicInfoMedicalCertificate"].value === 'yes') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Yes</label>
               </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_n" name="basicInfoMedicalCertificate" className="custom-control-input" value="f" onChange={handleChange}/>
+                  <input type="radio" id="edit_user_medical_certificates_n" name="basicInfoMedicalCertificate" className="custom-control-input" value="no" onChange={handleChange} checked={(formData["basicInfoMedicalCertificate"].value === 'no') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">No</label>
                 </div>
               </div>
@@ -327,45 +343,38 @@ function BasicInformation(){
             </div>
             <div className={`form-group ${formData["basicInfoAddress1"].errorClass}`}>
               <label>Address 1   <span className="text-danger">*</span> : </label>
-              <input type="text" className="form-control" name="basicInfoAddress1" id="basicInfoAddress1" placeholder="" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoAddress1" id="basicInfoAddress1" placeholder="" onChange={handleChange} value={formData["basicInfoAddress1"].value ? formData["basicInfoAddress1"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoAddress1"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoAddress2"].errorClass}`}>
               <label>Address 2 :</label>
-              <input type="text" className="form-control" name="basicInfoAddress2" id="basicInfoAddress2" placeholder="" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoAddress2" id="basicInfoAddress2" placeholder="" onChange={handleChange} value={formData["basicInfoAddress2"].value ? formData["basicInfoAddress2"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoAddress2"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoLandmark"].errorClass}`}>
               <label>Nearest Landmark :</label>
-              <input type="text" className="form-control" name="basicInfoLandmark" id="basicInfoLandmark" placeholder="" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoLandmark" id="basicInfoLandmark" placeholder="" onChange={handleChange} value={formData["basicInfoLandmark"].value ? formData["basicInfoLandmark"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoLandmark"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoTown"].errorClass}`}>
               <label>Village / Town / City <span className="text-danger">*</span> :</label>
-              <input type="text" className="form-control" name="basicInfoTown" id="basicInfoTown" placeholder="" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoTown" id="basicInfoTown" placeholder="" onChange={handleChange} value={formData["basicInfoTown"].value ? formData["basicInfoTown"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoTown"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoPostalCode"].errorClass}`}>
               <label>Postal Code / Pincode <span className="text-danger">*</span> :</label>
-              <input type="text" className="form-control" name="basicInfoPostalCode" id="basicInfoPostalCode" placeholder="" onChange={handleChange} maxLength={6}/>
+              <input type="text" className="form-control" name="basicInfoPostalCode" id="basicInfoPostalCode" placeholder="" onChange={handleChange} maxLength={6} value={formData["basicInfoPostalCode"].value ? formData["basicInfoPostalCode"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoPostalCode"].errorMessage}</small>
             </div>
             
             <div className={`form-group ${formData["basicInfoServiceArea"].errorClass}`}>
-              {/* <label className="no-style"><span className="d-block">Service Area :</span><small>(Multiple can pick)</small></label> */}
               <label>Service Area : <span className='text-danger'> *</span></label>
-              {/* <select className="form-control" multiple name="basicInfoServiceArea">
-                <option value="1">Guwahati Zoo,Fancy bazar</option>
-                <option value="2">Navagraha Temple, Guwahati</option>
-                <option value="3">Umananda Temple, Guwahati</option>
-                <option value="4">Morigaon</option>
-              </select> */}
               <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
               <small className="error-mesg">{formData["basicInfoServiceArea"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoSpecialNotes"].errorClass}`}>
               <label>Special Notes :</label>
-              <input type="text" className="form-control" name="basicInfoSpecialNotes" id="basicInfoSpecialNotes" placeholder="Special Notes" onChange={handleChange}/>
+              <input type="text" className="form-control" name="basicInfoSpecialNotes" id="basicInfoSpecialNotes" placeholder="Special Notes" onChange={handleChange} value={formData["basicInfoSpecialNotes"].value ? formData["basicInfoSpecialNotes"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoSpecialNotes"].errorMessage}</small>
             </div>
 
