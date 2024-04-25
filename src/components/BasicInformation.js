@@ -13,12 +13,14 @@ import { Link } from "react-router-dom";
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from '../context/alert/AlertContext';
 
 import Dropdown from 'react-dropdown-select';
 
 function BasicInformation(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [isMActive, setIsMActive]           = useState(false);
   const [accountDetails, setAccountDetails] = useState([]);
@@ -189,8 +191,23 @@ function BasicInformation(){
       jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
 
-      console.log(jsonData);
+      const response = await fetch(`${API_URL}/updateUserProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      console.log(response)
+      let result = await response.json();
 
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+      
     }
   }
 
