@@ -49,10 +49,10 @@ import SignUpVerification from './SignUpVerification';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'ukhra.serviceplace.org.in'; //NGO, system_id=3
+  //const domainName = 'ukhra.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2h.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvn.serviceplace.org.in';//NGO, system_id=2
-  //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
+  const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
   const [systemId, setSystemId] = useState(null);
 
   const loginContext  = useContext(LoginContext);
