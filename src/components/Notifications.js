@@ -22,6 +22,8 @@ function Notifications(){
   const systemContext = useContext(SystemContext);
   const [notificationList, setNotificationList] = useState([]);
   const [showModal, setShowModal] = useState(false); 
+  const [editNotficationId, setEditNotificationId] = useState(0);
+  const [notificationDetails, setNotificationDetails] = useState('');
 
   const modalClose  = () => setShowModal(false);  
   const modalShow   = () => setShowModal(true);  
@@ -70,7 +72,32 @@ function Notifications(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
-  const readNotification = (notificationId) => {
+  const readNotification = async (notificationId) => {
+    setEditNotificationId(notificationId);
+    var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {
+      'system_id': systemContext.systemDetails.system_id,
+      'device_type': DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+      'user_lat': localStorage.getItem('latitude'),
+      'user_long': localStorage.getItem('longitude'),
+      'user_account_key': loginDetails.account_key,
+      'user_account_type': loginDetails.account_type,
+      'notification_id': notificationId
+    };
+
+    /*const response = await fetch(`${API_URL}/myNotifications`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    });
+
+    let result = await response.json();*/
+
     modalShow();
   }
 

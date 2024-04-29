@@ -60,7 +60,7 @@ function AppTop(){
     let result = await response.json();
 
     if(result.success){
-      setTotalNotifications(result.data.row.length());
+      setTotalNotifications(result.data.row.length);
     }
   }
 
