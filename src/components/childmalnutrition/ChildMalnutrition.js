@@ -1,20 +1,25 @@
 import { useState, useContext } from 'react';
 
+import Appfooter from "../AppFooter";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import SystemContext from "../context/system/SystemContext";
+import childprofile from '../../assets/images/profile-child.png';
 
-import Appfooter from "./AppFooter";
+import SystemContext from "../../context/system/SystemContext";
 
-import './YoungWomanUploadPrescription.css'
+function ChildMalnutrion(){
 
-import youngwomenprescription from '../assets/images/sample-rx.png';
-
-function YoungWomanUploadPrescription(){
   const systemContext = useContext(SystemContext);
+
+  const [isActive, setIsActive] = useState(false);
+
+  const handleClick = () => {
+    setIsActive(!isActive); // Toggle the state
+  };
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -22,8 +27,9 @@ function YoungWomanUploadPrescription(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+
   return(
-    <>  
+    <>
       <div className='app-top inner-app-top services-app-top'>
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
@@ -32,7 +38,7 @@ function YoungWomanUploadPrescription(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Upload Prescription </h5>
+            <h5 className='mx-2 mb-0'>Child Malnutrition </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -57,35 +63,53 @@ function YoungWomanUploadPrescription(){
           </div>
         </div>
       </div>
-      <div className="app-body young-womens upload-prescription">
+      <div className="app-body young-womens profile-listing">
+        <div className='add-patient'><Link to="/create-child-malnutrition" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Malnutrition</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Prescription' />
+            <input type="text" className='form-control' placeholder='Search Child Malnutrition' />
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
           <div className='col-6'>
             <div className='button-box'>
-              <div className='prescription'>
-                <img src={youngwomenprescription} alt='' className='w-100' />
-                <p className='mb-1'><strong>PRE2495B310D</strong></p>
+              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                <ul>
+                  <li><Link to={"patient-basicinfo"}>Edit Basic Information</Link></li>
+                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
+                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"#"}>Close Child Malnutrition</Link></li>
+                </ul>
               </div>
+              <Link to="#">
+                <img src={childprofile} alt='' />
+                <h6>Child Malnutrition 1</h6>
+              </Link>
             </div>
           </div>
           <div className='col-6'>
             <div className='button-box'>
-              <div className='prescription'>
-                <img src={youngwomenprescription} alt='' className='w-100' />
-                <p className='mb-1'><strong>PRE2450B310C</strong></p>
+              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                <ul>
+                  <li><Link to={"#"}>Close Patient</Link></li>
+                </ul>
               </div>
+              <Link to="#">
+                <img src={childprofile} alt='' />
+                <h6>Child Malnutrition 2</h6>
+              </Link>
             </div>
           </div>
         </div>
       </div>
       <Appfooter></Appfooter>
     </>
-  )
+  );
 }
 
-export default YoungWomanUploadPrescription;
+
+export default ChildMalnutrion;

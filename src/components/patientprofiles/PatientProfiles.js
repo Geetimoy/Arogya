@@ -1,19 +1,20 @@
 import { useState, useContext } from 'react';
 
-import Appfooter from "./AppFooter";
+import './PatientProfiles.css'
+
+import Appfooter from '../AppFooter';
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import youngwomenprofile from '../assets/images/profile-girl.png';
+import patientprofile from '../../assets/images/profile.png';
 
-import SystemContext from "../context/system/SystemContext";
+import SystemContext from "../../context/system/SystemContext";
 
-function Janani(){
-
-  const systemContext = useContext(SystemContext);
+function Patientprofiles(){
 
   const [isActive, setIsActive] = useState(false);
 
@@ -21,12 +22,13 @@ function Janani(){
     setIsActive(!isActive); // Toggle the state
   };
 
+  const systemContext = useContext(SystemContext);
+
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
-
 
   return(
     <>
@@ -38,7 +40,7 @@ function Janani(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Janani</h5>
+            <h5 className='mx-2 mb-0'>Patient Profiles </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -63,11 +65,11 @@ function Janani(){
           </div>
         </div>
       </div>
-      <div className="app-body janani profile-listing">
-        <div className='add-patient'><Link to="/create-janani" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Janani</Link></div>
+      <div className="app-body patient-profiles profile-listing">
+        <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Janani' />
+            <input type="text" className='form-control' placeholder='Search a patient' />
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
@@ -77,16 +79,16 @@ function Janani(){
               <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
               <div className='drop-menu'>
                 <ul>
-                  <li><Link to={"patient-basicinfo"}>Edit Basic Information</Link></li>
+                  <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
                   <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
                   <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Close Janani</Link></li>
+                  <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="#">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Janani 1</h6>
+              <Link to="/viewpatientdetails">
+                <img src={patientprofile} alt='' />
+                <h6>Patient 1</h6>
               </Link>
             </div>
           </div>
@@ -98,17 +100,17 @@ function Janani(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="#">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Janani 2</h6>
+              <Link to="/viewpatientdetails">
+                <img src={patientprofile} alt='' />
+                <h6>Patient 2</h6>
               </Link>
             </div>
           </div>
         </div>
       </div>
-      <Appfooter></Appfooter>
+      <Appfooter></Appfooter> 
     </>
-  )
+  );
 }
 
-export default Janani;
+export default Patientprofiles;

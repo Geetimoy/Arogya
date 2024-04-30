@@ -1,27 +1,19 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 
-import Appfooter from "./AppFooter";
+import Appfooter from '../AppFooter';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faBell, faLongArrowAltLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-
-import './CreatePatientProfile.css'
+import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import SystemContext from "../context/system/SystemContext";
+import './CreatePatientProfile.css';
 
-function ViewPatientDetails(){
+import SystemContext from "../../context/system/SystemContext";
 
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  const handleButtonClick = () => {
-    // Toggle the state when the button is clicked
-    setIsDisabled(!isDisabled);
-  };
+function CreatePatientProfile(){
 
   const systemContext = useContext(SystemContext);
-
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
@@ -31,7 +23,7 @@ function ViewPatientDetails(){
 
   return(
     <>
-    <div className='app-top inner-app-top services-app-top'>
+      <div className='app-top inner-app-top services-app-top'>
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
@@ -39,7 +31,7 @@ function ViewPatientDetails(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Patient Details </h5>
+            <h5 className='mx-2 mb-0'>Create Patient Profiles </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -64,14 +56,10 @@ function ViewPatientDetails(){
           </div>
         </div>
       </div>
-    <div className="app-body view-patient-profiles form-all">
-      <div className='d-flex justify-content-between'>
-        <h6 className="title">Basic Information </h6>
-        <div><span className='mx-2'><Link to="#" className='primary-color font-weight-500'>Edit Medical History</Link></span>
-          <span className="float-end"><Link to="#" className={isDisabled ? 'disabled' : ''} onClick={handleButtonClick}><FontAwesomeIcon icon={faEdit} /></Link></span>
-        </div>
-      </div>
-    <form name="" id="" className={isDisabled ? 'disabled' : ''}>
+      <div className='app-body create-patient-profiles'>
+       
+        <p><small>Add Patient Information</small></p>
+        <form className="mt-3" name="" id="">
           <div className="form-group">
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="" id="" placeholder="Full Name" />
@@ -149,13 +137,14 @@ function ViewPatientDetails(){
             <input type="text" className="form-control" name="" id="" placeholder="Special Notes" />
           </div>
           <div className='mb-3 mt-3'>
-            <button type="submit" className='btn primary-bg-color text-light w-100'>Submit</button>
+            <button type="submit" className='btn primary-bg-color text-light w-100'>Create Profile</button>
           </div>
         </form>
-    </div>
-    <Appfooter></Appfooter>
+      </div>
+      <Appfooter></Appfooter>
     </>
   );
 }
 
-export default ViewPatientDetails;
+
+export default CreatePatientProfile;

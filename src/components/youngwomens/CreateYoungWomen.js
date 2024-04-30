@@ -5,8 +5,8 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 
 import { Link } from "react-router-dom";
 
-import SystemContext from "../context/system/SystemContext";
-import Appfooter from './AppFooter';
+import SystemContext from "../../context/system/SystemContext";
+import Appfooter from '../AppFooter';
 
 import  './CreateYoungWoman.css'
 

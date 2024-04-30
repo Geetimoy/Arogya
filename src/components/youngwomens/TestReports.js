@@ -5,10 +5,10 @@ import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/
 
 import { Link } from "react-router-dom";
 
-import SystemContext from "../context/system/SystemContext";
-import Appfooter from './AppFooter';
+import SystemContext from "../../context/system/SystemContext";
+import Appfooter from '../AppFooter';
 
-import patientprescription from '../assets/images/demo-test-report.jpg';
+import patientprescription from '../../assets/images/demo-test-report.jpg';
 
 import './TestReports.css'
 

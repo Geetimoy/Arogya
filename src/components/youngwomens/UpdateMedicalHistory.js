@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
-import SystemContext from "../context/system/SystemContext";
+import SystemContext from "../../context/system/SystemContext";
 
-import Appfooter from './AppFooter';
+import Appfooter from '../AppFooter';
 
 
 

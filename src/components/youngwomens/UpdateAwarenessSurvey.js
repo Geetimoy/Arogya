@@ -1,15 +1,15 @@
 import { useState, useContext } from 'react';
 
-import Appfooter from "./AppFooter";
+import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import SystemContext from "../context/system/SystemContext";
+import SystemContext from "../../context/system/SystemContext";
 
-import SliderRating from './SliderRating';
+import SliderRating from '../SliderRating';
 
 import './UpdateAwarenessSurvey.css'
 

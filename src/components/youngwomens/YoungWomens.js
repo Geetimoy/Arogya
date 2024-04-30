@@ -1,28 +1,23 @@
 import { useState, useContext } from 'react';
 
-import './PatientProfiles.css'
-
-import Appfooter from './AppFooter';
-
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import patientprofile from '../assets/images/profile.png';
+import youngwomenprofile from '../../assets/images/profile-girl.png';
 
-import SystemContext from "../context/system/SystemContext";
+import SystemContext from "../../context/system/SystemContext";
+import Appfooter from '../AppFooter';
 
-function Patientprofiles(){
+function YoungWomens(){
+  const systemContext = useContext(SystemContext);
 
   const [isActive, setIsActive] = useState(false);
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
   };
-
-  const systemContext = useContext(SystemContext);
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -40,7 +35,7 @@ function Patientprofiles(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Patient Profiles </h5>
+            <h5 className='mx-2 mb-0'>Young Women's </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -65,11 +60,13 @@ function Patientprofiles(){
           </div>
         </div>
       </div>
-      <div className="app-body patient-profiles profile-listing">
-        <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
+      <div className="app-body young-womens profile-listing">
+        <div className='add-patient align-items-center d-flex justify-content-between'>
+          <span>Total- 2</span>
+          <Link to="/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search a patient' />
+            <input type="text" className='form-control' placeholder='Search Young Womens' />
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
@@ -80,15 +77,16 @@ function Patientprofiles(){
               <div className='drop-menu'>
                 <ul>
                   <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
-                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"/update-medical-history"}>Update Medical History</Link></li>
+                  <li><Link to={"/update-awareness-survey"}>Update Awareness Survey</Link></li>
+                  <li><Link to={"/young-woman-upload-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Close Patient</Link></li>
+                  <li><Link to={"#"}>Close Young Women</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
-                <img src={patientprofile} alt='' />
-                <h6>Patient 1</h6>
+              <Link to="javascript:void(0);">
+                <img src={youngwomenprofile} alt='' />
+                <h6>Young Women 1</h6>
               </Link>
             </div>
           </div>
@@ -100,17 +98,18 @@ function Patientprofiles(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
-                <img src={patientprofile} alt='' />
-                <h6>Patient 2</h6>
+              <Link to="javascript:void(0);">
+                <img src={youngwomenprofile} alt='' />
+                <h6>Young Women 2</h6>
               </Link>
             </div>
           </div>
         </div>
       </div>
-      <Appfooter></Appfooter> 
+      <Appfooter></Appfooter>
     </>
-  );
+  )
 }
 
-export default Patientprofiles;
+
+export default YoungWomens;
