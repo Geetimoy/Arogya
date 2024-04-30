@@ -138,13 +138,16 @@ function ProfilePhoto(){
     setUserDetails(result1.data.results);
 
     if(userDetails.source_image !== ""){
-      var imageConfig = JSON.parse(userDetails.profile_photo);
-      setImage(userDetails.source_image+'?timestamp='+Math.random());
-      setCrop(imageConfig.crop);
-      setZoom(imageConfig.zoom);
-      setRotation(imageConfig.rotation);
-      setCroppedAreaPixels(imageConfig.crop_area);
-      setCroppedImage(userDetails.shared_image+'?timestamp='+Math.random());
+      if(userDetails.profile_photo){
+        var imageConfig = JSON.parse(userDetails.profile_photo);
+        setImage(userDetails.source_image+'?timestamp='+Math.random());
+        setCrop(imageConfig.crop);
+        setZoom(imageConfig.zoom);
+        setRotation(imageConfig.rotation);
+        setCroppedAreaPixels(imageConfig.crop_area);
+        setCroppedImage(userDetails.shared_image+'?timestamp='+Math.random());
+      }
+      
     }
 
   }
