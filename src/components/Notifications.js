@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from 'react';
 import CryptoJS from "crypto-js";
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from '../context/alert/AlertContext';
 //import 'bootstrap/dist/css/bootstrap.min.css';  
 import {Modal, Button} from 'react-bootstrap';  
 
@@ -20,6 +21,8 @@ import {Modal, Button} from 'react-bootstrap';
 function Notifications(){
   
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
   const [notificationList, setNotificationList] = useState([]);
   const [showModal, setShowModal] = useState(false); 
   const [editNotficationId, setEditNotificationId] = useState(0);
@@ -96,7 +99,41 @@ function Notifications(){
     modalShow();
   }
 
-  const markAsRead = (notification_id) => {
+  const markAsRead = async (notification_id) => {
+
+    var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {
+      'system_id': systemContext.systemDetails.system_id,
+      'device_type': DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+      'user_lat': localStorage.getItem('latitude'),
+      'user_long': localStorage.getItem('longitude'),
+      'user_account_key': loginDetails.account_key,
+      'user_account_type': loginDetails.account_type,
+      'notification_id': notification_id
+    };
+
+    const response = await fetch(`${API_URL}/myNotificationsRead`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    })
+
+    let result = await response.json();
+
+    if (result.success) { 
+      alertContext.setAlertMessage({show:true, type: "success", message: "Marked as read successfully"});
+      setTimeout(()=>{
+        modalClose();
+      }, 1000);
+    } 
+    else {
+      alertContext.setAlertMessage({show:true, type: "error", message: "Status update failed!"});
+    }
 
   }
 
@@ -117,7 +154,7 @@ function Notifications(){
                   <p className='mb-2 notification-title'>
                     {notification.push_title}
                   </p>
-                  {notification.push_text}
+                  {/*notification.push_text*/}
                 </div>
                 <div className='notification-time'>
                   {notification.last_update}
@@ -132,7 +169,7 @@ function Notifications(){
               </p>
             </div>}
         </div>
-        <Modal show={showModal} onHide={modalClose}>  
+        <Modal show={showModal} onHide={modalClose}>
           <Modal.Body>  
             <p>{notificationDetails.push_text}</p>  
           </Modal.Body>  
