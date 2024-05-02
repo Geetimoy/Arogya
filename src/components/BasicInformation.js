@@ -190,8 +190,9 @@ function BasicInformation(){
       jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
       jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
-
-      const response = await fetch(`${API_URL}/updateUserProfile`, {
+      
+      
+      const response = await fetch(`${API_URL}/updateVolunteerProfile`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
