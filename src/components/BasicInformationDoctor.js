@@ -17,7 +17,7 @@ import AlertContext from '../context/alert/AlertContext';
 
 import Dropdown from 'react-dropdown-select';
 
-function BasicInformation(){
+function BasicInformationDoctor(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -407,4 +407,4 @@ function BasicInformation(){
   );
 }
 
-export default BasicInformation;
+export default BasicInformationDoctor;

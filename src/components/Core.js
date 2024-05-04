@@ -7,7 +7,7 @@ import Dashboard from './Dashboard';
 import Account from './Account';
 import ProfilePhoto from './ProfilePhoto';
 import ChangePassword from './ChangePassword';
-import BasicInformation from './BasicInformation';
+import BasicInformationMain from './BasicInformationMain';
 import Verification from './Verification';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
@@ -236,7 +236,7 @@ export default function Core() {
             <Route path="/Account" exact element={<Account />} />
             <Route path="/ProfilePhoto" exact element={<ProfilePhoto />} />
             <Route path="/ChangePassword" exact element={<ChangePassword />} />
-            <Route path="/BasicInfo" exact element={<BasicInformation />} />
+            <Route path="/BasicInfo" exact element={<BasicInformationMain/>} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/PatientProfiles" exact element={<PatientProfiles />} />
             <Route path="/patientprofiles/ViewPatientDetails" exact element={<ViewPatientDetails />} />
