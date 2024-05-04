@@ -239,16 +239,17 @@ export default function Core() {
             <Route path="/BasicInfo" exact element={<BasicInformation />} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/PatientProfiles" exact element={<PatientProfiles />} />
-            <Route path="/ViewPatientDetails" exact element={<ViewPatientDetails />} />
-            <Route path="/CreatePatientProfile" exact element={<CreatePatientProfile />} />
+            <Route path="/patientprofiles/ViewPatientDetails" exact element={<ViewPatientDetails />} />
+            <Route path="/patientprofiles/CreatePatientProfile" exact element={<CreatePatientProfile />} />
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
-            <Route path="/Create-Young-Women" exact element={<CreateYoungWomen />} />
-            <Route path="/update-medical-history" exact element={<UpdateMedicalHistory />} />
-            <Route path="/update-awareness-survey" exact element={<UpdateAwarenessSurvey />} />
-            <Route path="/young-woman-upload-prescription" exact element={<YoungWomanUploadPrescription />} />
-            <Route path="/TestReports" exact element={<TestReports />} />
+            <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
+            <Route path="/youngwomens/update-medical-history" exact element={<UpdateMedicalHistory />} />
+            <Route path="/youngwomens/update-awareness-survey" exact element={<UpdateAwarenessSurvey />} />
+            <Route path="/youngwomens/young-woman-upload-prescription" exact element={<YoungWomanUploadPrescription />} />
+            <Route path="/youngwomens/TestReports" exact element={<TestReports />} />
+            <Route path="/patientprofiles/TestReports" exact element={<TestReports />} />
             <Route path="/Bookings" exact element={<Bookings />} />
             <Route path="/SelectPatient" exact element={<SelectPatient />} />
             <Route path="/Notifications" exact element={<Notifications />} />

@@ -66,11 +66,11 @@ function Patientprofiles(){
         </div>
       </div>
       <div className="app-body patient-profiles profile-listing">
-        <div className='add-patient'><Link to="/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
+        <div className='add-patient'><Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search a patient' />
-            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
@@ -82,11 +82,11 @@ function Patientprofiles(){
                   <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
                   <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
                   <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"/patientprofiles/testreports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="/viewpatientdetails">
+              <Link to="/patientprofiles/viewpatientdetails">
                 <img src={patientprofile} alt='' />
                 <h6>Patient 1</h6>
               </Link>

@@ -27,11 +27,11 @@ function TestReports(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/youngwomens" className=''>
+              <Link to="/services" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Test Reports YW</h5>
+            <h5 className='mx-2 mb-0'>Test Reports </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>

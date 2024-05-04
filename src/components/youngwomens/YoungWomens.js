@@ -63,7 +63,7 @@ function YoungWomens(){
       <div className="app-body young-womens profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total- 2</span>
-          <Link to="/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link></div>
+          <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Young Womens' />
@@ -76,11 +76,11 @@ function YoungWomens(){
               <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
               <div className='drop-menu'>
                 <ul>
-                  <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/update-medical-history"}>Update Medical History</Link></li>
-                  <li><Link to={"/update-awareness-survey"}>Update Awareness Survey</Link></li>
-                  <li><Link to={"/young-woman-upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"/youngwomens/patient-basicinfo"}>Edit Basic Information</Link></li>
+                  <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
+                  <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
+                  <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"/youngwomens/testreports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Close Young Women</Link></li>
                 </ul>
               </div>

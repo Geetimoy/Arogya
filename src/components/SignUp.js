@@ -178,9 +178,12 @@ function SignUp(){
               <select className="form-control" id="userType" name="userType" onChange={handleChange} defaultValue={formData["userType"].value}>
                 <option value="">Select</option>
                 <option value="3">Patient</option>
-                <option value="4">Volunteer - MedTech</option>
-                <option value="5">Doctor</option>
-                <option value="6">Pharmacy</option>
+                <option value="4">Child Malnutrition</option>
+                <option value="5">Young Womens</option>
+                <option value="6">Janani</option>
+                <option value="7">Volunteer - MedTech</option>
+                <option value="8">Doctor</option>
+                <option value="9">Pharmacy</option>
               </select>
               <small className="error-mesg">{formData["userType"].errorMessage}</small>
             </div>
