@@ -156,7 +156,6 @@ function Notifications(){
                   </p>
                   {/*notification.push_text*/}
                 </div>
-                
               </div>
               <div className='notification-time'>
                   {notification.last_update}
