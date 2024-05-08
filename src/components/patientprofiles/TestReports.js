@@ -66,6 +66,7 @@ function TestReports(){
         <div className='row'>
           <div className='col-6'>
             <div className='button-box'>
+              <p>A2</p>
               <img src={patientprescription} alt='' className='w-100' />
               <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
             </div>

@@ -31,7 +31,7 @@ function TestReports(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Test Reports YW</h5>
+            <h5 className='mx-2 mb-0'>Test Reports</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -66,6 +66,7 @@ function TestReports(){
         <div className='row'>
           <div className='col-6'>
             <div className='button-box'>
+              <p>A1</p>
               <img src={patientprescription} alt='' className='w-100' />
               <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
             </div>

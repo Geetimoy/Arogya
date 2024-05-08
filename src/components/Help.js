@@ -3,6 +3,14 @@ import React, { useContext, useState, useEffect } from "react";
 import Appfooter from "./AppFooter";
 import AppTop from "./AppTop";
 
+import CryptoJS from "crypto-js";
+import { ENCYPTION_KEY } from './util/Constants';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
+import './Help.css'
+
 import SystemContext from '../context/system/SystemContext';
 
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
@@ -10,8 +18,11 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 function Help(){
 
   const systemContext = useContext(SystemContext);
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   const [data, setData] = useState({page_content:'', page_title:''});
+
+  const [profileImage, setProfileImage] = useState('/assets/images/profile.jpg');
 
   let jsonData = {};
       //jsonData['system_id']             = systemContext.systemDetails.system_id;
@@ -55,9 +66,37 @@ function Help(){
   return(
       <>
         <AppTop></AppTop>
-          <div className="app-body">
-              <h5 className="title">{data.page_title}</h5>
-              <p dangerouslySetInnerHTML={{ __html: data.page_content }}></p>
+          <div className="app-body help">
+              {/* <h5 className="title">{data.page_title}</h5>
+              <p dangerouslySetInnerHTML={{ __html: data.page_content }}></p> */}
+              <div className='d-flex justify-content-between mb-4'>
+                <div className='d-flex align-items-center'>
+                  <div className="profile-img"><img src={profileImage} className='thumb' alt='' style={{height:'50px', width:'50px'}}/></div>
+                  <h5 className='mb-0 mx-3 primary-color'>Hello Volunteer!</h5>
+                </div>
+                <div>
+                  <img src={systemContext.systemDetails.thp_sp_global_logo_url} alt='' style={{height:'50px'}} />
+                </div>
+              </div>
+              <h2 className="mb-3">{decryptedLoginDetails.user_name}</h2>
+              <div className='red-box primary-bg-color'>
+                <div className='d-flex align-items-center'>
+                  <FontAwesomeIcon icon={faPhone} />
+                  <div className='mx-3'>
+                    <h6 className='mb-2'>Call {systemContext.systemDetails.thp_system_name} Office</h6>
+                    <p className='mb-0'>Give a call for any query</p>
+                  </div>
+                </div>
+              </div>
+              <div className='red-box primary-bg-color'>
+                  <div className='d-flex align-items-center'>
+                  <FontAwesomeIcon icon={faEnvelope} />
+                    <div className='mx-3'>
+                      <h6 className='mb-2'>Email {systemContext.systemDetails.thp_system_name} </h6>
+                      <p className='mb-0'>Send us a Email and we will get back to you within 2 days</p>
+                    </div>
+                  </div>
+              </div>
           </div>
         <Appfooter></Appfooter>
       </>

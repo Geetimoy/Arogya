@@ -80,7 +80,7 @@ function YoungWomens(){
                   <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
                   <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
                   <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"/youngwomens/testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Close Young Women</Link></li>
                 </ul>
               </div>

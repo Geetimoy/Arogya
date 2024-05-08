@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import { ENCYPTION_KEY } from './util/Constants';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 
 import Appfooter from './AppFooter';

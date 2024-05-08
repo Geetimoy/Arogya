@@ -82,7 +82,7 @@ function Patientprofiles(){
                   <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
                   <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
                   <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"/patientprofiles/testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
