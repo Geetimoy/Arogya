@@ -60,15 +60,15 @@ function CraeteYoungWomen(){
         <form className="mt-3" name="" id="">
           <div className="form-group">
             <label htmlFor="full_name">Full Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="full_name" id="" placeholder="Full Name" />
+            <input type="text" className="form-control" name="full_name" id="full_name" placeholder="Full Name" />
           </div>
           <div className="form-group">
             <label htmlFor="parent_name">Name of Parent/Guardian<span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="parent_name" id="" placeholder="Name of Parent/Guardian" />
+            <input type="text" className="form-control" name="parent_name" id="parent_name" placeholder="Name of Parent/Guardian" />
           </div>
           <div className="form-group">
             <label htmlFor="occupation">Occupation of Guardian <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="occupation" id="" placeholder="Occupation of Guardian" />
+            <input type="text" className="form-control" name="occupation" id="occupation" placeholder="Occupation of Guardian" />
           </div>
           <div className="form-group">
             <label><span className="d-block">Gender  </span></label>
@@ -78,72 +78,72 @@ function CraeteYoungWomen(){
           </div>
           <div className="form-group">
             <label htmlFor="age">Age <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="age" id="" placeholder="Age" />
+            <input type="text" className="form-control" name="age" id="age" placeholder="Age" />
           </div>
           <div className="form-group">
             <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="personal_mobile_number_y" name="personal_mobile_number" className="custom-control-input" />
+                <input type="radio" id="personal_mobile_number_y" name="personal_mobile_number" className="custom-control-input" value="yes"/>
                 <label className="custom-control-label no-style" htmlFor="personal_mobile_number_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="personal_mobile_number_n" name="personal_mobile_number" className="custom-control-input" value="f" />
+                <input type="radio" id="personal_mobile_number_n" name="personal_mobile_number" className="custom-control-input" value="no" />
                 <label className="custom-control-label no-style" htmlFor="personal_mobile_number_n">No</label>
               </div>
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="phone">Phone No <span className="text-danger">*</span></label>
-            <input type="tel" className="form-control" name="phone" id="" placeholder="Phone No" />
+            <input type="tel" className="form-control" name="phone" id="phone" placeholder="Phone No" />
           </div>
           <div className="form-group">
             <label htmlFor="whatsapp">WhatsApp No </label>
-            <input type="tel" className="form-control" name="whatsapp" id="" placeholder="WhatsApp No" />
+            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email </label>
-            <input type="text" className="form-control" name="email" id="" placeholder="Email" />
+            <input type="text" className="form-control" name="email" id="email" placeholder="Email" />
           </div>
           <div className="form-group">
             <label htmlFor="address">Address <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="address" id="" placeholder="Address" />
+            <input type="text" className="form-control" name="address" id="address" placeholder="Address" />
           </div>
           <div className="form-group">
             <label htmlFor="add2">Address 2 <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="add2" id="" placeholder="Address 2" />
+            <input type="text" className="form-control" name="address_2" id="address_2" placeholder="Address 2" />
           </div>
           <div className="form-group">
             <label htmlFor="landmark">Landmark <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="landmark" id="" placeholder="Landmark" />
+            <input type="text" className="form-control" name="landmark" id="landmark" placeholder="Landmark" />
           </div>
           <div className="form-group">
             <label htmlFor="place">Village/Town/City <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="place" id="" placeholder="Village/Town/City" />
+            <input type="text" className="form-control" name="place" id="place" placeholder="Village/Town/City" />
           </div>
           <div className="form-group">
             <label htmlFor="pincode">Pincode <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="pincode" id="" placeholder="Pincode" />
+            <input type="text" className="form-control" name="pincode" id="pincode" placeholder="Pincode" />
           </div>
           <div className="form-group">
             <label><span className="d-block">Service Area :</span></label>
             <select className="form-control">
-              <option value="1" selected="">Ukhra</option>
+              <option value="1" selected>Ukhra</option>
               <option value="2">B2B</option>
             </select>
           </div>
           
           <div className="form-group">
             <label htmlFor="school_name">School Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="school_name" id="" placeholder="School Name" />
+            <input type="text" className="form-control" name="school_name" id="school_name" placeholder="School Name" />
           </div>
           <div className="form-group">
             <label htmlFor="class">Class <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="class" id="" placeholder="Class" />
+            <input type="text" className="form-control" name="class" id="class" placeholder="Class" />
           </div>
           <div className="form-group">
             <label htmlFor="class">Section <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="section" id="" placeholder="Section" />
+            <input type="text" className="form-control" name="section" id="section" placeholder="Section" />
           </div>
 
 
@@ -155,11 +155,11 @@ function CraeteYoungWomen(){
             </select> */}
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_y" name="premature_birth" className="custom-control-input" />
+                <input type="radio" id="premature_birth_y" name="premature_birth" value="yes" className="custom-control-input" />
                 <label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_n" name="premature_birth" className="custom-control-input" value="f" />
+                <input type="radio" id="premature_birth_n" name="premature_birth" value="no" className="custom-control-input" />
                 <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
               </div>
             </div>
@@ -167,16 +167,16 @@ function CraeteYoungWomen(){
 
           <div className="form-group">
             <label htmlFor="house">House<span className="text-danger">*</span></label>
-            <select className="form-control">
-              <option value="1" selected="">Mud House</option>
+            <select className="form-control" name="house" id="house">
+              <option value="1" selected>Mud House</option>
               <option value="2">Paved House</option>
             </select>
           </div>
 
           <div className="form-group">
             <label htmlFor="drinking_water">Drinking Water<span className="text-danger">*</span></label>
-            <select className="form-control">
-              <option value="1" selected="">Tap</option>
+            <select className="form-control" name="drinking_water" id="drinking_water">
+              <option value="1" selected>Tap</option>
               <option value="2">Well</option>
               <option value="3">Pond</option>
             </select>
@@ -184,8 +184,8 @@ function CraeteYoungWomen(){
 
           <div className="form-group">
             <label htmlFor="toilet">Toilet<span className="text-danger">*</span></label>
-            <select className="form-control">
-              <option value="1" selected="">Open-field</option>
+            <select className="form-control" name="toilet" id="toilet">
+              <option value="1" selected>Open-field</option>
               <option value="2">Country-latrine</option>
               <option value="3">Flush-toilet</option>
             </select>
@@ -194,7 +194,7 @@ function CraeteYoungWomen(){
 
           <div className="form-group">
             <label htmlFor="special_note">Special Notes </label>
-            <input type="text" className="form-control" name="special_note" id="" placeholder="Special Notes" />
+            <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" />
           </div>
           {/* <div className='form-group'>
             <div className="custom-control custom-checkbox mb-3">
@@ -212,7 +212,7 @@ function CraeteYoungWomen(){
 
           </div> */}
           <div className='mb-3 mt-3'>
-            <button type="submit" className='btn primary-bg-color text-light w-100'>Create Young Women Profiles</button>
+            <button type="button" className='btn primary-bg-color text-light w-100'>Create Young Women Profiles</button>
           </div>
         </form>
       </div>
