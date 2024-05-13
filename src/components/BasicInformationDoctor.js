@@ -279,7 +279,7 @@ function BasicInformationDoctor(){
           <div className="row">
             <div className="col-6">
               <div className="normal-box">
-                <span>Volunteer ID :</span>
+                <span>Doctor ID :</span>
                 {(accountDetails.account_key) ? accountDetails.account_key.toUpperCase() : ''}
               </div>
             </div>
@@ -335,29 +335,17 @@ function BasicInformationDoctor(){
               <input type="text" className="form-control" name="basicInfoAge" id="basicInfoAge" onChange={handleChange} maxLength={3} value={formData["basicInfoAge"].value ? formData["basicInfoAge"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoAge"].errorMessage}</small>
             </div>
-            <div className={`form-group ${formData["basicInfoCommute"].errorClass}`}>
-              <label>How You Commute  <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoCommute" id="basicInfoCommute" placeholder="Bike" onChange={handleChange} value={formData["basicInfoCommute"].value ? formData["basicInfoCommute"].value : ''}/>
-              <small className="error-mesg">{formData["basicInfoCommute"].errorMessage}</small>
+            <div className='form-group'>
+              <label>Educational Degree</label>
+              <input type="text" className="form-control" name="educationalDegree" id="educationalDegree"  value="Doctorate" />
             </div>
-            <div className={`form-group ${formData["basicInfoMedicalExperience"].errorClass}`}>
-              <label>Medical Experiences   <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> </label>
-              <input type="text" className="form-control" name="basicInfoMedicalExperience" id="basicInfoMedicalExperience" placeholder="" onChange={handleChange} value={formData["basicInfoMedicalExperience"].value ? formData["basicInfoMedicalExperience"].value : ''}/>
-              <small className="error-mesg">{formData["basicInfoMedicalExperience"].errorMessage}</small>
+            <div className='form-group'>
+              <label>Specialization</label>
+              <input type="text" className="form-control" name="specialization" id="specialization"  value="Heart" />
             </div>
-            <div className={`form-group ${formData["basicInfoMedicalCertificate"].errorClass}`}>
-              <label className="no-style">Do you have Medical Certificates?    <span className="text-danger">*</span> <FontAwesomeIcon icon={faQuestionCircle} /> : </label>
-              <div className="d-flex">
-                <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_y" name="basicInfoMedicalCertificate" className="custom-control-input" value="yes" onChange={handleChange} checked={(formData["basicInfoMedicalCertificate"].value === 'yes') ? true : false}/>
-                  <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Yes</label>
-              </div>
-                <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_n" name="basicInfoMedicalCertificate" className="custom-control-input" value="no" onChange={handleChange} checked={(formData["basicInfoMedicalCertificate"].value === 'no') ? true : false}/>
-                  <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">No</label>
-                </div>
-              </div>
-              <small className="error-mesg">{formData["basicInfoMedicalCertificate"].errorMessage}</small>
+            <div className='form-group'>
+              <label>Is Available on Emergency Call?</label>
+              <input type="text" className="form-control" name="specialization" id="specialization"  value="Yes" />
             </div>
             <div className={`form-group ${formData["basicInfoAddress1"].errorClass}`}>
               <label>Address 1   <span className="text-danger">*</span> : </label>

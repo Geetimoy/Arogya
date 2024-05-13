@@ -8,6 +8,8 @@ import Account from './Account';
 import ProfilePhoto from './ProfilePhoto';
 import ChangePassword from './ChangePassword';
 import BasicInformationMain from './BasicInformationMain';
+import BasicInformationDoctor from './BasicInformationDoctor';
+import BasicInformationPatient from './BasicInformationPatient';
 import Verification from './Verification';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
@@ -237,6 +239,8 @@ export default function Core() {
             <Route path="/ProfilePhoto" exact element={<ProfilePhoto />} />
             <Route path="/ChangePassword" exact element={<ChangePassword />} />
             <Route path="/BasicInfo" exact element={<BasicInformationMain/>} />
+            <Route path="/basicinfodoctor" exact element={<BasicInformationDoctor/>} />
+            <Route path="/basicinfopatient" exact element={<BasicInformationPatient/>} />
             <Route path="/Services" exact element={<Services />} />
             <Route path="/PatientProfiles" exact element={<PatientProfiles />} />
             <Route path="/patientprofiles/ViewPatientDetails" exact element={<ViewPatientDetails />} />

@@ -78,7 +78,7 @@ function Help(){
                   <img src={systemContext.systemDetails.thp_sp_global_logo_url} alt='' style={{height:'50px'}} />
                 </div>
               </div>
-              <h2 className="mb-3">{decryptedLoginDetails.user_name}</h2>
+              {/* <h2 className="mb-3">{decryptedLoginDetails.user_name}</h2> */}
               <div className='red-box primary-bg-color'>
                 <div className='d-flex align-items-center'>
                   <FontAwesomeIcon icon={faPhone} />
