@@ -67,6 +67,19 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" name="parent_name" id="parent_name" placeholder="Name of Parent/Guardian" />
           </div>
           <div className="form-group">
+            <label htmlFor="premature_birth" className='no-style'>Premature Birth? <span className="text-danger">*</span></label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_y" name="premature_birth" value="yes" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_n" name="premature_birth" value="no" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
             <label htmlFor="occupation">Occupation of Guardian <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="occupation" id="occupation" placeholder="Occupation of Guardian" />
           </div>
@@ -147,23 +160,7 @@ function CraeteYoungWomen(){
           </div>
 
 
-          <div className="form-group">
-            <label htmlFor="premature_birth" className='no-style'>Premature Birth? <span className="text-danger">*</span></label>
-            {/* <select className="form-control">
-              <option value="1" selected="">Yes</option>
-              <option value="2">No</option>
-            </select> */}
-            <div className="d-flex">
-              <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_y" name="premature_birth" value="yes" className="custom-control-input" />
-                <label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
-              </div>
-              <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_n" name="premature_birth" value="no" className="custom-control-input" />
-                <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
-              </div>
-            </div>
-          </div>
+          
 
           <div className="form-group">
             <label htmlFor="house">House<span className="text-danger">*</span></label>

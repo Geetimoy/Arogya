@@ -86,7 +86,7 @@ function Account(){
               <li><FontAwesomeIcon icon={faInfoCircle} /> <Link to ="/basicinfo">Update Basic Information</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
               <li><FontAwesomeIcon icon={faImage} /> <Link to ="/profilephoto">Update Profile Photo</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>  
 
-              {(decryptedLoginDetails.account_type == 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/uploadcertificates">Initial History</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>}
+              {(decryptedLoginDetails.account_type == 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/initialhistory">Initial History</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>}
 
               {(decryptedLoginDetails.account_type != 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/uploadcertificates">Upload Certificates</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>}
               
