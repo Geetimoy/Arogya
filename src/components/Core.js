@@ -40,6 +40,7 @@ import Logout from './Logout';
 import AboutNgo from './AboutNgo';
 import Settings from './Settings';
 import UploadCertificates from './UploadCertificates';
+import InitialHistory from './InitialHistory';
 import ContactAdmin from './ContactAdmin';
 import LoginContext from '../context/login/LoginContext';
 import AlertContext from '../context/alert/AlertContext';
@@ -264,6 +265,8 @@ export default function Core() {
             <Route path="/Help" exact element={<Help />} />
             <Route path="/Settings" exact element={<Settings />} />
             <Route path="/UploadCertificates" exact element={<UploadCertificates />} />
+            <Route path="/InitialHistory" exact element={<InitialHistory />} />
+      
             <Route exact path="/logout" element={<Logout/>}></Route>
             <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="*" element={<Navigate to="/dashboard"/>}></Route>

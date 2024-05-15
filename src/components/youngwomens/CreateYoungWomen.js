@@ -71,6 +71,19 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" />
           </div>
           <div className="form-group">
+            <label htmlFor="premature_birth" className='no-style'>Premature Birth? <span className="text-danger">*</span></label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_y" name="premature_birth" value="yes" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_n" name="premature_birth" value="no" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
             <label htmlFor="occupation">Occupation of Guardian <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="occupation" id="occupation" placeholder="Occupation of Guardian" />
           </div>
