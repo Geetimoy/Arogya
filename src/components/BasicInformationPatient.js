@@ -50,7 +50,7 @@ function BasicInformationPatient(){
     basicInfoTown: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoPostalCode: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoServiceArea: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoSpecialNotesAdmin: {required: false, value:"", errorClass:"", errorMessage:""}
+    basicInfoSpecialNotes: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -111,7 +111,7 @@ function BasicInformationPatient(){
     formData['basicInfoTown']         = {value:userDetails.city, errorClass:"", errorMessage:""};
     formData['basicInfoPostalCode']   = {value:userDetails.postal_code, errorClass:"", errorMessage:""};
     formData['basicInfoServiceArea']  = {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
-    formData['basicInfoSpecialNotesAdmin'] = {value:userDetails.special_notes_admin, errorClass:"", errorMessage:""};
+    formData['basicInfoSpecialNotes'] = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
     setFormData({...formData, ...formData});
     
@@ -189,7 +189,7 @@ function BasicInformationPatient(){
       jsonData["basicInfoTown"]             = formData['basicInfoTown'].value;
       jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
       jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
-      jsonData["basicInfoSpecialNotesAdmin"]     = formData['basicInfoSpecialNotesAdmin'].value;
+      jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
       
       
       const response = await fetch(`${API_URL}/updatePatientProfile`, {
@@ -369,10 +369,10 @@ function BasicInformationPatient(){
               <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
               <small className="error-mesg">{formData["basicInfoServiceArea"].errorMessage}</small>
             </div>
-            <div className={`form-group ${formData["basicInfoSpecialNotesAdmin"].errorClass}`}>
+            <div className={`form-group ${formData["basicInfoSpecialNotes"].errorClass}`}>
               <label>Special Notes :</label>
-              <input type="text" className="form-control" name="basicInfoSpecialNotesAdmin" id="basicInfoSpecialNotesAdmin" placeholder="Special Notes" onChange={handleChange} value={formData["basicInfoSpecialNotesAdmin"].value ? formData["basicInfoSpecialNotesAdmin"].value : ''}/>
-              <small className="error-mesg">{formData["basicInfoSpecialNotesAdmin"].errorMessage}</small>
+              <input type="text" className="form-control" name="basicInfoSpecialNotes" id="basicInfoSpecialNotes" placeholder="Special Notes" onChange={handleChange} value={formData["basicInfoSpecialNotes"].value ? formData["basicInfoSpecialNotes"].value : ''}/>
+              <small className="error-mesg">{formData["basicInfoSpecialNotes"].errorMessage}</small>
             </div>
 
             <div className='btns-group d-flex justify-content-center'>
