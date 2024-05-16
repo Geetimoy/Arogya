@@ -203,7 +203,7 @@ function Settings(){
             </div>
           </div>
 
-          <h5 className='title brdr-btm'>Another Category</h5>
+          
       </div>
       <Appfooter></Appfooter>
     </>
