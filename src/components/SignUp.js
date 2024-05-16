@@ -178,9 +178,9 @@ function SignUp(){
               <select className="form-control" id="userType" name="userType" onChange={handleChange} defaultValue={formData["userType"].value}>
                 <option value="">Select</option>
                 <option value="3">Patient</option>
-                <option value="3">Child Malnutrition</option>
-                <option value="3">Young Womens</option>
-                <option value="3">Janani</option>
+                <option value="31">Child Malnutrition</option>
+                <option value="32">Young Womens</option>
+                <option value="33">Janani</option>
                 <option value="4">Volunteer - MedTech</option>
                 <option value="5">Doctor</option>
                 <option value="6">Pharmacy</option>
