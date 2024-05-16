@@ -192,7 +192,7 @@ function BasicInformationPatient(){
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
       
       
-      const response = await fetch(`${API_URL}/updateVolunteerProfile`, {
+      const response = await fetch(`${API_URL}/updatePatientProfile`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
