@@ -1,0 +1,12 @@
+.form-all.choose-file .not-ellipse label {
+  color: #818181;
+  position: absolute;
+  padding: 10px;
+  font-size: 12px;
+  z-index: 1;
+  text-overflow: inherit;
+}
+
+.form-all.choose-file .not-ellipse textarea {
+  padding-top: 1.825rem;
+}

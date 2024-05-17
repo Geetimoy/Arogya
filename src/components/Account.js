@@ -92,7 +92,7 @@ function Account(){
               
               <li><FontAwesomeIcon icon={faBell} /> <Link to ="/settings">Settings</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
               <li><FontAwesomeIcon icon={faLock} /> <Link to ="/changepassword">Change Password</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
-              <li><FontAwesomeIcon icon={faSignOutAlt} /> <Link to ="/logout">Log Out</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
+              <li><FontAwesomeIcon icon={faSignOutAlt} /> <Link to ="/logout">Logout</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
             </ul>
           </div>
         </div>

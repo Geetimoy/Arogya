@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import './AppTop.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt, faSignOutAlt, faVenusDouble } from '@fortawesome/free-solid-svg-icons';
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
@@ -127,8 +127,11 @@ function AppTop(){
             <ul>
               <li className='mm-active'><FontAwesomeIcon icon={faUser} /> <Link to={"/account"}>My Profile</Link></li>
               <li><FontAwesomeIcon icon={faUsers} /> <Link to={"/patientprofiles"}>Patient Profiles</Link></li>
-              <li><FontAwesomeIcon icon={faFemale} /> <Link to={"/janani"}>Janani</Link></li>
+              
               <li><FontAwesomeIcon icon={faChild} /> <Link to={"/child-malnutrition"}>Child Malnutrition</Link></li>
+              <li><FontAwesomeIcon icon={faVenusDouble} /> <Link to={"/youngwomens"}>Young Womens</Link></li>
+              <li><FontAwesomeIcon icon={faFemale} /> <Link to={"/janani"}>Janani</Link></li>
+              
               <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/bookings"}>Appointments</Link></li>
               <li><FontAwesomeIcon icon={faSignOutAlt} /> <Link to={"/logout"}>Logout</Link></li>
             </ul>

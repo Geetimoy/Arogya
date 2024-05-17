@@ -9,7 +9,7 @@ import SystemContext from "../../context/system/SystemContext";
 
 import Appfooter from '../AppFooter';
 
-
+import './UpdateMedicalHistory.css';
 
 function UpadteMedicalHistory(){
 
@@ -123,6 +123,10 @@ function UpadteMedicalHistory(){
               <option value="1">Irregular Periods</option>
               <option value="2">Age of Menarchy(menstruation)</option>
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
           </div>
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>

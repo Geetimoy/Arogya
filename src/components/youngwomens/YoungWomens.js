@@ -78,6 +78,7 @@ function YoungWomens(){
                 <ul>
                   <li><Link to={"/youngwomens/patient-basicinfo"}>Edit Basic Information</Link></li>
                   <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
+                  <li><Link to={"/youngwomens/update-periodic-data"}>Update Periodic Data</Link></li>
                   <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
                   <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"./testreports"}>Upload Test Reports</Link></li>

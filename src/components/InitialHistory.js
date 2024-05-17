@@ -14,6 +14,8 @@ import { faBell, faEllipsisV, faLongArrowAltLeft, faTrash, faDownload } from '@f
 
 import { Link } from "react-router-dom";
 
+import './InitialHistory.css'
+
 
 function InitialHistroy(){
 
@@ -277,7 +279,7 @@ function InitialHistroy(){
         <div className='d-flex justify-content-between align-items-center'><h5></h5><span>Max 5 files, 500 KB each</span></div>
         <div className="upload-certificate-list">
           <div className="rounded jumbotron p-3 mt-3 mb-3">
-            <form encType="multipart/form-data" className='choose-file'>
+            <form encType="multipart/form-data" className='choose-file form-all'>
               {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => 
                 <div key={i+1} className={`form-group brdr-btm parent`}>
                   <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
@@ -285,6 +287,10 @@ function InitialHistroy(){
                   {(fileUpload['certificate_'+(i+1)].fileName !== '') && <span className="close float-end"><Link to={`${API_URL}/user-data/${userFolder}/${userDetails.account_key}/shared/${fileUpload['certificate_'+(i+1)].fileName}`} target="_blank" download><FontAwesomeIcon icon={faDownload}/></Link><FontAwesomeIcon style={{marginLeft: '10px'}} icon={faTrash} onClick={() => deleteCertificate(fileUpload['certificate_'+(i+1)].fileName)}/></span>}
                 </div>
               )}
+              <div className="form-group not-ellipse">
+                <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+                <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+              </div>
             </form>
             {/* <div className="form-group">
             <button type="button" id="" name="" class="btn btn-primary primary-bg-color border-0 mx-2">Update Photo<input type="file" name="cover" accept="img/*" style={{ display: "none" }} /></button>
