@@ -1,5 +1,7 @@
 import { useState, useContext } from "react";
 
+import Category from './Category';
+
 import Appfooter from '../AppFooter';
 import './UpdatePeriodicData.css';
 
@@ -15,9 +17,16 @@ function UpdatePeriodicData(){
 
   const [isMActive, setIsMActive] = useState(false);
 
+  const [inputList, setInputList] = useState([]);
+
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const onAddBtnClick = event => {
+    setInputList(inputList.concat(<Category key={inputList.length} />));
+  };
+
 
 return(
   <>
@@ -53,7 +62,50 @@ return(
             </div>
           </div>
         </div>
-      </div>
+    </div>
+    <div className='app-body form-all upadte-periodic-data'>
+      <p><small>Update Young Women Periodic Data</small></p>
+      <form className="mt-3" name="" id="">
+        <div className='mb-3 mt-3 text-end'>
+          <button type="button" className='btn primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
+        </div>
+        {/* <div className="category">
+          <div className="form-group">
+            <label><span className="d-block">Select Category </span></label>
+            <select className="form-control">
+              <option value="1">Body weight in kgs</option>
+              <option value="2">Body height in cm</option>
+              <option value="3">Temperature</option>
+              <option value="4">Oxygen Level</option>
+              <option value="5">Heart Rate</option>
+              <option value="5">Do you have Blood Pressure?</option>
+              <option value="5">Are you Diabetic?</option>
+              <option value="5">Do you have Cholesterol problem?</option>
+              <option value="5">Do you have Thyroid?</option>
+              <option value="5">Iron/Folic Acid Tablets</option>
+              <option value="5">Calcium Tablets</option>
+              <option value="5">Sanitary Pads</option>
+              <option value="5">Protein Supplement</option>
+              <option value="5">Repeat De-Warming</option>
+              <option value="5">Repeat Hemoglobin Test</option>
+              <option value="5">Repeat Medicine</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <input type="text" className="form-control pt-0"  name="" id="" placeholder="" value="" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+          </div>
+        </div> */}
+        {/* <Category></Category> */}
+        {inputList}
+        <div className='mb-3 mt-3 text-center'>
+          <button type="submit" className='btn primary-bg-color text-light'>Update</button>
+        </div>
+      </form>
+    </div>
   <Appfooter></Appfooter>
   </>
 )
