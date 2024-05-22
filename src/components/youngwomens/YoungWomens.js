@@ -72,7 +72,7 @@ function YoungWomens(){
       setWomenList(result.data);
     }
     else{
-      setWomenList([]);
+      setWomenList([]); 
     }
 
   }
