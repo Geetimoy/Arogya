@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -10,10 +11,13 @@ import youngwomenprofile from '../../assets/images/profile-girl.png';
 import SystemContext from "../../context/system/SystemContext";
 import Appfooter from '../AppFooter';
 
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
 function YoungWomens(){
   const systemContext = useContext(SystemContext);
 
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive]   = useState(false);
+  const [womenList, setWomenList] = useState([]);
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
@@ -24,6 +28,61 @@ function YoungWomens(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  
+  const searchWomen = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listWomen(value);
+    }, 1000)
+  }
+
+  const listWomen = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_name": searchKey,
+                                              "limit": "10",
+                                              "offset": "0",
+                                              "order_by_field": "women_name",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/womanProfileList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      setWomenList(result.data.results.data);
+    }
+    else{
+      setWomenList([]);
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listWomen("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
 
   return(
     <>
@@ -66,45 +125,35 @@ function YoungWomens(){
           <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Young Womens' />
-            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <input type="text" className='form-control' id="searchWomen" name="searchWomen" placeholder='Search Young Womens' onChange={searchWomen} />
+            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/youngwomens/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
-                  <li><Link to={"/youngwomens/update-periodic-data"}>Update Periodic Data</Link></li>
-                  <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
-                  <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Close Young Women</Link></li>
-                </ul>
+          
+          {womenList && womenList.map((women, index) => (
+            <div className='col-6' key={women.account_id}>
+              <div className='button-box'>
+                <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
+                <div className='drop-menu'>
+                  <ul>
+                    <li><Link to={"/youngwomens/patient-basicinfo"}>Edit Basic Information</Link></li>
+                    <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
+                    <li><Link to={"/youngwomens/update-periodic-data"}>Update Periodic Data</Link></li>
+                    <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
+                    <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
+                    <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
+                    <li><Link to={"#"}>Close Young Women</Link></li>
+                  </ul>
+                </div>
+                <Link to="#">
+                  <img src={youngwomenprofile} alt='' />
+                  <h6>{women.women_name}</h6>
+                </Link>
               </div>
-              <Link to="javascript:void(0);">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Young Women 1</h6>
-              </Link>
             </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"#"}>Close Patient</Link></li>
-                </ul>
-              </div>
-              <Link to="javascript:void(0);">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Young Women 2</h6>
-              </Link>
-            </div>
-          </div>
+          ))}
+
         </div>
       </div>
       <Appfooter></Appfooter>

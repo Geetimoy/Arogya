@@ -109,7 +109,7 @@ function CraeteYoungWomen(){
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
     let errorCounter = validateForm();
-    if(errorCounter == 0){
+    if(errorCounter === 0){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
