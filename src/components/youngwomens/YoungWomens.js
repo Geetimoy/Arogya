@@ -123,7 +123,7 @@ function YoungWomens(){
       </div>
       <div className="app-body young-womens profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total- 2</span>
+          <span>Total- {womenList.length}</span>
           <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
@@ -134,7 +134,7 @@ function YoungWomens(){
         <div className="listing-patient">
           <div className='row'>
             
-            {womenList && womenList.map((women, index) => (
+            {womenList.map((women, index) => (
               <div className='col-6' key={women.account_id}>
                 <div className='button-box'>
                   <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
@@ -156,6 +156,8 @@ function YoungWomens(){
                 </div>
               </div>
             ))}
+
+            {womenList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
 
           </div>
         </div>
