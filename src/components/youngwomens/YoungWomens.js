@@ -71,7 +71,7 @@ function YoungWomens(){
     let result = await response.json();
 
     if(result.success){
-      setWomenList(result.data.results.data);
+      setWomenList(result.data);
     }
     else{
       setWomenList([]);
@@ -124,41 +124,38 @@ function YoungWomens(){
       <div className="app-body young-womens profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total- 2</span>
-          <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link>
-        </div>
+          <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' id="searchWomen" name="searchWomen" placeholder='Search Young Womens' onChange={searchWomen} />
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
-        <div className="listing-patient">
-          <div className='row'>
-            
-            {womenList && womenList.map((women, index) => (
-              <div className='col-6' key={women.account_id}>
-                <div className='button-box'>
-                  <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-                  <div className='drop-menu'>
-                    <ul>
-                      <li><Link to={"/youngwomens/patient-basicinfo"}>Edit Basic Information</Link></li>
-                      <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
-                      <li><Link to={"/youngwomens/update-periodic-data"}>Update Periodic Data</Link></li>
-                      <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
-                      <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
-                      <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
-                      <li><Link to={"#"}>Close Young Women</Link></li>
-                    </ul>
-                  </div>
-                  <Link to="#">
-                    <img src={youngwomenprofile} alt='' />
-                    <h6>{women.women_name}</h6>
-                  </Link>
+        <div className='row'>
+          
+          {womenList && womenList.map((women, index) => (
+            <div className='col-6' key={women.account_id}>
+              <div className='button-box'>
+                <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
+                <div className='drop-menu'>
+                  <ul>
+                    <li><Link to={"/youngwomens/patient-basicinfo"}>Edit Basic Information</Link></li>
+                    <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
+                    <li><Link to={"/youngwomens/update-periodic-data"}>Update Periodic Data</Link></li>
+                    <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
+                    <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
+                    <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
+                    <li><Link to={"#"}>Close Young Women</Link></li>
+                  </ul>
                 </div>
+                <Link to="#">
+                  <img src={youngwomenprofile} alt='' />
+                  <h6>{women.women_name}</h6>
+                </Link>
               </div>
-            ))}
+            </div>
+          ))}
 
-          </div>
         </div>
       </div>
       <Appfooter></Appfooter>
