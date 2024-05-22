@@ -1,0 +1,14 @@
+.periodic-data p{
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.saved-periodic-data .row .col-6{
+  margin-bottom: 20px;
+}
+
+.category{
+  background: #f3f3f3;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}

@@ -99,12 +99,57 @@ return(
             <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
           </div>
         </div> */}
-        {/* <Category></Category> */}
+        
+        <Category></Category>
         {inputList}
         <div className='mb-3 mt-3 text-center'>
           <button type="submit" className='btn primary-bg-color text-light'>Update</button>
         </div>
       </form>
+      <div className="saved-periodic-data">
+          <div className="row mt-4">
+            <div className="col-6">
+              <div className="jumbotron rounded p-2">
+                <div className="periodic-data">
+                  <p className="primary-color"><strong>Date -  18/05/24</strong></p>
+                  <p>Body Wt in kgs - 56</p>
+                  <p>Blood Pressure - 145/85</p>
+                  <p>Cholesterol Problem- Yes</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="jumbotron rounded p-2">
+              <div className="periodic-data">
+                  <p className="primary-color"><strong>Date -  19/05/24</strong></p>
+                  <p>Body Height in cm - 42</p>
+                  <p>Oxygen Level - 95</p>
+                  <p>Diabetic- Yes</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="jumbotron rounded p-2">
+              <div className="periodic-data">
+                  <p className="primary-color"><strong>Date -  20/05/24</strong></p>
+                  <p>Body Height in cm - 42</p>
+                  <p>Oxygen Level - 95</p>
+                  <p>Diabetic- Yes</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="jumbotron rounded p-2">
+              <div className="periodic-data">
+                  <p className="primary-color"><strong>Date -  21/05/24</strong></p>
+                  <p>Body Height in cm - 42</p>
+                  <p>Oxygen Level - 95</p>
+                  <p>Diabetic- Yes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   <Appfooter></Appfooter>
   </>
