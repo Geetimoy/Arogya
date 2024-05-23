@@ -18,11 +18,11 @@ import './YoungWomens.css'
 function YoungWomens(){
   const systemContext = useContext(SystemContext);
 
-  const [isActive, setIsActive]   = useState(false);
-  const [womenList, setWomenList] = useState([]);
+  const [womenList, setWomenList]   = useState([]);
+  const [openMenuId, setOpenMenuId] = useState(0);
 
-  const handleClick = () => {
-    setIsActive(!isActive); // Toggle the state
+  const handleMenuClick = (accountId) => {
+    setOpenMenuId(openMenuId === accountId ? 0 : accountId);
   };
 
   const [isMActive, setIsMActive] = useState(false);
@@ -71,6 +71,9 @@ function YoungWomens(){
     let result = await response.json();
 
     if(result.success){
+      if(result.data.length > 0){
+
+      }
       setWomenList(result.data);
     }
     else{
@@ -137,18 +140,20 @@ function YoungWomens(){
             {womenList.map((women, index) => (
               <div className='col-6' key={women.account_id}>
                 <div className='button-box'>
-                  <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-                  <div className='drop-menu'>
-                    <ul>
-                      <li><Link to={"/youngwomens/patient-basicinfo"}>Edit Basic Information</Link></li>
-                      <li><Link to={"/youngwomens/update-medical-history"}>Update Medical History</Link></li>
-                      <li><Link to={"/youngwomens/update-periodic-data"}>Update Periodic Data</Link></li>
-                      <li><Link to={"/youngwomens/update-awareness-survey"}>Update Awareness Survey</Link></li>
-                      <li><Link to={"/youngwomens/young-woman-upload-prescription"}>Upload Prescription</Link></li>
-                      <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
-                      <li><Link to={"#"}>Close Young Women</Link></li>
-                    </ul>
-                  </div>
+                  <div className={`three-dot my-element2 ${openMenuId === women.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(women.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
+
+                  {openMenuId === women.account_id && <div className='drop-menu'>
+                      <ul>
+                        <li><Link to={`/youngwomens/patient-basicinfo/${women.account_key}`}>Edit Basic Information</Link></li>
+                        <li><Link to={`/youngwomens/update-medical-history/${women.account_key}`}>Update Medical History</Link></li>
+                        <li><Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>Update Periodic Data</Link></li>
+                        <li><Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link></li>
+                        <li><Link to={`/youngwomens/young-woman-upload-prescription/${women.account_key}`}>Upload Prescription</Link></li>
+                        <li><Link to={`/testreports/${women.account_key}`}>Upload Test Reports</Link></li>
+                        <li><Link to={"#"}>Close Young Women</Link></li>
+                      </ul>
+                    </div>
+                  }
                   <Link to="#">
                     <img src={youngwomenprofile} alt='' />
                     <h6>{women.women_name}</h6>
