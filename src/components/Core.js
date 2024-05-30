@@ -251,10 +251,11 @@ export default function Core() {
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
-            <Route path="/youngwomens/update-medical-history" exact element={<UpdateMedicalHistory />} />
-            <Route path="/youngwomens/update-periodic-data" exact element={<UpdatePeriodicData />} />
-            <Route path="/youngwomens/update-awareness-survey" exact element={<UpdateAwarenessSurvey />} />
-            <Route path="/youngwomens/young-woman-upload-prescription" exact element={<YoungWomanUploadPrescription />} />
+            <Route path="/youngwomens/patient-basicinfo/:accountKey" exact element={<CreateYoungWomen />} />
+            <Route path="/youngwomens/update-medical-history/:accountKey" exact element={<UpdateMedicalHistory />} />
+            <Route path="/youngwomens/update-periodic-data/:accountKey" exact element={<UpdatePeriodicData />} />
+            <Route path="/youngwomens/update-awareness-survey/:accountKey" exact element={<UpdateAwarenessSurvey />} />
+            <Route path="/youngwomens/young-woman-upload-prescription/:accountKey" exact element={<YoungWomanUploadPrescription />} />
             <Route path="/youngwomens/TestReports" exact element={<TestReports />} />
             <Route path="/patientprofiles/TestReports" exact element={<TestReports />} />
             <Route path="/Bookings" exact element={<Bookings />} />

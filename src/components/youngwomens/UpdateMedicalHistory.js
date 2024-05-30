@@ -60,8 +60,9 @@ function UpadteMedicalHistory(){
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3" name="" id="">
           <div className="form-group">
-            <label><span className="d-block">Eye  </span></label>
+            <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Dimness of Vision</option>
               <option value="2">Eye Pain</option>
               <option value="3">Eye Redness</option>
@@ -69,59 +70,72 @@ function UpadteMedicalHistory(){
             </select>
           </div>
           <div className="form-group">
-            <label><span className="d-block">Ears  </span></label>
+            <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Hearing Loss</option>
               <option value="2">Water or pus from the ear</option>
             </select>
           </div>
           <div className="form-group">
-            <label><span className="d-block">Nose  </span></label>
+            <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Stuffy Nose</option>
               <option value="2">Runny or watery nose</option>
               <option value="3">Bleeding from the nose</option>
+              <option value="0">None of above</option>
             </select>
           </div>
           <div className="form-group">
-            <label><span className="d-block">Mouth  </span></label>
+            <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Difficulty in Swallowing</option>
               <option value="2">Carries Tooth (cavity etc.)</option>
               <option value="3">Sores on gums</option>
+              <option value="0">None of above</option>
             </select>
           </div>
           <div className="form-group">
-            <label><span className="d-block">Digestive system  </span></label>
+            <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Loss of Appetite</option>
               <option value="2">Nausia/vomiting</option>
               <option value="3">Diarrhea</option>
               <option value="4">Constipation</option>
               <option value="5">Abdominal (stomach) pain</option>
               <option value="6">Blood with stool.</option>
+              <option value="0">None of above</option>
             </select>
           </div>
           <div className="form-group">
-            <label><span className="d-block">General  </span></label>
+            <label><span className="d-block">General <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Cough - dry/productive?</option>
               <option value="2">Shortness of breath</option>
               <option value="3">Sound while breathing(whezzing)</option>
+              <option value="0">None of above</option>
             </select>
           </div>
           <div className="form-group">
-            <label><span className="d-block">Urinary Problems  </span></label>
+            <label><span className="d-block">Urinary Problems <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Frequent Urination</option>
               <option value="2">Burning during urination</option>
+              <option value="0">None of above</option>
             </select>
           </div>
           <div className="form-group">
-            <label><span className="d-block">Periods  </span></label>
+            <label><span className="d-block">Periods <span className="text-danger">*</span></span></label>
             <select className="form-control">
+              <option value="">Select</option>
               <option value="1">Irregular Periods</option>
               <option value="2">Age of Menarchy(menstruation)</option>
+              <option value="0">None of above</option>
             </select>
           </div>
           <div className="form-group">
