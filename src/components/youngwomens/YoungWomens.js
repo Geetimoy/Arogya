@@ -144,7 +144,8 @@ function YoungWomens(){
 
                   {openMenuId === women.account_id && <div className='drop-menu'>
                       <ul>
-                        <li><Link to={`/youngwomens/patient-basicinfo/${women.account_key}`}>Edit Basic Information</Link></li>
+                        <li><Link to={`/youngwomens/young-woman-basicinfo/${women.account_key}`}>Edit Basic Information</Link></li>
+                        <li><Link to="/youngwomens/young-woman-basicinfo">Edit Basic Information</Link></li>
                         <li><Link to={`/youngwomens/update-medical-history/${women.account_key}`}>Update Medical History</Link></li>
                         <li><Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>Update Periodic Data</Link></li>
                         <li><Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link></li>

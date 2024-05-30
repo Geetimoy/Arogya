@@ -34,7 +34,7 @@ return(
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/services" className=''>
+              <Link to="/youngwomens" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -102,6 +102,10 @@ return(
         
         <Category></Category>
         {inputList}
+        <div className="form-group">
+          <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+          <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+        </div>
         <div className='mb-3 mt-3 text-center'>
           <button type="submit" className='btn primary-bg-color text-light'>Update</button>
         </div>

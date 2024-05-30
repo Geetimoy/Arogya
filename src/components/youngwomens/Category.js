@@ -35,12 +35,9 @@ function Category(props){
             </select>
           </div>
           <div className="form-group">
-            <input type="text" className="form-control pt-0"  name="" id="" placeholder="" value="" />
+            <input type="text" className="form-control pt-0"  name="" id="" placeholder="" />
           </div>
-          <div className="form-group">
-            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
-            <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
-          </div>
+          
         </div>
   )
 }
