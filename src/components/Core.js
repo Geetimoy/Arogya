@@ -22,6 +22,7 @@ import YoungWomens from './youngwomens/YoungWomens';
 import Janani from './janani/Janani';
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
+import YoungWomanBasicInformation from './youngwomens/YoungWomanBasicInformation';
 import UpdateMedicalHistory from './youngwomens/UpdateMedicalHistory';
 import UpdatePeriodicData from './youngwomens/UpdatePeriodicData';
 import UpdateAwarenessSurvey from './youngwomens/UpdateAwarenessSurvey';
@@ -251,6 +252,7 @@ export default function Core() {
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
+            <Route path="/youngwomens/young-woman-basicinfo" exact element={<YoungWomanBasicInformation />} />
             <Route path="/youngwomens/update-medical-history" exact element={<UpdateMedicalHistory />} />
             <Route path="/youngwomens/update-periodic-data" exact element={<UpdatePeriodicData />} />
             <Route path="/youngwomens/update-awareness-survey" exact element={<UpdateAwarenessSurvey />} />
