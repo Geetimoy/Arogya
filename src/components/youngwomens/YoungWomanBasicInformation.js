@@ -1,15 +1,17 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
 
 import Dropdown from 'react-dropdown-select';
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
 import './YoungWomanBasicInformation.css'
 
@@ -18,6 +20,10 @@ function YoungWomanBasicInformation(){
 
   const systemContext = useContext(SystemContext);
 
+  const [urlParam, setUrlParam] = useState(useParams());
+
+  const editAccountKey = urlParam.accountKey;
+
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
@@ -25,13 +31,29 @@ function YoungWomanBasicInformation(){
   };
 
   const [formData, setFormData] = useState({
-    userType: {required: true, value:"", errorClass:"", errorMessage:""},
-    userName: {required: true, value:"", errorClass:"", errorMessage:""},
-    userId: {required: true, value:"", errorClass:"", errorMessage:""},
-    userContactNumber: {required: true, value:"", errorClass:"", errorMessage:""},
-    userEmail: {required: true, value:"", errorClass:"", errorMessage:""},
-    userPassword: {required: true, value:"", errorClass:"", errorMessage:""},
-    userServiceArea: {required: true, value:"", errorClass:"", errorMessage:""}
+    woman_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_father_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
+    gender: {required: true, value:"1", errorClass:"", errorMessage:""},
+    woman_contact_number: {required: true, value:"", errorClass:"", errorMessage:""},
+    whatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
+    woman_email_id: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_address: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_address_2: {required: false, value:"", errorClass:"", errorMessage:""},
+    woman_landmark: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_city: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_state: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_education: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_school_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_school_class: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
+    toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    special_note: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const options = [
@@ -61,6 +83,90 @@ function YoungWomanBasicInformation(){
     }
     setSelectedOptions(values);
   };
+
+  const getUserDetails = async () => {
+
+    let jsonData = {};
+
+    jsonData['system_id']           = systemContext.systemDetails.system_id;
+    jsonData["woman_account_key"]   = editAccountKey;
+    jsonData["woman_account_type"]  = 3;
+    jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]        = DEVICE_TOKEN;
+    jsonData["user_lat"]            = localStorage.getItem('latitude');
+    jsonData["user_long"]           = localStorage.getItem('longitude');
+    jsonData["search_param"]        = {
+                                        "by_keywords": "test",
+                                        "limit": "2",
+                                        "offset": "0",
+                                        "order_by_field": "account_id",
+                                        "order_by_value": "desc"
+                                      }
+    
+    const response1 = await fetch(`${API_URL}/womanBasicInformationList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    if(result1.data.length > 0){
+      let userDetails = result1.data[0];
+      console.log(userDetails);
+      formData['woman_name']              = {value:userDetails.women_name, errorClass:"", errorMessage:""};
+      formData['woman_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
+      formData['is_premature_birth']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
+      formData['woman_father_occupation'] = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
+      formData['gender']                  = {value:1, errorClass:"", errorMessage:""};
+      formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+      formData['whatsapp']                = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+      formData['woman_email_id']          = {value:userDetails.women_email_id, errorClass:"", errorMessage:""};
+      formData['woman_address']           = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
+      formData['woman_address_2']         = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
+      formData['woman_landmark']          = {value:userDetails.women_addr_landmark, errorClass:"", errorMessage:""};
+      formData['woman_city']              = {value:userDetails.women_city, errorClass:"", errorMessage:""};
+      formData['woman_state']             = {value:userDetails.women_state, errorClass:"", errorMessage:""};
+      formData['woman_postal_code']       = {value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
+      formData['woman_service_area']      = {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
+      formData['woman_education']         = {value:"", errorClass:"", errorMessage:""};
+      formData['woman_school_name']       = {value:userDetails.women_school_name, errorClass:"", errorMessage:""};
+      formData['woman_school_class']      = {value:userDetails.women_school_class, errorClass:"", errorMessage:""};
+      formData['woman_school_section']    = {value:userDetails.women_school_section, errorClass:"", errorMessage:""};
+      formData['toilet_type']             = {value:userDetails.women_toilet_type, errorClass:"", errorMessage:""};
+      formData['house_type']              = {value:userDetails.women_house_type, errorClass:"", errorMessage:""};
+      formData['drinking_water_type']     = {value:userDetails.women_drinking_water_type, errorClass:"", errorMessage:""};
+      formData['special_note']            = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+
+      setFormData({...formData, ...formData});
+
+      if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        var array1 = new Array();
+        serviceAreaArray.forEach((item)=>{
+          options.forEach((opt)=>{
+            if(opt.value == item){
+              array1.push(opt);
+            }
+          })
+        })
+        setSelectedOptions(array1);
+      }
+
+    }
+
+  }
+
+  useEffect(() => {
+
+    if(systemContext.systemDetails.system_id){
+      getUserDetails();
+    }
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id]);
 
   return(
     <>
@@ -99,70 +205,70 @@ function YoungWomanBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
         <p><small>To update your profile information</small></p>
-        <form class="mt-3" name="young_women_form" id="young_women_form">
-          <div class="form-group">
-            <label for="woman_name">Full Name <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value="" />
+        <form className="mt-3" name="young_women_form" id="young_women_form">
+          <div className="form-group">
+            <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''} />
           </div>
-          <div class="form-group">
-            <label for="woman_father_name">Name of Parent/Guardian<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" value="" />
+          <div className="form-group">
+            <label htmlFor="woman_father_name">Name of Parent/Guardian<span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" value={formData["woman_father_name"].value ? formData["woman_father_name"].value : ''} />
           </div>
-          <div class="form-group">
-            <label for="premature_birth" class="no-style">Premature Birth? <span class="text-danger">*</span></label>
-            <div class="d-flex">
-              <div class="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_y" name="is_premature_birth" class="custom-control-input" value="t" /><label class="custom-control-label no-style" for="premature_birth_y">Yes</label>
+          <div className="form-group">
+            <label htmlFor="premature_birth" className="no-style">Premature Birth? <span className="text-danger">*</span></label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_y" name="is_premature_birth" className="custom-control-input" value="t" /><label className="custom-control-label no-style" htmlFor="premature_birth_y" checked={(formData["is_premature_birth"].value === 't') ? true : false}>Yes</label>
               </div>
-              <div class="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_n" name="is_premature_birth" class="custom-control-input" value="f" /><label class="custom-control-label no-style" for="premature_birth_n">No</label>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="premature_birth_n" name="is_premature_birth" className="custom-control-input" value="f" /><label className="custom-control-label no-style" htmlFor="premature_birth_n" checked={(formData["is_premature_birth"].value === 'f') ? true : false}>No</label>
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="woman_father_occupation">Occupation of Guardian <span class="text-danger">*</span></label><input type="text" class="form-control" name="woman_father_occupation" id="woman_father_occupation" placeholder="Occupation of Guardian" value="" />
+          <div className="form-group">
+            <label htmlFor="woman_father_occupation">Occupation of Guardian <span className="text-danger">*</span></label><input type="text" className="form-control" name="woman_father_occupation" id="woman_father_occupation" placeholder="Occupation of Guardian" value={formData["woman_father_occupation"].value ? formData["woman_father_occupation"].value : ''} />
           </div>
-          <div class="form-group">
-            <label><span class="d-block">Gender  </span></label>
-            <select class="form-control" name="gender" id="gender">
+          <div className="form-group">
+            <label><span className="d-block">Gender  </span></label>
+            <select className="form-control" name="gender" id="gender" defaultValue={1}>
               <option value="1">Female</option>
             </select>
           </div>
-          <div class="form-group ">
-            <label for="woman_contact_number">Phone No <span class="text-danger">*</span></label>
-            <input type="tel" class="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_contact_number">Phone No <span className="text-danger">*</span></label>
+            <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="whatsapp">WhatsApp No </label>
-            <input type="tel" class="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value="" />
+          <div className="form-group ">
+            <label htmlFor="whatsapp">WhatsApp No </label>
+            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="woman_email_id">Email </label>
-            <input type="text" class="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_email_id">Email </label>
+            <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="woman_address">Address <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_address" id="woman_address" placeholder="Address" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_address">Address <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_address" id="woman_address" placeholder="Address" value={formData["woman_address"].value ? formData["woman_address"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="woman_address_2">Address 2 </label>
-            <input type="text" class="form-control" name="woman_address_2" id="woman_address_2" placeholder="Address 2" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_address_2">Address 2 </label>
+            <input type="text" className="form-control" name="woman_address_2" id="woman_address_2" placeholder="Address 2" value={formData["woman_address_2"].value ? formData["woman_address_2"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="woman_landmark">Landmark <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_landmark" id="woman_landmark" placeholder="Landmark" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_landmark">Landmark <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_landmark" id="woman_landmark" placeholder="Landmark" value={formData["woman_landmark"].value ? formData["woman_landmark"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="woman_city">Village/Town/City <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_city" id="woman_city" placeholder="Village/Town/City" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_city">Village/Town/City <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_city" id="woman_city" placeholder="Village/Town/City" value={formData["woman_city"].value ? formData["woman_city"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="woman_state">State <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_state" id="woman_state" placeholder="State" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_state">State <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_state" id="woman_state" placeholder="State" value={formData["woman_state"].value ? formData["woman_state"].value : ''} />
           </div>
-          <div class="form-group ">
-            <label for="woman_postal_code">Pincode <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_postal_code" id="woman_postal_code" placeholder="Pincode" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_postal_code">Pincode <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_postal_code" id="woman_postal_code" placeholder="Pincode" value={formData["woman_postal_code"].value ? formData["woman_postal_code"].value : ''} />
           </div>
 
           <div className="form-group">
@@ -172,52 +278,52 @@ function YoungWomanBasicInformation(){
           </div>
           
 
-          <div class="form-group ">
-            <label for="woman_education">Education <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_education" id="woman_education" placeholder="Education" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_education">Education <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value="" />
           </div>
-          <div class="form-group ">
-            <label for="woman_school_name">School Name <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_school_name">School Name <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value="" />
           </div>
 
-          <div class="form-group ">
-            <label for="woman_school_class">Class <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_school_class">Class <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value="" />
           </div>
-          <div class="form-group ">
-            <label for="woman_school_section">Section <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="woman_school_section" id="woman_school_section" placeholder="Section" value="" />
+          <div className="form-group ">
+            <label htmlFor="woman_school_section">Section <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_school_section" id="woman_school_section" placeholder="Section" value="" />
           </div>
-          <div class="form-group ">
-            <label for="house_type">House<span class="text-danger">*</span></label>
-            <select class="form-control" name="house_type" id="house_type">
+          <div className="form-group ">
+            <label htmlFor="house_type">House<span className="text-danger">*</span></label>
+            <select className="form-control" name="house_type" id="house_type">
               <option value="1">Mud House</option>
               <option value="2">Paved House</option>
             </select>
           </div>
-          <div class="form-group ">
-            <label for="drinking_water_type">Drinking Water<span class="text-danger">*</span></label>
-            <select class="form-control" name="drinking_water_type" id="drinking_water_type">
+          <div className="form-group ">
+            <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
+            <select className="form-control" name="drinking_water_type" id="drinking_water_type">
               <option value="1">Tap</option>
               <option value="2">Well</option>
               <option value="3">Pond</option>
             </select>
           </div>
-          <div class="form-group ">
-            <label for="toilet_type">Toilet<span class="text-danger">*</span></label>
-            <select class="form-control" name="toilet_type" id="toilet_type">
+          <div className="form-group ">
+            <label htmlFor="toilet_type">Toilet<span className="text-danger">*</span></label>
+            <select className="form-control" name="toilet_type" id="toilet_type">
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>
               <option value="3">Flush-toilet</option>
             </select>
           </div>
-          <div class="form-group ">
-            <label for="special_note">Special Notes </label>
-            <input type="text" class="form-control" name="special_note" id="special_note" placeholder="Special Notes" value="" />
+          <div className="form-group ">
+            <label htmlFor="special_note">Special Notes </label>
+            <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" value="" />
           </div>
-          <div class="mb-3 mt-3 text-center">
-            <button type="submit" class="btn primary-bg-color text-light">Update</button></div>
+          <div className="mb-3 mt-3 text-center">
+            <button type="submit" className="btn primary-bg-color text-light">Update</button></div>
         </form>
       </div>
       <Appfooter></Appfooter>
