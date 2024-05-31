@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
 
@@ -8,6 +9,7 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 import { Link, useParams } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
 import Dropdown from 'react-dropdown-select';
 
@@ -19,6 +21,7 @@ import './YoungWomanBasicInformation.css'
 function YoungWomanBasicInformation(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [urlParam, setUrlParam] = useState(useParams());
 
@@ -158,6 +161,107 @@ function YoungWomanBasicInformation(){
 
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if(value.trim() !== ""){
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+  }
+
+  const validateForm = () => {
+    const fieldName = Object.keys(formData);
+    let errorCounter = 0;
+    fieldName.forEach((element) => {
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
+        formData[element].errorMessage = "This field is required!";
+        formData[element].errorClass = "form-error";
+        errorCounter++;
+      }
+      else{
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if((element === "woman_email_id") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
+          formData[element].errorMessage = "Please enter a valid email!";
+          formData[element].errorClass = "form-error";
+        }
+        else{
+          formData[element].errorMessage = "";
+          formData[element].errorClass = "";
+        }
+      }
+    })
+    setFormData({...formData, ...formData});
+    return errorCounter;
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+    let errorCounter = validateForm();
+    if(errorCounter === 0){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+      jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+
+      var serviceArea                       = '{'+formData['woman_service_area'].value+'}';
+
+      jsonData["woman_name"]                = formData['woman_name'].value;
+      jsonData["woman_contact_number"]      = formData['woman_contact_number'].value;
+      jsonData["woman_email_id"]            = formData['woman_email_id'].value;
+      jsonData["woman_body_height"]         = '0';
+      jsonData["woman_body_weight"]         = '0';
+      jsonData["woman_age"]                 = formData['woman_age'].value;
+      jsonData["woman_address"]             = formData['woman_address'].value;
+      jsonData["woman_address_2"]           = formData['woman_address_2'].value;
+      jsonData["woman_state"]               = formData['woman_state'].value;
+      jsonData["woman_postal_code"]         = formData['woman_postal_code'].value;
+      jsonData["woman_landmark"]            = formData['woman_landmark'].value;
+      jsonData["woman_city"]                = formData['woman_city'].value;
+      jsonData["woman_father_name"]         = formData['woman_father_name'].value;
+      jsonData["woman_education"]           = formData['woman_education'].value;
+      jsonData["woman_school_name"]         = formData['woman_school_name'].value;
+      jsonData["woman_school_class"]        = formData['woman_school_class'].value;
+      jsonData["woman_school_section"]      = formData['woman_school_section'].value;
+      jsonData["toilet_type"]               = formData['toilet_type'].value;
+      jsonData["house_type"]                = formData['house_type'].value;
+      jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
+      jsonData["is_premature_birth"]        = formData['is_premature_birth'].value;
+      jsonData["is_bpl"]                    = 'f';
+      jsonData["woman_father_occupation"]   = formData['woman_father_occupation'].value;
+      jsonData["is_your_personal_number"]   = formData['is_personal_mobile_number'].value;
+      jsonData["special_note"]              = formData['special_note'].value;
+      jsonData["woman_whatsup_number"]      = formData['whatsapp'].value;
+      jsonData["service_area"]              = serviceArea;
+
+      const response = await fetch(`${API_URL}/addUpdateWomanProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      console.log(response)
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+    }
+  }
+
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
@@ -205,28 +309,28 @@ function YoungWomanBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
         <p><small>To update your profile information</small></p>
-        <form className="mt-3" name="young_women_form" id="young_women_form">
+        <form className="mt-3" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
           <div className="form-group">
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''} />
+            <input type="text" className="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group">
             <label htmlFor="woman_father_name">Name of Parent/Guardian<span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" value={formData["woman_father_name"].value ? formData["woman_father_name"].value : ''} />
+            <input type="text" className="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" value={formData["woman_father_name"].value ? formData["woman_father_name"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group">
             <label htmlFor="premature_birth" className="no-style">Premature Birth? <span className="text-danger">*</span></label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_y" name="is_premature_birth" className="custom-control-input" value="t" /><label className="custom-control-label no-style" htmlFor="premature_birth_y" checked={(formData["is_premature_birth"].value === 't') ? true : false}>Yes</label>
+                <input type="radio" id="premature_birth_y" name="is_premature_birth" className="custom-control-input" value="t" checked={(formData["is_premature_birth"].value === 't') ? true : false} onChange={handleChange}/><label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_n" name="is_premature_birth" className="custom-control-input" value="f" /><label className="custom-control-label no-style" htmlFor="premature_birth_n" checked={(formData["is_premature_birth"].value === 'f') ? true : false}>No</label>
+                <input type="radio" id="premature_birth_n" name="is_premature_birth" className="custom-control-input" value="f" checked={(formData["is_premature_birth"].value === 'f') ? true : false} onChange={handleChange}/><label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
               </div>
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="woman_father_occupation">Occupation of Guardian <span className="text-danger">*</span></label><input type="text" className="form-control" name="woman_father_occupation" id="woman_father_occupation" placeholder="Occupation of Guardian" value={formData["woman_father_occupation"].value ? formData["woman_father_occupation"].value : ''} />
+            <label htmlFor="woman_father_occupation">Occupation of Guardian <span className="text-danger">*</span></label><input type="text" className="form-control" name="woman_father_occupation" id="woman_father_occupation" placeholder="Occupation of Guardian" value={formData["woman_father_occupation"].value ? formData["woman_father_occupation"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group">
             <label><span className="d-block">Gender  </span></label>
@@ -236,39 +340,39 @@ function YoungWomanBasicInformation(){
           </div>
           <div className="form-group ">
             <label htmlFor="woman_contact_number">Phone No <span className="text-danger">*</span></label>
-            <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} />
+            <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="whatsapp">WhatsApp No </label>
-            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} />
+            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_email_id">Email </label>
-            <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} />
+            <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_address">Address <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_address" id="woman_address" placeholder="Address" value={formData["woman_address"].value ? formData["woman_address"].value : ''} />
+            <input type="text" className="form-control" name="woman_address" id="woman_address" placeholder="Address" value={formData["woman_address"].value ? formData["woman_address"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_address_2">Address 2 </label>
-            <input type="text" className="form-control" name="woman_address_2" id="woman_address_2" placeholder="Address 2" value={formData["woman_address_2"].value ? formData["woman_address_2"].value : ''} />
+            <input type="text" className="form-control" name="woman_address_2" id="woman_address_2" placeholder="Address 2" value={formData["woman_address_2"].value ? formData["woman_address_2"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_landmark">Landmark <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_landmark" id="woman_landmark" placeholder="Landmark" value={formData["woman_landmark"].value ? formData["woman_landmark"].value : ''} />
+            <input type="text" className="form-control" name="woman_landmark" id="woman_landmark" placeholder="Landmark" value={formData["woman_landmark"].value ? formData["woman_landmark"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_city">Village/Town/City <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_city" id="woman_city" placeholder="Village/Town/City" value={formData["woman_city"].value ? formData["woman_city"].value : ''} />
+            <input type="text" className="form-control" name="woman_city" id="woman_city" placeholder="Village/Town/City" value={formData["woman_city"].value ? formData["woman_city"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_state">State <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_state" id="woman_state" placeholder="State" value={formData["woman_state"].value ? formData["woman_state"].value : ''} />
+            <input type="text" className="form-control" name="woman_state" id="woman_state" placeholder="State" value={formData["woman_state"].value ? formData["woman_state"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_postal_code">Pincode <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_postal_code" id="woman_postal_code" placeholder="Pincode" value={formData["woman_postal_code"].value ? formData["woman_postal_code"].value : ''} />
+            <input type="text" className="form-control" name="woman_postal_code" id="woman_postal_code" placeholder="Pincode" value={formData["woman_postal_code"].value ? formData["woman_postal_code"].value : ''} onChange={handleChange}/>
           </div>
 
           <div className="form-group">
@@ -280,31 +384,31 @@ function YoungWomanBasicInformation(){
 
           <div className="form-group ">
             <label htmlFor="woman_education">Education <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value="" />
+            <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value="" onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_school_name">School Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value="" />
+            <input type="text" className="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value={formData["woman_school_name"].value ? formData["woman_school_name"].value : ''} onChange={handleChange}/>
           </div>
 
           <div className="form-group ">
             <label htmlFor="woman_school_class">Class <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value="" />
+            <input type="text" className="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value={formData["woman_school_class"].value ? formData["woman_school_class"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="woman_school_section">Section <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_school_section" id="woman_school_section" placeholder="Section" value="" />
+            <input type="text" className="form-control" name="woman_school_section" id="woman_school_section" placeholder="Section" value={formData["woman_school_section"].value ? formData["woman_school_section"].value : ''} onChange={handleChange}/>
           </div>
           <div className="form-group ">
             <label htmlFor="house_type">House<span className="text-danger">*</span></label>
-            <select className="form-control" name="house_type" id="house_type">
+            <select className="form-control" name="house_type" id="house_type" defaultValue={formData["house_type"].value ? formData["house_type"].value : '1'} onChange={handleChange}>
               <option value="1">Mud House</option>
               <option value="2">Paved House</option>
             </select>
           </div>
           <div className="form-group ">
             <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
-            <select className="form-control" name="drinking_water_type" id="drinking_water_type">
+            <select className="form-control" name="drinking_water_type" id="drinking_water_type" defaultValue={formData["drinking_water_type"].value ? formData["drinking_water_type"].value : '1'} onChange={handleChange}>
               <option value="1">Tap</option>
               <option value="2">Well</option>
               <option value="3">Pond</option>
@@ -312,7 +416,7 @@ function YoungWomanBasicInformation(){
           </div>
           <div className="form-group ">
             <label htmlFor="toilet_type">Toilet<span className="text-danger">*</span></label>
-            <select className="form-control" name="toilet_type" id="toilet_type">
+            <select className="form-control" name="toilet_type" id="toilet_type" defaultValue={formData["toilet_type"].value ? formData["toilet_type"].value : '1'} onChange={handleChange}>
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>
               <option value="3">Flush-toilet</option>
@@ -320,7 +424,7 @@ function YoungWomanBasicInformation(){
           </div>
           <div className="form-group ">
             <label htmlFor="special_note">Special Notes </label>
-            <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" value="" />
+            <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''} onChange={handleChange}/>
           </div>
           <div className="mb-3 mt-3 text-center">
             <button type="submit" className="btn primary-bg-color text-light">Update</button></div>
