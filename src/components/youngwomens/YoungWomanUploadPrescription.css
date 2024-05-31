@@ -2,3 +2,31 @@
   max-height: 135px;
   object-fit: contain;
 }
+
+div.file {
+  position: relative;
+  overflow: hidden;
+}
+
+.file input[type="file"] {
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+
+.prescription{
+  padding: 20px 20px 0;
+  position: relative;
+}
+
+.btn-delete{
+  position: absolute;
+  right: 7px;
+  top: 7px;
+}
+
+/* .btn-delete svg{
+  color: black;
+} */

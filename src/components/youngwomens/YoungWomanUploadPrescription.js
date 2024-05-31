@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
@@ -58,6 +58,12 @@ function YoungWomanUploadPrescription(){
         </div>
       </div>
       <div className="app-body young-womens upload-prescription">
+      <div className='add-patient align-items-center d-flex justify-content-between'>
+          <span>Total- 2</span>
+          <div class="file btn btn-sm btn-primary primary-bg-color border-0"> Upload
+            <input type="file" name="file"/>
+          </div>
+        </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Prescription' />
@@ -68,6 +74,7 @@ function YoungWomanUploadPrescription(){
           <div className='col-6'>
             <div className='button-box'>
               <div className='prescription'>
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                 <img src={youngwomenprescription} alt='' className='w-100' />
                 <p className='mb-1'><strong>PRE2495B310D</strong></p>
               </div>
@@ -76,6 +83,7 @@ function YoungWomanUploadPrescription(){
           <div className='col-6'>
             <div className='button-box'>
               <div className='prescription'>
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                 <img src={youngwomenprescription} alt='' className='w-100' />
                 <p className='mb-1'><strong>PRE2450B310C</strong></p>
               </div>

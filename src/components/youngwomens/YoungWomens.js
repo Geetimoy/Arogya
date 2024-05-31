@@ -127,7 +127,8 @@ function YoungWomens(){
       <div className="app-body young-womens profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total- {womenList.length}</span>
-          <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link></div>
+          <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link>
+        </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' id="searchWomen" name="searchWomen" placeholder='Search Young Womens' onChange={searchWomen} />

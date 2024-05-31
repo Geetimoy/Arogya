@@ -6,7 +6,7 @@ import Appfooter from '../AppFooter';
 import './UpdatePeriodicData.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import SystemContext from "../../context/system/SystemContext";
 
@@ -114,7 +114,8 @@ return(
           <div className="row mt-4">
             <div className="col-6">
               <div className="jumbotron rounded p-2">
-                <div className="periodic-data">
+                <div className="periodic-data position-relative">
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                   <p className="primary-color"><strong>Date -  18/05/24</strong></p>
                   <p>Body Wt in kgs - 56</p>
                   <p>Blood Pressure - 145/85</p>
@@ -124,7 +125,8 @@ return(
             </div>
             <div className="col-6">
               <div className="jumbotron rounded p-2">
-              <div className="periodic-data">
+                <div className="periodic-data position-relative">
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                   <p className="primary-color"><strong>Date -  19/05/24</strong></p>
                   <p>Body Height in cm - 42</p>
                   <p>Oxygen Level - 95</p>
@@ -134,7 +136,8 @@ return(
             </div>
             <div className="col-6">
               <div className="jumbotron rounded p-2">
-              <div className="periodic-data">
+                <div className="periodic-data position-relative">
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                   <p className="primary-color"><strong>Date -  20/05/24</strong></p>
                   <p>Body Height in cm - 42</p>
                   <p>Oxygen Level - 95</p>
@@ -144,7 +147,8 @@ return(
             </div>
             <div className="col-6">
               <div className="jumbotron rounded p-2">
-              <div className="periodic-data">
+                <div className="periodic-data position-relative">
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                   <p className="primary-color"><strong>Date -  21/05/24</strong></p>
                   <p>Body Height in cm - 42</p>
                   <p>Oxygen Level - 95</p>

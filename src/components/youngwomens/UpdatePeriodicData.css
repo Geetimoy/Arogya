@@ -12,3 +12,8 @@
   padding: 10px 20px;
   margin-bottom: 20px;
 }
+
+.periodic-data .btn-delete{
+  right: 0;
+  top: 0;
+}
