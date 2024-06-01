@@ -41,6 +41,8 @@ function YoungWomanBasicInformation(){
     gender: {required: true, value:"1", errorClass:"", errorMessage:""},
     woman_contact_number: {required: true, value:"", errorClass:"", errorMessage:""},
     whatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
+    woman_age: {required: true, value:"", errorClass:"", errorMessage:""},
+    is_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_email_id: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_address: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_address_2: {required: false, value:"", errorClass:"", errorMessage:""},
@@ -122,9 +124,12 @@ function YoungWomanBasicInformation(){
       formData['woman_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
       formData['is_premature_birth']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
       formData['woman_father_occupation'] = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
+      formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
       formData['gender']                  = {value:1, errorClass:"", errorMessage:""};
       formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+      formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
       formData['whatsapp']                = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+      formData['woman_age']               = {value:userDetails.women_age, errorClass:"", errorMessage:""};
       formData['woman_email_id']          = {value:userDetails.women_email_id, errorClass:"", errorMessage:""};
       formData['woman_address']           = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
       formData['woman_address_2']         = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
@@ -133,7 +138,7 @@ function YoungWomanBasicInformation(){
       formData['woman_state']             = {value:userDetails.women_state, errorClass:"", errorMessage:""};
       formData['woman_postal_code']       = {value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
       formData['woman_service_area']      = {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
-      formData['woman_education']         = {value:"", errorClass:"", errorMessage:""};
+      formData['woman_education']         = {value:userDetails.women_education, errorClass:"", errorMessage:""};
       formData['woman_school_name']       = {value:userDetails.women_school_name, errorClass:"", errorMessage:""};
       formData['woman_school_class']      = {value:userDetails.women_school_class, errorClass:"", errorMessage:""};
       formData['woman_school_section']    = {value:userDetails.women_school_section, errorClass:"", errorMessage:""};
@@ -207,6 +212,8 @@ function YoungWomanBasicInformation(){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
       jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      jsonData["woman_account_type"]        = '3';
+      jsonData["woman_account_key"]         = editAccountKey;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -310,15 +317,17 @@ function YoungWomanBasicInformation(){
       <div className='app-body form-all basicinfo-young-woman'>
         <p><small>To update your profile information</small></p>
         <form className="mt-3" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
-          <div className="form-group">
+          <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_name"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["woman_father_name"].errorClass}`}>
             <label htmlFor="woman_father_name">Name of Parent/Guardian<span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" value={formData["woman_father_name"].value ? formData["woman_father_name"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_father_name"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["is_premature_birth"].errorClass}`}>
             <label htmlFor="premature_birth" className="no-style">Premature Birth? <span className="text-danger">*</span></label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
@@ -328,9 +337,11 @@ function YoungWomanBasicInformation(){
                 <input type="radio" id="premature_birth_n" name="is_premature_birth" className="custom-control-input" value="f" checked={(formData["is_premature_birth"].value === 'f') ? true : false} onChange={handleChange}/><label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
               </div>
             </div>
+            <small className="error-mesg">{formData["is_premature_birth"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["woman_father_occupation"].errorClass}`}>
             <label htmlFor="woman_father_occupation">Occupation of Guardian <span className="text-danger">*</span></label><input type="text" className="form-control" name="woman_father_occupation" id="woman_father_occupation" placeholder="Occupation of Guardian" value={formData["woman_father_occupation"].value ? formData["woman_father_occupation"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_father_occupation"].errorMessage}</small>
           </div>
           <div className="form-group">
             <label><span className="d-block">Gender  </span></label>
@@ -338,93 +349,128 @@ function YoungWomanBasicInformation(){
               <option value="1">Female</option>
             </select>
           </div>
+          <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
+            <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="personal_mobile_number_y" name="is_personal_mobile_number" className="custom-control-input" value="t" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 't') ? true : false}/>
+                <label className="custom-control-label no-style" htmlFor="personal_mobile_number_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="personal_mobile_number_n" name="is_personal_mobile_number" className="custom-control-input" value="f" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 'f') ? true : false}/>
+                <label className="custom-control-label no-style" htmlFor="personal_mobile_number_n">No</label>
+              </div>
+            </div>
+            <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
+          </div>
           <div className="form-group ">
             <label htmlFor="woman_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} onChange={handleChange}/>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_email_id"].errorClass}`}>
             <label htmlFor="woman_email_id">Email </label>
             <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_age"].errorClass}`}>
+            <label htmlFor="woman_age">Age </label>
+            <input type="text" className="form-control" name="woman_age" id="woman_age" placeholder="Age" value={formData["woman_age"].value ? formData["woman_age"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_age"].errorMessage}</small>
+          </div>
+          <div className={`form-group ${formData["woman_address"].errorClass}`}>
             <label htmlFor="woman_address">Address <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_address" id="woman_address" placeholder="Address" value={formData["woman_address"].value ? formData["woman_address"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_address"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_address_2"].errorClass}`}>
             <label htmlFor="woman_address_2">Address 2 </label>
             <input type="text" className="form-control" name="woman_address_2" id="woman_address_2" placeholder="Address 2" value={formData["woman_address_2"].value ? formData["woman_address_2"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_address_2"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_landmark"].errorClass}`}>
             <label htmlFor="woman_landmark">Landmark <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_landmark" id="woman_landmark" placeholder="Landmark" value={formData["woman_landmark"].value ? formData["woman_landmark"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_landmark"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_city"].errorClass}`}>
             <label htmlFor="woman_city">Village/Town/City <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_city" id="woman_city" placeholder="Village/Town/City" value={formData["woman_city"].value ? formData["woman_city"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_city"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_state"].errorClass}`}>
             <label htmlFor="woman_state">State <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_state" id="woman_state" placeholder="State" value={formData["woman_state"].value ? formData["woman_state"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_state"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_postal_code"].errorClass}`}>
             <label htmlFor="woman_postal_code">Pincode <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_postal_code" id="woman_postal_code" placeholder="Pincode" value={formData["woman_postal_code"].value ? formData["woman_postal_code"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_postal_code"].errorMessage}</small>
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${formData["woman_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            
             <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
+            <small className="error-mesg">{formData["woman_service_area"].errorMessage}</small>
           </div>
           
 
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_education"].errorClass}`}>
             <label htmlFor="woman_education">Education <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value="" onChange={handleChange}/>
+            <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value={formData["woman_education"].value ? formData["woman_education"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_education"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_school_name"].errorClass}`}>
             <label htmlFor="woman_school_name">School Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value={formData["woman_school_name"].value ? formData["woman_school_name"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_school_name"].errorMessage}</small>
           </div>
 
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_school_class"].errorClass}`}>
             <label htmlFor="woman_school_class">Class <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value={formData["woman_school_class"].value ? formData["woman_school_class"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_school_class"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["woman_school_section"].errorClass}`}>
             <label htmlFor="woman_school_section">Section <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_school_section" id="woman_school_section" placeholder="Section" value={formData["woman_school_section"].value ? formData["woman_school_section"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_school_section"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["house_type"].errorClass}`}>
             <label htmlFor="house_type">House<span className="text-danger">*</span></label>
             <select className="form-control" name="house_type" id="house_type" defaultValue={formData["house_type"].value ? formData["house_type"].value : '1'} onChange={handleChange}>
               <option value="1">Mud House</option>
               <option value="2">Paved House</option>
             </select>
+            <small className="error-mesg">{formData["house_type"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["drinking_water_type"].errorClass}`}>
             <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
             <select className="form-control" name="drinking_water_type" id="drinking_water_type" defaultValue={formData["drinking_water_type"].value ? formData["drinking_water_type"].value : '1'} onChange={handleChange}>
               <option value="1">Tap</option>
               <option value="2">Well</option>
               <option value="3">Pond</option>
             </select>
+            <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["toilet_type"].errorClass}`}>
             <label htmlFor="toilet_type">Toilet<span className="text-danger">*</span></label>
             <select className="form-control" name="toilet_type" id="toilet_type" defaultValue={formData["toilet_type"].value ? formData["toilet_type"].value : '1'} onChange={handleChange}>
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>
               <option value="3">Flush-toilet</option>
             </select>
+            <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          <div className={`form-group ${formData["special_note"].errorClass}`}>
             <label htmlFor="special_note">Special Notes </label>
             <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["special_note"].errorMessage}</small>
           </div>
           <div className="mb-3 mt-3 text-center">
             <button type="submit" className="btn primary-bg-color text-light">Update</button></div>
