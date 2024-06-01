@@ -15,7 +15,7 @@ import Dropdown from 'react-dropdown-select';
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
-import './YoungWomanBasicInformation.css'
+import './YoungWomanBasicInformation.css' 
 
 
 function YoungWomanBasicInformation(){
