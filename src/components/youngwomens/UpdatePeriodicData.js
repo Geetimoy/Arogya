@@ -157,7 +157,58 @@ return(
               </div>
             </div>
           </div>
+      </div>
+      <div className="saved-data">
+        <div className="masonry">
+          <div className="masonry-item">
+            <div className="jumbotron rounded p-2">
+              <div className="periodic-data position-relative">
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
+                <p>Body Wt in kgs - 56</p>
+                <p>Blood Pressure - 145/85</p>
+                <p>Cholesterol Problem- Yes</p>
+              </div>
+            </div>
+          </div>
+          <div className="masonry-item">
+            <div className="jumbotron rounded p-2">
+              <div className="periodic-data position-relative">
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
+                <p>Body Wt in kgs - 56</p>
+                <p>Blood Pressure - 145/85</p>
+                <p>Cholesterol Problem- Yes</p>
+                <p>Body Wt in kgs - 56</p>
+                <p>Blood Pressure - 145/85</p>
+                <p>Cholesterol Problem- Yes</p>
+              </div>
+            </div>
+          </div>
+          <div className="masonry-item">
+            <div className="jumbotron rounded p-2">
+              <div className="periodic-data position-relative">
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
+                <p>Body Wt in kgs - 56</p>
+                <p>Blood Pressure - 145/85</p>
+                <p>Cholesterol Problem- Yes</p>
+              </div>
+            </div>
+          </div>
+          <div className="masonry-item">
+            <div className="jumbotron rounded p-2">
+              <div className="periodic-data position-relative">
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
+                <p>Body Wt in kgs - 56</p>
+                <p>Blood Pressure - 145/85</p>
+                <p>Cholesterol Problem- Yes</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
   <Appfooter></Appfooter>
   </>
