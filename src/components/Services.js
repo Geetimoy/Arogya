@@ -37,14 +37,14 @@ function Services(){
               </div>
             </div> */}
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/patientprofiles">
                 <img src={patientprofile} alt='' />
                 <h6>Patient Profiles</h6></Link>
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/child-malnutrition"><img src={malnutrition} alt='' />
                 <h6>Child Malnutrition</h6></Link>
               </div>
@@ -56,20 +56,20 @@ function Services(){
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/janani">
                 <img src={janani} alt='' />
                 <h6>Janani</h6></Link>
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/bookings"><img src={appointmentscheduling} alt='' />
                 <h6>Appointment Scheduling</h6></Link>
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/upload-prescription"><img src={uploadrx} alt='' />
                 <h6>Upload Rx</h6></Link>
               </div>
