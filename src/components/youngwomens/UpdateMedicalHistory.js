@@ -38,7 +38,7 @@ function UpadteMedicalHistory(){
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
     urinary_problems_type: {required: true, value:"", errorClass:"", errorMessage:""},
     periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    explanation: {required: false, value:"", errorClass:"", errorMessage:""}
+    remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -109,7 +109,7 @@ function UpadteMedicalHistory(){
       formData['general_type']  = {value:medicalHistory.general_type, required: true, errorClass:"", errorMessage:""};
       formData['urinary_problems_type'] = {value:medicalHistory.urinary_problems_type, required: true, errorClass:"", errorMessage:""};
       formData['periods_type']  = {value:medicalHistory.periods_type, required: true, errorClass:"", errorMessage:""};
-      formData['explanation']   = {value:"", required: false, errorClass:"", errorMessage:""};
+      formData['remarks']   = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
 
@@ -155,7 +155,7 @@ function UpadteMedicalHistory(){
       jsonData["general_type"]              = formData['general_type'].value;
       jsonData["urinary_problems_type"]     = formData['urinary_problems_type'].value;
       jsonData["periods_type"]              = formData['periods_type'].value;
-      jsonData["explanation"]               = formData['explanation'].value;
+      jsonData["remarks"]                   = formData['remarks'].value;
 
       const response = await fetch(`${API_URL}/addUpdateWomanMedicalHistory`, {
         method: "POST",
@@ -217,7 +217,7 @@ function UpadteMedicalHistory(){
         <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["eye_type"].errorClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["eye_type"].value ? formData["eye_type"].value : ''} name="eye_type" id="eye_type" onChange={handleChange}>
+            <select className="form-control" value={formData["eye_type"].value ? formData["eye_type"].value : ''} name="eye_type" id="eye_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Dimness of Vision</option>
@@ -229,7 +229,7 @@ function UpadteMedicalHistory(){
           </div>
           <div className={`form-group ${formData["ears_type"].errorClass}`}>
             <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["ears_type"].value ? formData["ears_type"].value : ''} name="ears_type" id="ears_type" onChange={handleChange}>
+            <select className="form-control" value={formData["ears_type"].value ? formData["ears_type"].value : ''} name="ears_type" id="ears_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Hearing Loss</option>
@@ -239,7 +239,7 @@ function UpadteMedicalHistory(){
           </div>
           <div className={`form-group ${formData["nose_type"].errorClass}`}>
             <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["nose_type"].value ? formData["nose_type"].value : ''} name="nose_type" id="nose_type" onChange={handleChange}>
+            <select className="form-control" value={formData["nose_type"].value ? formData["nose_type"].value : ''} name="nose_type" id="nose_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Stuffy Nose</option>
@@ -250,7 +250,7 @@ function UpadteMedicalHistory(){
           </div>
           <div className={`form-group ${formData["mouth_type"].errorClass}`}>
             <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["mouth_type"].value ? formData["mouth_type"].value : ''} name="mouth_type" id="mouth_type" onChange={handleChange}>
+            <select className="form-control" value={formData["mouth_type"].value ? formData["mouth_type"].value : ''} name="mouth_type" id="mouth_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Difficulty in Swallowing</option>
@@ -261,7 +261,7 @@ function UpadteMedicalHistory(){
           </div>
           <div className={`form-group ${formData["digestive_system_type"].errorClass}`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["digestive_system_type"].value ? formData["digestive_system_type"].value : ''} name="digestive_system_type" id="digestive_system_type" onChange={handleChange}>
+            <select className="form-control" value={formData["digestive_system_type"].value ? formData["digestive_system_type"].value : ''} name="digestive_system_type" id="digestive_system_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Loss of Appetite</option>
@@ -275,7 +275,7 @@ function UpadteMedicalHistory(){
           </div>
           <div className={`form-group ${formData["general_type"].errorClass}`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["general_type"].value ? formData["general_type"].value : ''} name="general_type" id="general_type" onChange={handleChange}>
+            <select className="form-control" value={formData["general_type"].value ? formData["general_type"].value : ''} name="general_type" id="general_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Cough - dry/productive?</option>
@@ -286,7 +286,7 @@ function UpadteMedicalHistory(){
           </div>
           <div className={`form-group ${formData["urinary_problems_type"].errorClass}`}>
             <label><span className="d-block">Urinary Problems <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["urinary_problems_type"].value ? formData["urinary_problems_type"].value : ''} name="urinary_problems_type" id="urinary_problems_type" onChange={handleChange}>
+            <select className="form-control" value={formData["urinary_problems_type"].value ? formData["urinary_problems_type"].value : ''} name="urinary_problems_type" id="urinary_problems_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Frequent Urination</option>
@@ -296,7 +296,7 @@ function UpadteMedicalHistory(){
           </div>
           <div className={`form-group ${formData["periods_type"].errorClass}`}>
             <label><span className="d-block">Periods <span className="text-danger">*</span></span></label>
-            <select className="form-control" defaultValue={formData["periods_type"].value ? formData["periods_type"].value : ''} name="periods_type" id="periods_type" onChange={handleChange}>
+            <select className="form-control" value={formData["periods_type"].value ? formData["periods_type"].value : ''} name="periods_type" id="periods_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Irregular Periods</option>
@@ -304,10 +304,10 @@ function UpadteMedicalHistory(){
             </select>
             <small className="error-mesg">{formData["periods_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["explanation"].errorClass}`}>
+          <div className={`form-group ${formData["remarks"].errorClass}`}>
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
-            <textarea rows="3" name="explanation" id="explanation" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChange}></textarea>
-            <small className="error-mesg">{formData["explanation"].errorMessage}</small>
+            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChange} value={formData["remarks"].value}></textarea>
+            <small className="error-mesg">{formData["remarks"].errorMessage}</small>
           </div>
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
