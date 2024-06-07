@@ -32,7 +32,7 @@ function YoungWomanUploadPrescription(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Upload Prescription </h5>
+            <h5 className='mx-2 mb-0'>Upload Prescriptions </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -58,7 +58,7 @@ function YoungWomanUploadPrescription(){
         </div>
       </div>
       <div className="app-body young-womens upload-prescription">
-      <div className='add-patient align-items-center d-flex justify-content-between'>
+        <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total- 2</span>
           <div class="file btn btn-sm btn-primary primary-bg-color border-0"> Upload
             <input type="file" name="file"/>

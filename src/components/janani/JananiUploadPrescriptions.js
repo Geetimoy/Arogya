@@ -1,25 +1,19 @@
 import { useState, useContext } from 'react';
-
 import Appfooter from "../AppFooter";
 
+import './Janani.css';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import youngwomenprofile from '../../assets/images/profile-girl.png';
-
 import SystemContext from "../../context/system/SystemContext";
 
-function Janani(){
+import youngwomenprescription from '../../assets/images/sample-rx.png';
 
+function JananiUploadPrescriptions(){
   const systemContext = useContext(SystemContext);
-
-  const [isActive, setIsActive] = useState(false);
-
-  const handleClick = () => {
-    setIsActive(!isActive); // Toggle the state
-  };
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -34,11 +28,11 @@ function Janani(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/services" className=''>
+              <Link to="/janani" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Janani</h5>
+            <h5 className='mx-2 mb-0'>Upload Prescriptions</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -63,47 +57,36 @@ function Janani(){
           </div>
         </div>
       </div>
-      <div className="app-body janani profile-listing">
-        <div className='add-patient'><Link to="/janani/create-janani" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Janani</Link></div>
+      <div className="app-body young-womens upload-prescription">
+        <div className='add-patient align-items-center d-flex justify-content-between'>
+          <span>Total- 2</span>
+          <div class="file btn btn-sm btn-primary primary-bg-color border-0"> Upload
+            <input type="file" name="file"/>
+          </div>
+        </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Janani' />
+            <input type="text" className='form-control' placeholder='Search Prescription' />
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
           <div className='col-6'>
             <div className='button-box'>
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/janani/janani-basic-information"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/janani/janani-basic-medical-history"}>Update Medical History</Link></li>
-                  <li><Link to={"/janani/janani-update-periodic-data"}>Update Periodic Data</Link></li>
-                  <li><Link to={"/janani/janani-awareness-survey"}>Update Awareness Survey</Link></li>
-                  <li><Link to={"/janani/janani-upload-prescriptions"}>Upload Prescriptions</Link></li>
-                  {/* <li><Link to={"/janani/janani-testreports"}>Upload Test Reports</Link></li> */}
-                  <li><Link to={"#"}>Close Profile </Link></li>
-                </ul>
+              <div className='prescription'>
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <img src={youngwomenprescription} alt='' className='w-100' />
+                <p className='mb-1'><strong>PRE2495B310D</strong></p>
               </div>
-              <Link to="#">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Janani 1</h6>
-              </Link>
             </div>
           </div>
           <div className='col-6'>
             <div className='button-box'>
-              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"#"}>Close Patient</Link></li>
-                </ul>
+              <div className='prescription'>
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <img src={youngwomenprescription} alt='' className='w-100' />
+                <p className='mb-1'><strong>PRE2450B310C</strong></p>
               </div>
-              <Link to="#">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Janani 2</h6>
-              </Link>
             </div>
           </div>
         </div>
@@ -113,4 +96,5 @@ function Janani(){
   )
 }
 
-export default Janani;
+
+export default JananiUploadPrescriptions;

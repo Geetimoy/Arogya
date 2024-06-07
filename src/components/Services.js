@@ -56,7 +56,7 @@ function Services(){
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box disable'>
+              <div className='button-box'>
                 <Link to="/janani">
                 <img src={janani} alt='' />
                 <h6>Janani</h6></Link>
