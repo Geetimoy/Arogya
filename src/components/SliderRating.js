@@ -17,7 +17,7 @@ const SliderRating = ({ onChange }) => {
       <Slider
         min={0}
         max={10}
-        step={1}
+        step={5}
         value={value}
         onChange={handleSliderChange}
       />
