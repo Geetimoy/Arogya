@@ -13,7 +13,7 @@ import './YoungWomanUploadPrescription.css'
 
 import youngwomenprescription from '../../assets/images/sample-rx.png';
 
-function YoungWomanUploadPrescription(){
+function YoungWomanPrescriptions(){
   const systemContext = useContext(SystemContext);
 
   const [urlParam, setUrlParam] = useState(useParams());
@@ -62,12 +62,34 @@ function YoungWomanUploadPrescription(){
         </div>
       </div>
       <div className="app-body young-womens upload-prescription">
-        <div className='row'>
-          <div className='col-12 text-center'>
-            <button type="button" class="btn primary-bg-color text-light w-75">Upload</button>
+        <div className='add-patient align-items-center d-flex justify-content-between'>
+          <span>Total- 2</span>
+          <Link to={`/youngwomens/young-woman-upload-prescription/${editAccountKey}`}>Upload</Link>
+        </div>
+        <div className='search-patient mt-3 mb-3'>
+          <div className='input-group'>
+            <input type="text" className='form-control' placeholder='Search Prescription' />
+            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
-          <div className='col-12 text-center mt-5'>
-            <button type="button" class="btn primary-bg-color text-light w-75">Use Camera</button>
+        </div>
+        <div className='row'>
+          <div className='col-6'>
+            <div className='button-box'>
+              <div className='prescription'>
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <img src={youngwomenprescription} alt='' className='w-100' />
+                <p className='mb-1'><strong>PRE2495B310D</strong></p>
+              </div>
+            </div>
+          </div>
+          <div className='col-6'>
+            <div className='button-box'>
+              <div className='prescription'>
+                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                <img src={youngwomenprescription} alt='' className='w-100' />
+                <p className='mb-1'><strong>PRE2450B310C</strong></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,4 +98,4 @@ function YoungWomanUploadPrescription(){
   )
 }
 
-export default YoungWomanUploadPrescription;
+export default YoungWomanPrescriptions;

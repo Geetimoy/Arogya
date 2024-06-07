@@ -30,6 +30,7 @@ import UpdateMedicalHistory from './youngwomens/UpdateMedicalHistory';
 import UpdatePeriodicData from './youngwomens/UpdatePeriodicData';
 import UpdateAwarenessSurvey from './youngwomens/UpdateAwarenessSurvey';
 import YoungWomanUploadPrescription from './youngwomens/YoungWomanUploadPrescription';
+import YoungWomanPrescriptions from './youngwomens/YoungWomanPrescriptions';
 import TestReports from './youngwomens/TestReports';
 import Bookings from './Bookings';
 import SelectPatient from './SelectPatient';
@@ -174,9 +175,9 @@ export default function Core() {
 
   // Function to get the current domain
   const getCurrentDomain = () => {
-  const currentDomain = window.location.hostname;
-  //console.log(currentDomain);
-  setDomain(domainName);
+    const currentDomain = window.location.hostname;
+    //console.log(currentDomain);
+    setDomain(domainName);
   };
 
   // Function to set the primary color based on the domain
@@ -262,6 +263,7 @@ export default function Core() {
             <Route path="/youngwomens/update-medical-history/:accountKey" exact element={<UpdateMedicalHistory />} />
             <Route path="/youngwomens/update-periodic-data/:accountKey" exact element={<UpdatePeriodicData />} />
             <Route path="/youngwomens/update-awareness-survey/:accountKey" exact element={<UpdateAwarenessSurvey />} />
+            <Route path="/youngwomens/young-woman-prescriptions/:accountKey" exact element={<YoungWomanPrescriptions />} />
             <Route path="/youngwomens/young-woman-upload-prescription/:accountKey" exact element={<YoungWomanUploadPrescription />} />
             <Route path="/youngwomens/TestReports" exact element={<TestReports />} />
             <Route path="/patientprofiles/TestReports" exact element={<TestReports />} />
