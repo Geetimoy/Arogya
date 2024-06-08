@@ -43,7 +43,7 @@ function UpdateAwarenessSurvey(){
     education_support_remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
-  const preSavedRating = 5; // This is the pre-saved rating value you want to display
+  const preSavedRating = 5; // This is the pre-saved rating 
 
   const handleRatingChange = (value, name) => {
     setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
