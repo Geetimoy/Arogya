@@ -74,7 +74,7 @@ function JananiUploadPrescriptions(){
           <div className='col-6'>
             <div className='button-box'>
               <div className='prescription'>
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
                 <img src={youngwomenprescription} alt='' className='w-100' />
                 <p className='mb-1'><strong>PRE5632B310D</strong></p>
               </div>
@@ -83,7 +83,7 @@ function JananiUploadPrescriptions(){
           <div className='col-6'>
             <div className='button-box'>
               <div className='prescription'>
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
                 <img src={youngwomenprescription} alt='' className='w-100' />
                 <p className='mb-1'><strong>PRE5624B310C</strong></p>
               </div>

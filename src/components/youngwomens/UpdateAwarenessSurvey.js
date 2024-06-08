@@ -43,8 +43,11 @@ function UpdateAwarenessSurvey(){
     education_support_remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
+  const preSavedRating = 5; // This is the pre-saved rating value you want to display
+
   const handleRatingChange = (value, name) => {
     setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+    console.log('Rating changed:', value);
   };
 
   const handleChange = (e) => {
@@ -137,31 +140,31 @@ function UpdateAwarenessSurvey(){
         <form name="awareness_survey_form" id="awareness_survey_form" onSubmit={handleFormSubmit}>
           <div className='form-group'>
             <label>1. Menstruation Cycle - why and how it happens? </label>
-            <SliderRating onChange={(value)=>handleRatingChange(value, 'menstruation_cycle_value')} />
+            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'menstruation_cycle_value')} />
           </div>
           <div className='form-group'>
             <label>2. Menstruation Hygiene - methods available including, pads, cups, etc. </label>
-            <SliderRating onChange={(value)=>handleRatingChange(value, 'menstruation_hygiene_value')} />
+            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'menstruation_hygiene_value')} />
           </div>
           <div className='form-group'>
             <label>3. General cleanliness and regular washing </label>
-            <SliderRating onChange={(value)=>handleRatingChange(value, 'general_cleanliness_value')} />
+            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'general_cleanliness_value')} />
           </div>
           <div className='form-group'>
             <label>4. Iron and blood loss due to menstruation,  Anemia and treatments </label>
-            <SliderRating onChange={(value)=>handleRatingChange(value, 'iron_blood_menstruation_value')} />
+            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'iron_blood_menstruation_value')} />
           </div>
           <div className='form-group'>
             <label>5. Nutrition choices for young women's health </label>
-            <SliderRating onChange={(value)=>handleRatingChange(value, 'nutrition_choices_value')} />
+            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'nutrition_choices_value')} />
           </div>
           <div className='form-group'>
             <label>6. Pregnancy prevention </label>
-            <SliderRating onChange={(value)=>handleRatingChange(value, 'pregnancy_prevention_value')} />
+            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'pregnancy_prevention_value')} />
           </div>
           <div className='form-group'>
             <label>7. Resources available from ASHA workers, community </label>
-            <SliderRating onChange={(value)=>handleRatingChange(value, 'resources_available_value')} />
+            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'resources_available_value')} />
           </div>
           <div className='form-group'>
             <label>8. Any other areas you would like further education and support (write)</label>

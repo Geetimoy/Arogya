@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const SliderRating = ({ onChange }) => {
-  const [value, setValue] = useState(0);
+const SliderRating = ({ initialRating, onChange }) => {
+  const [value, setValue] = useState(initialRating);
+
+  useEffect(() => {
+    setValue(initialRating);
+  }, [initialRating]);
 
   const handleSliderChange = (newValue) => {
     setValue(newValue);
     onChange && onChange(newValue);
   };
-
+  
   return (
     <div style={{ margin: '0 10px' }}>
       
