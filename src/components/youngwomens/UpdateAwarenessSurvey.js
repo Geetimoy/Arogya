@@ -43,8 +43,6 @@ function UpdateAwarenessSurvey(){
     education_support_remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
-  const preSavedRating = 5; // This is the pre-saved rating 
-
   const handleRatingChange = (value, name) => {
     setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     console.log('Rating changed:', value);
@@ -99,6 +97,64 @@ function UpdateAwarenessSurvey(){
     }
   }
 
+  const getUserDetails = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']           = systemContext.systemDetails.system_id;
+    jsonData["woman_account_key"]   = editAccountKey;
+    jsonData["woman_account_type"]  = 3;
+    jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]        = DEVICE_TOKEN;
+    jsonData["user_lat"]            = localStorage.getItem('latitude');
+    jsonData["user_long"]           = localStorage.getItem('longitude');
+    jsonData["search_param"]        = {
+                                        "by_keywords": "test",
+                                        "limit": "2",
+                                        "offset": "0",
+                                        "order_by_field": "account_id",
+                                        "order_by_value": "desc"
+                                      }
+    
+    const response1 = await fetch(`${API_URL}/womanHealthAwarenessSurveyList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1     = await response1.json();
+
+    if(result1.data.length > 0){
+      let userDetails = result1.data[0];
+      
+      formData['menstruation_cycle_value']      = {value:userDetails.menstruation_cycle_value, errorClass:"", errorMessage:""};
+      formData['menstruation_hygiene_value']    = {value:userDetails.menstruation_hygiene_value, errorClass:"", errorMessage:""};
+      formData['general_cleanliness_value']     = {value:userDetails.general_cleanliness_value, errorClass:"", errorMessage:""};
+      formData['iron_blood_menstruation_value'] = {value:userDetails.iron_blood_menstruation_value, errorClass:"", errorMessage:""};
+      formData['nutrition_choices_value']       = {value:userDetails.nutrition_choices_value, errorClass:"", errorMessage:""};
+      formData['pregnancy_prevention_value']    = {value:userDetails.pregnancy_prevention_value, errorClass:"", errorMessage:""};
+      formData['resources_available_value']     = {value:userDetails.resources_available_value, errorClass:"", errorMessage:""};
+      formData['education_support_remarks']     = {value:userDetails.education_support_remarks, errorClass:"", errorMessage:""};
+      
+      setFormData({...formData, ...formData});
+
+    }
+
+  }
+
+  useEffect(() => {
+
+    if(systemContext.systemDetails.system_id){
+      getUserDetails();
+    }
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id]);
+
   return(
     <>
     <div className='app-top inner-app-top services-app-top'>
@@ -140,35 +196,35 @@ function UpdateAwarenessSurvey(){
         <form name="awareness_survey_form" id="awareness_survey_form" onSubmit={handleFormSubmit}>
           <div className='form-group'>
             <label>1. Menstruation Cycle - why and how it happens? </label>
-            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'menstruation_cycle_value')} />
+            <SliderRating initialRating={formData['menstruation_cycle_value'].value} onChange={(value)=>handleRatingChange(value, 'menstruation_cycle_value')} />
           </div>
           <div className='form-group'>
             <label>2. Menstruation Hygiene - methods available including, pads, cups, etc. </label>
-            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'menstruation_hygiene_value')} />
+            <SliderRating initialRating={formData['menstruation_hygiene_value'].value} onChange={(value)=>handleRatingChange(value, 'menstruation_hygiene_value')} />
           </div>
           <div className='form-group'>
             <label>3. General cleanliness and regular washing </label>
-            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'general_cleanliness_value')} />
+            <SliderRating initialRating={formData['general_cleanliness_value'].value} onChange={(value)=>handleRatingChange(value, 'general_cleanliness_value')} />
           </div>
           <div className='form-group'>
             <label>4. Iron and blood loss due to menstruation,  Anemia and treatments </label>
-            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'iron_blood_menstruation_value')} />
+            <SliderRating initialRating={formData['iron_blood_menstruation_value'].value} onChange={(value)=>handleRatingChange(value, 'iron_blood_menstruation_value')} />
           </div>
           <div className='form-group'>
             <label>5. Nutrition choices for young women's health </label>
-            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'nutrition_choices_value')} />
+            <SliderRating initialRating={formData['nutrition_choices_value'].value} onChange={(value)=>handleRatingChange(value, 'nutrition_choices_value')} />
           </div>
           <div className='form-group'>
             <label>6. Pregnancy prevention </label>
-            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'pregnancy_prevention_value')} />
+            <SliderRating initialRating={formData['pregnancy_prevention_value'].value} onChange={(value)=>handleRatingChange(value, 'pregnancy_prevention_value')} />
           </div>
           <div className='form-group'>
             <label>7. Resources available from ASHA workers, community </label>
-            <SliderRating initialRating={preSavedRating} onChange={(value)=>handleRatingChange(value, 'resources_available_value')} />
+            <SliderRating initialRating={formData['resources_available_value'].value} onChange={(value)=>handleRatingChange(value, 'resources_available_value')} />
           </div>
           <div className='form-group'>
             <label>8. Any other areas you would like further education and support (write)</label>
-            <textarea name="education_support_remarks" rows="3" className="form-control" placeholder="" onChange={handleChange}></textarea>
+            <textarea name="education_support_remarks" rows="3" className="form-control" placeholder="" onChange={handleChange} value={formData['education_support_remarks'].value}></textarea>
           </div>
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Submit</button>
