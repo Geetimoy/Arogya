@@ -57,8 +57,8 @@ import SignUpVerification from './SignUpVerification';
 
 export default function Core() {
 
-  const domainName = window.location.hostname;
-  //const domainName = 'ukhra.serviceplace.org.in'; //NGO, system_id=3
+  //const domainName = window.location.hostname;
+  const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2h.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvn.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
@@ -106,8 +106,8 @@ export default function Core() {
       setSystemId("rgvn.serviceplace.org.in");
       var faviconFolder = '/rgvn-favicon/';
     }
-    else if(domainName === "ukhra.serviceplace.org.in"){
-      setSystemId("ukhra.serviceplace.org.in");
+    else if(domainName === "ukhraapp.serviceplace.org.in"){
+      setSystemId("ukhraapp.serviceplace.org.in");
       var faviconFolder = '/ukhra-favicon/';
     }
     else{
