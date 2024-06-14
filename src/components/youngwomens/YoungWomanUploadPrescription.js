@@ -66,9 +66,7 @@ function YoungWomanUploadPrescription(){
       jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
-      jsonData["initial_summary"]         = "sadasd";
       jsonData["file"]                    = uploadedFileBase64;
-      jsonData["file_seq"]                = "elem";
       jsonData["file_extension"]          = fileExtension;
 
       console.log(jsonData);
@@ -85,6 +83,11 @@ function YoungWomanUploadPrescription(){
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setTimeout(() => {
+          fileUpload['inputPrescription'].upload   = true;
+          fileUpload['inputPrescription'].fileName = "";
+          setFileUpload({...fileUpload, ...fileUpload});
+        }, 2000);
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -100,7 +103,7 @@ function YoungWomanUploadPrescription(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/youngwomens" className=''>
+              <Link to={`/youngwomens/young-woman-prescriptions/${editAccountKey}`} className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -134,7 +137,7 @@ function YoungWomanUploadPrescription(){
           <div className='col-12'>
             <div className={`form-group brdr-btm parent`}>
               <input type="file" name="inputPrescription" id="inputPrescription" onChange={(event) => uploadCertificateChange(event)}/>
-              <label>Upload Prescription</label>
+              <label>{(fileUpload['inputPrescription'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription'].fileName}</label>
             </div>
           </div>
           <div className='col-12 mt-4'>
