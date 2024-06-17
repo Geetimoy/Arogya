@@ -1,22 +1,27 @@
-import { useState, useContext } from 'react';
-
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Link, useParams } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
 import Appfooter from "../AppFooter";
 
 import './YoungWomanUploadPrescription.css'
 
-import youngwomenprescription from '../../assets/images/sample-rx.png';
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
+import docIcon from '../../assets/images/doc-icon.jpg';
 
 function YoungWomanPrescriptions(){
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [urlParam, setUrlParam] = useState(useParams());
+  const [prescriptionList, setPrescriptionList]   = useState([]);
 
   const editAccountKey = urlParam.accountKey;
 
@@ -25,6 +30,81 @@ function YoungWomanPrescriptions(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const searchPrescription = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listPrescription(value);
+    }, 1000)
+  }
+
+  const listPrescription = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+
+    const response = await fetch(`${API_URL}/womanSurveyPrescriptionList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setPrescriptionList(result.data);
+    }
+    else{
+      setPrescriptionList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPrescription("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const deletePrescription = async (fileName) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+    jsonData["file_name"]       = fileName;
+
+    const response = await fetch(`${API_URL}/deleteWomanSurveyPrescription`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      listPrescription("");
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
 
   return(
     <>  
@@ -73,24 +153,19 @@ function YoungWomanPrescriptions(){
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='prescription'>
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <img src={youngwomenprescription} alt='' className='w-100' />
-                <p className='mb-1'><strong>PRE2495B310D</strong></p>
+
+          {prescriptionList.map((women, index) => (
+            <div className='col-6' key={women.file_id}>
+              <div className='button-box'>
+                <div className='prescription'>
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(women.file_name)}/></div>
+                  <img src={docIcon} alt='' className='w-100' />
+                  <p className='mb-1'><strong>{women.file_name}</strong></p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='prescription'>
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <img src={youngwomenprescription} alt='' className='w-100' />
-                <p className='mb-1'><strong>PRE2450B310C</strong></p>
-              </div>
-            </div>
-          </div>
+          ))}
+
         </div>
       </div>
       <Appfooter></Appfooter>
