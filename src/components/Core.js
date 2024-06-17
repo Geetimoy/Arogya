@@ -59,8 +59,8 @@ export default function Core() {
 
   //const domainName = window.location.hostname;
   const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
-  //const domainName = 'b2h.serviceplace.org.in'; //NGO, system_id=1
-  //const domainName = 'rgvn.serviceplace.org.in';//NGO, system_id=2
+  //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
+  //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
   const [systemId, setSystemId] = useState(null);
 
@@ -98,12 +98,12 @@ export default function Core() {
 
   useEffect(() => {
 
-    if(domainName === "b2h.serviceplace.org.in"){
-      setSystemId("b2h.serviceplace.org.in");
+    if(domainName === "b2happ.serviceplace.org.in"){
+      setSystemId("b2happ.serviceplace.org.in");
       var faviconFolder = '/b2b-favicon/';
     }
-    else if(domainName === "rgvn.serviceplace.org.in"){
-      setSystemId("rgvn.serviceplace.org.in");
+    else if(domainName === "rgvnapp.serviceplace.org.in"){
+      setSystemId("rgvnapp.serviceplace.org.in");
       var faviconFolder = '/rgvn-favicon/';
     }
     else if(domainName === "ukhraapp.serviceplace.org.in"){
@@ -187,15 +187,15 @@ export default function Core() {
         setPrimaryColor('#2aa142');
         setPrimaryBgColor('#2aa142');
         break;
-      case 'ukhra.serviceplace.org.in':
+      case 'ukhraapp.serviceplace.org.in':
         setPrimaryColor('#f79645');
         setPrimaryBgColor('#f79645');
         break;
-      case 'rgvn.serviceplace.org.in':
+      case 'rgvnapp.serviceplace.org.in':
         setPrimaryColor('#2aa142');
         setPrimaryBgColor('#2aa142');
         break;
-      case 'b2h.serviceplace.org.in':
+      case 'b2happ.serviceplace.org.in':
         setPrimaryColor('#c10000');
         setPrimaryBgColor('#c10000');
         break;
@@ -218,13 +218,13 @@ export default function Core() {
   if (domainName === "telehealth.serviceplace.org.in") {
     containerClass = 'serviceplace-container-class';
   } 
-  else if (domainName === "b2h.serviceplace.org.in") {
+  else if (domainName === "b2happ.serviceplace.org.in") {
     containerClass = 'b2h-container-class';
   } 
-  else if (domainName === "rgvn.serviceplace.org.in"){
+  else if (domainName === "rgvnapp.serviceplace.org.in"){
     containerClass = 'rgvn-container-class';
   } 
-  else if (domainName === "ukhra.serviceplace.org.in"){
+  else if (domainName === "ukhraapp.serviceplace.org.in"){
     containerClass = 'ukhra-container-class';
   } 
   
