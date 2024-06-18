@@ -76,7 +76,7 @@ function YoungWomanPrescriptions(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
-  const deletePrescription = async (fileName) => {
+  const deletePrescription = async (fileId) => {
 
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -84,7 +84,7 @@ function YoungWomanPrescriptions(){
     jsonData['system_id']       = systemContext.systemDetails.system_id;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
-    jsonData["file_name"]       = fileName;
+    jsonData["file_id"]         = fileId;
 
     const response = await fetch(`${API_URL}/deleteWomanSurveyPrescription`, {
       method: "POST",
@@ -143,7 +143,7 @@ function YoungWomanPrescriptions(){
       </div>
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total- 2</span>
+          <span>Total - {prescriptionList.length}</span>
           <Link to={`/youngwomens/young-woman-upload-prescription/${editAccountKey}`}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
@@ -158,7 +158,7 @@ function YoungWomanPrescriptions(){
             <div className='col-6' key={women.file_id}>
               <div className='button-box'>
                 <div className='prescription'>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(women.file_name)}/></div>
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(women.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
                   <p className='mb-1'><strong>{women.file_name}</strong></p>
                 </div>
