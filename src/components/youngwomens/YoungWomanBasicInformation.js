@@ -420,7 +420,7 @@ function YoungWomanBasicInformation(){
           </div>
           
 
-          <div className={`form-group ${formData["woman_education"].errorClass}`}>
+          <div className={`d-none form-group ${formData["woman_education"].errorClass}`}>
             <label htmlFor="woman_education">Education <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value={formData["woman_education"].value ? formData["woman_education"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["woman_education"].errorMessage}</small>

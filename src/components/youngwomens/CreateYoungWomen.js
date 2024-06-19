@@ -345,7 +345,7 @@ function CraeteYoungWomen(){
             <Dropdown className='form-control select-multi' multi options={serviceAreaOption} values={selectedOptions} onChange={handleChange1}/>
             <small className="error-mesg">{formData["woman_service_area"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["woman_education"].errorClass}`}>
+          <div className={`d-none form-group ${formData["woman_education"].errorClass}`}>
             <label htmlFor="woman_education">Education <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_education"].value ? formData["woman_education"].value : ''} name="woman_education" id="woman_education" placeholder="Education" />
             <small className="error-mesg">{formData["woman_education"].errorMessage}</small>

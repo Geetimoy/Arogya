@@ -21,6 +21,12 @@ div.file {
   position: relative;
 }
 
+.prescription p{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .btn-delete{
   position: absolute;
   right: 7px;
