@@ -153,7 +153,7 @@ function YoungWomanPrescriptions(){
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {prescriptionList.length}</span>
-          <Link to={`/youngwomens/young-woman-upload-prescription/${editAccountKey}`}>Upload</Link>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/youngwomens/young-woman-upload-prescription/${editAccountKey}`}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
