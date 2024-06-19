@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
@@ -26,6 +26,8 @@ function YoungWomanPrescriptions(){
   const editAccountKey = urlParam.accountKey;
 
   const [isMActive, setIsMActive] = useState(false);
+
+  const redirect = useNavigate();
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -106,6 +108,13 @@ function YoungWomanPrescriptions(){
 
   }
 
+  const downloadPrescription = async (filePath) => {
+
+    console.log(filePath);
+    //redirect(filePath);
+
+  }
+
   return(
     <>  
       <div className='app-top inner-app-top services-app-top'>
@@ -158,6 +167,7 @@ function YoungWomanPrescriptions(){
             <div className='col-6' key={women.file_id}>
               <div className='button-box'>
                 <div className='prescription'>
+                  <div className="btn-download"><Link target="_blank" to={`${women.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
                   <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(women.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
                   <p className='mb-1'><strong>{women.file_name}</strong></p>
