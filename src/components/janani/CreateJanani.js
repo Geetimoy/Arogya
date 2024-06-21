@@ -64,23 +64,6 @@ function CreateJanani(){
             <label for="janani_name">Janani Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_name" id="janani_name" placeholder="Janani Name" value=""/>
           </div>
-          {/* <div class="form-group ">
-            <label for="janani_id">Login ID <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="janani_id" id="janani_id" placeholder="Login Id" value=""/>
-          </div> */}
-          {/* <div class="form-group ">
-            <label class="no-style"><span class="d-block">BPL / APL ?  <span class="text-danger">*</span></span> </label>
-            <div class="d-flex">
-              <div class="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="bpl" name="aplbpl" class="custom-control-input" value="" />
-                <label class="custom-control-label no-style" for="bpl">Yes</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="apl" name="aplbpl" class="custom-control-input" value="" />
-              <label class="custom-control-label no-style" for="apl">No</label>
-              </div>
-            </div>
-          </div> */}
           <div class="form-group ">
             <label for="janani_age">Age <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_age" id="janani_age" placeholder="Age" value="" />
@@ -155,8 +138,6 @@ function CreateJanani(){
             <label for="janani_city">City <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_city" id="janani_city" placeholder="City" value="" />
           </div>
-
-
 
           <div class="form-group ">
             <label for="janani_landmark">Landmark <span class="text-danger">*</span></label>
