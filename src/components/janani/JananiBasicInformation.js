@@ -61,14 +61,14 @@ function CreateJanani(){
         <p><small>To update your profile information</small></p>
         <form className="mt-3" name="create_janani_form" id="create_janani_form">
           <div class="form-group ">
-            <label for="janani_name">Full Name <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="janani_name" id="janani_name" placeholder="Full Name" value=""/>
+            <label for="janani_name">Janani Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="janani_name" id="janani_name" placeholder="Janani Name" value=""/>
           </div>
-          <div class="form-group ">
+          {/* <div class="form-group ">
             <label for="janani_id">Login ID <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_id" id="janani_id" placeholder="Login Id" value=""/>
-          </div>
-          <div class="form-group ">
+          </div> */}
+          {/* <div class="form-group ">
             <label class="no-style"><span class="d-block">BPL / APL ?  <span class="text-danger">*</span></span> </label>
             <div class="d-flex">
               <div class="custom-control custom-radio custom-control-inline mt-2">
@@ -80,11 +80,38 @@ function CreateJanani(){
               <label class="custom-control-label no-style" for="apl">No</label>
               </div>
             </div>
-          </div>
+          </div> */}
           <div class="form-group ">
             <label for="janani_age">Age <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_age" id="janani_age" placeholder="Age" value="" />
           </div>
+
+          <div class="form-group ">
+            <label for="janani_husband">Husband Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="janani_husband" id="janani_husband" placeholder="Husband Name" value="" />
+          </div>
+          <div class="form-group ">
+            <label for="period_missed">First Period Missed Data <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="period_missed" id="period_missed" placeholder="First Period Missed Data" value="" />
+          </div>
+          <div class="form-group ">
+            <label for="conception_date">Estimated Conception Date <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="conception_date" id="conception_date" placeholder="Estimated Conception Date" value="" />
+          </div>
+          <div class="form-group ">
+            <label for="janani_education">Janani Education <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="janani_education" id="janani_education" placeholder="Janani Education" value="" />
+          </div>
+          <div class="form-group ">
+            <label for="doctor_name">Involved Doctor Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="doctor_name" id="doctor_name" placeholder="Involved Doctor Name" value="" />
+          </div>
+          <div class="form-group ">
+            <label for="hospital_name">Involved Hospital Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="hospital_name" id="hospital_name" placeholder="Involved Hospital Name" value="" />
+          </div>
+
+
           <div class="form-group ">
             <label class="no-style"><span class="d-block">Is your personal mobile number? <span class="text-danger">*</span></span> </label>
             <div class="d-flex">
@@ -111,12 +138,20 @@ function CreateJanani(){
             <input type="text" class="form-control" name="janani_email_id" id="janani_email_id" placeholder="Email" value="" />
           </div>
           <div class="form-group ">
-            <label for="janani_address">Address <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="janani_address" id="janani_address" placeholder="Address" value="" />
+            <label for="janani_address">Janani Address <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="janani_address" id="janani_address" placeholder="Janani Address" value="" />
           </div>
           <div class="form-group ">
             <label for="janani_address_2">Address 2 </label>
             <input type="text" class="form-control" name="janani_address_2" id="janani_address_2" placeholder="Address 2" value="" />
+          </div>
+          <div class="form-group ">
+            <label for="janani_state">State <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="janani_state" id="janani_state" placeholder="State" value="" />
+          </div>
+          <div class="form-group ">
+            <label for="janani_city">City <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="janani_city" id="janani_city" placeholder="City" value="" />
           </div>
           <div class="form-group ">
             <label for="janani_landmark">Landmark <span class="text-danger">*</span></label>
