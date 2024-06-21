@@ -13,20 +13,35 @@ import SystemContext from "../../context/system/SystemContext";
 import { Link } from "react-router-dom";
 
 function UpdatePeriodicData(){
+
   const systemContext = useContext(SystemContext);
+
+  const [inputValues, setInputValues] = useState({
+    select1: {value:""}
+  });
+  const selectCategory = (e) => {
+    const { name, value } = e.target;
+    setInputValues({...inputValues, [name]: {...inputValues[name], value:value}});
+    
+  }
 
   const [isMActive, setIsMActive] = useState(false);
 
-  const [inputList, setInputList] = useState([]);
+  const [inputList, setInputList] = useState([<Category key={1} name="select1" changefunc={selectCategory}/>]);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
 
   const onAddBtnClick = event => {
-    setInputList(inputList.concat(<Category key={inputList.length} />));
-  };
+    var newKey = 'select'+(inputList.length+1);
+    setInputList(inputList.concat(<Category key={inputList.length+1} name={`select${inputList.length+1}`} changefunc={selectCategory}/>));
+    console.log(newKey);
+    inputValues[newKey] = {value:""};
 
+    setInputValues({...inputValues, ...inputValues});
+    
+  };
 
 return(
   <>
@@ -100,7 +115,7 @@ return(
           </div>
         </div> */}
         
-        <Category></Category>
+        
         {inputList}
         <div className="form-group">
           <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
