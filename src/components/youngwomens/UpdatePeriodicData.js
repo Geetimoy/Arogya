@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import Category from './Category';
 
@@ -19,10 +19,17 @@ function UpdatePeriodicData(){
   const [inputValues, setInputValues] = useState({
     select1: {value:""}
   });
+
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [inputValues]);
+
   const selectCategory = (e) => {
-    const { name, value } = e.target;
-    setInputValues({...inputValues, [name]: {...inputValues[name], value:value}});
     
+    const { name, value } = e.target;console.log(name, value);
+    inputValues[name] = {value:value};
+    setInputValues({...inputValues, [name]: {...inputValues[name], value:value}});
+    console.log(inputValues);
   }
 
   const [isMActive, setIsMActive] = useState(false);
@@ -35,11 +42,14 @@ function UpdatePeriodicData(){
 
   const onAddBtnClick = event => {
     var newKey = 'select'+(inputList.length+1);
-    setInputList(inputList.concat(<Category key={inputList.length+1} name={`select${inputList.length+1}`} changefunc={selectCategory}/>));
+    setInputList(inputList.concat(<Category key={inputList.length+1} name={`${newKey}`} changefunc={selectCategory}/>));
+    
     console.log(newKey);
     inputValues[newKey] = {value:""};
 
-    setInputValues({...inputValues, ...inputValues});
+    setInputValues({...inputValues, [newKey]: {...inputValues[newKey], value:""}});
+
+    console.log(inputValues);
     
   };
 
