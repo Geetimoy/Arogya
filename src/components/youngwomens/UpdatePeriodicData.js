@@ -17,41 +17,69 @@ function UpdatePeriodicData(){
   const systemContext = useContext(SystemContext);
 
   const [inputValues, setInputValues] = useState({
-    select1: {value:""}
+    select1: {category:"", value:""},
+    select2: {category:"", value:""},
+    select3: {category:"", value:""},
+    select4: {category:"", value:""},
+    select5: {category:"", value:""},
+    select6: {category:"", value:""},
+    select7: {category:"", value:""},
+    select8: {category:"", value:""},
+    select9: {category:"", value:""},
+    select10: {category:"", value:""},
+    select11: {category:"", value:""},
+    select12: {category:"", value:""},
+    select13: {category:"", value:""},
+    select14: {category:"", value:""},
+    select15: {category:"", value:""},
+    select16: {category:"", value:""}
   });
+
+  const [remarks, setRemarks] = useState(''); 
 
   useEffect(() => {
     // eslint-disable-next-line
   }, [inputValues]);
 
   const selectCategory = (e) => {
-    
-    const { name, value } = e.target;console.log(name, value);
-    inputValues[name] = {value:value};
-    setInputValues({...inputValues, [name]: {...inputValues[name], value:value}});
+    const { name, value } = e.target;
+    inputValues[name].category = value;
+    console.log(inputValues);
+  }
+  const changeCategoryValue = (e) => {
+    const { name, value } = e.target;
+    inputValues[name].value = value;
     console.log(inputValues);
   }
 
   const [isMActive, setIsMActive] = useState(false);
 
-  const [inputList, setInputList] = useState([<Category key={1} name="select1" changefunc={selectCategory}/>]);
+  const [inputList, setInputList] = useState([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
 
   const onAddBtnClick = event => {
-    var newKey = 'select'+(inputList.length+1);
-    setInputList(inputList.concat(<Category key={inputList.length+1} name={`${newKey}`} changefunc={selectCategory}/>));
-    
-    console.log(newKey);
-    inputValues[newKey] = {value:""};
 
-    setInputValues({...inputValues, [newKey]: {...inputValues[newKey], value:""}});
+    if(inputList.length < 10){
+      
+      var newKey = 'select'+(inputList.length+1);
+      setInputList(inputList.concat(<Category key={inputList.length+1} name={`${newKey}`} changefunc={selectCategory} changecatval={changeCategoryValue}/>));
 
-    console.log(inputValues);
-    
+    }
+    else{
+      return false;
+    }
+
   };
+
+  const handleRemarks = (e) => {
+    const { name, value } = e.target;
+    setRemarks(value);
+  }
+
+
 
 return(
   <>
@@ -90,7 +118,7 @@ return(
     </div>
     <div className='app-body form-all upadte-periodic-data'>
       <p><small>Update Young Women Periodic Data</small></p>
-      <form className="mt-3" name="" id="">
+      <form className="mt-3" name="periodicDataForm" id="periodicDataForm">
         <div className='mb-3 mt-3 text-end'>
           <button type="button" className='btn primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
         </div>
@@ -129,7 +157,7 @@ return(
         {inputList}
         <div className="form-group">
           <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
-          <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+          <textarea name="remarks" id="remarks" onChange={handleRemarks} rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
         </div>
         <div className='mb-3 mt-3 text-center'>
           <button type="submit" className='btn primary-bg-color text-light'>Update</button>

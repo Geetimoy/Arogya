@@ -37,7 +37,7 @@ function Category(props){
             </select>
           </div>
           <div className="form-group">
-            <input type="text" className="form-control pt-0"  name="" id="" placeholder="" />
+            <input type="text" className="form-control pt-0"  name={props.name} onChange={props.changecatval} placeholder="" />
           </div>
           
         </div>
