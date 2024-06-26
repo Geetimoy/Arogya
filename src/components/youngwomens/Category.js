@@ -17,7 +17,8 @@ function Category(props){
           </div>
           <div className="form-group">
             <label><span className="d-block">Select Category </span></label>
-            <select name={props.name} className="form-control" onChange={props.changefunc}>
+            <select name={props.name} className="form-control" onChange={props.changefunc} default={0}>
+              <option value="0">Select</option>
               <option value="1">Body weight in kgs</option>
               <option value="2">Body height in cm</option>
               <option value="3">Temperature</option>

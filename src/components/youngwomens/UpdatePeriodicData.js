@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import CryptoJS from "crypto-js";
 
 import Category from './Category';
 
@@ -9,12 +10,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
-import { Link } from "react-router-dom";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
+import { Link, useParams } from "react-router-dom";
 
 function UpdatePeriodicData(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [inputValues, setInputValues] = useState({
     select1: {category:"", value:""},
@@ -36,6 +41,9 @@ function UpdatePeriodicData(){
   });
 
   const [remarks, setRemarks] = useState(''); 
+
+  const [urlParam, setUrlParam] = useState(useParams());
+  const editAccountKey = urlParam.accountKey;
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -62,7 +70,7 @@ function UpdatePeriodicData(){
 
   const onAddBtnClick = event => {
 
-    if(inputList.length < 10){
+    if(inputList.length < 16){
       
       var newKey = 'select'+(inputList.length+1);
       setInputList(inputList.concat(<Category key={inputList.length+1} name={`${newKey}`} changefunc={selectCategory} changecatval={changeCategoryValue}/>));
@@ -79,6 +87,70 @@ function UpdatePeriodicData(){
     setRemarks(value);
   }
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+    var womenCategory = [];
+    Object.keys(inputValues).forEach(function(k, i){
+      if(inputValues[k].category != '' && parseInt(inputValues[k].category) > 0){
+        womenCategory[i] = {category: inputValues[k].category, value: inputValues[k].value}
+      }
+    });
+
+    if(womenCategory.length > 0){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      var currentDate = new Date();
+      var day         = currentDate.getDate();
+          day         = (day < 10) ? '0'+day : day;
+      var month       = currentDate.getMonth() + 1; // Add 1 as months are zero-based
+          month       = (month < 10) ? '0'+month : month;
+      var year        = currentDate.getFullYear();
+      var currentDate = `${day}-${month}-${year}`;
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
+      jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
+      jsonData["woman_account_type"]        = '3';
+      jsonData["woman_account_key"]         = editAccountKey;
+      jsonData["data_processed_on"]         = currentDate;
+      jsonData["remarks"]                   = remarks;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["woman_cat_value"]           = womenCategory;
+
+      const response = await fetch(`${API_URL}/womanPeriodicDataAdd`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      console.log(response)
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
+        setRemarks("");
+        Object.keys(inputValues).forEach(function(k, i){
+          inputValues[k].category = "";
+          inputValues[k].value    = "";
+        });
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: "Please select at least one category!"});
+    }
+  }
 
 
 return(
@@ -118,7 +190,7 @@ return(
     </div>
     <div className='app-body form-all upadte-periodic-data'>
       <p><small>Update Young Women Periodic Data</small></p>
-      <form className="mt-3" name="periodicDataForm" id="periodicDataForm">
+      <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
         <div className='mb-3 mt-3 text-end'>
           <button type="button" className='btn primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
         </div>
