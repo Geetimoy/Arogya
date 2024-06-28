@@ -41,7 +41,7 @@ function UpdatePeriodicData(){
   });
 
   const [remarks, setRemarks] = useState(''); 
-
+  const [periodicList, setPeriodicList] = useState([]); 
   const [urlParam, setUrlParam] = useState(useParams());
   const editAccountKey = urlParam.accountKey;
 
@@ -141,6 +141,7 @@ function UpdatePeriodicData(){
           inputValues[k].category = "";
           inputValues[k].value    = "";
         });
+        listPeriodicData();
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -151,6 +152,56 @@ function UpdatePeriodicData(){
       alertContext.setAlertMessage({show:true, type: "error", message: "Please select at least one category!"});
     }
   }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPeriodicData();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const listPeriodicData = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["woman_account_type"]        = 3;
+    jsonData["woman_account_key"]         = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": "10",
+                                              "limit": "10",
+                                              "offset": "0",
+                                              "order_by_field": "data_processed_on",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/womanPeriodicDataList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      setPeriodicList(result.data.data);
+    }
+    else{
+      setPeriodicList([]); 
+    }
+
+  }
+
+  
+
 
 
 return(
@@ -194,38 +245,6 @@ return(
         <div className='mb-3 mt-3 text-end'>
           <button type="button" className='btn primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
         </div>
-        {/* <div className="category">
-          <div className="form-group">
-            <label><span className="d-block">Select Category </span></label>
-            <select className="form-control">
-              <option value="1">Body weight in kgs</option>
-              <option value="2">Body height in cm</option>
-              <option value="3">Temperature</option>
-              <option value="4">Oxygen Level</option>
-              <option value="5">Heart Rate</option>
-              <option value="5">Do you have Blood Pressure?</option>
-              <option value="5">Are you Diabetic?</option>
-              <option value="5">Do you have Cholesterol problem?</option>
-              <option value="5">Do you have Thyroid?</option>
-              <option value="5">Iron/Folic Acid Tablets</option>
-              <option value="5">Calcium Tablets</option>
-              <option value="5">Sanitary Pads</option>
-              <option value="5">Protein Supplement</option>
-              <option value="5">Repeat De-Warming</option>
-              <option value="5">Repeat Hemoglobin Test</option>
-              <option value="5">Repeat Medicine</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <input type="text" className="form-control pt-0"  name="" id="" placeholder="" value="" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
-            <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
-          </div>
-        </div> */}
-        
-        
         {inputList}
         <div className="form-group">
           <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
@@ -237,103 +256,25 @@ return(
       </form>
       <div className="saved-periodic-data">
           <div className="row mt-4">
-            <div className="col-6">
-              <div className="jumbotron rounded p-2">
-                <div className="periodic-data position-relative">
-                  {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
-                  <p className="primary-color"><strong>Date -  18/05/24</strong></p>
-                  <p>Body Wt in kgs - 56</p>
-                  <p>Blood Pressure - 145/85</p>
-                  <p>Cholesterol Problem- Yes</p>
+
+            {periodicList.map((women, index) => (
+              <div className="col-6" key={index}>
+                <div className="jumbotron rounded p-2">
+                  <div className="periodic-data position-relative">
+                    {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
+                    <p className="primary-color"><strong>Date -  {women.data_processed_on}</strong></p>
+                    {
+                      women.sub_periodic_data.map((category, categoryindex) => {
+                        return <p>{category.category_name} - {category.value}</p>
+                      })
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-6">
-              <div className="jumbotron rounded p-2">
-                <div className="periodic-data position-relative">
-                  {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
-                  <p className="primary-color"><strong>Date -  19/05/24</strong></p>
-                  <p>Body Height in cm - 42</p>
-                  <p>Oxygen Level - 95</p>
-                  <p>Diabetic- Yes</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="jumbotron rounded p-2">
-                <div className="periodic-data position-relative">
-                  {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
-                  <p className="primary-color"><strong>Date -  20/05/24</strong></p>
-                  <p>Body Height in cm - 42</p>
-                  <p>Oxygen Level - 95</p>
-                  <p>Diabetic- Yes</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="jumbotron rounded p-2">
-                <div className="periodic-data position-relative">
-                  {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
-                  <p className="primary-color"><strong>Date -  21/05/24</strong></p>
-                  <p>Body Height in cm - 42</p>
-                  <p>Oxygen Level - 95</p>
-                  <p>Diabetic- Yes</p>
-                </div>
-              </div>
-            </div>
+            ))}
+
           </div>
       </div>
-      {/* <div className="saved-data">
-        <div className="masonry">
-          <div className="masonry-item">
-            <div className="jumbotron rounded p-2">
-              <div className="periodic-data position-relative">
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
-                <p>Body Wt in kgs - 56</p>
-                <p>Blood Pressure - 145/85</p>
-                <p>Cholesterol Problem- Yes</p>
-              </div>
-            </div>
-          </div>
-          <div className="masonry-item">
-            <div className="jumbotron rounded p-2">
-              <div className="periodic-data position-relative">
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
-                <p>Body Wt in kgs - 56</p>
-                <p>Blood Pressure - 145/85</p>
-                <p>Cholesterol Problem- Yes</p>
-                <p>Body Wt in kgs - 56</p>
-                <p>Blood Pressure - 145/85</p>
-                <p>Cholesterol Problem- Yes</p>
-              </div>
-            </div>
-          </div>
-          <div className="masonry-item">
-            <div className="jumbotron rounded p-2">
-              <div className="periodic-data position-relative">
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
-                <p>Body Wt in kgs - 56</p>
-                <p>Blood Pressure - 145/85</p>
-                <p>Cholesterol Problem- Yes</p>
-              </div>
-            </div>
-          </div>
-          <div className="masonry-item">
-            <div className="jumbotron rounded p-2">
-              <div className="periodic-data position-relative">
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <p className="primary-color"><strong>Date -  18/05/24</strong></p>
-                <p>Body Wt in kgs - 56</p>
-                <p>Blood Pressure - 145/85</p>
-                <p>Cholesterol Problem- Yes</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   <Appfooter></Appfooter>
   </>
