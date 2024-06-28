@@ -130,7 +130,7 @@ function UpdatePeriodicData(){
         },
         body: JSON.stringify(jsonData),
       });
-      console.log(response)
+      
       let result = await response.json();
 
       if(result.success){
@@ -190,7 +190,7 @@ function UpdatePeriodicData(){
     });
 
     let result = await response.json();
-    console.log(result);
+    
     if(result.success){
       setPeriodicList(result.data.data);
     }
@@ -265,7 +265,7 @@ return(
                     <p className="primary-color"><strong>Date -  {women.data_processed_on}</strong></p>
                     {
                       women.sub_periodic_data.map((category, categoryindex) => {
-                        return <p>{category.category_name} - {category.value}</p>
+                        return <p key={`${index}${categoryindex}`}>{category.category_name} - {category.value}</p>
                       })
                     }
                   </div>
