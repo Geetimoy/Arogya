@@ -7,6 +7,10 @@
   text-align: left;
   box-shadow: 0px 0px 4px #e7e7e7;
   margin: 20px 0;
+  overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 90%;
 }
 
 .normal-box span{
