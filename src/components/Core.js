@@ -100,21 +100,26 @@ export default function Core() {
 
     if(domainName === "b2happ.serviceplace.org.in"){
       setSystemId("b2happ.serviceplace.org.in");
-      var faviconFolder = '/b2b-favicon/';
+      var faviconFolder   = '/b2b-favicon/';
+      var manifestFolder  = '/b2b-manifest/'
     }
     else if(domainName === "rgvnapp.serviceplace.org.in"){
       setSystemId("rgvnapp.serviceplace.org.in");
-      var faviconFolder = '/rgvn-favicon/';
+      var faviconFolder   = '/rgvn-favicon/';
+      var manifestFolder  = '/rgvn-manifest/'
     }
     else if(domainName === "ukhraapp.serviceplace.org.in"){
       setSystemId("ukhraapp.serviceplace.org.in");
-      var faviconFolder = '/ukhra-favicon/';
+      var faviconFolder   = '/ukhra-favicon/';
+      var manifestFolder  = '/ukhra-manifest/'
     }
     else{
       setSystemId("telehealth.serviceplace.org.in");
-      var faviconFolder = '/telehealth-favicon/';
+      var faviconFolder   = '/telehealth-favicon/';
+      var manifestFolder  = '/telehealth-manifest/'
     }
     
+    //REPLACE FAVICON PATH
     document.querySelector("link[rel='icon']").setAttribute("href", faviconFolder+'favicon.ico');
     document.querySelector("link[rel='apple-touch-icon']").setAttribute("href", faviconFolder+'logo192.png');
     document.querySelector("link[rel='apple-touch-icon'][sizes='57x57']").setAttribute("href", faviconFolder+'apple-icon-57x57.png');
@@ -131,6 +136,8 @@ export default function Core() {
     document.querySelector("link[rel='icon'][sizes='96x96']").setAttribute("href", faviconFolder+'favicon-96x96.png');
     document.querySelector("link[rel='icon'][sizes='16x16']").setAttribute("href", faviconFolder+'favicon-16x16.png');
 
+    //REPLACE MAFIFEST PATH
+    document.querySelector("link[rel='manifest']").setAttribute("href", manifestFolder+'manifest.json');
 
     if(systemId){
       fetchSystemDetails(systemId);
