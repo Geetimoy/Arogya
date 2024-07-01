@@ -47,7 +47,19 @@ function SignUp(){
   const handleChange = (e) => {
     const { name, value } = e.target;
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      if(name == 'userContactNumber'){
+        var regex = /[0-9]|\./;
+        if( !regex.test(value) ) {
+          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
+          e.preventDefault();
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+        }
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      }
     }
     else{
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
@@ -64,14 +76,19 @@ function SignUp(){
         errorCounter++;
       }
       else{
-        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        var validRegex        = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        var validMobileRegex  = /[0-9]|\./;
         if((element === "userEmail") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
-          formData[element].errorMessage = "Please enter a valid email!";
-          formData[element].errorClass = "form-error";
+          formData[element].errorMessage  = "Please enter a valid email!";
+          formData[element].errorClass    = "form-error";
+        }
+        else if((element === "userContactNumber") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validMobileRegex))){
+          formData[element].errorMessage  = "Please enter a valid contact number!";
+          formData[element].errorClass    = "form-error";
         }
         else{
-          formData[element].errorMessage = "";
-          formData[element].errorClass = "";
+          formData[element].errorMessage  = "";
+          formData[element].errorClass    = "";
         }
       }
     })
@@ -199,7 +216,7 @@ function SignUp(){
             </div>
             <div className={`form-group ${formData["userContactNumber"].errorClass}`}>
               <label htmlFor="userContactNumber"> Contact Number/Mobile Number <span className='text-danger'> *</span></label>
-              <input type="text" id="userContactNumber" name="userContactNumber" className='form-control' placeholder='Enter contact or mobile number' value={formData["userContactNumber"].value} onChange={handleChange}/>
+              <input type="text" id="userContactNumber" name="userContactNumber" className='form-control' placeholder='Enter contact or mobile number' value={formData["userContactNumber"].value} onChange={handleChange} maxLength={10}/>
               <small className="error-mesg">{formData["userContactNumber"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["userEmail"].errorClass}`}>
