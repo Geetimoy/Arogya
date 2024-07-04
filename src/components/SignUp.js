@@ -105,12 +105,12 @@ function SignUp(){
     setFormData({...formData, ...formData});
   }*/
 
-  const options = [
+  const [options, setOptions] = useState([
     { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
     { label: 'Navagraha Temple, Guwahati', value: '2' },
     { label: 'Umananda Temple, Guwahati', value: '3' },
     { label: 'Morigaon', value: '4' },
-  ];
+  ]);
 
   // Define the selectedOptions state and the corresponding setter function
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -131,7 +131,6 @@ function SignUp(){
     }
     setSelectedOptions(values);
   };
-
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -177,48 +176,49 @@ function SignUp(){
     }
   }
 
-  let jsonData = {};
-      //jsonData['system_id']             = systemContext.systemDetails.system_id;
-      jsonData['device_type']           = DEVICE_TYPE;
-      jsonData['device_token']          = DEVICE_TOKEN;
-      jsonData['user_lat']              = localStorage.getItem('latitude');
-      jsonData['user_long']             = localStorage.getItem('longitude');
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      getMasterServicesArea();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
 
-      //jsonData["page_key"] = localStorage.getItem('page_key');
-      //jsonData["page_key"]              = "ABOUT_AROGYA_TELEHEALTH";
-      jsonData["system_id"]             = "ukhraapp.serviceplace.org.in";
-      //jsonData["page_id"]               = 2;
-      jsonData["center_id"]               = 1;
-      
+  useEffect(() => {
 
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch(`${API_URL}/masterServiceAreas`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(jsonData),
-            });
-            
-            const responseData = await response.json();
-            // console.log(responseData.data.results[0]);
-           //console.log(responseData.results);
-            setSelectedOptions(responseData.results);
-            // console.log('Hi');
-            
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          } finally {
-            // setLoading(false);
-          }
-        };
-    
-        fetchData();
-        // eslint-disable-next-line
-      }, []);
+  }, [options])
 
+  const getMasterServicesArea = async (e) => {
+
+    let jsonData = {};
+
+    jsonData['system_id']        = systemContext.systemDetails.system_id;
+    jsonData["device_type"]      = DEVICE_TYPE;
+    jsonData["device_token"]     = DEVICE_TOKEN;
+    jsonData["user_lat"]         = localStorage.getItem('latitude');
+    jsonData["user_long"]        = localStorage.getItem('longitude');
+    jsonData["center_id"]        = 1;
+
+    const response = await fetch(`${API_URL}/masterServiceAreas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.data.rows > 0){
+      var areas         = result.data.results;
+      var optionsArray  = [];
+      for(var i=0; i<areas.length; i++){
+        optionsArray[i] = {label: areas[i].service_area_city+', '+areas[i].service_area_state, value: areas[i].service_area_id}
+      }
+      setOptions(optionsArray);
+    }
+
+  }
+  
   return(
     <div className='container'>
       <div className='login-container'>
