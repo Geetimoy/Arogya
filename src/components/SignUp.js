@@ -10,7 +10,7 @@ import { faLongArrowAltLeft, faEye, faQuestionCircle, faKey, faEyeSlash } from '
 import {Link, useNavigate} from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 import AlertContext from "../context/alert/AlertContext";
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import Dropdown from 'react-dropdown-select';
 import CryptoJS from "crypto-js";
@@ -176,6 +176,48 @@ function SignUp(){
       }
     }
   }
+
+  let jsonData = {};
+      //jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData['device_type']           = DEVICE_TYPE;
+      jsonData['device_token']          = DEVICE_TOKEN;
+      jsonData['user_lat']              = localStorage.getItem('latitude');
+      jsonData['user_long']             = localStorage.getItem('longitude');
+
+      //jsonData["page_key"] = localStorage.getItem('page_key');
+      //jsonData["page_key"]              = "ABOUT_AROGYA_TELEHEALTH";
+      jsonData["system_id"]             = "ukhraapp.serviceplace.org.in";
+      //jsonData["page_id"]               = 2;
+      jsonData["center_id"]               = 1;
+      
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`${API_URL}/masterServiceAreas`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+            
+            const responseData = await response.json();
+            // console.log(responseData.data.results[0]);
+           //console.log(responseData.results);
+            setSelectedOptions(responseData.results);
+            // console.log('Hi');
+            
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          } finally {
+            // setLoading(false);
+          }
+        };
+    
+        fetchData();
+        // eslint-disable-next-line
+      }, []);
 
   return(
     <div className='container'>
