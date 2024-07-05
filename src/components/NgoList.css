@@ -1,8 +1,15 @@
-.ngo-list .button-box{
-  margin-bottom: 20px;
-  min-height: 146px;
+.ngolist-box{
+  margin-top: 10px;
+    margin-bottom: 50px;
+    border: 1px solid #eeeeee;
+    padding: 20px;
 }
 
-.ngo-list .button-box a{
+.ngolist-box .button-box{
+  margin-bottom: 20px;
+  min-height: 152px;
+}
+
+.ngolist-box .button-box a{
   padding: 15px;
 }

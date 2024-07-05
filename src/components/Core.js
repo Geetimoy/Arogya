@@ -58,8 +58,8 @@ import SignUpVerification from './SignUpVerification';
 
 export default function Core() {
 
-  const domainName = window.location.hostname;
-  //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
+  //const domainName = window.location.hostname;
+  const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
@@ -250,7 +250,6 @@ export default function Core() {
         {
           (isLoggedIn === true) && <Routes>
             <Route path="/Dashboard" exact element={<Dashboard />} />
-            <Route path="/NgoList" exact element={<NgoList />} />
             <Route path="/Account" exact element={<Account />} />
             <Route path="/ProfilePhoto" exact element={<ProfilePhoto />} />
             <Route path="/ChangePassword" exact element={<ChangePassword />} />
@@ -296,6 +295,7 @@ export default function Core() {
         {
           (isLoggedIn === false) && <Routes>
             <Route path="/" exact element={<Landing />} />
+            <Route path="/ngolist" exact element={<NgoList />} />
             <Route path="/logIn" exact element={<LogIn colorname={primaryColor} bgcolor={primaryBgColor}/>} />
             <Route path="/SignUp" exact element={<SignUp />} />
             <Route path="/TermsOfUse" exact element={<TermsOfUse />} />

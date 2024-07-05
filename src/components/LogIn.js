@@ -125,7 +125,7 @@ function LogIn(props) {
           //console.log(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
           localStorage.setItem('cred', encryptedLoginDetails);
           loginContext.updateLoginState(true);
-          redirect('/ngolist');
+          redirect('/dashboard');
         }, 3000);
       } else {
         alertContext.setAlertMessage({show:true, type: "error", message: "Login failed!"});
