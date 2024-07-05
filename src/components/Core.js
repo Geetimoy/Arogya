@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import Landing from './Landing';
 import LogIn from './LogIn';
 import Dashboard from './Dashboard';
+import NgoList from './NgoList';
 import Account from './Account';
 import ProfilePhoto from './ProfilePhoto';
 import ChangePassword from './ChangePassword';
@@ -249,6 +250,7 @@ export default function Core() {
         {
           (isLoggedIn === true) && <Routes>
             <Route path="/Dashboard" exact element={<Dashboard />} />
+            <Route path="/NgoList" exact element={<NgoList />} />
             <Route path="/Account" exact element={<Account />} />
             <Route path="/ProfilePhoto" exact element={<ProfilePhoto />} />
             <Route path="/ChangePassword" exact element={<ChangePassword />} />

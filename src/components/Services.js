@@ -75,26 +75,26 @@ function Services(){
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/testreports"><img src={testreport} alt='' />
                 <h6>Upload Test Report</h6></Link>
               </div>
             </div>
            
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/viewappointments"><img src={rxpharmacy} alt='' />
                 <h6>Rx :: Pharmacy</h6></Link>
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/viewappointments"><img src={requestsupply} alt='' />
                 <h6>Request Supply</h6></Link>
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box'>
+              <div className='button-box disable'>
                 <Link to="/viewappointments"><img src={uploadsupply} alt='' />
                 <h6>Upload Supply Dispensing</h6></Link>
               </div>
