@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
 
@@ -10,12 +11,20 @@ import { Link } from "react-router-dom";
 import youngwomenprofile from '../../assets/images/profile-girl.png';
 
 import SystemContext from "../../context/system/SystemContext";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
 function Janani(){
 
   const systemContext = useContext(SystemContext);
 
   const [isActive, setIsActive] = useState(false);
+
+  const [jananiList, setJananiList]   = useState([]);
+  const [openMenuId, setOpenMenuId]   = useState(0);
+
+  const handleMenuClick = (accountId) => {
+    setOpenMenuId(openMenuId === accountId ? 0 : accountId);
+  };
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
@@ -27,6 +36,59 @@ function Janani(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const searchJanani = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listJanani(value);
+    }, 1000)
+  }
+
+  const listJanani = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": searchKey,
+                                              "limit": "10",
+                                              "offset": "0",
+                                              "order_by_field": "account_id",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/jananiProfileList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      setJananiList(result.data);
+    }
+    else{
+      setJananiList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listJanani("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
 
   return(
     <>
@@ -106,6 +168,10 @@ function Janani(){
               </Link>
             </div>
           </div>
+
+          
+
+          {jananiList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
         </div>
       </div>
       <Appfooter></Appfooter>
