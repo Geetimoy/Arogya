@@ -141,9 +141,9 @@ function YoungWomanUploadPrescription(){
             </div>
           </div>
           <div className='col-12 mt-4'>
-            <button type="button" class="btn btn-primary primary-bg-color border-0">
+            {/* <button type="button" class="btn btn-primary primary-bg-color border-0">
               Use Camera
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

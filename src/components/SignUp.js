@@ -212,7 +212,7 @@ function SignUp(){
       var areas         = result.data.results;
       var optionsArray  = [];
       for(var i=0; i<areas.length; i++){
-        optionsArray[i] = {label: areas[i].service_area_city+', '+areas[i].service_area_state, value: areas[i].service_area_id}
+        optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
       }
       setOptions(optionsArray);
     }
