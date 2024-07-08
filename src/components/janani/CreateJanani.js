@@ -13,11 +13,17 @@ import SystemContext from "../../context/system/SystemContext";
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 function CreateJanani(){
 
   const systemContext = useContext(SystemContext);
 
   const [isMActive, setIsMActive] = useState(false);
+
+  const [periodMissedDate, setPeriodMissedDate] = useState(new Date());
+  const [conceptionDate, setConceptionDate]     = useState(new Date());
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -48,7 +54,7 @@ function CreateJanani(){
   const handleChange = (e) => {
     const { name, value } = e.target;
     if(value.trim() !== ""){
-      if(name == 'janani_contact_number'){
+      if(name === 'janani_contact_number'){
         var regex = /[0-9]|\./;
         if( !regex.test(value) ) {
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
@@ -57,7 +63,7 @@ function CreateJanani(){
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
         }
       }
-      else if(name == 'janani_email_id'){
+      else if(name === 'janani_email_id'){
         var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if( !regex.match(value)) {
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid email!"}});
@@ -115,7 +121,14 @@ function CreateJanani(){
     return errorCounter;
   }
 
-
+  const onChangePeriodMissedDate = (date) => {
+    setPeriodMissedDate(date);
+    setFormData({...formData, ['period_missed']: {...formData['period_missed'], value:date, errorClass:"", errorMessage:""}});
+  }
+  const onChangeConceptionDate = (date) => {
+    setConceptionDate(date);
+    setFormData({...formData, ['conception_date']: {...formData['conception_date'], value:date, errorClass:"", errorMessage:""}});
+  }
 
   return(
     <>
@@ -156,42 +169,42 @@ function CreateJanani(){
         <p><small>Add Janani Informations</small></p>
         <form className="mt-3" name="create_janani_form" id="create_janani_form">
           <div class={`form-group ${formData["janani_name"].errorClass}`}>
-            <label for="janani_name">Janani Name <span class="text-danger">*</span></label>
+            <label htmlfor="janani_name">Janani Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_name" id="janani_name" onChange={handleChange} placeholder="Janani Name" value={formData["janani_name"].value ? formData["janani_name"].value : ''}/>
             <small className="error-mesg">{formData["janani_name"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_age"].errorClass}`}>
-            <label for="janani_age">Age <span class="text-danger">*</span></label>
+            <label htmlfor="janani_age">Age <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_age" id="janani_age" onChange={handleChange} placeholder="Age" value={formData["janani_age"].value ? formData["janani_age"].value : ''} />
             <small className="error-mesg">{formData["janani_age"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_husband"].errorClass}`}>
-            <label for="janani_husband">Husband Name <span class="text-danger">*</span></label>
+            <label htmlfor="janani_husband">Husband Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_husband" id="janani_husband" onChange={handleChange} placeholder="Husband Name" value={formData["janani_husband"].value ? formData["janani_husband"].value : ''} />
             <small className="error-mesg">{formData["janani_husband"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["period_missed"].errorClass}`}>
-            <label for="period_missed">First Period Missed Data <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="period_missed" id="period_missed" onChange={handleChange} placeholder="First Period Missed Data" value={formData["period_missed"].value ? formData["period_missed"].value : ''} />
+            <label htmlfor="period_missed">First Period Missed Date <span class="text-danger">*</span></label>
+            <DatePicker dateFormat="yyyy-MM-dd" selected={periodMissedDate} onChange={(date) => onChangePeriodMissedDate(date)} />
             <small className="error-mesg">{formData["period_missed"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["conception_date"].errorClass}`}>
-            <label for="conception_date">Estimated Conception Date <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" name="conception_date" id="conception_date" onChange={handleChange} placeholder="Estimated Conception Date" value={formData["conception_date"].value ? formData["conception_date"].value : ''} />
+            <label htmlfor="conception_date">Estimated Conception Date <span class="text-danger">*</span></label>
+            <DatePicker dateFormat="yyyy-MM-dd" selected={conceptionDate} onChange={(date) => onChangeConceptionDate(date)} />
             <small className="error-mesg">{formData["conception_date"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_education"].errorClass}`}>
-            <label for="janani_education">Janani Education <span class="text-danger">*</span></label>
+            <label htmlfor="janani_education">Janani Education <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_education" id="janani_education" onChange={handleChange} placeholder="Janani Education" value={formData["janani_education"].value ? formData["janani_education"].value : ''} />
             <small className="error-mesg">{formData["janani_education"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["doctor_name"].errorClass}`}>
-            <label for="doctor_name">Involved Doctor Name <span class="text-danger">*</span></label>
+            <label htmlfor="doctor_name">Involved Doctor Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="doctor_name" id="doctor_name" onChange={handleChange} placeholder="Involved Doctor Name" value={formData["doctor_name"].value ? formData["doctor_name"].value : ''} />
             <small className="error-mesg">{formData["doctor_name"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["hospital_name"].errorClass}`}>
-            <label for="hospital_name">Involved Hospital Name <span class="text-danger">*</span></label>
+            <label htmlfor="hospital_name">Involved Hospital Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="hospital_name" id="hospital_name"  onChange={handleChange} placeholder="Involved Hospital Name" value={formData["hospital_name"].value ? formData["hospital_name"].value : ''} />
             <small className="error-mesg">{formData["hospital_name"].errorMessage}</small>
           </div>
@@ -200,62 +213,62 @@ function CreateJanani(){
             <div class="d-flex">
               <div class="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="personal_mobile_number_y" name="is_personal_mobile_number" class="custom-control-input" value="t" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 't') ? true : false}/>
-                <label class="custom-control-label no-style" for="personal_mobile_number_y">Yes</label>
+                <label class="custom-control-label no-style" htmlfor="personal_mobile_number_y">Yes</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="personal_mobile_number_n" name="is_personal_mobile_number" class="custom-control-input" value="f" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 'f') ? true : false}/>
-                <label class="custom-control-label no-style" for="personal_mobile_number_n">No</label>
+                <label class="custom-control-label no-style" htmlfor="personal_mobile_number_n">No</label>
               </div>
               <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
             </div>
           </div>
           <div class={`form-group ${formData["janani_contact_number"].errorClass}`}>
-            <label for="janani_contact_number">Phone No <span class="text-danger">*</span></label>
+            <label htmlfor="janani_contact_number">Phone No <span class="text-danger">*</span></label>
             <input type="tel" class="form-control" name="janani_contact_number" id="janani_contact_number" onChange={handleChange} placeholder="Phone No" value={formData["janani_contact_number"].value ? formData["janani_contact_number"].value : ''} />
             <small className="error-mesg">{formData["janani_contact_number"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["whatsapp"].errorClass}`}>
-            <label for="whatsapp">WhatsApp No </label>
+            <label htmlfor="whatsapp">WhatsApp No </label>
             <input type="tel" class="form-control" name="whatsapp" id="whatsapp" onChange={handleChange}  placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} />
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_email_id"].errorClass}`}>
-            <label for="janani_email_id">Email <span class="text-danger">*</span></label>
+            <label htmlfor="janani_email_id">Email <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_email_id" id="janani_email_id" onChange={handleChange} placeholder="Email" value={formData["janani_email_id"].value ? formData["janani_email_id"].value : ''} />
             <small className="error-mesg">{formData["janani_email_id"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_address"].errorClass}`}>
-            <label for="janani_address">Address <span class="text-danger">*</span></label>
+            <label htmlfor="janani_address">Address <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_address" id="janani_address" onChange={handleChange} placeholder="Address 1" value={formData["janani_address"].value ? formData["janani_address"].value : ''} />
             <small className="error-mesg">{formData["janani_address"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_address_2"].errorClass}`}>
-            <label for="janani_address_2">Address 2 </label>
+            <label htmlfor="janani_address_2">Address 2 </label>
             <input type="text" class="form-control" name="janani_address_2" id="janani_address_2" onChange={handleChange} placeholder="Address 2" value={formData["janani_address_2"].value ? formData["janani_address_2"].value : ''} />
             <small className="error-mesg">{formData["janani_address_2"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_state"].errorClass}`}>
-            <label for="janani_state">State <span class="text-danger">*</span></label>
+            <label htmlfor="janani_state">State <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_state" id="janani_state" onChange={handleChange} placeholder="State" value={formData["janani_state"].value ? formData["janani_state"].value : ''} />
             <small className="error-mesg">{formData["janani_state"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_city"].errorClass}`}>
-            <label for="janani_city">City <span class="text-danger">*</span></label>
+            <label htmlfor="janani_city">City <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_city" id="janani_city" onChange={handleChange} placeholder="City" value={formData["janani_city"].value ? formData["janani_city"].value : ''} />
             <small className="error-mesg">{formData["janani_city"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_landmark"].errorClass}`}>
-            <label for="janani_landmark">Landmark <span class="text-danger">*</span></label>
+            <label htmlfor="janani_landmark">Landmark <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_landmark" id="janani_landmark" onChange={handleChange} placeholder="Landmark" value={formData["janani_landmark"].value ? formData["janani_landmark"].value : ''} />
             <small className="error-mesg">{formData["janani_landmark"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["janani_postal_code"].errorClass}`}>
-            <label for="janani_postal_code">Pincode <span class="text-danger">*</span></label>
+            <label htmlfor="janani_postal_code">Pincode <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="janani_postal_code" id="janani_postal_code" onChange={handleChange} placeholder="Pincode" value={formData["janani_postal_code"].value ? formData["janani_postal_code"].value : ''} />
             <small className="error-mesg">{formData["janani_postal_code"].errorMessage}</small>
           </div>
           <div class={`form-group ${formData["special_note"].errorClass}`}>
-            <label for="special_note">Special Notes </label>
+            <label htmlfor="special_note">Special Notes </label>
             <input type="text" class="form-control" name="special_note" id="special_note" onChange={handleChange} placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''} />
             <small className="error-mesg">{formData["special_note"].errorMessage}</small>
           </div>
