@@ -253,7 +253,7 @@ function SignUp(){
             </div>
             <div className={`form-group ${formData["userId"].errorClass}`}>
               <label htmlFor="userId"> User ID <span className='text-danger'> *</span></label>
-              <input type="text" id="userId" name="userId" className='form-control' placeholder='Enter user id' value={formData["userId"].value} onChange={handleChange}/>
+              <input type="text" id="userId" name="userId" className='form-control' placeholder='Enter user id' value={formData["userId"].value} onChange={handleChange} maxLength={4}/>
               <small className="error-mesg">{formData["userId"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["userContactNumber"].errorClass}`}>
