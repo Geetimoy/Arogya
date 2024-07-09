@@ -295,12 +295,12 @@ function CreateJanani(){
           </div>
           <div className={`form-group ${formData["janani_contact_number"].errorClass}`}>
             <label htmlFor="janani_contact_number">Phone No <span className="text-danger">*</span></label>
-            <input type="tel" className="form-control" name="janani_contact_number" id="janani_contact_number" onChange={handleChange} placeholder="Phone No" value={formData["janani_contact_number"].value ? formData["janani_contact_number"].value : ''} />
+            <input type="tel" className="form-control" name="janani_contact_number" id="janani_contact_number" onChange={handleChange} placeholder="Phone No" value={formData["janani_contact_number"].value ? formData["janani_contact_number"].value : ''} maxLength={10}/>
             <small className="error-mesg">{formData["janani_contact_number"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
-            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" onChange={handleChange}  placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} />
+            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" onChange={handleChange}  placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} maxLength={10}/>
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["janani_email_id"].errorClass}`}>
