@@ -57,6 +57,10 @@ function SignUp(){
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
         }
       }
+      else if((name === "userId" || name === "userPassword") && (value.length < 4)){
+        setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"At least 4 characters are required!"}});
+        e.preventDefault();
+      }
       else{
         setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
       }
@@ -84,6 +88,10 @@ function SignUp(){
         }
         else if((element === "userContactNumber") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validMobileRegex))){
           formData[element].errorMessage  = "Please enter a valid contact number!";
+          formData[element].errorClass    = "form-error";
+        }
+        else if((element === "userId" || element === "userPassword") && (formData[element].value.trim() !== "") && (!formData[element].value.length < 4)){
+          formData[element].errorMessage  = "At least 4 characters are required!";
           formData[element].errorClass    = "form-error";
         }
         else{
@@ -253,7 +261,7 @@ function SignUp(){
             </div>
             <div className={`form-group ${formData["userId"].errorClass}`}>
               <label htmlFor="userId"> User ID <span className='text-danger'> *</span></label>
-              <input type="text" id="userId" name="userId" className='form-control' placeholder='Enter user id' value={formData["userId"].value} onChange={handleChange} minLength={4}/>
+              <input type="text" id="userId" name="userId" className='form-control' placeholder='Enter user id' value={formData["userId"].value} onChange={handleChange}/>
               <small className="error-mesg">{formData["userId"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["userContactNumber"].errorClass}`}>
@@ -268,7 +276,7 @@ function SignUp(){
             </div>
             <div className={`form-group ${formData["userPassword"].errorClass}`}>
               <label htmlFor="userPassword"> Password <span className='text-danger'> *</span> <FontAwesomeIcon icon={faKey} /> <FontAwesomeIcon icon={faQuestionCircle} /></label>
-              <input type={passwordType ? `password` : `text`} id="userPassword" name="userPassword" className='form-control' placeholder='Enter Password' value={formData["userPassword"].value} onChange={handleChange} minLength={4}/>
+              <input type={passwordType ? `password` : `text`} id="userPassword" name="userPassword" className='form-control' placeholder='Enter Password' value={formData["userPassword"].value} onChange={handleChange}/>
               <div className='icon-font' onClick={changePasswordType}><FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} /></div>
               <small className="error-mesg">{formData["userPassword"].errorMessage}</small>
             </div>

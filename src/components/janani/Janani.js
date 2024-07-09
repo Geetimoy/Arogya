@@ -130,46 +130,34 @@ function Janani(){
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Janani' />
-            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/janani/janani-basic-information"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/janani/janani-basic-medical-history"}>Update Medical History</Link></li>
-                  <li><Link to={"/janani/janani-update-periodic-data"}>Update Periodic Data</Link></li>
-                  <li><Link to={"/janani/janani-awareness-survey"}>Update Awareness Survey</Link></li>
-                  <li><Link to={"/janani/janani-upload-prescriptions"}>Upload Prescriptions</Link></li>
-                  {/* <li><Link to={"/janani/janani-testreports"}>Upload Test Reports</Link></li> */}
-                  <li><Link to={"#"}>Close Profile </Link></li>
-                </ul>
-              </div>
-              <Link to="#">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Janani 1</h6>
-              </Link>
-            </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"#"}>Close Patient</Link></li>
-                </ul>
-              </div>
-              <Link to="#">
-                <img src={youngwomenprofile} alt='' />
-                <h6>Janani 2</h6>
-              </Link>
-            </div>
-          </div>
 
-          
+          {jananiList.map((janani, index) => (
+            <div className='col-6' key={janani.account_id}>
+              <div className='button-box'>
+                <div className={`three-dot my-element2 ${openMenuId === janani.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(janani.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
+
+                {openMenuId === janani.account_id && <div className='drop-menu'>
+                    <ul>
+                      <li><Link to={`/janani/janani-basic-information/${janani.account_key}`}>Edit Basic Information</Link></li>
+                      <li><Link to={`/janani/janani-basic-medical-history/${janani.account_key}`}>Update Medical History</Link></li>
+                      <li><Link to={`/janani/janani-update-periodic-data/${janani.account_key}`}>Update Periodic Data</Link></li>
+                      <li><Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>Update Awareness Survey</Link></li>
+                      <li><Link to={`/janani/janani-upload-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li>
+                      <li><Link to={`#`}>Close Profile </Link></li>
+                    </ul>
+                  </div>
+                }
+                <Link to="#">
+                  <img src={youngwomenprofile} alt='' />
+                  <h6>{janani.janani_name}</h6>
+                </Link>
+              </div>
+            </div>
+          ))}
 
           {jananiList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
         </div>
