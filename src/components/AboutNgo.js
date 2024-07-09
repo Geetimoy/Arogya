@@ -22,32 +22,32 @@ function AboutNgo(){
       jsonData["page_id"]               = 2;
 
       useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch(`${API_URL}/staticPage`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(jsonData),
-            });
-            
-            const responseData = await response.json();
-            // console.log(responseData.data.results[0]);
-            
-            setData(responseData.data.results[0]);
-            // console.log('Hi');
-            console.log(data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          } finally {
-            // setLoading(false);
-          }
-        };
-    
         fetchData();
         // eslint-disable-next-line
       }, []);
+
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`${API_URL}/staticPage`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+          
+          const responseData = await response.json();
+          // console.log(responseData.data.results[0]);
+          
+          setData(responseData.data.results[0]);
+          // console.log('Hi');
+          //console.log(data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          // setLoading(false);
+        }
+      }
 
   return(
     <>
