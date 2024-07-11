@@ -18,6 +18,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import Dropdown from 'react-dropdown-select'
+
 function CreateJanani(){
 
   const systemContext = useContext(SystemContext);
@@ -53,6 +55,7 @@ function CreateJanani(){
     janani_city: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_landmark: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
+    janani_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
     special_note: {required: false, value:"", errorClass:"", errorMessage:""},
   });
 
@@ -137,6 +140,29 @@ function CreateJanani(){
     setFormData({...formData, ['conception_date']: {...formData['conception_date'], value:date, errorClass:"", errorMessage:""}});
   }
 
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const serviceAreaOption = [
+    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
+    { label: 'Navagraha Temple, Guwahati', value: '2' },
+    { label: 'Umananda Temple, Guwahati', value: '3' },
+    { label: 'Morigaon', value: '4' },
+  ];
+  const handleChange1 = (values) => {
+    var selectedArea = [];
+    if(values.length > 0){
+      values.forEach((item, index) => {
+        selectedArea.push(item.value);
+      })
+    }
+    if(selectedArea.length > 0){
+      setFormData({...formData, ['janani_service_area']: {...formData['janani_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, ['janani_service_area']: {...formData['janani_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+    setSelectedOptions(values);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
     let errorCounter = validateForm();
@@ -154,6 +180,8 @@ function CreateJanani(){
       jsonData["device_token"]                  = DEVICE_TOKEN;
       jsonData["user_lat"]                      = localStorage.getItem('latitude');
       jsonData["user_long"]                     = localStorage.getItem('longitude');
+
+      var serviceArea                       = '{'+formData['janani_service_area'].value+'}';
 
       jsonData["janani_name"]                   = formData['janani_name'].value;
       jsonData["janani_husband_name"]           = formData['janani_husband'].value;
@@ -176,6 +204,7 @@ function CreateJanani(){
       jsonData["involved_hospital_name"]        = formData['hospital_name'].value;
       jsonData["special_note"]                  = formData['special_note'].value;
       jsonData["service_area"]                  = '{1,2}';
+      jsonData["service_area"]                  = serviceArea;
       
       const response = await fetch(`${API_URL}/addUpdateJananiProfile`, {
         method: "POST",
@@ -337,6 +366,12 @@ function CreateJanani(){
             <label htmlFor="janani_postal_code">Pincode <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="janani_postal_code" id="janani_postal_code" onChange={handleChange} placeholder="Pincode" value={formData["janani_postal_code"].value ? formData["janani_postal_code"].value : ''} />
             <small className="error-mesg">{formData["janani_postal_code"].errorMessage}</small>
+          </div>
+          <div class="form-group "><label for="sub_volunteer_name">Sub Volunteer Name</label><select class="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
+          <div className={`form-group ${formData["janani_service_area"].errorClass}`}>
+            <label>Service Area <span className='text-danger'> *</span></label>
+            <Dropdown className='form-control select-multi' multi options={serviceAreaOption} values={selectedOptions} onChange={handleChange1}/>
+            <small className="error-mesg">{formData["janani_service_area"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["special_note"].errorClass}`}>
             <label htmlFor="special_note">Special Notes </label>

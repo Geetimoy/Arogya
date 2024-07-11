@@ -167,7 +167,7 @@ function Dashboard() {
           {/* Add more slides here */}
         </Slider>
       </div>
-      <div className="reminder">
+      {/* <div className="reminder">
         <h5 className='mb-2'>Reminder</h5>
         <ul className="list-style">
         <li>Donec blandit velit eu nunc auctor rutrum.</li>
@@ -175,7 +175,7 @@ function Dashboard() {
         <li>Nam tristique justo sed purus facilisis imperdiet.</li>
         <li>Ut ac dolor ac purus commodo dictum ut nec purus.</li>
         </ul>
-      </div>
+      </div> */}
       
     </div>
 
