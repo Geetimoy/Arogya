@@ -19,14 +19,27 @@ import 'slick-carousel/slick/slick-theme.css';
 
 // import banner1 from '../assets/images/banner1.jpg';
 // import banner2 from '../assets/images/banner2.jpg';
-// import banner3 from '../assets/images/banner3.jpg'
+// import banner3 from '../assets/images/banner3.jpg';
+// import banner4 from '../assets/images/banner4.jpg'
 
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+
+
+import BannerUkhra from "./BannerUkhra";
+import BannerB2h from "./BannerB2h";
+import BannerRgvn from "./BannerRgvn";
+import BannerServiceplace from "./BannerServiceplace";
 
 function Dashboard() {
  
   const systemContext = useContext(SystemContext);
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+  const currentDomain = window.location.hostname;
+  //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
+  //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
+  //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
+  //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
 
   const settings = {
     dots: true,
@@ -153,20 +166,26 @@ function Dashboard() {
             </div>
           </div>
       </div>
-      <div className="banner">
+      {/* <div className="banner">
         <Slider {...settings}>
           <div>
-            <img src={imageData.banner1} alt="" />
+            <img src={banner1} alt="" />
           </div>
           <div>
-            <img src={imageData.banner2} alt="" />
+            <img src={banner2} alt="" />
           </div>
-          {/* <div>
-            <img src={imageData.banner1} alt="" />
-          </div> */}
-          {/* Add more slides here */}
+          <div>
+            <img src={banner3} alt="" />
+          </div>
+          
         </Slider>
-      </div>
+      </div> */}
+      {/* <BannerUkhra></BannerUkhra> */}
+
+      {currentDomain === 'ukhraapp.serviceplace.org.in' && <BannerUkhra />}
+      {currentDomain === 'b2happ.serviceplace.org.in' && <BannerB2h />}
+      {currentDomain === 'rgvnapp.serviceplace.org.in' && <BannerRgvn />}
+      {currentDomain === 'telehealth.serviceplace.org.in' && <BannerServiceplace />}
       {/* <div className="reminder">
         <h5 className='mb-2'>Reminder</h5>
         <ul className="list-style">
