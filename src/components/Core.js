@@ -55,6 +55,7 @@ import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
+import JananiPrescriptions from './janani/JananiPrescriptions';
 
 export default function Core() {
 
@@ -263,8 +264,9 @@ export default function Core() {
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/janani/create-janani" exact element={<CreateJanani />} />
-            <Route path="/janani/janani-basic-information" exact element={<JananiBasicInformation />} />
-            <Route path="/janani/janani-upload-prescriptions" exact element={<JananiUploadPrescriptions />} />
+            <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
+            <Route path="/janani/janani-prescriptions/:accountKey" exact element={<JananiPrescriptions/>} />
+            <Route path="/janani/janani-upload-prescriptions/:accountKey" exact element={<JananiUploadPrescriptions />} />
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
             <Route path="/youngwomens/young-woman-basicinfo/:accountKey" exact element={<YoungWomanBasicInformation />} />
