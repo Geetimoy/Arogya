@@ -151,30 +151,30 @@ function CreateJanani(){
       if(result1.data.length > 0){
         let userDetails = result1.data[0];
 
-        formData['janani_name']       = {value:userDetails.women_name, errorClass:"", errorMessage:""};
-        formData['janani_age']        = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
-        formData['janani_husband']    = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
-        formData['period_missed']     = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
-        formData['conception_date']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-        formData['janani_education']  = {value:1, errorClass:"", errorMessage:""};
-        formData['doctor_name']       = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-        formData['hospital_name']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-        formData['is_personal_mobile_number'] = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-        formData['janani_contact_number']  = {value:userDetails.women_age, errorClass:"", errorMessage:""};
-        formData['whatsapp']          = {value:userDetails.women_email_id, errorClass:"", errorMessage:""};
-        formData['janani_email_id']   = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
-        formData['janani_address']    = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
-        formData['janani_address_2']  = {value:userDetails.women_addr_landmark, errorClass:"", errorMessage:""};
-        formData['janani_state']      = {value:userDetails.women_city, errorClass:"", errorMessage:""};
-        formData['janani_city']       = {value:userDetails.women_state, errorClass:"", errorMessage:""};
-        formData['janani_landmark']   = {value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
-        formData['janani_postal_code']= {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
-        formData['special_note']      = {value:userDetails.women_education, errorClass:"", errorMessage:""};
+        formData['janani_name']       = {value:userDetails.janani_name, errorClass:"", errorMessage:""};
+        formData['janani_age']        = {value:userDetails.janani_age, errorClass:"", errorMessage:""};
+        formData['janani_husband']    = {value:userDetails.janani_husband_name, errorClass:"", errorMessage:""};
+        formData['period_missed']     = {value:userDetails.date_missed_first_period, errorClass:"", errorMessage:""};
+        setPeriodMissedDate(userDetails.date_missed_first_period);
+        formData['conception_date']   = {value:userDetails.estimate_conception_date, errorClass:"", errorMessage:""};
+        setConceptionDate(userDetails.estimate_conception_date);
+        formData['janani_education']  = {value:userDetails.janani_education, errorClass:"", errorMessage:""};
+        formData['doctor_name']       = {value:userDetails.involved_doctor_name, errorClass:"", errorMessage:""};
+        formData['hospital_name']     = {value:userDetails.involved_hospital_name, errorClass:"", errorMessage:""};
+        formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+        formData['janani_contact_number']  = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+        formData['whatsapp']          = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+        formData['janani_email_id']   = {value:userDetails.email_id, errorClass:"", errorMessage:""};
+        formData['janani_address']    = {value:userDetails.janani_addr_1, errorClass:"", errorMessage:""};
+        formData['janani_address_2']  = {value:userDetails.janani_addr_2, errorClass:"", errorMessage:""};
+        formData['janani_state']      = {value:userDetails.janani_city, errorClass:"", errorMessage:""};
+        formData['janani_city']       = {value:userDetails.janani_state, errorClass:"", errorMessage:""};
+        formData['janani_landmark']   = {value:userDetails.janani_addr_landmark, errorClass:"", errorMessage:""};
+        formData['janani_postal_code']= {value:userDetails.janani_postal_code, errorClass:"", errorMessage:""};
+        formData['special_note']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
   
         setFormData({...formData, ...formData});
-  
 
-  
       }
 
     }
@@ -199,6 +199,67 @@ function CreateJanani(){
     // eslint-disable-next-line
     
   }, [systemContext.systemDetails.system_id]);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+    let errorCounter = validateForm();
+    if(errorCounter == 0){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+
+      jsonData['system_id']                     = systemContext.systemDetails.system_id;
+      jsonData["janani_account_key"]            = editAccountKey;
+      jsonData["user_login_id"]                 = decryptedLoginDetails.login_id;
+      jsonData["device_type"]                   = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]                  = DEVICE_TOKEN;
+      jsonData["user_lat"]                      = localStorage.getItem('latitude');
+      jsonData["user_long"]                     = localStorage.getItem('longitude');
+
+      var serviceArea                           = '{1,2}';
+
+      jsonData["janani_name"]                   = formData['janani_name'].value;
+      jsonData["janani_husband_name"]           = formData['janani_husband'].value;
+      jsonData["date_missed_first_period"]      = formData['period_missed'].value;
+      jsonData["estimate_conception_date"]      = formData['conception_date'].value;
+      jsonData["janani_contact_number"]         = formData['janani_contact_number'].value;
+      jsonData["janani_whatsup_number"]         = formData['whatsapp'].value;
+      jsonData["janani_email_id"]               = formData['janani_email_id'].value;
+      jsonData["janani_age"]                    = formData['janani_age'].value;
+      jsonData["janani_address"]                = formData['janani_address'].value;
+      jsonData["janani_address_2"]              = formData['janani_address_2'].value;
+      jsonData["janani_state"]                  = formData['janani_state'].value;
+      jsonData["janani_postal_code"]            = formData['janani_postal_code'].value;
+      jsonData["janani_landmark"]               = formData['janani_landmark'].value;
+      jsonData["janani_city"]                   = formData['janani_city'].value;
+      jsonData["is_bpl"]                        = "t";
+      jsonData["is_your_personal_number"]       = formData['is_personal_mobile_number'].value;
+      jsonData["janani_education"]              = formData['janani_education'].value;
+      jsonData["involved_doctor_name"]          = formData['doctor_name'].value;
+      jsonData["involved_hospital_name"]        = formData['hospital_name'].value;
+      jsonData["special_note"]                  = formData['special_note'].value;
+      jsonData["service_area"]                  = serviceArea;
+      
+      const response = await fetch(`${API_URL}/addUpdateJananiProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      console.log(response)
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+      
+    }
+  }
 
   return(
     <>
@@ -237,7 +298,7 @@ function CreateJanani(){
       </div>
       <div className='app-body form-all create-janani'>
         <p><small>To update your profile information</small></p>
-        <form className="mt-3" name="create_janani_form" id="create_janani_form">
+        <form className="mt-3" name="create_janani_form" id="create_janani_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["janani_name"].errorClass}`}>
             <label htmlFor="janani_name">Janani Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="janani_name" id="janani_name" placeholder="Janani Name" onChange={handleChange} value={formData["janani_name"].value ? formData["janani_name"].value : ''}/>
