@@ -13,7 +13,10 @@ import { useContext } from 'react';
 function Landing() {
   const systemContext = useContext(SystemContext);
 
-  //console.log(systemContext.systemDetails.thp_system_colors);
+  let redirectUrl = '/ngolist';
+  if(systemContext.systemDetails.system_id != 'telehealth.serviceplace.org.in'){
+    redirectUrl = '/login';
+  }
 
   return(
     <div className='splash-container'>
@@ -21,7 +24,9 @@ function Landing() {
         <header className="App-header">
           <img src={systemContext.systemDetails.thp_app_logo_url} className="mb-3" alt="logo" />
           <h2>Welcome to {systemContext.systemDetails.thp_system_name}</h2>
-          <div className='btn primary-bg-color mb-5 mt-5 w-100 border-0'><Link to ="/ngolist" className='m-auto text-light text-decoration-none d-block'>Get Started</Link></div>
+          <div className='btn primary-bg-color mb-5 mt-5 w-100 border-0'>
+            <Link to ={redirectUrl} className='m-auto text-light text-decoration-none d-block'>Get Started</Link>
+          </div>
         </header>
       
         <div className='footerLogo text-center'>
