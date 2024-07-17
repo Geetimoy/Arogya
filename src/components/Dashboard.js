@@ -35,12 +35,6 @@ function Dashboard() {
   const systemContext = useContext(SystemContext);
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
-  const currentDomain = window.location.hostname;
-  //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
-  //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
-  //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
-  //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
-
   const settings = {
     dots: true,
     infinite: true,
@@ -182,14 +176,15 @@ function Dashboard() {
       </div> */}
       {/* <BannerUkhra></BannerUkhra> */}
 
-      {currentDomain === 'ukhraapp.serviceplace.org.in' && <BannerUkhra />}
-      {currentDomain === 'b2happ.serviceplace.org.in' && <BannerB2h />}
-      {currentDomain === 'rgvnapp.serviceplace.org.in' && <BannerRgvn />}
-      {currentDomain === 'telehealth.serviceplace.org.in' && <BannerServiceplace />}
+      {systemContext.systemDetails.system_id === 'ukhraapp.serviceplace.org.in' && <BannerUkhra />}
+      {systemContext.systemDetails.system_id === 'b2happ.serviceplace.org.in' && <BannerB2h />}
+      {systemContext.systemDetails.system_id === 'rgvnapp.serviceplace.org.in' && <BannerRgvn />}
+      {systemContext.systemDetails.system_id === 'telehealth.serviceplace.org.in' && <BannerServiceplace />}
       {/* {domainName === 'ukhraapp.serviceplace.org.in' && <BannerUkhra />}
       {domainName === 'b2happ.serviceplace.org.in' && <BannerB2h />}
       {domainName === 'rgvnapp.serviceplace.org.in' && <BannerRgvn />}
       {domainName === 'telehealth.serviceplace.org.in' && <BannerServiceplace />} */}
+
       {/* <div className="reminder">
         <h5 className='mb-2'>Reminder</h5>
         <ul className="list-style">
