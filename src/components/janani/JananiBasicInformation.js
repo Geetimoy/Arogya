@@ -61,7 +61,7 @@ function CreateJanani(){
     const { name, value } = e.target;
     if(value.trim() !== ""){
       if(name === 'janani_contact_number'){
-        var regex = /[0-9]|\./;
+        let regex = /[0-9]|\./;
         if( !regex.test(value) ) {
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
         }
@@ -70,7 +70,7 @@ function CreateJanani(){
         }
       }
       else if(name === 'janani_email_id'){
-        var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if( !regex.test(value)) {
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid email!"}});
         }
@@ -203,7 +203,7 @@ function CreateJanani(){
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
     let errorCounter = validateForm();
-    if(errorCounter == 0){
+    if(errorCounter === 0){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -240,6 +240,7 @@ function CreateJanani(){
       jsonData["involved_hospital_name"]        = formData['hospital_name'].value;
       jsonData["special_note"]                  = formData['special_note'].value;
       jsonData["service_area"]                  = serviceArea;
+      jsonData["sub_volunteer_id"]              = "";
       
       const response = await fetch(`${API_URL}/addUpdateJananiProfile`, {
         method: "POST",
@@ -316,12 +317,12 @@ function CreateJanani(){
           </div>
           <div className={`form-group ${formData["period_missed"].errorClass}`}>
             <label htmlFor="period_missed">First Period Missed Date <span className="text-danger">*</span></label>
-            <DatePicker dateFormat="dd-MM-yyyy" selected={periodMissedDate} onChange={(date) => onChangePeriodMissedDate(date)} className='form-control' />
+            <DatePicker dateFormat="yyyy-MM-dd" selected={periodMissedDate} onChange={(date) => onChangePeriodMissedDate(date)} className='form-control' />
             <small className="error-mesg">{formData["period_missed"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["conception_date"].errorClass}`}>
             <label htmlFor="conception_date">Estimated Conception Date <span className="text-danger">*</span></label>
-            <DatePicker dateFormat="dd-MM-yyyy" selected={conceptionDate} onChange={(date) => onChangeConceptionDate(date)}  className='form-control'/>
+            <DatePicker dateFormat="yyyy-MM-dd" selected={conceptionDate} onChange={(date) => onChangeConceptionDate(date)}  className='form-control'/>
             <small className="error-mesg">{formData["conception_date"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["janani_education"].errorClass}`}>
