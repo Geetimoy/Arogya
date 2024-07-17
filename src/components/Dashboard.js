@@ -186,6 +186,10 @@ function Dashboard() {
       {currentDomain === 'b2happ.serviceplace.org.in' && <BannerB2h />}
       {currentDomain === 'rgvnapp.serviceplace.org.in' && <BannerRgvn />}
       {currentDomain === 'telehealth.serviceplace.org.in' && <BannerServiceplace />}
+      {/* {domainName === 'ukhraapp.serviceplace.org.in' && <BannerUkhra />}
+      {domainName === 'b2happ.serviceplace.org.in' && <BannerB2h />}
+      {domainName === 'rgvnapp.serviceplace.org.in' && <BannerRgvn />}
+      {domainName === 'telehealth.serviceplace.org.in' && <BannerServiceplace />} */}
       {/* <div className="reminder">
         <h5 className='mb-2'>Reminder</h5>
         <ul className="list-style">
