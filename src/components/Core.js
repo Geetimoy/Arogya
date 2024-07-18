@@ -58,6 +58,7 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
 import JananiPrescriptions from './janani/JananiPrescriptions';
 import UpadteJananiMedicalHistory from './janani/UpadteJananiMedicalHistory';
+import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
 
 export default function Core() {
 
@@ -269,6 +270,8 @@ export default function Core() {
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
             <Route path="/janani/janani-prescriptions/:accountKey" exact element={<JananiPrescriptions/>} />
             <Route path="/janani/janani-upload-prescriptions/:accountKey" exact element={<JananiUploadPrescriptions />} />
+            <Route path="/janani/janani-periodic-data/" exact element={<JananiPeriodicData />} />
+            <Route path="/janani/janani-awareness-survey/" exact element={<JananiAwarenesssurvey />} />
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
