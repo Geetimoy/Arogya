@@ -160,7 +160,7 @@ function JananiPrescriptions(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Prescription' />
+            <input type="text" className='form-control' placeholder='Search Prescription' onChange={searchPrescription}/>
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
