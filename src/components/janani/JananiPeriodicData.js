@@ -25,7 +25,7 @@ function JananiPeriodicData(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/youngwomens" className=''>
+              <Link to="/janani" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -54,7 +54,7 @@ function JananiPeriodicData(){
           </div>
         </div>
       </div>
-      
+
       <div className='app-body form-all upadte-periodic-data'>
         <p><small>Update Janani Periodic Data</small></p>
         <form className="mt-3" name="periodicDataForm" id="periodicDataForm">
