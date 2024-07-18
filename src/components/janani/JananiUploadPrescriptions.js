@@ -71,7 +71,7 @@ function JananiUploadPrescriptions(){
 
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/uploadWomanSurveyPrescription`, {
+      const response = await fetch(`${API_URL}/uploadJananiSurveyPrescription`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ function JananiUploadPrescriptions(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to={`/youngwomens/young-woman-prescriptions/${editAccountKey}`} className=''>
+              <Link to={`/janani/janani-prescriptions/${editAccountKey}`} className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>

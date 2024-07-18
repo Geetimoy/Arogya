@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
 import './Janani.css';
@@ -9,20 +10,112 @@ import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash } from '@for
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
 import youngwomenprescription from '../../assets/images/sample-rx.png';
 
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
+import docIcon from '../../assets/images/doc-icon.jpg';
+
 function JananiPrescriptions(){
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [urlParam, setUrlParam] = useState(useParams());
+  const [prescriptionList, setPrescriptionList]   = useState([]);
+
   const editAccountKey = urlParam.accountKey;
 
   const [isMActive, setIsMActive] = useState(false);
 
+  const redirect = useNavigate();
+
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const searchPrescription = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listPrescription(value);
+    }, 1000)
+  }
+
+  const listPrescription = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+
+    const response = await fetch(`${API_URL}/jananiSurveyPrescriptionList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setPrescriptionList(result.data);
+    }
+    else{
+      setPrescriptionList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPrescription("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const deletePrescription = async (fileId) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+    jsonData["file_id"]         = fileId;
+
+    const response = await fetch(`${API_URL}/deleteJananiSurveyPrescription`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      listPrescription("");
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
+  const downloadPrescription = async (filePath) => {
+
+    console.log(filePath);
+    //redirect(filePath);
+
+  }
 
 
   return(
@@ -62,7 +155,7 @@ function JananiPrescriptions(){
       </div>
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total- 2</span>
+          <span>Total- {prescriptionList.length}</span>
           <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/janani/janani-upload-prescriptions/${editAccountKey}`}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
@@ -72,24 +165,18 @@ function JananiPrescriptions(){
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='prescription'>
-                {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
-                <img src={youngwomenprescription} alt='' className='w-100' />
-                <p className='mb-1'><strong>PRE5632B310D</strong></p>
+          {prescriptionList.map((janani, index) => (
+            <div className='col-6' key={janani.file_id}>
+              <div className='button-box'>
+                <div className='prescription'>
+                  {/* <div className="btn-download"><Link target="_blank" to={`${janani.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div> */}
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(janani.file_id)}/></div>
+                  <img src={docIcon} alt='' className='w-100' />
+                  <p className='mb-1'><strong>{janani.file_name}</strong></p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='prescription'>
-                {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
-                <img src={youngwomenprescription} alt='' className='w-100' />
-                <p className='mb-1'><strong>PRE5624B310C</strong></p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       <Appfooter></Appfooter>
