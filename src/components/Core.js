@@ -24,6 +24,7 @@ import Janani from './janani/Janani';
 import CreateJanani from './janani/CreateJanani';
 import JananiBasicInformation from './janani/JananiBasicInformation';
 import JananiUploadPrescriptions from './janani/JananiUploadPrescriptions';
+import JananiPeriodicData from './janani/JananiPeriodicData';
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
 import YoungWomanBasicInformation from './youngwomens/YoungWomanBasicInformation';
@@ -267,6 +268,7 @@ export default function Core() {
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
             <Route path="/janani/janani-prescriptions/:accountKey" exact element={<JananiPrescriptions/>} />
             <Route path="/janani/janani-upload-prescriptions/:accountKey" exact element={<JananiUploadPrescriptions />} />
+            <Route path="/janani/janani-periodic-data" exact element={<JananiPeriodicData />} />
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
