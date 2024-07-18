@@ -129,7 +129,7 @@ function Janani(){
         <div className='add-patient'><Link to="/janani/create-janani" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Janani</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Janani' />
+            <input type="text" className='form-control' placeholder='Search Janani' onChange={searchJanani}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>

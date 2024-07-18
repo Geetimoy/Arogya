@@ -285,12 +285,12 @@ function CreateJanani(){
           </div>
           <div className={`form-group ${formData["period_missed"].errorClass}`}>
             <label htmlFor="period_missed">First Period Missed Date <span className="text-danger">*</span></label>
-            <DatePicker dateFormat="dd-MM-yyyy" selected={periodMissedDate} onChange={(date) => onChangePeriodMissedDate(date)} className='form-control' />
+            <DatePicker dateFormat="yyyy-MM-dd" selected={periodMissedDate} onChange={(date) => onChangePeriodMissedDate(date)} className='form-control' />
             <small className="error-mesg">{formData["period_missed"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["conception_date"].errorClass}`}>
             <label htmlFor="conception_date">Estimated Conception Date <span className="text-danger">*</span></label>
-            <DatePicker dateFormat="dd-MM-yyyy" selected={conceptionDate} onChange={(date) => onChangeConceptionDate(date)}  className='form-control'/>
+            <DatePicker dateFormat="yyyy-MM-dd" selected={conceptionDate} onChange={(date) => onChangeConceptionDate(date)}  className='form-control'/>
             <small className="error-mesg">{formData["conception_date"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["janani_education"].errorClass}`}>
