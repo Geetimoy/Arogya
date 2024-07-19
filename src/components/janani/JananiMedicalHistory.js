@@ -319,15 +319,72 @@ function JananiMedicalHistory(){
           </div>
 
           <div className="form-group">
-            <label className="no-style"><span className="d-block">No Prenatal Care <span className="text-danger">*</span></span> </label>
+            <label className="no-style"><span className="d-block">Is Emotional Stress? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="prenatal_care_y" name="prenatal_care" className="custom-control-input" value="t" />
-                <label className="custom-control-label no-style" htmlFor="prenatal_care_y">Yes</label>
+                <input type="radio" id="emotional_stress_y" name="is_emotional_stress" className="custom-control-input" value="t" />
+                <label className="custom-control-label no-style" htmlFor="emotional_stress_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="prenatal_care_n" name="prenatal_care" className="custom-control-input" value="f"/>
-                <label className="custom-control-label no-style" htmlFor="prenatal_care_n">No</label>
+                <input type="radio" id="emotional_stress_n" name="is_emotional_stress" className="custom-control-input" value="f"/>
+                <label className="custom-control-label no-style" htmlFor="emotional_stress_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="no-style"><span className="d-block">Is Placenta Problems? <span className="text-danger">*</span></span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="placenta_problems_y" name="is_placenta_problems" className="custom-control-input" value="t" />
+                <label className="custom-control-label no-style" htmlFor="placenta_problems_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="placenta_problems_n" name="is_placenta_problems" className="custom-control-input" value="f"/>
+                <label className="custom-control-label no-style" htmlFor="placenta_problems_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="drinking_duration"><span className="d-block">Placenta Problems Desc <span className="text-danger">*</span></span></label>
+            <input type="text" class="form-control" name="drinking_duration" placeholder="Placenta Problems Desc" />
+          </div>
+          <div className="form-group">
+            <label className="no-style"><span className="d-block">Is Diabetic? <span className="text-danger">*</span></span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="diabetic_y" name="is_diabetic" className="custom-control-input" value="t" />
+                <label className="custom-control-label no-style" htmlFor="diabetic_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="diabetic_n" name="is_diabetic" className="custom-control-input" value="f"/>
+                <label className="custom-control-label no-style" htmlFor="diabetic_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="no-style"><span className="d-block">Is Conjestive Heart Failure? <span className="text-danger">*</span></span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="conjestive_heart_failure_y" name="is_conjestive_heart_failure" className="custom-control-input" value="t" />
+                <label className="custom-control-label no-style" htmlFor="conjestive_heart_failure_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="conjestive_heart_failure_n" name="is_conjestive_heart_failure" className="custom-control-input" value="f"/>
+                <label className="custom-control-label no-style" htmlFor="conjestive_heart_failure_n">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="no-style"><span className="d-block">Is Existing Infection Done? <span className="text-danger">*</span></span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="existing_infection_y" name="is_existing_infection" className="custom-control-input" value="t" />
+                <label className="custom-control-label no-style" htmlFor="existing_infection_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="existing_infection_n" name="is_existing_infection" className="custom-control-input" value="f"/>
+                <label className="custom-control-label no-style" htmlFor="existing_infection_n">No</label>
               </div>
             </div>
           </div>
