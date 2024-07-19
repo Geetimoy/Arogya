@@ -273,9 +273,9 @@ export default function Core() {
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
             <Route path="/janani/janani-prescriptions/:accountKey" exact element={<JananiPrescriptions/>} />
             <Route path="/janani/janani-upload-prescriptions/:accountKey" exact element={<JananiUploadPrescriptions />} />
-            <Route path="/janani/janani-periodic-data/" exact element={<JananiPeriodicData />} />
-            <Route path="/janani/janani-awareness-survey/" exact element={<JananiAwarenesssurvey />} />
-            <Route path="/janani/janani-medical-history/" exact element={<JananiMedicalHistory />} />
+            <Route path="/janani/janani-periodic-data/:accountKey" exact element={<JananiPeriodicData />} />
+            <Route path="/janani/janani-awareness-survey/:accountKey" exact element={<JananiAwarenesssurvey />} />
+            <Route path="/janani/janani-medical-history/:accountKey" exact element={<JananiMedicalHistory />} />
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />

@@ -143,9 +143,9 @@ function Janani(){
                 {openMenuId === janani.account_id && <div className='drop-menu'>
                     <ul>
                       <li><Link to={`/janani/janani-basic-information/${janani.account_key}`}>Edit Basic Information</Link></li>
-                      <li><Link to={`/janani/janani-medical-history`}>Update Medical History</Link></li>
-                      <li><Link to={`/janani/janani-periodic-data`}>Update Periodic Data</Link></li>
-                      <li><Link to={`/janani/janani-awareness-survey`}>Update Awareness Survey</Link></li>
+                      <li><Link to={`/janani/janani-medical-history/${janani.account_key}`}>Update Medical History</Link></li>
+                      <li><Link to={`/janani/janani-periodic-data/${janani.account_key}`}>Update Periodic Data</Link></li>
+                      <li><Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>Update Awareness Survey</Link></li>
                       <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li>
                       {/* <li><Link to={`#`}>Close Profile </Link></li> */}
                     </ul>
