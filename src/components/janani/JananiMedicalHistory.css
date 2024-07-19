@@ -1,0 +1,9 @@
+.form-all form textarea {
+  padding-top: 1.825rem;
+}
+
+.update-medical-history label.no-style {
+  padding: 0;
+  font-size: 16px;
+  position: relative;
+}

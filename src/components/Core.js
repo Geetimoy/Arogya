@@ -25,6 +25,11 @@ import CreateJanani from './janani/CreateJanani';
 import JananiBasicInformation from './janani/JananiBasicInformation';
 import JananiUploadPrescriptions from './janani/JananiUploadPrescriptions';
 import JananiPeriodicData from './janani/JananiPeriodicData';
+
+import JananiPrescriptions from './janani/JananiPrescriptions';
+import JananiMedicalHistory from './janani/JananiMedicalHistory';
+import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
+
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
 import YoungWomanBasicInformation from './youngwomens/YoungWomanBasicInformation';
@@ -56,9 +61,7 @@ import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
-import JananiPrescriptions from './janani/JananiPrescriptions';
-import UpadteJananiMedicalHistory from './janani/UpadteJananiMedicalHistory';
-import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
+
 
 export default function Core() {
 
@@ -272,6 +275,7 @@ export default function Core() {
             <Route path="/janani/janani-upload-prescriptions/:accountKey" exact element={<JananiUploadPrescriptions />} />
             <Route path="/janani/janani-periodic-data/" exact element={<JananiPeriodicData />} />
             <Route path="/janani/janani-awareness-survey/" exact element={<JananiAwarenesssurvey />} />
+            <Route path="/janani/janani-medical-history/" exact element={<JananiMedicalHistory />} />
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
