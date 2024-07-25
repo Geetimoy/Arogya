@@ -221,7 +221,7 @@ function JananiAwarenesssurvey(){
           </div>
           <div className='form-group'>
             <label>8. Any other areas you would like further education and support (write)</label>
-            <textarea name="education_support_remarks" rows="3" class="form-control" placeholder="" onChange={handleChange} defaultValue={formData['education_support_remarks'].value}></textarea>
+            <textarea name="education_support_remarks" rows="3" class="form-control pt-5" placeholder="" onChange={handleChange} defaultValue={formData['education_support_remarks'].value}></textarea>
           </div>
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Submit</button>
