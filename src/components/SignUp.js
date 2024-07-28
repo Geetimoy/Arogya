@@ -90,7 +90,7 @@ function SignUp(){
           formData[element].errorMessage  = "Please enter a valid contact number!";
           formData[element].errorClass    = "form-error";
         }
-        else if((element === "userId" || element === "userPassword") && (formData[element].value.trim() !== "") && (!formData[element].value.length < 4)){
+        else if((element === "userId" || element === "userPassword") && (formData[element].value.trim() !== "") && (formData[element].value.length < 4)){
           formData[element].errorMessage  = "At least 4 characters are required!";
           formData[element].errorClass    = "form-error";
         }

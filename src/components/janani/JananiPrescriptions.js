@@ -50,6 +50,9 @@ function JananiPrescriptions(){
     jsonData['system_id']       = systemContext.systemDetails.system_id;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
+    jsonData["search_param"]    = {
+                                    "keyword": searchKey
+                                  }
 
     const response = await fetch(`${API_URL}/jananiSurveyPrescriptionList`, {
       method: "POST",
