@@ -4,6 +4,8 @@ import Appfooter from "../AppFooter";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
+import Category from './Category';
+
 import SystemContext from "../../context/system/SystemContext";
 
 import { Link } from "react-router-dom";
@@ -61,7 +63,8 @@ function JananiPeriodicData(){
           <div className='mb-3 mt-3 text-end'>
             <button type="button" className='btn primary-bg-color text-light'>Add More Category</button>
           </div>
-          <div class="category">
+          <Category></Category>
+          {/* <div class="category">
             <div class="text-end mb-2"></div>
             <div class="form-group">
               <label><span class="d-block">Select Category </span></label>
@@ -88,7 +91,7 @@ function JananiPeriodicData(){
             <div class="form-group">
               <input type="text" class="form-control pt-0" name="select1" placeholder="" />
             </div>
-          </div>
+          </div> */}
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
             <textarea name="remarks" id="remarks" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
