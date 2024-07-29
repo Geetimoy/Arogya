@@ -1,4 +1,6 @@
 import { useContext, useState } from "react";
+import CryptoJS from "crypto-js";
+
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
