@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
@@ -9,18 +9,196 @@ import { faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid
 import Category from './Category';
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
-import { Link } from "react-router-dom";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
+import { Link, useParams } from "react-router-dom";
 
 function JananiPeriodicData(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
+  const [inputValues, setInputValues] = useState({
+    select1: {category:"", value:""},
+    select2: {category:"", value:""},
+    select3: {category:"", value:""},
+    select4: {category:"", value:""},
+    select5: {category:"", value:""},
+    select6: {category:"", value:""},
+    select7: {category:"", value:""},
+    select8: {category:"", value:""},
+    select9: {category:"", value:""},
+    select10: {category:"", value:""},
+    select11: {category:"", value:""},
+    select12: {category:"", value:""},
+  });
+
+  const [remarks, setRemarks] = useState(''); 
+  const [periodicList, setPeriodicList] = useState([]); 
+  const [urlParam, setUrlParam] = useState(useParams());
+  const editAccountKey = urlParam.accountKey;
+
+  const selectCategory = (e) => {
+    const { name, value } = e.target;
+    inputValues[name].category = value;
+    console.log(inputValues);
+  }
+  const changeCategoryValue = (e) => {
+    const { name, value } = e.target;
+    inputValues[name].value = value;
+    console.log(inputValues);
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [inputValues]);
 
   const [isMActive, setIsMActive] = useState(false);
+
+  const [inputList, setInputList] = useState([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
+
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [inputList]);
+
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const onAddBtnClick = event => {
+
+    if(inputList.length < 12){
+      
+      var newKey = 'select'+(inputList.length+1);
+      setInputList(inputList.concat(<Category key={inputList.length+1} name={`${newKey}`} changefunc={selectCategory} changecatval={changeCategoryValue}/>));
+
+    }
+    else{
+      return false;
+    }
+
+  };
+
+  const handleRemarks = (e) => {
+    const { name, value } = e.target;
+    setRemarks(value);
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+    var womenCategory = [];
+    Object.keys(inputValues).forEach(function(k, i){
+      if(inputValues[k].category != '' && parseInt(inputValues[k].category) > 0){
+        womenCategory[i] = {category: inputValues[k].category, value: inputValues[k].value}
+      }
+    });
+
+    if(womenCategory.length > 0){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      var currentDate = new Date();
+      var day         = currentDate.getDate();
+          day         = (day < 10) ? '0'+day : day;
+      var month       = currentDate.getMonth() + 1; // Add 1 as months are zero-based
+          month       = (month < 10) ? '0'+month : month;
+      var year        = currentDate.getFullYear();
+      var currentDate = `${day}-${month}-${year}`;
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
+      jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
+      jsonData["woman_account_type"]        = '3';
+      jsonData["janani_account_key"]        = editAccountKey;
+      jsonData["data_processed_on"]         = currentDate;
+      jsonData["remarks"]                   = remarks;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["janani_cat_value"]          = womenCategory;
+
+      const response = await fetch(`${API_URL}/jananiPeriodicDataAdd`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
+        setRemarks("");
+        Object.keys(inputValues).forEach(function(k, i){
+          inputValues[k].category = "";
+          inputValues[k].value    = "";
+        });
+        listPeriodicData();
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: "Please select at least one category!"});
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPeriodicData();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const listPeriodicData = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["janani_account_type"]       = 3;
+    jsonData["janani_account_key"]        = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": "",
+                                              "limit": "10",
+                                              "offset": "0",
+                                              "order_by_field": "data_processed_on",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/jananiPeriodicDataList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      setPeriodicList(result.data.data);
+    }
+    else{
+      setPeriodicList([]); 
+    }
+
+  }
 
 
   return(
@@ -61,44 +239,40 @@ function JananiPeriodicData(){
 
       <div className='app-body form-all upadte-periodic-data'>
         <p><small>Update Janani Periodic Data</small></p>
-        <form className="mt-3" name="periodicDataForm" id="periodicDataForm">
+        <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
           <div className='mb-3 mt-3 text-end'>
-            <button type="button" className='btn primary-bg-color text-light'>Add More Category</button>
+            <button type="button" className='btn primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
           </div>
-          <Category></Category>
-          {/* <div class="category">
-            <div class="text-end mb-2"></div>
-            <div class="form-group">
-              <label><span class="d-block">Select Category </span></label>
-              <select name="select1" class="form-control">
-                <option value="0">Select</option>
-                <option value="1">Body weight in kgs</option>
-                <option value="2">Body height in cm</option>
-                <option value="3">Temperature</option>
-                <option value="4">Oxygen Level</option>
-                <option value="5">Heart Rate</option>
-                <option value="6">Do you have Blood Pressure?</option>
-                <option value="7">Are you Diabetic?</option>
-                <option value="8">Do you have Cholesterol problem?</option>
-                <option value="9">Do you have Thyroid?</option>
-                <option value="10">Iron/Folic Acid Tablets</option>
-                <option value="11">Calcium Tablets</option>
-                <option value="12">Sanitary Pads</option>
-                <option value="13">Protein Supplement</option>
-                <option value="14">Repeat De-Warming</option>
-                <option value="15">Repeat Hemoglobin Test</option>
-                <option value="16">Repeat Medicine</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control pt-0" name="select1" placeholder="" />
-            </div>
-          </div> */}
+          {inputList}
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
-            <textarea name="remarks" id="remarks" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+            <textarea name="remarks" id="remarks" onChange={handleRemarks} rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+          </div>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
           </div>
         </form>
+        <div className="saved-periodic-data">
+          <div className="row mt-4">
+
+            {periodicList.map((janani, index) => (
+              <div className="col-6" key={index}>
+                <div className="jumbotron rounded p-2">
+                  <div className="periodic-data position-relative">
+                    {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
+                    <p className="primary-color"><strong>Date -  {janani.data_processed_on}</strong></p>
+                    {
+                      janani.sub_periodic_data.map((category, categoryindex) => {
+                        return <p key={`${index}${categoryindex}`}>{category.category_name} - {category.value}</p>
+                      })
+                    }
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          </div>
+        </div>
       </div>
       <Appfooter></Appfooter>
     </>
