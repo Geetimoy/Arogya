@@ -192,7 +192,7 @@ function BasicInformationDoctor(){
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
       
       
-      const response = await fetch(`${API_URL}/updateVolunteerProfile`, {
+      const response = await fetch(`${API_URL}/updateDoctorProfile`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -294,7 +294,7 @@ function BasicInformationDoctor(){
           <form className="basic-information" name="basic_information" id="basic_information" onSubmit={handleFormSubmit}>
             <div className={`form-group ${formData["basicInfoName"].errorClass}`}>
               <label htmlFor="name">Name <span className="text-danger">*</span></label>
-              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange} value={formData["basicInfoName"].value ? formData["basicInfoName"].value : ''}/>
+              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Doctor M" onChange={handleChange} value={formData["basicInfoName"].value ? formData["basicInfoName"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoName"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoMobileNo"].errorClass}`}> 
