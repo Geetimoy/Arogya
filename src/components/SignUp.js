@@ -53,15 +53,15 @@ function SignUp(){
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
           e.preventDefault();
         }
+        else if((value.length < 10)){
+          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"At least 10 characters are required!"}});
+          e.preventDefault();
+        }
         else{
           setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
         }
       }
       else if((name === "userId" || name === "userPassword") && (value.length < 4)){
-        setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"At least 4 characters are required!"}});
-        e.preventDefault();
-      }
-      else if((name === "userContactNumber") && (value.length < 4)){
         setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"At least 4 characters are required!"}});
         e.preventDefault();
       }
