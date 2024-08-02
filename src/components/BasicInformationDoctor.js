@@ -186,7 +186,7 @@ function BasicInformationDoctor(){
       jsonData["basicInfoAddress1"]         = formData['basicInfoAddress1'].value;
       jsonData["basicInfoAddress2"]         = formData['basicInfoAddress2'].value;
       jsonData["basicInfoLandmark"]         = formData['basicInfoLandmark'].value;
-      jsonData["basicInfoTown"]             = formData['basicInfoTown'].value;
+      jsonData["basicInfoCity"]             = formData['basicInfoTown'].value;
       jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
       jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
