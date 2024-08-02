@@ -24,6 +24,11 @@
   padding: 5px 10px;
 }
 
+.feedback-form .normal-box{
+  width: 100%;
+  white-space: normal;
+}
+
 .normal-box .rating-star span{
   display: inline-block;
 }

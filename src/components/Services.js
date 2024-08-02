@@ -63,7 +63,7 @@ function Services(){
               </div>
             </div>
             <div className='col-6'>
-              <div className='button-box disable'>
+              <div className='button-box'>
                 <Link to="/bookings"><img src={appointmentscheduling} alt='' />
                 <h6>Appointment Scheduling</h6></Link>
               </div>
