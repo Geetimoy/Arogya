@@ -61,6 +61,10 @@ function SignUp(){
         setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"At least 4 characters are required!"}});
         e.preventDefault();
       }
+      else if((name === "userContactNumber") && (value.length < 4)){
+        setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"At least 4 characters are required!"}});
+        e.preventDefault();
+      }
       else{
         setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
       }
@@ -88,6 +92,10 @@ function SignUp(){
         }
         else if((element === "userContactNumber") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validMobileRegex))){
           formData[element].errorMessage  = "Please enter a valid contact number!";
+          formData[element].errorClass    = "form-error";
+        }
+        else if((element === "userContactNumber") && (formData[element].value.trim() !== "") && (formData[element].value.length < 10)){
+          formData[element].errorMessage  = "At least 10 digit are required!";
           formData[element].errorClass    = "form-error";
         }
         else if((element === "userId" || element === "userPassword") && (formData[element].value.trim() !== "") && (formData[element].value.length < 4)){
