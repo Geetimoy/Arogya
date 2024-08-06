@@ -54,7 +54,7 @@ function SignUp(){
           e.preventDefault();
         }
         else if((value.length < 10)){
-          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"At least 10 characters are required!"}});
+          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This is an invalid number!"}});
           e.preventDefault();
         }
         else{

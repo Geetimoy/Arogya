@@ -1,0 +1,35 @@
+.create-schedule .form-group {
+  margin-bottom: 20px;
+}
+
+.create-schedule form label.pos {
+  color: #818181;
+  position: absolute;
+  padding: 10px;
+  font-size: 12px;
+  z-index: 1;
+}
+
+.create-schedule form input.pos {
+  padding-top: 1.825rem;
+  padding-bottom: 0.625rem;
+}
+
+select.pos {
+  padding-top: 1.825rem;
+  padding-bottom: 0.625rem;
+  position: relative;
+  appearance: auto;
+  color: #818181;
+  padding-left: 7px;
+}
+.create-schedule .add-more{
+  right: 0;
+  top: -8px;
+}
+
+.create-schedule .add-more button{
+  padding: 2px 5px;
+  margin: 0;
+  font-size: 12px;
+}
