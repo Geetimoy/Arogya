@@ -258,7 +258,7 @@ function SignUp(){
                 <option value="33">Janani</option>
                 <option value="4">Volunteer - MedTech</option>
                 <option value="5">Doctor</option>
-                <option value="6">Pharmacy</option>
+                {/* <option value="6">Pharmacy</option> */}
               </select>
               <small className="error-mesg">{formData["userType"].errorMessage}</small>
             </div>
