@@ -13,6 +13,8 @@ import AlertContext from "../context/alert/AlertContext";
 import { useContext, useState, useEffect } from 'react';
 
 import Dropdown from 'react-dropdown-select';
+import Select from 'react-select';
+
 import CryptoJS from "crypto-js";
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
@@ -192,6 +194,10 @@ function SignUp(){
     }
   }
 
+  // const handleChange2 = (selected) => {
+  //   setSelectedOptions(selected);
+  // };
+
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
       getMasterServicesArea();
@@ -246,7 +252,7 @@ function SignUp(){
           <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />
           
           <p>Create an account to continue your all activities</p>
-          <form onSubmit={handleFormSubmit}>
+          <form className='select-box' onSubmit={handleFormSubmit}>
             <p className='text-end mandatory'><span className='text-danger'>*</span> marks are mandatory</p>
             <div className={`form-group ${formData["userType"].errorClass}`}>
               <label htmlFor="userType"> Register As <span className='text-danger'> *</span></label>
@@ -300,7 +306,9 @@ function SignUp(){
             </div> */}
             <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
               <label>Area <span className='text-danger'> *</span></label>
-              <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
+              {/* <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} /> */}
+              <Select className='form-control select-multi' isMulti value={selectedOptions}
+        onChange={handleChange1} options={options} />
               <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
             </div>
             

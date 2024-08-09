@@ -16,6 +16,7 @@ import SystemContext from "../context/system/SystemContext";
 import AlertContext from '../context/alert/AlertContext';
 
 import Dropdown from 'react-dropdown-select';
+import Select from 'react-select';
 
 function BasicInformation(){
 
@@ -145,6 +146,10 @@ function BasicInformation(){
     }
     setSelectedOptions(values);
   };
+
+  // const handleChange2 = (selected) => {
+  //   setSelectedOptions(selected);
+  // };
 
   useEffect(() => {
 
@@ -291,7 +296,7 @@ function BasicInformation(){
             
           </div>
 
-          <form className="basic-information" name="basic_information" id="basic_information" onSubmit={handleFormSubmit}>
+          <form className="basic-information select-box" name="basic_information" id="basic_information" onSubmit={handleFormSubmit}>
             <div className={`form-group ${formData["basicInfoName"].errorClass}`}>
               <label htmlFor="name">Name <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange} value={formData["basicInfoName"].value ? formData["basicInfoName"].value : ''}/>
@@ -385,12 +390,21 @@ function BasicInformation(){
               <small className="error-mesg">{formData["basicInfoPostalCode"].errorMessage}</small>
             </div>
             
-            <div className={`form-group ${formData["basicInfoServiceArea"].errorClass}`}>
+            {/* <div className={`form-group ${formData["basicInfoServiceArea"].errorClass}`}>
               <label>Service Area : <span className='text-danger'> *</span></label>
               <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
               <small className="error-mesg">{formData["basicInfoServiceArea"].errorMessage}</small>
+            </div> */}
+
+            <div className={`form-group ${formData["basicInfoServiceArea"].errorClass}`}>
+              <label>Service Area : <span className='text-danger'> *</span></label>
+              {/* <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} /> */}
+              <Select className='form-control select-multi' isMulti value={selectedOptions}
+        onChange={handleChange1} options={options} />
+              <small className="error-mesg">{formData["basicInfoServiceArea"].errorMessage}</small>
             </div>
-            <div className={`form-group ${formData["basicInfoSpecialNotes"].errorClass}`}>
+
+            <div className={`sp-notes form-group ${formData["basicInfoSpecialNotes"].errorClass}`}>
               <label>Special Notes :</label>
               <input type="text" className="form-control" name="basicInfoSpecialNotes" id="basicInfoSpecialNotes" placeholder="Special Notes" onChange={handleChange} value={formData["basicInfoSpecialNotes"].value ? formData["basicInfoSpecialNotes"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoSpecialNotes"].errorMessage}</small>

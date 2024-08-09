@@ -71,3 +71,22 @@
 .react-datepicker-wrapper{
   z-index: 9 !important;
 }
+
+.select-box .select-multi{
+  padding-top: 1.825rem!important;
+  padding-bottom: 0.625rem!important;
+}
+
+.css-13cymwt-control{
+  border-style: none!important;
+}
+.css-3w2yfm-ValueContainer{
+  padding: 0!important;
+}
+.css-1hb7zxy-IndicatorsContainer .css-1xc3v61-indicatorContainer:nth-child(1){
+  display: none!important;
+}
+.sp-notes{
+  position: relative;
+  z-index: -1;
+}

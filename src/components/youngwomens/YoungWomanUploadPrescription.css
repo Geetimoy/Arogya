@@ -36,3 +36,14 @@ div.file {
 /* .btn-delete svg{
   color: black;
 } */
+.upload-prescription .btn-download{
+  position: absolute;
+  right: 30px;
+  top: 7px;
+}
+.upload-prescription .btn-download a{
+  padding: 0;
+}
+.upload-prescription .button-box{
+  margin-bottom: 20px;
+}
