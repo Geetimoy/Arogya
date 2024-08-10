@@ -18,7 +18,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import Dropdown from 'react-dropdown-select'
+import Dropdown from 'react-dropdown-select';
+import Select from 'react-select';
 
 function CreateJanani(){
 
@@ -267,7 +268,7 @@ function CreateJanani(){
       </div>
       <div className='app-body form-all create-janani'>
         <p><small>Add Janani Informations</small></p>
-        <form className="mt-3" name="create_janani_form" id="create_janani_form" onSubmit={handleFormSubmit}>
+        <form className="select-box mt-3" name="create_janani_form" id="create_janani_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["janani_name"].errorClass}`}>
             <label htmlFor="janani_name">Janani Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="janani_name" id="janani_name" onChange={handleChange} placeholder="Janani Name" value={formData["janani_name"].value ? formData["janani_name"].value : ''}/>
@@ -370,10 +371,12 @@ function CreateJanani(){
           <div class="form-group "><label for="sub_volunteer_name">Sub Volunteer Name</label><select class="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
           <div className={`form-group ${formData["janani_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            <Dropdown className='form-control select-multi' multi options={serviceAreaOption} values={selectedOptions} onChange={handleChange1}/>
+            {/* <Dropdown className='form-control select-multi' multi options={serviceAreaOption} values={selectedOptions} onChange={handleChange1}/> */}
+            <Select className='form-control select-multi' isMulti value={selectedOptions}
+        onChange={handleChange1} options={serviceAreaOption} />
             <small className="error-mesg">{formData["janani_service_area"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["special_note"].errorClass}`}>
+          <div className={`sp-notes form-group ${formData["special_note"].errorClass}`}>
             <label htmlFor="special_note">Special Notes </label>
             <input type="text" className="form-control" name="special_note" id="special_note" onChange={handleChange} placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''} />
             <small className="error-mesg">{formData["special_note"].errorMessage}</small>

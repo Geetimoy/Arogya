@@ -12,6 +12,7 @@ import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
 import Dropdown from 'react-dropdown-select';
+import Select from 'react-select';
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
@@ -316,7 +317,7 @@ function YoungWomanBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
         <p><small>To update your profile information</small></p>
-        <form className="mt-3" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
+        <form className="mt-3 select-box" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''} onChange={handleChange}/>
@@ -415,7 +416,9 @@ function YoungWomanBasicInformation(){
 
           <div className={`form-group ${formData["woman_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
+            {/* <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} /> */}
+            <Select className='form-control select-multi' isMulti value={selectedOptions}
+        onChange={handleChange1} options={options} />
             <small className="error-mesg">{formData["woman_service_area"].errorMessage}</small>
           </div>
           
@@ -425,13 +428,13 @@ function YoungWomanBasicInformation(){
             <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value={formData["woman_education"].value ? formData["woman_education"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["woman_education"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["woman_school_name"].errorClass}`}>
+          <div className={`sp-notes form-group ${formData["woman_school_name"].errorClass}`}>
             <label htmlFor="woman_school_name">School Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value={formData["woman_school_name"].value ? formData["woman_school_name"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["woman_school_name"].errorMessage}</small>
           </div>
 
-          <div className={`form-group ${formData["woman_school_class"].errorClass}`}>
+          <div className={`sp-notes form-group ${formData["woman_school_class"].errorClass}`}>
             <label htmlFor="woman_school_class">Class <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value={formData["woman_school_class"].value ? formData["woman_school_class"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["woman_school_class"].errorMessage}</small>

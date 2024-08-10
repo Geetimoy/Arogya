@@ -10,6 +10,8 @@ import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 import Appfooter from '../AppFooter';
 import Dropdown from 'react-dropdown-select';
+import Select from 'react-select';
+
 import  './CreateYoungWoman.css'
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
@@ -239,7 +241,7 @@ function CraeteYoungWomen(){
       <div className='app-body form-all create-young-woman'>
        
         <p><small>Add Young Women Informations</small></p>
-        <form className="mt-3" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
+        <form className="mt-3 select-box" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''}/>
@@ -342,7 +344,9 @@ function CraeteYoungWomen(){
           </div>
           <div className={`form-group ${formData["woman_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            <Dropdown className='form-control select-multi' multi options={serviceAreaOption} values={selectedOptions} onChange={handleChange1}/>
+            {/* <Dropdown className='form-control select-multi' multi options={serviceAreaOption} values={selectedOptions} onChange={handleChange1}/> */}
+            <Select className='form-control select-multi' isMulti value={selectedOptions}
+        onChange={handleChange1} options={serviceAreaOption} />
             <small className="error-mesg">{formData["woman_service_area"].errorMessage}</small>
           </div>
           <div className={`d-none form-group ${formData["woman_education"].errorClass}`}>
@@ -350,12 +354,12 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_education"].value ? formData["woman_education"].value : ''} name="woman_education" id="woman_education" placeholder="Education" />
             <small className="error-mesg">{formData["woman_education"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["woman_school_name"].errorClass}`}>
+          <div className={`sp-notes form-group ${formData["woman_school_name"].errorClass}`}>
             <label htmlFor="woman_school_name">School Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_school_name"].value ? formData["woman_school_name"].value : ''} name="woman_school_name" id="woman_school_name" placeholder="School Name" />
             <small className="error-mesg">{formData["woman_school_name"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["woman_school_class"].errorClass}`}>
+          <div className={`sp-notes form-group ${formData["woman_school_class"].errorClass}`}>
             <label htmlFor="woman_school_class">Class <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_school_class"].value ? formData["woman_school_class"].value : ''} name="woman_school_class" id="woman_school_class" placeholder="Class" />
             <small className="error-mesg">{formData["woman_school_class"].errorMessage}</small>
