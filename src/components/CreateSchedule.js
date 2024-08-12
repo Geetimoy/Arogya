@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import Appfooter from "./AppFooter";
 
@@ -10,6 +10,9 @@ import { Link } from "react-router-dom";
 import SystemContext from "../context/system/SystemContext";
 
 import './CreateSchedule.css'
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function CraeteSchedule(){
 
@@ -31,6 +34,45 @@ function CraeteSchedule(){
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  const [singleFromDate, setSingleFromDate] = useState('');
+  const [singleToDate, setSingleToDate]     = useState('');
+
+  const [repeatFromDate, setRepeatFromDate] = useState('');
+  const [repeatToDate, setRepeatToDate]     = useState('');
+
+  const [multipleFromDate, setMultipleFromDate] = useState('');
+  const [multipleToDate, setMultipleToDate]     = useState('');
+
+  const [multipletimeDate, setMultipletimeDate] = useState('');
+
+  const generateTimeIntervals = () => {
+    const times = [];
+    let startTime = new Date();
+    startTime.setHours(0, 0, 0, 0); // Start at midnight
+
+    for (let i = 0; i < 96; i++) {
+        let hours = startTime.getHours();
+        let minutes = startTime.getMinutes();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        hours = hours < 10 ? '0' + hours : hours;
+        const timeString = `${hours}:${minutes} ${ampm}`;
+        times.push(timeString);
+        startTime.setMinutes(startTime.getMinutes() + 15); // Increment by 15 minutes
+    }
+
+    return times;
+  }
+
+  const [timePickerDropDown, setTimePickerDropDown] = useState(generateTimeIntervals);
+
+  useEffect(()=>{
+
+  }, [timePickerDropDown]);
+
 
   return(
     <>
@@ -73,7 +115,7 @@ function CraeteSchedule(){
           <div className='col-12'>
             <form>
               <div className='form-group'>
-                <label for="schedule" class="no-style">Schedule Type :</label>
+                <label htmlFor="schedule" className="no-style">Schedule Type :</label>
                 <div className="">
                   
                     <div className="custom-control custom-radio mt-2">
@@ -108,15 +150,15 @@ function CraeteSchedule(){
                 
               {selectedOption === 'single' && (
                 <div className='form-group'>
-                  <label for="date_range" class="no-style">Date Range : <small>(If only one date leave next field empty)</small></label>
+                  <label htmlFor="date_range" className="no-style">Date Range : <small>(If only one date leave next field empty)</small></label>
                   <div className='row'>
-                    <div className='col-6'>
+                    <div className='col-12 mb-2'>
                       <label className='pos'>From :</label>
-                      <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="23/01/24" />
+                      <DatePicker dateFormat="yyyy-MM-dd" selected={singleFromDate} onChange={(date) => setSingleFromDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     </div>
-                    <div className='col-6'>
+                    <div className='col-12'>
                       <label className='pos'>To :</label>
-                      <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="23/01/24" />
+                      <DatePicker dateFormat="yyyy-MM-dd" selected={singleToDate} onChange={(date) => setSingleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     </div>
                   </div>
                 </div>
@@ -125,9 +167,9 @@ function CraeteSchedule(){
               {selectedOption === 'repeat' && (
                 <div className="content pos-relative">
                   <div className='form-group'>
-                  <label for="date_range" class="no-style">Date Range : </label>
-                  <div class="position-absolute add-more">
-                    <button type="button" class="btn primary-bg-color text-light">Add More Day</button>
+                  <label htmlFor="date_range" className="no-style">Date Range : </label>
+                  <div className="position-absolute add-more">
+                    <button type="button" className="btn primary-bg-color text-light">Add More Day</button>
                   </div>
                   <div className='row'>
                     <div className='col-12 mb-3'>
@@ -135,20 +177,20 @@ function CraeteSchedule(){
                       <select className="form-control pos" value="" name="" id="">
                         <option value="1">Sunday</option>
                         <option value="2">Monday</option>
-                        <option value="1">Tuesday</option>
-                        <option value="1">Wednesday</option>
-                        <option value="1">Thursday</option>
-                        <option value="1">Friday</option>
-                        <option value="1">Saturday</option>
+                        <option value="3">Tuesday</option>
+                        <option value="4">Wednesday</option>
+                        <option value="5">Thursday</option>
+                        <option value="6">Friday</option>
+                        <option value="7">Saturday</option>
                       </select>
                     </div>
-                    <div className='col-6'>
+                    <div className='col-12 mb-2'>
                       <label className='pos'>Start Date :</label>
-                      <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="23/01/24" />
+                      <DatePicker dateFormat="yyyy-MM-dd" selected={repeatFromDate} onChange={(date) => setRepeatFromDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     </div>
-                    <div className='col-6'>
+                    <div className='col-12'>
                       <label className='pos'>End Date :</label>
-                      <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="23/08/24" />
+                      <DatePicker dateFormat="yyyy-MM-dd" selected={repeatToDate} onChange={(date) => setRepeatToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     </div>
                   </div>
                 </div>
@@ -158,15 +200,15 @@ function CraeteSchedule(){
               {selectedOption === 'multiple' && (
                 <div className="content">
                   <div className='form-group'>
-                  <label for="date_range" class="no-style">Date Range : </label>
+                  <label htmlFor="date_range" className="no-style">Date Range : </label>
                   <div className='row'>
-                    <div className='col-6'>
+                    <div className='col-12 mb-2'>
                       <label className='pos'>From :</label>
-                      <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="23/01/24" />
+                      <DatePicker dateFormat="yyyy-MM-dd" selected={multipleFromDate} onChange={(date) => setMultipleFromDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     </div>
-                    <div className='col-6'>
+                    <div className='col-12'>
                       <label className='pos'>To :</label>
-                      <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="23/01/24" />
+                      <DatePicker dateFormat="yyyy-MM-dd" selected={multipleToDate} onChange={(date) => setMultipleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     </div>
                   </div>
                 </div>
@@ -176,14 +218,14 @@ function CraeteSchedule(){
               {selectedOption === 'multipletime' && (
                 <div className="content pos-relative">
                   <div className='form-group'>
-                  <label for="date_range" class="no-style">Date Range : </label>
-                  <div class="position-absolute add-more">
-                    <button type="button" class="btn primary-bg-color text-light">Add More Date</button>
+                  <label htmlFor="date_range" className="no-style">Date Range : </label>
+                  <div className="position-absolute add-more">
+                    <button type="button" className="btn primary-bg-color text-light">Add More Date</button>
                   </div>
                   <div className='row'>
-                    <div className='col-12'>
+                    <div className='col-12 mb-2'>
                       <label className='pos'>Date :</label>
-                      <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="23/01/24" />
+                      <DatePicker dateFormat="yyyy-MM-dd" selected={multipletimeDate} onChange={(date) => setMultipletimeDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     </div>
                   </div>
                 </div>
@@ -191,64 +233,72 @@ function CraeteSchedule(){
               )}
 
               <div className='form-group'>
-                <label for="date_range" class="no-style">Time Range :</label>
+                <label htmlFor="date_range" className="no-style">Time Range :</label>
                 <div className='row'>
                   <div className='col-6'>
                     <label className='pos'>From :</label>
-                    <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="7:00PM" />
+                    <select className="form-control pos">
+                      <option>Select</option>
+                      {timePickerDropDown.map((item)=>{ console.log(item);
+                        return <option value={item}>{item}</option>
+                      })}
+                    </select>
                   </div>
                   <div className='col-6'>
                     <label className='pos'>To :</label>
-                    <input type="text" class="form-control pos" name="" id="" placeholder="" maxlength="" value="10:00PM" />
+                    <select className="form-control pos">
+                      <option>Select</option>
+                      {timePickerDropDown.map((item)=>{ console.log(item);
+                        return <option value={item}>{item}</option>
+                      })}
+                    </select>
                   </div>
                 </div>
               </div>
 
 
               <div className='form-group'>
-                <label for="schedule" class="no-style">Consultation Mode :</label>
+                <label htmlFor="schedule" className="no-style">Consultation Mode :</label>
                 <div className="">
                     <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="offline" name="offline" value="ofline" className="custom-control-input" checked />
+                      <input type="radio" id="offline" name="consultation_mode" value="offline" className="custom-control-input" checked />
                       <label className="custom-control-label no-style" htmlFor="offline">Offline <small>(Clinic)</small>
                       </label>
                     </div>
-                  
                     <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="online" name="online" value="Online" className="custom-control-input" />
+                      <input type="radio" id="online" name="consultation_mode" value="online" className="custom-control-input" />
                       <label className="custom-control-label no-style" htmlFor="online">Online </label>
                     </div>
-                  
                     <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="emergency" name="emergency" value="emergency" className="custom-control-input" />
+                      <input type="radio" id="emergency" name="consultation_mode" value="emergency" className="custom-control-input" />
                       <label className="custom-control-label no-style" htmlFor="emergency">Call on Emergency</label>
                     </div>
                 </div>
               </div>
               <div className="form-group">
                 <label>Clinic Name, Location, Timing & Contact Number:</label>
-                <textarea name="" rows="3" class="form-control" placeholder="Clinic Name, Location, Timing & Contact Number">Test</textarea>
+                <textarea name="" rows="3" className="form-control" placeholder="Clinic Name, Location, Timing & Contact Number" value="">Test</textarea>
               </div>
               <div className="form-group">
                 <label>Total Appointments : </label>
-                <input type="text" class="form-control" name="appointments" id="appointments" placeholder="" value="10" />
+                <input type="text" className="form-control" name="appointments" id="appointments" placeholder="" value="10" />
               </div>
               <div className="form-group">
-                <label for="booking_confirm" class="no-style">Is Strict Full? : <small className=''>(If yes, no extra patients on those days)</small></label>
-                <div class="d-flex">
-                  <div class="custom-control custom-radio custom-control-inline mt-2">
-                    <input type="radio" id="booking_confirm_y" name="is_booking_confirm" class="custom-control-input" value="t" />
-                    <label class="custom-control-label no-style" for="booking_confirm_y">Yes</label>
+                <label htmlFor="booking_confirm" className="no-style">Is Strict Full? : <small className=''>(If yes, no extra patients on those days)</small></label>
+                <div className="d-flex">
+                  <div className="custom-control custom-radio custom-control-inline mt-2">
+                    <input type="radio" id="booking_confirm_y" name="is_booking_confirm" className="custom-control-input" value="t" />
+                    <label className="custom-control-label no-style" htmlFor="booking_confirm_y">Yes</label>
                   </div>
-                  <div class="custom-control custom-radio custom-control-inline mt-2">
-                    <input type="radio" id="booking_confirm_n" name="is_booking_confirm" class="custom-control-input" value="f" />
-                    <label class="custom-control-label no-style" for="booking_confirm_n">No</label>
+                  <div className="custom-control custom-radio custom-control-inline mt-2">
+                    <input type="radio" id="booking_confirm_n" name="is_booking_confirm" className="custom-control-input" value="f" />
+                    <label className="custom-control-label no-style" htmlFor="booking_confirm_n">No</label>
                   </div>
                 </div>
               </div>
               <div className="form-group">
                 <label>Extra Appointment (%) : <small>(Buffer percentage. e.g. 10%)</small></label>
-                <input type="text" class="form-control" name="extra_appointments" id="extra_appointments" placeholder="" value="1" />
+                <input type="text" className="form-control" name="extra_appointments" id="extra_appointments" placeholder="" value="1" />
               </div>
               <div className="btns-group d-flex justify-content-center">
                 <button type="submit" className="btn btn-primary primary-bg-color border-0 mx-2">Add my Schedule</button>

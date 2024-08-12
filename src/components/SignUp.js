@@ -307,8 +307,7 @@ function SignUp(){
             <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
               <label>Area <span className='text-danger'> *</span></label>
               {/* <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} /> */}
-              <Select className='form-control select-multi' isMulti value={selectedOptions}
-        onChange={handleChange1} options={options} />
+              <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={options} />
               <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
             </div>
             
