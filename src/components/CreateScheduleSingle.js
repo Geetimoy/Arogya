@@ -14,7 +14,7 @@ import './CreateSchedule.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function CraeteSchedule(){
+function CraeteScheduleSingle(){
 
   const systemContext = useContext(SystemContext);
 
@@ -317,4 +317,4 @@ function CraeteSchedule(){
 }
 
 
-export default CraeteSchedule;
+export default CraeteScheduleSingle;
