@@ -77,7 +77,8 @@ function AppointmentScheduling(){
               <p><span className="d-block">Appointment Time:</span> 04:00 PM - 07:00PM</p>
               <p><span className="d-block">Place:</span> New Life - Bablatala</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <div class="mb-3 mt-3 text-center"><button type="submit" class="btn primary-bg-color text-light">Book Now</button></div>
+              <div class="mb-3 mt-3 text-center">
+              <a href='./bookings' class="btn primary-bg-color text-light">Book Now</a></div>
             </div>
             <div className="button-box mb-3">
               <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
@@ -88,7 +89,10 @@ function AppointmentScheduling(){
               <p><span className="d-block">Appointment Time:</span> 07:00 PM - 10:00PM</p>
               <p><span className="d-block">Place:</span> Apex - Joramandir</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <div class="mb-3 mt-3 text-center"><button type="submit" class="btn primary-bg-color text-light">Book Now</button></div>
+              <div class="mb-3 mt-3 text-center">
+                {/* <button type="submit" class="btn primary-bg-color text-light">Book Now</button> */}
+                <a href='./bookings' class="btn primary-bg-color text-light">Book Now</a>
+              </div>
             </div>
           </div>
         </div>

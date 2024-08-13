@@ -24,3 +24,8 @@
 .bookings .my-element2.active + .drop-menu{
   top: 30px;
 }
+
+.bookings .button-box a{
+  padding: 6px 12px;
+  display: inline-block;
+}

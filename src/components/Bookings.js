@@ -34,7 +34,7 @@ function Bookings(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/services" className=''>
+              <Link to="/appointment-scheduling" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -64,7 +64,8 @@ function Bookings(){
         </div>
       </div>
       <div className="app-body bookings">
-        <div className="add-booking mb-3"><a class="btn btn-sm btn-primary" href="selectpatient">Add New Booking</a></div>
+        {/* <div className="add-booking mb-3"><a class="btn btn-sm btn-primary primary-bg-color border-0" href="selectpatient">Add New Booking</a></div> */}
+        <div><p><small>Booking List</small></p></div>
         <div className="row">
           <div className="col-12">
             <div className="button-box pos-relative mb-3">
@@ -81,19 +82,19 @@ function Bookings(){
                 </ul>
               </div>
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
-              <p><span className="d-block">Doctor Name:</span> Doctor2</p>
-              <p><span className="d-block">Specialization:</span> Test</p>
-              <p><span className="d-block">Appointment Date:</span> Friday 16th February, 2024</p>
+              <p><span className="d-block">Doctor Name:</span> Dr. D Sinha</p>
+              <p><span className="d-block">Specialization:</span> Heart</p>
+              <p><span className="d-block">Appointment Date:</span> Tuesday 6th August, 2024</p>
               <p><span className="d-block">Appointment Time:</span> 04:38 PM</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p>
+              <p><span className="d-block">Booking Status:</span> Appointment Confirmed by Doctor </p>
             </div>
             <div className="button-box mb-3">
               <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
-              <p><span className="d-block">Doctor Name:</span> Doctor2</p>
-              <p><span className="d-block">Specialization:</span> Test</p>
-              <p><span className="d-block">Appointment Date:</span> Friday 16th February, 2024</p>
+              <p><span className="d-block">Doctor Name:</span> Dr.NP Kar</p>
+              <p><span className="d-block">Specialization:</span> Medicine</p>
+              <p><span className="d-block">Appointment Date:</span> Monday 12th August, 2024</p>
               <p><span className="d-block">Appointment Time:</span> 04:38 PM</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
               <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p>
