@@ -98,7 +98,7 @@ function AppointmentScheduling(){
               <a href='./bookings' className="btn primary-bg-color text-light">Book Now</a></div>
             </div>
             <div className="button-box mb-3">
-              <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
+              {/* <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span> */}
               <p><span className="d-block">Doctor Name:</span> Dr.NP Kar</p>
               <p><span className="d-block">Specialization:</span> Medicine</p>
               <p><span className="d-block">Schedule Type :</span> Single</p>
