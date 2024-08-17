@@ -145,8 +145,8 @@ function AppointmentScheduling(){
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
             <Button variant="primary" className='btn primary-bg-color text-light border-0' onClick={redirectToCreateSchedule}>Proceed</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
           </Modal.Footer>  
         </Modal>
         {/* <div className="row">

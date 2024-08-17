@@ -113,63 +113,13 @@ function CreateScheduleRepeat(){
         </div>
       </div>
       <div className="app-body create-schedule">
-        <p><small>Add Your Schedule</small></p>
+        <p><small>Add Your Schedule - Repeat <small>(Fixed Time)</small></small></p>
         <div className="row mb-4">
           <div className='col-12'>
             <form>
-              <div className='form-group'>
-                <label htmlFor="schedule" className="no-style">Schedule Type :</label>
-                <div className="">
-                  
-                    <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="schedule_single" name="schedule" value="single" className="custom-control-input" checked={selectedOption === 'single'}
-                      onChange={handleRadioChange}/>
-                      <label className="custom-control-label no-style" htmlFor="schedule_single">Single Day</label>
-                    </div>
-                  
-                  
-                    <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="schedule_repeat" name="schedule" value="repeat" className="custom-control-input" checked={selectedOption === 'repeat'}
-                      onChange={handleRadioChange} />
-                      <label className="custom-control-label no-style" htmlFor="schedule_repeat">Repeat <small>(Fixed Time)</small></label>
-                    </div>
-                  
-                 
-                    <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="schedule_multiple" name="schedule" value="multiple" className="custom-control-input" checked={selectedOption === 'multiple'}
-                      onChange={handleRadioChange} />
-                      <label className="custom-control-label no-style" htmlFor="schedule_multiple">Multiple Dates <small>(Fixed Time)</small></label>
-                    </div>
-                  
-                 
-                    <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="schedule_multiple_t" name="schedule" value="multipletime" className="custom-control-input" checked={selectedOption === 'multipletime'}
-                      onChange={handleRadioChange} />
-                      <label className="custom-control-label no-style" htmlFor="schedule_multiple_t">Multiple Dates <small>(Multiple Time)</small></label>
-                    </div>
-                  
-                </div>
-              </div>
-                
-              {selectedOption === 'single' && (
-                <div className='form-group'>
-                  <label htmlFor="date_range" className="no-style">Date Range : <small>(If only one date leave next field empty)</small></label>
-                  <div className='row'>
-                    <div className='col-12 mb-2'>
-                      <label className='pos'>From :</label>
-                      <DatePicker dateFormat="yyyy-MM-dd" selected={singleFromDate} onChange={(date) => setSingleFromDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
-                    </div>
-                    <div className='col-12'>
-                      <label className='pos'>To :</label>
-                      <DatePicker dateFormat="yyyy-MM-dd" selected={singleToDate} onChange={(date) => setSingleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
-                    </div>
-                  </div>
-                </div>
-              )}
 
-              {selectedOption === 'repeat' && (
-                <div className="content pos-relative">
-                  <div className='form-group'>
+              <div className="content pos-relative">
+                <div className='form-group'>
                   <label htmlFor="date_range" className="no-style">Date Range : </label>
                   <div className="position-absolute add-more">
                     <button type="button" className="btn primary-bg-color text-light">Add More Day</button>
@@ -197,43 +147,7 @@ function CreateScheduleRepeat(){
                     </div>
                   </div>
                 </div>
-                </div>
-              )}
-
-              {selectedOption === 'multiple' && (
-                <div className="content">
-                  <div className='form-group'>
-                  <label htmlFor="date_range" className="no-style">Date Range : </label>
-                  <div className='row'>
-                    <div className='col-12 mb-2'>
-                      <label className='pos'>From :</label>
-                      <DatePicker dateFormat="yyyy-MM-dd" selected={multipleFromDate} onChange={(date) => setMultipleFromDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
-                    </div>
-                    <div className='col-12'>
-                      <label className='pos'>To :</label>
-                      <DatePicker dateFormat="yyyy-MM-dd" selected={multipleToDate} onChange={(date) => setMultipleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              )}
-
-              {selectedOption === 'multipletime' && (
-                <div className="content pos-relative">
-                  <div className='form-group'>
-                  <label htmlFor="date_range" className="no-style">Date Range : </label>
-                  <div className="position-absolute add-more">
-                    <button type="button" className="btn primary-bg-color text-light">Add More Date</button>
-                  </div>
-                  <div className='row'>
-                    <div className='col-12 mb-2'>
-                      <label className='pos'>Date :</label>
-                      <DatePicker dateFormat="yyyy-MM-dd" selected={multipletimeDate} onChange={(date) => setMultipletimeDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              )}
+              </div>
 
               <div className='form-group'>
                 <label htmlFor="date_range" className="no-style">Time Range :</label>
