@@ -38,15 +38,6 @@ function CreateScheduleMultipletime(){
     setSelectedOption(event.target.value);
   };
 
-  const [singleFromDate, setSingleFromDate]     = useState('');
-  const [singleToDate, setSingleToDate]         = useState('');
-
-  const [repeatFromDate, setRepeatFromDate]     = useState('');
-  const [repeatToDate, setRepeatToDate]         = useState('');
-
-  const [multipleFromDate, setMultipleFromDate] = useState('');
-  const [multipleToDate, setMultipleToDate]     = useState('');
-
   const [multipletimeDate, setMultipletimeDate] = useState('');
 
   const generateTimeIntervals = () => {
