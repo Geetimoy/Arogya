@@ -161,7 +161,7 @@ function CraeteScheduleSingle(){
                 <label htmlFor="schedule" className="no-style">Consultation Mode :</label>
                 <div className="">
                     <div className="custom-control custom-radio mt-2">
-                      <input type="radio" id="offline" name="consultation_mode" value="offline" className="custom-control-input" checked />
+                      <input type="radio" id="offline" name="consultation_mode" value="offline" className="custom-control-input" />
                       <label className="custom-control-label no-style" htmlFor="offline">Offline <small>(Clinic)</small>
                       </label>
                     </div>

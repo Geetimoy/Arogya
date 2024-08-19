@@ -87,6 +87,15 @@ function AppointmentScheduling(){
         <div className="row">
           <div className="col-12">
             <div className="button-box pos-relative mb-3">
+              {/* <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span> */}
+              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                <ul>
+                  <li><Link to={"#"}>Cancel Schedule</Link></li>
+                  <li><Link to={"#"}>Close Booking</Link></li>
+                  <li><Link to={"#"}>Edit Schedule</Link></li>
+                </ul>
+              </div>
               <p><span className="d-block">Doctor Name:</span> Dr. D Sinha</p>
               <p><span className="d-block">Specialization:</span> Heart</p>
               <p><span className="d-block">Schedule Type :</span> Single</p>
@@ -94,11 +103,13 @@ function AppointmentScheduling(){
               <p><span className="d-block">Appointment Time:</span> 04:00 PM - 07:00PM</p>
               <p><span className="d-block">Place:</span> New Life - Bablatala</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <div className="mb-3 mt-3 text-center">
-              <a href='./bookings' className="btn primary-bg-color text-light">Book Now</a></div>
+              <div className="mb-3 mt-3 text-center d-flex justify-content-between">
+                <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
+                <a href='#' className="btn primary-bg-color text-light">Book Now</a>
+              </div>
             </div>
             <div className="button-box mb-3">
-              {/* <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span> */}
+              <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
               <p><span className="d-block">Doctor Name:</span> Dr.NP Kar</p>
               <p><span className="d-block">Specialization:</span> Medicine</p>
               <p><span className="d-block">Schedule Type :</span> Single</p>
@@ -106,9 +117,10 @@ function AppointmentScheduling(){
               <p><span className="d-block">Appointment Time:</span> 07:00 PM - 10:00PM</p>
               <p><span className="d-block">Place:</span> Apex - Joramandir</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <div className="mb-3 mt-3 text-center">
+              <div className="mb-3 mt-3 text-center d-flex justify-content-between">
                 {/* <button type="submit" className="btn primary-bg-color text-light">Book Now</button> */}
-                <a href='./bookings' className="btn primary-bg-color text-light">Book Now</a>
+                <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
+                <a href='#' className="btn primary-bg-color text-light">Book Now</a>
               </div>
             </div>
           </div>
