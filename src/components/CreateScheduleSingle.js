@@ -167,7 +167,7 @@ function CraeteScheduleSingle(){
         },
         body: JSON.stringify(jsonData),
       });
-      console.log(response)
+      
       let result = await response.json();
 
       if(result.success){

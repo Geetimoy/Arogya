@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 
 import Appfooter from "./AppFooter";
 
@@ -8,15 +9,19 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 import { Link, useParams } from "react-router-dom";
 
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from '../context/alert/AlertContext';
 
 import './CreateSchedule.css'
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+
 function CreateScheduleMultiple(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [isActive, setIsActive] = useState(false);
 
