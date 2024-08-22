@@ -153,74 +153,56 @@ function AppointmentScheduling(){
         <div className="row">
           <div className="col-12">
 
-            {scheduleList.map((schedule, index) => (
+            {scheduleList.map((schedule) => {
 
-              <div className="button-box pos-relative mb-3" key={schedule.doctor_avail_schedule_id}>
+              var scheduleTypeDescr = '';
+              if(schedule.schedule_type === '1') {
+                scheduleTypeDescr = 'single';
+              }
+              else if(schedule.schedule_type === '2') {
+                scheduleTypeDescr = 'repeat';
+              }
+              else if(schedule.schedule_type === '3') {
+                scheduleTypeDescr = 'multiple';
+              }
+              else if(schedule.schedule_type === '4') {
+                scheduleTypeDescr = 'multipletime';
+              }
+              
+              return <div className="button-box pos-relative mb-3" key={schedule.doctor_avail_schedule_id}>
                 {/* <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span> */}
                 <div className={`three-dot my-element2 ${openMenuId === schedule.doctor_avail_schedule_id ? 'active' : ''}`} onClick={() => handleMenuClick(schedule.doctor_avail_schedule_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
                 {openMenuId === schedule.doctor_avail_schedule_id && <div className='drop-menu'>
                     <ul>
                       <li><Link to={"#"}>Cancel Schedule</Link></li>
                       <li><Link to={"#"}>Close Booking</Link></li>
-                      <li><Link to={"#"}>Edit Schedule</Link></li>
+                      <li><Link to={`/create-schedule/${scheduleTypeDescr}/${schedule.doctor_avail_schedule_id}`}>Edit Schedule</Link></li>
                     </ul>
                   </div>
                 }
-                <p><span className="d-block">Doctor Name:</span> Dr. D Sinha</p>
-                <p><span className="d-block">Specialization:</span> Heart</p>
-                <p><span className="d-block">Schedule Type :</span> Single</p>
-                <p><span className="d-block">Appointment Date:</span> Tuesday 6th August, 2024</p>
-                <p><span className="d-block">Appointment Time:</span> 04:00 PM - 07:00PM</p>
-                <p><span className="d-block">Place:</span> New Life - Bablatala</p>
-                <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
+                <p><span className="d-block">Doctor Name:</span> Dr. {schedule.display_name}</p>
+                <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p>
+                <p><span className="d-block">Schedule Type :</span> {schedule.schedule_type_descr}</p>
+                <p>
+                  <span className="d-block">Appointment Date & Time:</span>
+                  {
+                    schedule.schedule_dates.map((dateTime, index) => {
+                      return <label key={index}>{dateTime.date} @ {dateTime.time_from} - {dateTime.time_to}</label>
+                    })
+                  } 
+                </p>
+                <p><span className="d-block">Place:</span> {schedule.clinic_details}</p>
+                <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p>
                 <div className="mb-3 mt-3 text-center d-flex justify-content-between">
                   <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
                   <a href='#' className="btn primary-bg-color text-light">Book Now</a>
                 </div>
               </div>
 
-            ))}
+            })}
 
             {scheduleList.length === 0 && <div className='text-center'>No Records Found</div>}
 
-
-            <div className="button-box pos-relative mb-3">
-              {/* <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span> */}
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"#"}>Cancel Schedule</Link></li>
-                  <li><Link to={"#"}>Close Booking</Link></li>
-                  <li><Link to={"#"}>Edit Schedule</Link></li>
-                </ul>
-              </div>
-              <p><span className="d-block">Doctor Name:</span> Dr. D Sinha</p>
-              <p><span className="d-block">Specialization:</span> Heart</p>
-              <p><span className="d-block">Schedule Type :</span> Single</p>
-              <p><span className="d-block">Appointment Date:</span> Tuesday 6th August, 2024</p>
-              <p><span className="d-block">Appointment Time:</span> 04:00 PM - 07:00PM</p>
-              <p><span className="d-block">Place:</span> New Life - Bablatala</p>
-              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <div className="mb-3 mt-3 text-center d-flex justify-content-between">
-                <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
-                <a href='#' className="btn primary-bg-color text-light">Book Now</a>
-              </div>
-            </div>
-            <div className="button-box mb-3">
-              <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
-              <p><span className="d-block">Doctor Name:</span> Dr.NP Kar</p>
-              <p><span className="d-block">Specialization:</span> Medicine</p>
-              <p><span className="d-block">Schedule Type :</span> Single</p>
-              <p><span className="d-block">Appointment Date:</span> Monday 12th August, 2024</p>
-              <p><span className="d-block">Appointment Time:</span> 07:00 PM - 10:00PM</p>
-              <p><span className="d-block">Place:</span> Apex - Joramandir</p>
-              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <div className="mb-3 mt-3 text-center d-flex justify-content-between">
-                {/* <button type="submit" className="btn primary-bg-color text-light">Book Now</button> */}
-                <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
-                <a href='#' className="btn primary-bg-color text-light">Book Now</a>
-              </div>
-            </div>
           </div>
         </div>
         <Modal show={showModal} onHide={modalClose}>

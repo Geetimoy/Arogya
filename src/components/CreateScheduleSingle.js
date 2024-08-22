@@ -26,7 +26,8 @@ function CraeteScheduleSingle(){
   const [isActive, setIsActive] = useState(false);
 
   const [urlParam, setUrlParam] = useState(useParams());
-  const scheduleType = urlParam.scheduleType;
+  const scheduleType  = urlParam.scheduleType;
+  const scheduleId    = urlParam.scheduleId;
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
