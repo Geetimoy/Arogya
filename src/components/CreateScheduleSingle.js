@@ -182,6 +182,61 @@ function CraeteScheduleSingle(){
     }
   }
 
+  useEffect(() => {
+
+    if(systemContext.systemDetails.system_id && scheduleId){
+      getSingleScheduleDetails(scheduleId);
+    }
+
+    // eslint-disable-next-line
+    
+  }, [systemContext.systemDetails.system_id]);
+
+  const getSingleScheduleDetails = async (scheduleId) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["user_account_key"]  = decryptedLoginDetails.account_key;
+    jsonData["user_account_type"] = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+    jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    jsonData["schedule_id"]       = scheduleId;
+    
+    const response1 = await fetch(`${API_URL}/singleDoctorSchedules`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    let scheduleDetails = result1.data;
+
+    if(scheduleDetails.length > 0){
+
+      scheduleDetails = result1.data[0];
+      formData['scheduleFromDate']          = {value:scheduleDetails.display_name, errorClass:"", errorMessage:""};
+      formData['scheduleToDate']            = {value:scheduleDetails.contact_no, errorClass:"", errorMessage:""};
+      formData['scheduleFromTime']          = {value:scheduleDetails.whatsapp_no, errorClass:"", errorMessage:""};
+      formData['scheduleToTime']            = {value:scheduleDetails.email_id, errorClass:"", errorMessage:""};
+      formData['scheduleConsultationMode']  = {value:scheduleDetails.gender, errorClass:"", errorMessage:""};
+      formData['scheduleContactDetails']    = {value:scheduleDetails.age, errorClass:"", errorMessage:""};
+      formData['scheduleTotalAppoitments']  = {value:scheduleDetails.how_commute, errorClass:"", errorMessage:""};
+      formData['scheduleIsStrictFull']      = {value:scheduleDetails.medical_experiences, errorClass:"", errorMessage:""};
+      formData['scheduleExtraAppointments'] = {value:scheduleDetails.medical_certificates, errorClass:"", errorMessage:""};
+
+      setFormData({...formData, ...formData});
+
+    }
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -192,7 +247,7 @@ function CraeteScheduleSingle(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Create Schedule </h5>
+            <h5 className='mx-2 mb-0'>{(scheduleId) ? 'Edit' : 'Create' } Schedule </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -218,7 +273,7 @@ function CraeteScheduleSingle(){
         </div>
       </div>
       <div className="app-body create-schedule">
-        <p><small>Add Your Schedule - Single Day</small></p>
+        <p><small>{(scheduleId) ? 'Edit' : 'Add' } Your Schedule - Single Day</small></p>
         <div className="row mb-4">
           <div className='col-12'>
             <form id="createScheduleForm" name="createScheduleForm" onSubmit={handleFormSubmit}>
