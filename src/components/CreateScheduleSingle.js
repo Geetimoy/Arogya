@@ -139,7 +139,7 @@ function CraeteScheduleSingle(){
 
       let jsonData = {};
 
-      jsonData['system_id']           = systemContext.systemDetails.system_id;
+      jsonData['system_id']             = systemContext.systemDetails.system_id;
       jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
       jsonData["doctor_account_type"]   = decryptedLoginDetails.account_type;
       jsonData["user_login_id"]         = decryptedLoginDetails.login_id;
@@ -147,6 +147,10 @@ function CraeteScheduleSingle(){
       jsonData["device_token"]          = DEVICE_TOKEN;
       jsonData["user_lat"]              = localStorage.getItem('latitude');
       jsonData["user_long"]             = localStorage.getItem('longitude');
+
+      if(scheduleId){
+        jsonData["schedule_id"]         = scheduleId;
+      }
 
       jsonData["consultation_mode"]     = formData['scheduleConsultationMode'].value;
       jsonData["clinic_details"]        = formData['scheduleContactDetails'].value;
@@ -161,19 +165,37 @@ function CraeteScheduleSingle(){
       
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/addSingleDayDoctorSchedule`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
-      
+      if(scheduleId){
+        var response = await fetch(`${API_URL}/updateSingleDayDoctorSchedule`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      else{
+        var response = await fetch(`${API_URL}/addSingleDayDoctorSchedule`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+
       let result = await response.json();
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        resetForm();
+
+        if(scheduleId){
+          //Do Nothing
+        }
+        else{
+          resetForm();
+        }
+
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -184,7 +206,7 @@ function CraeteScheduleSingle(){
 
   useEffect(() => {
 
-    if(systemContext.systemDetails.system_id && scheduleId){
+    if(systemContext.systemDetails.system_id && scheduleId){ 
       getSingleScheduleDetails(scheduleId);
     }
 
@@ -217,20 +239,26 @@ function CraeteScheduleSingle(){
     });
     let result1 = await response1.json();
 
-    let scheduleDetails = result1.data;
+    let scheduleDetails = result1.data.data;
 
-    if(scheduleDetails.length > 0){
+    if(scheduleDetails.length > 0){ 
 
-      scheduleDetails = result1.data[0];
-      formData['scheduleFromDate']          = {value:scheduleDetails.display_name, errorClass:"", errorMessage:""};
-      formData['scheduleToDate']            = {value:scheduleDetails.contact_no, errorClass:"", errorMessage:""};
-      formData['scheduleFromTime']          = {value:scheduleDetails.whatsapp_no, errorClass:"", errorMessage:""};
-      formData['scheduleToTime']            = {value:scheduleDetails.email_id, errorClass:"", errorMessage:""};
-      formData['scheduleConsultationMode']  = {value:scheduleDetails.gender, errorClass:"", errorMessage:""};
-      formData['scheduleContactDetails']    = {value:scheduleDetails.age, errorClass:"", errorMessage:""};
-      formData['scheduleTotalAppoitments']  = {value:scheduleDetails.how_commute, errorClass:"", errorMessage:""};
-      formData['scheduleIsStrictFull']      = {value:scheduleDetails.medical_experiences, errorClass:"", errorMessage:""};
-      formData['scheduleExtraAppointments'] = {value:scheduleDetails.medical_certificates, errorClass:"", errorMessage:""};
+      scheduleDetails = scheduleDetails[0];
+
+      formData['scheduleFromDate']          = {value:scheduleDetails['schedule_dates'][0].schedule_date_from, errorClass:"", errorMessage:""};
+      setSingleFromDate(scheduleDetails['schedule_dates'][0].schedule_date_from);
+
+      formData['scheduleToDate']            = {value:scheduleDetails['schedule_dates'][0].schedule_date_to, errorClass:"", errorMessage:""};
+      setSingleToDate(scheduleDetails['schedule_dates'][0].schedule_date_to);
+
+      formData['scheduleFromTime']          = {value:scheduleDetails['schedule_dates'][0].time_from, errorClass:"", errorMessage:""};
+      formData['scheduleToTime']            = {value:scheduleDetails['schedule_dates'][0].time_to, errorClass:"", errorMessage:""};
+      
+      formData['scheduleConsultationMode']  = {value:scheduleDetails.consultation_mode, errorClass:"", errorMessage:""};
+      formData['scheduleContactDetails']    = {value:scheduleDetails.clinic_details, errorClass:"", errorMessage:""};
+      formData['scheduleTotalAppoitments']  = {value:scheduleDetails.total_appointments, errorClass:"", errorMessage:""};
+      formData['scheduleIsStrictFull']      = {value:scheduleDetails.is_strict_full, errorClass:"", errorMessage:""};
+      formData['scheduleExtraAppointments'] = {value:scheduleDetails.buffer_percentage, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
 
@@ -299,7 +327,7 @@ function CraeteScheduleSingle(){
                 <div className='row'>
                   <div className={`col-6 ${formData["scheduleFromTime"].errorClass}`}>
                     <label className='pos'>From :</label>
-                    <select className="form-control pos" id="scheduleFromTime" default={formData["scheduleFromTime"].value} name="scheduleFromTime" onChange={handleChange}>
+                    <select className="form-control pos" id="scheduleFromTime" value={formData["scheduleFromTime"].value} name="scheduleFromTime" onChange={handleChange}>
                       <option value="">Select</option>
                       {timePickerDropDown.map((item, index)=>{ 
                         return <option key={index} value={item}>{item}</option>
@@ -309,7 +337,7 @@ function CraeteScheduleSingle(){
                   </div>
                   <div className={`col-6 ${formData["scheduleToTime"].errorClass}`}>
                     <label className='pos'>To :</label>
-                    <select className="form-control pos" id="scheduleToTime" name="scheduleToTime" default={formData["scheduleToTime"].value} onChange={handleChange}>
+                    <select className="form-control pos" id="scheduleToTime" name="scheduleToTime" value={formData["scheduleToTime"].value} onChange={handleChange}>
                       <option value="">Select</option>
                       {timePickerDropDown.map((item, index)=>{ 
                         return <option key={index} value={item}>{item}</option>
@@ -369,7 +397,7 @@ function CraeteScheduleSingle(){
                 <small className="error-mesg">{formData["scheduleExtraAppointments"].errorMessage}</small>
               </div>
               <div className="btns-group d-flex justify-content-center">
-                <button type="submit" className="btn btn-primary primary-bg-color border-0 mx-2">Add my Schedule</button>
+                <button type="submit" className="btn btn-primary primary-bg-color border-0 mx-2">{(scheduleId) ? 'Update' : 'Add' } Schedule</button>
                 <a href="/appointment-scheduling"><button type="button" className="btn btn-primary primary-bg-color border-0 mx-2">Cancel</button></a>
               </div>
             </form>
