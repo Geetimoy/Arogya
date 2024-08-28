@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import Appfooter from "./AppFooter";
 
@@ -29,9 +29,21 @@ function Bookings(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [bookingStatus, setBookingStatus] = useState('');
+
   const [showModal, setShowModal] = useState(false); 
-  const modalClose  = () => setShowModal(false);  
-  const modalShow   = () => setShowModal(true);
+  const modalClose  = () => {
+    setBookingStatus('');
+    setShowModal(false);  
+  }
+  const modalShow   = (status) => {
+    setBookingStatus(status);
+    setShowModal(true);
+  }
+
+  useEffect(() => {
+
+  }, [bookingStatus])
 
   return(
     <>
@@ -97,15 +109,15 @@ function Bookings(){
               <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_confirm" onClick={() => { modalShow(); }} to="#">Confirm</label>
+                <label className="custom-control-label no-style" htmlFor="doctor_confirm" onClick={() => { modalShow('confirm'); }} to="#">Confirm</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_cancel" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_cancel" onClick={() => { modalShow(); }} to="#">Cancel</label>
+                <label className="custom-control-label no-style" htmlFor="doctor_cancel" onClick={() => { modalShow('cancel'); }} to="#">Cancel</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_reject" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_reject" onClick={() => { modalShow(); }} to="#">Reject</label>
+                <label className="custom-control-label no-style" htmlFor="doctor_reject" onClick={() => { modalShow('reject'); }} to="#">Reject</label>
               </div>
             </div>
             </div>
@@ -124,7 +136,7 @@ function Bookings(){
         </div>
         <Modal show={showModal} onHide={modalClose}>
           <Modal.Header>  
-            <h3>Booking Status</h3>
+            <h3>Booking Status - {bookingStatus.toUpperCase()}</h3>
           </Modal.Header>  
           <Modal.Body>  
             <div className='form-group'>
@@ -134,14 +146,13 @@ function Bookings(){
                 onChange={handleRadioChange}/>
                 <label className="custom-control-label no-style" htmlFor="schedule_single">Single Day</label>
               </div> */}
-              <div className="custom-control custom-radio custom-control-inline mt-2">
+              {(bookingStatus === 'confirm') && <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
                 <label className="custom-control-label no-style" htmlFor="doctor_confirm">Confirm</label>
-              </div>
-              <div className="mt-2">
-              <label htmlFor="doctor_cancel">Cancel Reason: </label>
-              <textarea name="doctor_cancel" id="doctor_cancel" rows="3"  className="form-control" placeholder="Cancel Reason"></textarea>
-              </div>
+              </div>}
+              {(bookingStatus === 'cancel' || bookingStatus === 'reject') && <div className="mt-2">
+                <textarea name="doctor_cancel" id="doctor_cancel" rows="3"  className="form-control" placeholder="Reason"></textarea>
+              </div>}
 
               {/* <div className="custom-control custom-radio mt-2">
                 <input type="radio" id="schedule_repeat" name="schedule" value="repeat" className="custom-control-input" checked={selectedOption === 'repeat'}
