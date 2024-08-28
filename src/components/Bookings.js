@@ -101,11 +101,11 @@ function Bookings(){
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_cancel" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_cancel">Cancel</label>
+                <label className="custom-control-label no-style" htmlFor="doctor_cancel" onClick={() => { modalShow(); }} to="#">Cancel</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_reject" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_reject">Reject</label>
+                <label className="custom-control-label no-style" htmlFor="doctor_reject" onClick={() => { modalShow(); }} to="#">Reject</label>
               </div>
             </div>
             </div>
@@ -138,6 +138,11 @@ function Bookings(){
                 <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
                 <label className="custom-control-label no-style" htmlFor="doctor_confirm">Confirm</label>
               </div>
+              <div className="mt-2">
+              <label htmlFor="doctor_cancel">Cancel Reason: </label>
+              <textarea name="doctor_cancel" id="doctor_cancel" rows="3"  className="form-control" placeholder="Cancel Reason"></textarea>
+              </div>
+
               {/* <div className="custom-control custom-radio mt-2">
                 <input type="radio" id="schedule_repeat" name="schedule" value="repeat" className="custom-control-input" checked={selectedOption === 'repeat'}
                 onChange={handleRadioChange} />
