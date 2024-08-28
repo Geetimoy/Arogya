@@ -121,7 +121,7 @@ function AppointmentScheduling(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Appointment Schedule </h5>
+            <h5 className='mx-2 mb-0'>Appointment Schedules </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -148,7 +148,7 @@ function AppointmentScheduling(){
       </div>
       <div className="app-body bookings">
         <div className="add-booking mb-3">
-          <Link className="btn btn-sm btn-primary primary-bg-color border-0" onClick={() => { modalShow(); }} to="#">Add/Update your Schedule</Link>
+          <Link className="btn btn-sm btn-primary primary-bg-color border-0" onClick={() => { modalShow(); }} to="#">Create/Update Schedule</Link>
         </div>
         <div className="row">
           <div className="col-12">

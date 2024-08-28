@@ -30,8 +30,12 @@ function Landing() {
         </header>
       
         <div className='footerLogo text-center'>
-          {systemContext.systemDetails.system_id !== "telehealth.serviceplace.org.in" && <img src={systemContext.systemDetails.thp_ngo_logo_url} className='mx-3' alt=''/>}
-          <img src={systemContext.systemDetails.thp_sp_global_logo_url} className='mx-3' alt=''/>
+          {/* {systemContext.systemDetails.system_id !== "telehealth.serviceplace.org.in" && <img src={systemContext.systemDetails.thp_ngo_logo_url} className='mx-3' alt=''/>}
+          <img src={systemContext.systemDetails.thp_sp_global_logo_url} className='mx-3' alt=''/> */}
+
+          {systemContext.systemDetails.system_id !== "telehealth.serviceplace.org.in" && 
+          <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>}
+          <Link to={systemContext.systemDetails.thp_sp_global_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
         </div>
       </div>
     </div>

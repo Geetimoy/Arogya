@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import "./Bookings.css";
 
 import SystemContext from "../context/system/SystemContext";
+import {Modal, Button} from 'react-bootstrap'; 
 
 function Bookings(){
 
@@ -27,6 +28,10 @@ function Bookings(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const [showModal, setShowModal] = useState(false); 
+  const modalClose  = () => setShowModal(false);  
+  const modalShow   = () => setShowModal(true);
 
   return(
     <>
@@ -65,7 +70,7 @@ function Bookings(){
       </div>
       <div className="app-body bookings">
         {/* <div className="add-booking mb-3"><a class="btn btn-sm btn-primary primary-bg-color border-0" href="selectpatient">Add New Booking</a></div> */}
-        <div><p><small>Booking List</small></p></div>
+        {/* <div><p><small>Booking List</small></p></div> */}
         <div className="row">
           <div className="col-12">
             <div className="button-box pos-relative mb-3">
@@ -82,17 +87,33 @@ function Bookings(){
                 </ul>
               </div>
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
-              <p><span className="d-block">Doctor Name:</span> Dr. D Sinha</p>
+              <p><span className="d-block">Patient Name:</span> Anuska D</p>
+              <p><span className="d-block">Volunteer Name:</span> Dipendu Banerjee</p>
               <p><span className="d-block">Specialization:</span> Heart</p>
               <p><span className="d-block">Appointment Date:</span> Tuesday 6th August, 2024</p>
               <p><span className="d-block">Appointment Time:</span> 04:38 PM</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <p><span className="d-block">Booking Status:</span> Appointment Confirmed by Doctor </p>
+              <span className="d-block">Booking Status:</span>
+              <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
+                <label className="custom-control-label no-style" htmlFor="doctor_confirm" onClick={() => { modalShow(); }} to="#">Confirm</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="doctor_cancel" name="doctor_confirmation" className="custom-control-input" value="" />
+                <label className="custom-control-label no-style" htmlFor="doctor_cancel">Cancel</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="doctor_reject" name="doctor_confirmation" className="custom-control-input" value="" />
+                <label className="custom-control-label no-style" htmlFor="doctor_reject">Reject</label>
+              </div>
+            </div>
             </div>
             <div className="button-box mb-3">
               <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
-              <p><span className="d-block">Doctor Name:</span> Dr.NP Kar</p>
+              <p><span className="d-block">Patient Name:</span> Dhirendra Kumar</p>
+              <p><span className="d-block">Volunteer Name:</span> Atanu Basu</p>
               <p><span className="d-block">Specialization:</span> Medicine</p>
               <p><span className="d-block">Appointment Date:</span> Monday 12th August, 2024</p>
               <p><span className="d-block">Appointment Time:</span> 04:38 PM</p>
@@ -101,6 +122,42 @@ function Bookings(){
             </div>
           </div>
         </div>
+        <Modal show={showModal} onHide={modalClose}>
+          <Modal.Header>  
+            <h3>Booking Status</h3>
+          </Modal.Header>  
+          <Modal.Body>  
+            <div className='form-group'>
+              {/* {selectedOption === '' && <p class="text-danger">Please select an option</p>} */}
+              {/* <div className="custom-control custom-radio mt-2">
+                <input type="radio" id="schedule_single" name="schedule" value="single" className="custom-control-input" checked={selectedOption === 'single'}
+                onChange={handleRadioChange}/>
+                <label className="custom-control-label no-style" htmlFor="schedule_single">Single Day</label>
+              </div> */}
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
+                <label className="custom-control-label no-style" htmlFor="doctor_confirm">Confirm</label>
+              </div>
+              {/* <div className="custom-control custom-radio mt-2">
+                <input type="radio" id="schedule_repeat" name="schedule" value="repeat" className="custom-control-input" checked={selectedOption === 'repeat'}
+                onChange={handleRadioChange} />
+                <label className="custom-control-label no-style" htmlFor="schedule_repeat">Repeat <small>(Fixed Time)</small></label>
+              </div> */}
+
+              {/* <div className="custom-control custom-radio mt-2">
+                <input type="radio" id="schedule_multiple" name="schedule" value="multiple" className="custom-control-input" checked={selectedOption === 'multiple'}
+                onChange={handleRadioChange} />
+                <label className="custom-control-label no-style" htmlFor="schedule_multiple">Multiple Dates <small>(Fixed Time)</small></label>
+              </div> */}
+
+              
+            </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            {/* <Button variant="primary" className='btn primary-bg-color text-light border-0' onClick={redirectToCreateSchedule}>Proceed</Button>   */}
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
       </div>
       <Appfooter></Appfooter>
     </>

@@ -112,7 +112,7 @@ function Verification(){
       <div className='container'>
         <div className='login-container'>
           <div className='mt-3'> 
-            <Link to="/forgotpassword"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
+            <Link to="/signup"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
             <span className='m-2'>Verification</span>
           </div>
           <div className='login-box verification'>
