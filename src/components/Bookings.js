@@ -146,11 +146,11 @@ function Bookings(){
                 onChange={handleRadioChange}/>
                 <label className="custom-control-label no-style" htmlFor="schedule_single">Single Day</label>
               </div> */}
-              {(bookingStatus === 'confirm') && <div className="custom-control custom-radio custom-control-inline mt-2">
+              {(bookingStatus === 'confirm') && <div className="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
                 <label className="custom-control-label no-style" htmlFor="doctor_confirm">Confirm</label>
               </div>}
-              {(bookingStatus === 'cancel' || bookingStatus === 'reject') && <div className="mt-2">
+              {(bookingStatus === 'cancel' || bookingStatus === 'reject') && <div>
                 <textarea name="doctor_cancel" id="doctor_cancel" rows="3"  className="form-control" placeholder="Reason"></textarea>
               </div>}
 
