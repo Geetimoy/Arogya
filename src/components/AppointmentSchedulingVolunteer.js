@@ -36,7 +36,7 @@ function AppointmentSchedulingVolunteer(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Appointment Schedules</h5>
+            <h5 className='mx-2 mb-0'>Doctor Schedules</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -91,23 +91,23 @@ function AppointmentSchedulingVolunteer(){
               </div> */}
               <p><span className="d-block">Doctor Name:</span> RM Das</p>
               <p><span className="d-block">Specialization:</span> Heart</p>
-              <p><span className="d-block">Schedule Type :</span> Single</p>
-              <p><span className="d-block">Appointment Date:</span> Tuesday 30th August, 2024</p>
-              <p><span className="d-block">Appointment Time:</span> 04:00 PM - 07:00PM</p>
+              
+              <p><span className="d-block">Date of Visit:</span> Tuesday 30th August, 2024</p>
+              <p><span className="d-block">Availability Time:</span> 04:00 PM - 07:00PM</p>
               <p><span className="d-block">Place:</span> New Life - Bablatala</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p>
+              {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
             </div>
             <div className="button-box mb-3">
               <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
               <p><span className="d-block">Doctor Name:</span> A Acharya</p>
               <p><span className="d-block">Specialization:</span> General Physician</p>
-              <p><span className="d-block">Schedule Type :</span> Single</p>
+              
               <p><span className="d-block">Appointment Date:</span> Monday 12th Sept, 2024</p>
               <p><span className="d-block">Appointment Time:</span> 07:00 PM - 10:00PM</p>
               <p><span className="d-block">Place:</span> Apex - Joramandir</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p>
+              {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
             </div>
           </div>
         </div>
