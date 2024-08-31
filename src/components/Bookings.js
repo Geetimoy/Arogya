@@ -30,11 +30,13 @@ function Bookings(){
   };
 
   const [bookingStatus, setBookingStatus] = useState('');
+  const [finalConfirm, setFinalConfirm]   = useState(false);
 
   const [showModal, setShowModal] = useState(false); 
   const modalClose  = () => {
     setBookingStatus('');
     setShowModal(false);  
+    setFinalConfirm(false);
   }
   const modalShow   = (status) => {
     setBookingStatus(status);
@@ -134,7 +136,7 @@ function Bookings(){
             </div>
           </div>
         </div>
-        <Modal show={showModal} onHide={modalClose}>
+        <Modal show={showModal} onHide={modalClose} backdrop={`static`}>
           <Modal.Header>  
             <h3>Booking Status - {bookingStatus.toUpperCase()}</h3>
           </Modal.Header>  
@@ -147,8 +149,8 @@ function Bookings(){
                 <label className="custom-control-label no-style" htmlFor="schedule_single">Single Day</label>
               </div> */}
               {(bookingStatus === 'confirm') && <div className="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_confirm">Confirm</label>
+                <input type="radio" id="final_confirm" name="final_confirm" className="custom-control-input" value="1" checked={finalConfirm} onChange={() => setFinalConfirm(!finalConfirm)}/>
+                <label className="custom-control-label no-style" htmlFor="final_confirm">Confirm</label>
               </div>}
               {(bookingStatus === 'cancel' || bookingStatus === 'reject') && <div>
                 <textarea name="doctor_cancel" id="doctor_cancel" rows="3"  className="form-control" placeholder="Reason"></textarea>
