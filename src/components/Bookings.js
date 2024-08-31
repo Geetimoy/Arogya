@@ -103,15 +103,15 @@ function Bookings(){
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
               <p><span className="d-block">Patient Name:</span> Anuska D</p>
               <p><span className="d-block">Volunteer Name:</span> Dipendu Banerjee</p>
-              <p><span className="d-block">Specialization:</span> Heart</p>
+              
               <p><span className="d-block">Appointment Date:</span> Tuesday 6th August, 2024</p>
               <p><span className="d-block">Appointment Time:</span> 04:38 PM</p>
-              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
+              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic) -  Bablatola</p>
               <span className="d-block">Booking Status:</span>
               <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_confirm" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_confirm" onClick={() => { modalShow('confirm'); }} to="#">Confirm</label>
+                <label className="custom-control-label no-style" htmlFor="doctor_confirm" onClick={() => { modalShow('confirm'); }} to="#">Confirmed</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_cancel" name="doctor_confirmation" className="custom-control-input" value="" />
@@ -119,7 +119,7 @@ function Bookings(){
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="doctor_reject" name="doctor_confirmation" className="custom-control-input" value="" />
-                <label className="custom-control-label no-style" htmlFor="doctor_reject" onClick={() => { modalShow('reject'); }} to="#">Reject</label>
+                <label className="custom-control-label no-style" htmlFor="doctor_reject" onClick={() => { modalShow('reject'); }} to="#">Request Reject</label>
               </div>
             </div>
             </div>
@@ -152,8 +152,15 @@ function Bookings(){
                 <input type="radio" id="final_confirm" name="final_confirm" className="custom-control-input" value="1" checked={finalConfirm} onChange={() => setFinalConfirm(!finalConfirm)}/>
                 <label className="custom-control-label no-style" htmlFor="final_confirm">Confirm</label>
               </div>}
-              {(bookingStatus === 'cancel' || bookingStatus === 'reject') && <div>
+              {(bookingStatus === 'cancel') && <div>
+                <p>Patient already waiting for you. Are you sure? </p>
+                {/* <p>Reject </p> */}
                 <textarea name="doctor_cancel" id="doctor_cancel" rows="3"  className="form-control" placeholder="Reason"></textarea>
+              </div>}
+
+              {(bookingStatus === 'reject') && <div>
+                <p>Reject </p>
+                <textarea name="doctor_reject" id="doctor_reject" rows="3"  className="form-control" placeholder="Reason"></textarea>
               </div>}
 
               {/* <div className="custom-control custom-radio mt-2">
@@ -172,7 +179,7 @@ function Bookings(){
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
-            {/* <Button variant="primary" className='btn primary-bg-color text-light border-0' onClick={redirectToCreateSchedule}>Proceed</Button>   */}
+            <Button variant="primary" className='btn primary-bg-color text-light border-0'>Confirm</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
           </Modal.Footer>  
         </Modal>

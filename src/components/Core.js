@@ -39,7 +39,10 @@ import UpdateAwarenessSurvey from './youngwomens/UpdateAwarenessSurvey';
 import YoungWomanUploadPrescription from './youngwomens/YoungWomanUploadPrescription';
 import YoungWomanPrescriptions from './youngwomens/YoungWomanPrescriptions';
 import TestReports from './youngwomens/TestReports';
+
 import AppointmentScheduling from './AppointmentScheduling';
+import AppointmentSchedulingVolunteer from './AppointmentSchedulingVolunteer';
+
 import CreateSchedule from './CreateSchedule';
 import Bookings from './Bookings';
 import SelectPatient from './SelectPatient';
@@ -291,6 +294,8 @@ export default function Core() {
             <Route path="/patientprofiles/TestReports" exact element={<TestReports />} />
             
             <Route path="/appointment-scheduling" exact element={<AppointmentScheduling />} />
+            <Route path="/appointment-scheduling-volunteer" exact element={<AppointmentSchedulingVolunteer />} />
+            
             <Route path="/create-schedule/:scheduleType/:scheduleId" exact element={<CreateSchedule />} />
             <Route path="/create-schedule/:scheduleType" exact element={<CreateSchedule />} />
 

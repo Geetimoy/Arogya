@@ -40,6 +40,10 @@ function AppointmentScheduling(){
   const modalClose  = () => setShowModal(false);  
   const modalShow   = () => setShowModal(true);
 
+  const [showModal2, setShowModal2] = useState(false); 
+  const modalClose2  = () => setShowModal2(false);  
+  const modalShow2   = () => setShowModal2(true);
+
   const [selectedOption, setSelectedOption] = useState('single');
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
@@ -174,14 +178,14 @@ function AppointmentScheduling(){
                 <div className={`three-dot my-element2 ${openMenuId === schedule.doctor_avail_schedule_id ? 'active' : ''}`} onClick={() => handleMenuClick(schedule.doctor_avail_schedule_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
                 {openMenuId === schedule.doctor_avail_schedule_id && <div className='drop-menu'>
                     <ul>
-                      <li><Link to={"#"}>Cancel Schedule</Link></li>
-                      <li><Link to={"#"}>Close Booking</Link></li>
+                      <li><Link onClick={() => { modalShow2(); }} to="#">Cancel Schedule</Link></li>
+                      <li><Link onClick={() => { modalShow2(); }} to="#">Close Booking</Link></li>
                       <li><Link to={`/create-schedule/${scheduleTypeDescr}/${schedule.doctor_avail_schedule_id}`}>Edit Schedule</Link></li>
                     </ul>
                   </div>
                 }
-                <p><span className="d-block">Doctor Name:</span> Dr. {schedule.display_name}</p>
-                <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p>
+                {/* <p><span className="d-block">Doctor Name:</span> Dr. {schedule.display_name}</p> */}
+                {/* <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p> */}
                 <p><span className="d-block">Schedule Type :</span> {schedule.schedule_type_descr}</p>
                 <p>
                   <span className="d-block">Appointment Date & Time:</span>
@@ -193,6 +197,9 @@ function AppointmentScheduling(){
                 </p>
                 <p><span className="d-block">Place:</span> {schedule.clinic_details}</p>
                 <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p>
+
+                <p><span className="d-block">Total Appointment Allowed/Booked:</span> 5/2</p>
+
                 <div className="mb-3 mt-3 text-center d-flex justify-content-between">
                   <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
                   <a href='#' className="btn primary-bg-color text-light">Book Now</a>
@@ -224,22 +231,38 @@ function AppointmentScheduling(){
                 <label className="custom-control-label no-style" htmlFor="schedule_repeat">Repeat <small>(Fixed Time)</small></label>
               </div>
 
-              <div className="custom-control custom-radio mt-2">
+              {/* <div className="custom-control custom-radio mt-2">
                 <input type="radio" id="schedule_multiple" name="schedule" value="multiple" className="custom-control-input" checked={selectedOption === 'multiple'}
                 onChange={handleRadioChange} />
                 <label className="custom-control-label no-style" htmlFor="schedule_multiple">Multiple Dates <small>(Fixed Time)</small></label>
-              </div>
+              </div> */}
 
-              <div className="custom-control custom-radio mt-2">
+              {/* <div className="custom-control custom-radio mt-2">
                 <input type="radio" id="schedule_multiple_t" name="schedule" value="multipletime" className="custom-control-input" checked={selectedOption === 'multipletime'}
                 onChange={handleRadioChange} />
                 <label className="custom-control-label no-style" htmlFor="schedule_multiple_t">Multiple Dates <small>(Multiple Time)</small></label>
-              </div>
+              </div> */}
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="primary" className='btn primary-bg-color text-light border-0' onClick={redirectToCreateSchedule}>Proceed</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showModal2} onHide={modalClose}>
+          <Modal.Header>  
+            <h3>Cancel Schedule</h3>
+            {/* <h3>Close Bookings</h3> */}
+          </Modal.Header>  
+          <Modal.Body>
+            <p>Already 5 bookings confirmed. Are you sure?</p>
+            {/* For Close Bookings - when click  */}
+            {/* <p>You have 20 appointment limit. Now, only 10 appointment booked. Are you sure?</p> */}
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+          <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>No</Button>  
           </Modal.Footer>  
         </Modal>
         {/* <div className="row">
