@@ -71,7 +71,7 @@ function AppointmentSchedulingVolunteer(){
             </svg> </span>
             <span>Advanced Search</span>
           </div>
-          <span id="filters-search-options-toggle" class="btn p-0">
+          <span id="filters-search-options-toggle" className="btn p-0">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <path d="M2.5 20c-0.276 0-0.5-0.224-0.5-0.5v-8c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v8c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M2.5 6c-0.276 0-0.5-0.224-0.5-0.5v-5c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v5c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M3.5 10h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM1.5 8c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> <path d="M9.5 20c-0.276 0-0.5-0.224-0.5-0.5v-4c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v4c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M9.5 10c-0.276 0-0.5-0.224-0.5-0.5v-9c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v9c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M10.5 14h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM8.5 12c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> <path d="M16.5 20c-0.276 0-0.5-0.224-0.5-0.5v-10c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v10c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M16.5 4c-0.276 0-0.5-0.224-0.5-0.5v-3c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v3c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M17.5 8h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM15.5 6c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> </svg>
           </span>
         </div>
@@ -96,14 +96,16 @@ function AppointmentSchedulingVolunteer(){
               <p><span className="d-block">Availability Time:</span> 04:00 PM - 07:00PM</p>
               <p><span className="d-block">Place:</span> New Life - Bablatala</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
+              <div className="mb-3 mt-3 text-center">
+                  <a href='#' className="btn primary-bg-color text-light">Book Now</a>
+                </div>
             </div>
             <div className="button-box mb-3">
-              <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
+              
               <p><span className="d-block">Doctor Name:</span> A Acharya</p>
               <p><span className="d-block">Specialization:</span> General Physician</p>
               
-              <p><span className="d-block">Appointment Date:</span> Monday 12th Sept, 2024</p>
+              <p><span className="d-block">Date of Visit:</span> Monday 12th Sept, 2024</p>
               <p><span className="d-block">Appointment Time:</span> 07:00 PM - 10:00PM</p>
               <p><span className="d-block">Place:</span> Apex - Joramandir</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
