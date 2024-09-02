@@ -1,10 +1,11 @@
 import Appfooter from './AppFooter';
 import AppTop from './AppTop';
+import CryptoJS from "crypto-js";
 
 import './Services.css'
 
 import { Link } from "react-router-dom";
-
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import patientprofile from '../assets/images/icon-patient-profile.png';
 import janani from '../assets/images/icon-janani.png';
 import appointmentscheduling from '../assets/images/icon-appointment-scheduling.png';
@@ -18,6 +19,7 @@ import testreport from '../assets/images/icon-upload-test-report.png';
 
 function Services(){
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   return(
     <>
@@ -64,8 +66,11 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' />
-                <h6>Appointment Scheduling</h6></Link>
+
+                {(decryptedLoginDetails.account_type == 4) && <Link to="/appointment-scheduling-volunteer"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>}
+
+                {(decryptedLoginDetails.account_type == 5) && <Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>}
+                
               </div>
             </div>
             <div className='col-6'>
