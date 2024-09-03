@@ -97,7 +97,7 @@ function AppointmentSchedulingVolunteer(){
               <p><span className="d-block">Place:</span> New Life - Bablatala</p>
               <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
               <div className="mb-3 mt-3 text-center">
-                  <a href='#' className="btn primary-bg-color text-light">Book Now</a>
+                  <a href='/patientprofiles' className="btn primary-bg-color text-light">Book Now</a>
                 </div>
             </div>
             <div className="button-box mb-3">

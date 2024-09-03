@@ -202,7 +202,7 @@ function AppointmentScheduling(){
 
                 <div className="mb-3 mt-3 text-center d-flex justify-content-between">
                   <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
-                  <a href='#' className="btn primary-bg-color text-light">Book Now</a>
+                  <a href='/patientprofiles' className="btn primary-bg-color text-light">Book Now</a>
                 </div>
               </div>
 
