@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import Appfooter from "./AppFooter";
+import CryptoJS from "crypto-js";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
@@ -7,12 +8,18 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 import { Link, useNavigate } from "react-router-dom";
 
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from '../context/alert/AlertContext';
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 
 import "./Bookings.css";
+
+import {Modal, Button} from 'react-bootstrap'; 
 
 function AppointmentSchedulingVolunteer(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -25,6 +32,60 @@ function AppointmentSchedulingVolunteer(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const [scheduleList, setScheduleList]   = useState([]);
+
+  const listSchedule = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["user_account_key"]          = decryptedLoginDetails.account_key;
+    jsonData["user_account_type"]         = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": "",
+                                              "schedule_date_from": "2024-01-01",
+                                              "schedule_date_to": "2024-09-28",
+                                              "limit": "4",
+                                              "offset": "0",
+                                              "order_by_field": "schedule_date_from",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/doctorSchedulesList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setScheduleList(result.data.data);
+    }
+    else{
+      setScheduleList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listSchedule("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
 
   return(
     <>
@@ -77,40 +138,35 @@ function AppointmentSchedulingVolunteer(){
         </div>
       <div className="row">
           <div className="col-12">
-            <div className="button-box pos-relative mb-3">
-              {/* <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div> */}
-              {/* <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Cancel Booking</Link></li>
-                  <li><Link to={"#"}>Close Booking</Link></li>
-                  <li><Link to={"/view-review"}>View Review</Link></li>
-                  <li><Link to={"/write-review"}>Write Review</Link></li>
-                </ul>
-              </div> */}
-              <p><span className="d-block">Doctor Name:</span> RM Das</p>
-              <p><span className="d-block">Specialization:</span> Heart</p>
+
+            {scheduleList.map((schedule) => {
+
+              return <div className="button-box mb-3" key={schedule.doctor_avail_schedule_id}> 
               
-              <p><span className="d-block">Date of Visit:</span> Tuesday 30th August, 2024</p>
-              <p><span className="d-block">Availability Time:</span> 04:00 PM - 07:00PM</p>
-              <p><span className="d-block">Place:</span> New Life - Bablatala</p>
-              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <div className="mb-3 mt-3 text-center">
+                <p><span className="d-block">Doctor Name:</span> {schedule.display_name}</p>
+                <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p>
+
+                <p>
+                  <span className="d-block">Date of Visit & Appointment Time:</span> 
+                  {
+                    schedule.schedule_dates.map((dateTime, index) => {
+                      return <label key={index}>{dateTime.date} @ {dateTime.time_from} - {dateTime.time_to}</label>
+                    })
+                  }
+                </p>
+
+                <p><span className="d-block">Place:</span> {schedule.clinic_details}</p>
+                <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p>
+                {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
+
+                <div className="mb-3 mt-3 text-center">
                   <a href='/patientprofiles' className="btn primary-bg-color text-light">Book Now</a>
                 </div>
-            </div>
-            <div className="button-box mb-3">
-              
-              <p><span className="d-block">Doctor Name:</span> A Acharya</p>
-              <p><span className="d-block">Specialization:</span> General Physician</p>
-              
-              <p><span className="d-block">Date of Visit:</span> Monday 12th Sept, 2024</p>
-              <p><span className="d-block">Appointment Time:</span> 07:00 PM - 10:00PM</p>
-              <p><span className="d-block">Place:</span> Apex - Joramandir</p>
-              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
-            </div>
+              </div>
+
+              })}
+
+            {scheduleList.length === 0 && <div className='text-center'>No Records Found</div>}
           </div>
         </div>
       </div>
