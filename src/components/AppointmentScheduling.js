@@ -49,6 +49,8 @@ function AppointmentScheduling(){
     setSelectedOption(event.target.value);
   };
 
+  const [popupScheduleCounter, setPopupScheduleCounter] = useState(0);
+
   const redirectToCreateSchedule = () => {
     if(selectedOption === ''){
       
@@ -179,7 +181,7 @@ function AppointmentScheduling(){
                 {openMenuId === schedule.doctor_avail_schedule_id && <div className='drop-menu'>
                     <ul>
                       <li><Link onClick={() => { modalShow2(); }} to="#">Cancel Schedule</Link></li>
-                      <li><Link onClick={() => { modalShow2(); }} to="#">Close Booking</Link></li>
+                      <li><Link onClick={() => {  }} to="#">Close Booking</Link></li>
                       <li><Link to={`/create-schedule/${scheduleTypeDescr}/${schedule.doctor_avail_schedule_id}`}>Edit Schedule</Link></li>
                     </ul>
                   </div>
@@ -198,7 +200,7 @@ function AppointmentScheduling(){
                 <p><span className="d-block">Place:</span> {schedule.clinic_details}</p>
                 <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p>
 
-                <p><span className="d-block">Total Appointment Allowed/Booked:</span> 5/2</p>
+                <p><span className="d-block">Total Appointment Allowed/Booked:</span> {schedule.total_appointments}/2</p>
 
                 <div className="mb-3 mt-3 text-center d-flex justify-content-between">
                   <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
@@ -253,56 +255,16 @@ function AppointmentScheduling(){
         <Modal show={showModal2} onHide={modalClose}>
           <Modal.Header>  
             <h3>Cancel Schedule</h3>
-            {/* <h3>Close Bookings</h3> */}
           </Modal.Header>  
           <Modal.Body>
-            <p>Already 5 bookings confirmed. Are you sure?</p>
-            {/* For Close Bookings - when click  */}
-            {/* <p>You have 20 appointment limit. Now, only 10 appointment booked. Are you sure?</p> */}
+            <p>Already {popupScheduleCounter} bookings confirmed. Are you sure?</p>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
           <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>No</Button>  
           </Modal.Footer>  
         </Modal>
-        {/* <div className="row">
-          <div className="col-12">
-            <div className="button-box pos-relative mb-3">
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Cancel Booking</Link></li>
-                  <li><Link to={"#"}>Close Booking</Link></li>
-                  <li><Link to={"/view-review"}>View Review</Link></li>
-                  <li><Link to={"/write-review"}>Write Review</Link></li>
-                </ul>
-              </div>
-              <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
-              <p><span className="d-block">Doctor Name:</span> Doctor2</p>
-              <p><span className="d-block">Specialization:</span> Test</p>
-              <p><span className="d-block">Schedule Type :</span> Single</p>
-              <p><span className="d-block">Appointment Date:</span> Tuesday 6th August, 2024</p>
-              <p><span className="d-block">Appointment Time:</span> 04:00 PM - 07:00PM</p>
-              <p><span className="d-block">Place:</span> New Life - Bablatala</p>
-              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p>
-            </div>
-            <div className="button-box mb-3">
-              <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span>
-              <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
-              <p><span className="d-block">Doctor Name:</span> Doctor2</p>
-              <p><span className="d-block">Specialization:</span> Test</p>
-              <p><span className="d-block">Schedule Type :</span> Single</p>
-              <p><span className="d-block">Appointment Date:</span> Monday 12th August, 2024</p>
-              <p><span className="d-block">Appointment Time:</span> 07:00 PM - 10:00PM</p>
-              <p><span className="d-block">Place:</span> Apex - Joramandir</p>
-              <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
-              <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p>
-            </div>
-          </div>
-        </div> */}
+        
       </div>
       <Appfooter></Appfooter>
     </>
