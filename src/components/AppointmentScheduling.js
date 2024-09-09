@@ -36,20 +36,28 @@ function AppointmentScheduling(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [confirmedBookingCounter, setConfirmedBookingCounter]                 = useState(0);
+  const [editScheduleId, setEditScheduleId]                                   = useState(0);
+  const [cancellationReason, setCancellationReason]                           = useState('');
+  const [cancellationReasonErrorMessage, setCancellationReasonErrorMessage]   = useState(false);
+
   const [showModal, setShowModal] = useState(false); 
   const modalClose  = () => setShowModal(false);  
   const modalShow   = () => setShowModal(true);
 
   const [showModal2, setShowModal2] = useState(false); 
   const modalClose2  = () => setShowModal2(false);  
-  const modalShow2   = () => setShowModal2(true);
+  const modalShow2   = (scheduleId, confirmedBooking) => {
+    setEditScheduleId(scheduleId);
+    setConfirmedBookingCounter(confirmedBooking);
+    setShowModal2(true);
+    setCancellationReason('');
+  }
 
   const [selectedOption, setSelectedOption] = useState('single');
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
-  const [popupScheduleCounter, setPopupScheduleCounter] = useState(0);
 
   const redirectToCreateSchedule = () => {
     if(selectedOption === ''){
@@ -110,12 +118,58 @@ function AppointmentScheduling(){
 
   }
 
+  const cancelSchedule = async () => {
+
+    if(cancellationReason === ''){
+      setCancellationReasonErrorMessage(true);
+      return false;
+    }
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["user_account_type"]         = decryptedLoginDetails.account_type;
+    jsonData["user_account_key"]          = decryptedLoginDetails.account_key;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["schedule_id"]               = editScheduleId;
+    jsonData["cancelled_reason"]          = cancellationReason;
+
+    const response = await fetch(`${API_URL}/cancelDoctorSchedule`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      modalClose2();
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
       listSchedule("");
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
+
+  const changeCancellationReason = (e) => {
+    const { name, value } = e.target;
+    setCancellationReason(value);
+  }
 
   return(
     <>
@@ -180,7 +234,7 @@ function AppointmentScheduling(){
                 <div className={`three-dot my-element2 ${openMenuId === schedule.doctor_avail_schedule_id ? 'active' : ''}`} onClick={() => handleMenuClick(schedule.doctor_avail_schedule_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
                 {openMenuId === schedule.doctor_avail_schedule_id && <div className='drop-menu'>
                     <ul>
-                      <li><Link onClick={() => { modalShow2(); }} to="#">Cancel Schedule</Link></li>
+                      <li><Link onClick={() => { modalShow2(schedule.doctor_avail_schedule_id, '2'); }} to="#">Cancel Schedule</Link></li>
                       <li><Link onClick={() => {  }} to="#">Close Booking</Link></li>
                       <li><Link to={`/create-schedule/${scheduleTypeDescr}/${schedule.doctor_avail_schedule_id}`}>Edit Schedule</Link></li>
                     </ul>
@@ -192,7 +246,7 @@ function AppointmentScheduling(){
                 <p>
                   <span className="d-block">Appointment Date & Time:</span>
                   {
-                    schedule.schedule_dates.map((dateTime, index) => {
+                    schedule.schedule_dates && schedule.schedule_dates.map((dateTime, index) => {
                       return <label key={index}>{dateTime.date} @ {dateTime.time_from} - {dateTime.time_to}</label>
                     })
                   } 
@@ -257,10 +311,13 @@ function AppointmentScheduling(){
             <h3>Cancel Schedule</h3>
           </Modal.Header>  
           <Modal.Body>
-            <p>Already {popupScheduleCounter} bookings confirmed. Are you sure?</p>
+            <p>Already {confirmedBookingCounter} bookings confirmed. Are you sure?</p>
+            <label><span className="d-block">Reason:</span></label>
+            <textarea className='form-control' value={cancellationReason} onChange={changeCancellationReason}></textarea>
+            {cancellationReasonErrorMessage && <small className="text-danger">This field is required!</small>}
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-          <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={cancelSchedule}>Confirm</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>No</Button>  
           </Modal.Footer>  
         </Modal>
