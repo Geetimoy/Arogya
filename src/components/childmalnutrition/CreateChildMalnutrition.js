@@ -153,7 +153,6 @@ function CreateChildMalnutrition(){
             <label htmlFor="child_state">State <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="child_state" id="child_state" placeholder="State" />
           </div>
-
           <div className="form-group">
             <label htmlFor="name">Pincode <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="" id="" placeholder="Pincode" />
