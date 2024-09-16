@@ -42,47 +42,51 @@ function Services(){
                 <h6>Set Schedule</h6></Link>
               </div>
             </div> */}
-            {!restrictedAccountTypes.includes(accountType) &&(
-              <div className='col-6'>
+            {
+              (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 5) && <div className='col-6'>
                 <div className='button-box'>
                   <Link to="/patientprofiles">
                   <img src={patientprofile} alt='' />
                   <h6>Patient Profiles</h6></Link>
                 </div>
               </div>
-            )}
-            {!restrictedAccountTypes.includes(accountType) &&(
-            <div className='col-6'>
-              <div className='button-box'>
-                <Link to="/child-malnutrition"><img src={malnutrition} alt='' />
-                <h6>Child Malnutrition</h6></Link>
+            }
+            {
+              (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 5) && <div className='col-6'>
+                <div className='button-box'>
+                  <Link to="/child-malnutrition"><img src={malnutrition} alt='' />
+                  <h6>Child Malnutrition</h6></Link>
+                </div>
               </div>
-            </div>
-            )}
-            {!restrictedAccountTypes.includes(accountType) &&(
-            <div className='col-6'>
-              <div className='button-box'>
-                <Link to="/youngwomens"><img src={youngwoman} alt='' />
-                <h6>Young Women's (11yrs to 18yrs)</h6></Link>
+            }
+            {
+              (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 5) && <div className='col-6'>
+                <div className='button-box'>
+                  <Link to="/youngwomens"><img src={youngwoman} alt='' />
+                  <h6>Young Women's (11yrs to 18yrs)</h6></Link>
+                </div>
               </div>
-            </div>
-            )}
-            {!restrictedAccountTypes.includes(accountType) &&(
-            <div className='col-6'>
-              <div className='button-box'>
-                <Link to="/janani">
-                <img src={janani} alt='' />
-                <h6>Janani</h6></Link>
+            }
+            {
+              (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 5) && <div className='col-6'>
+                <div className='button-box'>
+                  <Link to="/janani">
+                  <img src={janani} alt='' />
+                  <h6>Janani</h6></Link>
+                </div>
               </div>
-            </div>
-            )}
+            }
             
             <div className='col-6'>
               <div className='button-box'>
 
-                {(decryptedLoginDetails.account_type == 4) && (decryptedLoginDetails.account_type == 3) && (decryptedLoginDetails.account_type == 31) && (decryptedLoginDetails.account_type == 32) && (decryptedLoginDetails.account_type == 33) && <Link to="/appointment-scheduling-volunteer"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>}
+                {
+                  (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <Link to="/appointment-scheduling-volunteer"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>
+                }
 
-                {(decryptedLoginDetails.account_type == 5) && <Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>}
+                {
+                  (decryptedLoginDetails.account_type == 5) && <Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>
+                }
                 
               </div>
             </div>
