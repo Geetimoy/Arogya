@@ -40,6 +40,8 @@ function AppointmentScheduling(){
   const [editScheduleId, setEditScheduleId]                                   = useState(0);
   const [cancellationReason, setCancellationReason]                           = useState('');
   const [cancellationReasonErrorMessage, setCancellationReasonErrorMessage]   = useState(false);
+  const [closingReason, setClosingReason]                                     = useState('');
+  const [closingReasonErrorMessage, setClosingReasonErrorMessage]             = useState(false);
 
   const [showModal, setShowModal] = useState(false); 
   const modalClose  = () => setShowModal(false);  
@@ -52,6 +54,15 @@ function AppointmentScheduling(){
     setConfirmedBookingCounter(confirmedBooking);
     setShowModal2(true);
     setCancellationReason('');
+  }
+
+  const [showModal3, setShowModal3] = useState(false); 
+  const modalClose3  = () => setShowModal3(false);  
+  const modalShow3   = (scheduleId, confirmedBooking) => {
+    setEditScheduleId(scheduleId);
+    setConfirmedBookingCounter(confirmedBooking);
+    setShowModal3(true);
+    setClosingReasonErrorMessage('');
   }
 
   const [selectedOption, setSelectedOption] = useState('single');
@@ -152,6 +163,49 @@ function AppointmentScheduling(){
     if(result.success){
       alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
       modalClose2();
+      listSchedule("");
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
+  const closeBooking = async () => {
+
+    if(closingReason === ''){
+      setClosingReasonErrorMessage(true);
+      return false;
+    }
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["user_account_type"]         = decryptedLoginDetails.account_type;
+    jsonData["user_account_key"]          = decryptedLoginDetails.account_key;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["schedule_id"]               = editScheduleId;
+    jsonData["closed_reason"]             = closingReason;
+
+    const response = await fetch(`${API_URL}/closeDoctorSchedule`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      modalClose3();
+      listSchedule("");
     }
     else{
       alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -169,6 +223,11 @@ function AppointmentScheduling(){
   const changeCancellationReason = (e) => {
     const { name, value } = e.target;
     setCancellationReason(value);
+  }
+
+  const changeClosingReason = (e) => {
+    const { name, value } = e.target;
+    setClosingReason(value);
   }
 
   return(
@@ -235,13 +294,14 @@ function AppointmentScheduling(){
                 {openMenuId === schedule.doctor_avail_schedule_id && <div className='drop-menu'>
                     <ul>
                       <li><Link onClick={() => { modalShow2(schedule.doctor_avail_schedule_id, '2'); }} to="#">Cancel Schedule</Link></li>
-                      <li><Link onClick={() => {  }} to="#">Close Booking</Link></li>
+                      <li><Link onClick={() => { modalShow3(schedule.doctor_avail_schedule_id, '2'); }} to="#">Close Booking</Link></li>
                       <li><Link to={`/create-schedule/${scheduleTypeDescr}/${schedule.doctor_avail_schedule_id}`}>Edit Schedule</Link></li>
                     </ul>
                   </div>
                 }
                 {/* <p><span className="d-block">Doctor Name:</span> Dr. {schedule.display_name}</p> */}
                 {/* <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p> */}
+                <p><span className="d-block">Schedule Status :</span> {schedule.schedule_status}</p>
                 <p><span className="d-block">Schedule Type :</span> {schedule.schedule_type_descr}</p>
                 <p>
                   <span className="d-block">Appointment Date & Time:</span>
@@ -306,7 +366,7 @@ function AppointmentScheduling(){
           </Modal.Footer>  
         </Modal>
 
-        <Modal show={showModal2} onHide={modalClose}>
+        <Modal show={showModal2} onHide={modalClose2}>
           <Modal.Header>  
             <h3>Cancel Schedule</h3>
           </Modal.Header>  
@@ -319,6 +379,22 @@ function AppointmentScheduling(){
           <Modal.Footer className='justify-content-center'> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={cancelSchedule}>Confirm</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>No</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showModal3} onHide={modalClose3}>
+          <Modal.Header>  
+            <h3>Close Booking</h3>
+          </Modal.Header>  
+          <Modal.Body>
+            <p>Already {confirmedBookingCounter} bookings confirmed. Are you sure?</p>
+            <label><span className="d-block">Reason:</span></label>
+            <textarea className='form-control' value={closingReason} onChange={changeClosingReason}></textarea>
+            {closingReasonErrorMessage && <small className="text-danger">This field is required!</small>}
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeBooking}>Confirm</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose3}>No</Button>  
           </Modal.Footer>  
         </Modal>
         
