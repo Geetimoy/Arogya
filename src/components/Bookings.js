@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 
 import Appfooter from "./AppFooter";
-
+import Rating from "./Rating"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
@@ -42,6 +42,18 @@ function Bookings(){
     setBookingStatus(status);
     setShowModal(true);
   }
+
+  const [showModal2, setShowModal2] = useState(false); 
+  const modalClose2  = () => setShowModal2(false);  
+  const modalShow2   = () => setShowModal2(true);
+
+
+  const [rating, setRating] = useState(0);
+
+  const handleStarClick = (data) => {
+    setRating(data); // Toggle the state
+    console.log(data);
+  };
 
   useEffect(() => {
 
@@ -96,8 +108,8 @@ function Bookings(){
                   <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Cancel Booking</Link></li>
                   <li><Link to={"#"}>Close Booking</Link></li>
-                  <li><Link to={"/view-review"}>View Review</Link></li>
-                  <li><Link to={"/write-review"}>Write Review</Link></li>
+                  <li><Link onClick={() => { modalShow2(); }} to="#">View Review</Link></li>
+                  <li><Link onClick={() => { modalShow2(); }} to="#">Write Review</Link></li>
                 </ul>
               </div>
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
@@ -181,6 +193,30 @@ function Bookings(){
           <Modal.Footer className='justify-content-center'>  
             <Button variant="primary" className='btn primary-bg-color text-light border-0'>Confirm</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showModal2} onHide={modalClose2}>
+          <Modal.Header>  
+            <h3>Write Review</h3>
+          </Modal.Header>  
+          <Modal.Body>
+            <p>Servicewise Experience</p>
+            <div className="rating-star mb-3">
+              <span className="">Not at all likely</span>
+              <span>
+                <div className="rating-symbol mx-2">
+                  <Rating sendDataToParent={handleStarClick}></Rating>
+                </div>
+              </span>
+              <span className="">Extremely likely</span>
+            </div>
+            <label><span className="d-block">Would you like to share any other comments:</span></label>
+            <textarea className='form-control' value=''>Thank you so much for your help</textarea>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
           </Modal.Footer>  
         </Modal>
       </div>

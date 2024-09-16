@@ -146,6 +146,10 @@ body:has(.serviceplace-container-class) .modal .modal-footer .primary-bg-color:h
     background-color: #009fdc;
 }
 
+body:has(.serviceplace-container-class) .modal .rating-symbol .star{
+    color: #009fdc;
+}
+
 /* TELEHEALTH */
 .telehealth-container-class .primary-color{
     color: #2aa142; 
@@ -200,6 +204,10 @@ body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color{
 
 body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color:hover{
     background-color: #2aa142;
+}
+
+body:has(.telehealth-container-class) .modal .rating-symbol .star{
+    color: #2aa142;
 }
 
 
@@ -260,6 +268,10 @@ body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color:hover{
     background-color: #952025;
 }
 
+body:has(.ukhra-container-class) .modal .rating-symbol .star{
+    color: #af1e25;
+}
+
 /* RGVN */
 .rgvn-container-class .primary-color{
     color: #2aa142; 
@@ -316,6 +328,10 @@ body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color:hover{
     background-color: #2aa142;
 }
 
+body:has(.rgvn-container-class) .modal .rating-symbol .star{
+    color: #2aa142;
+}
+
 /* B2B */
 .b2h-container-class .primary-color{
     color: #c10000; 
@@ -370,4 +386,8 @@ body:has(.b2h-container-class) .modal .modal-footer .primary-bg-color{
 
 body:has(.b2h-container-class) .modal .modal-footer .primary-bg-color:hover{
     background-color: #a30707;
+}
+
+body:has(.b2h-container-clas) .modal .rating-symbol .star{
+    color: #a30707;
 }
