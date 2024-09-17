@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
 
@@ -19,6 +20,36 @@ function CreateChildMalnutrition(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const [formData, setFormData] = useState({
+    child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_user_id: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_mother_name: {required: true, value:"1", errorClass:"", errorMessage:""},
+    is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_guardian_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_bpl_apl: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_gender: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_age: {required: false, value:"", errorClass:"", errorMessage:""},
+    is_your_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_phone_no: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_whatsapp_no: {required: false, value:"", errorClass:"", errorMessage:""},
+    child_email: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_address: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_address_2: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_landmark: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_city: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_state: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_pincode: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_school_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_school_class: {required: true, value:"1", errorClass:"", errorMessage:""},
+    child_school_section: {required: true, value:"1", errorClass:"", errorMessage:""},
+    house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    drinking_water_type: {required: false, value:"", errorClass:"", errorMessage:""},
+    sub_volunteer_name: {required: false, value:"", errorClass:"", errorMessage:""},
+    special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
+  });
 
   return(
     <>
@@ -61,19 +92,19 @@ function CreateChildMalnutrition(){
         <form className="mt-3" name="" id="">
           <div className="form-group">
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Full Name" />
+            <input type="text" className="form-control" name="child_full_name" id="child_full_name" placeholder="Full Name" />
           </div>
           <div className="form-group">
             <label htmlFor="name">User ID <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="User ID" />
+            <input type="text" className="form-control" name="child_user_id" id="child_user_id" placeholder="User ID" />
           </div>
           <div className="form-group">
-            <label htmlFor="childn_father_name">Name of Father <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="childn_father_name" id="childn_father_name" placeholder="Name of Father" />
+            <label htmlFor="child_father_name">Name of Father <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name=" " id="child_father_name" placeholder="Name of Father" />
           </div>
           <div className="form-group">
             <label htmlFor="child_mother_name">Name of Mother <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="childn_mother_name" id="childn_mother_name" placeholder="Name of Mother" />
+            <input type="text" className="form-control" name="child_mother_name" id="child_mother_name" placeholder="Name of Mother" />
           </div>
 
           <div className="form-group">
@@ -91,62 +122,62 @@ function CreateChildMalnutrition(){
           </div>
 
           <div className="form-group">
-            <label htmlFor="child_father_occupation">Occupation of Guardian <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_father_occupation" id="child_father_occupation" placeholder="Occupation of Guardian" />
+            <label htmlFor="child_guardian_occupation">Occupation of Guardian <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="child_guardian_occupation" id="child_guardian_occupation" placeholder="Occupation of Guardian" />
           </div>
 
           <div className="form-group">
             <label className="no-style"><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
-            <select className="form-control">
-              <option value="1" selected="">BPL</option>
+            <select className="form-control" id="child_bpl_apl" name="child_bpl_apl">
+              <option value="1">BPL</option>
               <option value="2">APL</option>
             </select>
           </div>
           <div className="form-group">
             <label className="no-style"><span className="d-block">Gender  <span className="text-danger">*</span></span></label>
-            <select className="form-control">
-              <option value="1" selected="">Male</option>
+            <select className="form-control" id="child_gender" name="child_gender">
+              <option value="1">Male</option>
               <option value="2">Female</option>
             </select>
           </div>
           <div className="form-group">
             <label htmlFor="name">Age <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Age" />
+            <input type="text" className="form-control" name="child_age" id="child_age" placeholder="Age" />
           </div>
           <div className="form-group">
             <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
-            <select className="form-control">
-              <option value="1" selected="">Yes</option>
+            <select className="form-control" id="is_your_personal_mobile_number" name="is_your_personal_mobile_number">
+              <option value="1">Yes</option>
               <option value="2">No</option>
             </select>
           </div>
           <div className="form-group">
             <label htmlFor="name">Phone No <span className="text-danger">*</span></label>
-            <input type="tel" className="form-control" name="" id="" placeholder="Phone No" />
+            <input type="tel" className="form-control" name="child_phone_no" id="child_phone_no" placeholder="Phone No" />
           </div>
           <div className="form-group">
             <label htmlFor="name">WhatsApp No </label>
-            <input type="tel" className="form-control" name="" id="" placeholder="WhatsApp No" />
+            <input type="tel" className="form-control" name="child_whatsapp_no" id="child_whatsapp_no" placeholder="WhatsApp No" />
           </div>
           <div className="form-group">
             <label htmlFor="name">Email </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Email" />
+            <input type="text" className="form-control" name="child_email" id="child_email" placeholder="Email" />
           </div>
           <div className="form-group">
             <label htmlFor="name">Address <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Address" />
+            <input type="text" className="form-control" name="child_address" id="child_address" placeholder="Address" />
           </div>
           <div className="form-group">
             <label htmlFor="name">Address 2 </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Address 2" />
+            <input type="text" className="form-control" name="child_address_2" id="child_address_2" placeholder="Address 2" />
           </div>
           <div className="form-group">
             <label htmlFor="name">Landmark </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Landmark" />
+            <input type="text" className="form-control" name="child_landmark" id="child_landmark" placeholder="Landmark" />
           </div>
           <div className="form-group">
             <label htmlFor="name">Village/Town/City <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Village/Town/City" />
+            <input type="text" className="form-control" name="child_city" id="child_city" placeholder="Village/Town/City" />
           </div>
 
           <div className="form-group">
@@ -155,12 +186,12 @@ function CreateChildMalnutrition(){
           </div>
           <div className="form-group">
             <label htmlFor="name">Pincode <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="Pincode" />
+            <input type="text" className="form-control" name="child_pincode" id="child_pincode" placeholder="Pincode" />
           </div>
           <div className="form-group">
             <label><span className="d-block">Servie Area <span className="text-danger">*</span> </span> </label>
-            <select className="form-control">
-              <option value="1" selected="">Ukhra</option>
+            <select className="form-control" id="child_service_area" name="child_service_area">
+              <option value="1">Ukhra</option>
               <option value="2">B2B</option>
             </select>
           </div>
@@ -203,10 +234,9 @@ function CreateChildMalnutrition(){
             </select>
           </div>
 
-
           <div className="form-group">
             <label htmlFor="name">Special Notes </label>
-            <input type="text" className="form-control" name="" id="" placeholder="Special Notes" />
+            <input type="text" className="form-control" name="special_notes" id="special_notes" placeholder="Special Notes" />
           </div>
           <div className='mb-3 mt-3'>
             <button type="submit" className='btn primary-bg-color text-light w-100'>Create Profile</button>
