@@ -337,15 +337,15 @@ function BasicInformationDoctor(){
             </div>
             <div className='form-group'>
               <label>Educational Degree</label>
-              <input type="text" className="form-control" name="educationalDegree" id="educationalDegree"  value="Doctorate" />
+              <input type="text" className="form-control" name="educationalDegree" id="educationalDegree"  value="Doctorate" onChange={handleChange} />
             </div>
             <div className='form-group'>
               <label>Specialization</label>
-              <input type="text" className="form-control" name="specialization" id="specialization"  value="Heart" />
+              <input type="text" className="form-control" name="specialization" id="specialization"  value="Heart" onChange={handleChange} />
             </div>
             <div className='form-group'>
               <label>Is Available on Emergency Call?</label>
-              <input type="text" className="form-control" name="specialization" id="specialization"  value="Yes" />
+              <input type="text" className="form-control" name="specialization" id="specialization"  value="Yes" onChange={handleChange} />
             </div>
             <div className={`form-group ${formData["basicInfoAddress1"].errorClass}`}>
               <label>Address 1   <span className="text-danger">*</span> : </label>
