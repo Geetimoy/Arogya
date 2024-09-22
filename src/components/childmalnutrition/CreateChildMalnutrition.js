@@ -59,6 +59,29 @@ function CreateChildMalnutrition(){
     }
   }
 
+  const resetForm = () => {
+    const fieldName = Object.keys(formData);
+    setSelectedOptions([]);
+    fieldName.forEach((element) => {
+      if(element === "child_bpl_apl" || element === "child_gender" || element === "house_type" || element === "drinking_water_type"){
+        formData[element].value         = "1";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+      else  if(element === "is_your_personal_mobile_number"){
+        formData[element].value         = "t";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+      else{
+        formData[element].value         = "";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+    })
+    setFormData({...formData, ...formData});
+  }
+
   const [formData, setFormData] = useState({
     child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
     child_user_id: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -66,10 +89,10 @@ function CreateChildMalnutrition(){
     child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
     is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
     child_guardian_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_bpl_apl: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_gender: {required: true, value:"", errorClass:"", errorMessage:""},
+    child_bpl_apl: {required: true, value:"1", errorClass:"", errorMessage:""},
+    child_gender: {required: true, value:"1", errorClass:"", errorMessage:""},
     child_age: {required: true, value:"", errorClass:"", errorMessage:""},
-    is_your_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
+    is_your_personal_mobile_number: {required: true, value:"t", errorClass:"", errorMessage:""},
     child_phone_no: {required: true, value:"", errorClass:"", errorMessage:""},
     child_whatsapp_no: {required: false, value:"", errorClass:"", errorMessage:""},
     child_email: {required: false, value:"", errorClass:"", errorMessage:""},
@@ -84,8 +107,7 @@ function CreateChildMalnutrition(){
     child_school_class: {required: true, value:"", errorClass:"", errorMessage:""},
     child_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    drinking_water_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    sub_volunteer_name: {required: false, value:"", errorClass:"", errorMessage:""},
+    drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
@@ -94,6 +116,66 @@ function CreateChildMalnutrition(){
     let errorCounter = validateForm();
     if(errorCounter === 0){
 
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+      jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+
+      var serviceArea                       = '{'+formData['child_service_area'].value+'}';
+
+      jsonData["child_body_height"]         = '0';
+      jsonData["child_body_weight"]         = '0';
+      jsonData["child_name"]                = formData['child_full_name'].value;
+      //jsonData["user_id"]                   = formData['child_user_id'].value;
+      jsonData["child_father_name"]         = formData['child_father_name'].value;
+      jsonData["child_mother_name"]         = formData['child_mother_name'].value;
+      jsonData["is_premature_birth"]        = formData['is_premature_birth'].value;
+      jsonData["child_father_occupation"]   = formData['child_guardian_occupation'].value;
+      jsonData["is_bpl"]                    = formData['child_bpl_apl'].value;
+      jsonData["child_age"]                 = formData['child_age'].value;
+      jsonData["child_gender"]              = formData['child_gender'].value;
+      jsonData["is_your_personal_number"]   = formData['is_your_personal_mobile_number'].value;
+      jsonData["child_contact_number"]      = formData['child_phone_no'].value;
+      jsonData["child_whatsup_number"]      = formData['child_whatsapp_no'].value;
+      jsonData["child_email_id"]            = formData['child_email'].value;
+      jsonData["child_address"]             = formData['child_address'].value;
+      jsonData["child_address_2"]           = formData['child_address_2'].value;
+      jsonData["child_landmark"]            = formData['child_landmark'].value;
+      jsonData["child_city"]                = formData['child_city'].value;
+      jsonData["child_state"]               = formData['child_state'].value;
+      jsonData["child_postal_code"]         = formData['child_pincode'].value;
+      jsonData["service_area"]              = serviceArea;
+      jsonData["child_school_name"]         = formData['child_school_name'].value;
+      jsonData["child_school_class"]        = formData['child_school_class'].value;
+      jsonData["child_school_section"]      = formData['child_school_section'].value;
+      jsonData["house_type"]                = formData['house_type'].value;
+      jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
+      jsonData["special_note"]              = formData['special_notes'].value;
+
+      const response = await fetch(`${API_URL}/addUpdateChildProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      console.log(response)
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        resetForm();
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
       
     }
   }
@@ -318,15 +400,6 @@ function CreateChildMalnutrition(){
               <option value="3">Pond</option>
             </select>
             <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
-          </div>
-
-          <div className={`form-group ${formData["sub_volunteer_name"].errorClass}`}>
-            <label htmlFor="sub_volunteer_name">Sub Volunteer Name</label>
-            <select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name" value={formData["sub_volunteer_name"].value} onChange={handleChange}>
-              <option value="1">Sub Volunteer1</option>
-              <option value="2">Sub Volunteer2</option>
-            </select>
-            <small className="error-mesg">{formData["sub_volunteer_name"].errorMessage}</small>
           </div>
 
           <div className={`form-group ${formData["special_notes"].errorClass}`}>
