@@ -84,7 +84,6 @@ function CreateChildMalnutrition(){
 
   const [formData, setFormData] = useState({
     child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_user_id: {required: true, value:"", errorClass:"", errorMessage:""},
     child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
     is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -133,7 +132,6 @@ function CreateChildMalnutrition(){
       jsonData["child_body_height"]         = '0';
       jsonData["child_body_weight"]         = '0';
       jsonData["child_name"]                = formData['child_full_name'].value;
-      //jsonData["user_id"]                   = formData['child_user_id'].value;
       jsonData["child_father_name"]         = formData['child_father_name'].value;
       jsonData["child_mother_name"]         = formData['child_mother_name'].value;
       jsonData["is_premature_birth"]        = formData['is_premature_birth'].value;
@@ -249,11 +247,11 @@ function CreateChildMalnutrition(){
             <input type="text" className="form-control" name="child_full_name" id="child_full_name" placeholder="Full Name" onChange={handleChange} value={formData["child_full_name"].value ? formData["child_full_name"].value : ''}/>
             <small className="error-mesg">{formData["child_full_name"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["child_user_id"].errorClass}`}>
+          {/* <div className={`form-group ${formData["child_user_id"].errorClass}`}>
             <label htmlFor="name">User ID <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="child_user_id" id="child_user_id" placeholder="User ID" onChange={handleChange} value={formData["child_user_id"].value ? formData["child_user_id"].value : ''}/>
             <small className="error-mesg">{formData["child_user_id"].errorMessage}</small>
-          </div>
+          </div> */}
           <div className={`form-group ${formData["child_father_name"].errorClass}`}>
             <label htmlFor="child_father_name">Name of Father <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="child_father_name" id="child_father_name" placeholder="Name of Father" onChange={handleChange} value={formData["child_father_name"].value ? formData["child_father_name"].value : ''}/>
