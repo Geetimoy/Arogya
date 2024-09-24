@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
 
@@ -11,9 +12,18 @@ import childprofile from '../../assets/images/profile-child.png';
 
 import SystemContext from "../../context/system/SystemContext";
 
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
 function ChildMalnutrion(){
 
   const systemContext = useContext(SystemContext);
+
+  const [childList, setChildList] = useState([]);
+  const [openMenuId, setOpenMenuId] = useState(0);
+
+  const handleMenuClick = (accountId) => {
+    setOpenMenuId(openMenuId === accountId ? 0 : accountId);
+  };
 
   const [isActive, setIsActive] = useState(false);
 
@@ -26,6 +36,64 @@ function ChildMalnutrion(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const searchChild = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listChild(value);
+    }, 1000)
+  }
+
+  const listChild = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": searchKey,
+                                              "limit": "10",
+                                              "offset": "0",
+                                              "order_by_field": "account_id",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/childProfileList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setChildList(result.data);
+    }
+    else{
+      setChildList([]); 
+    }
+
+  }
+  
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listChild("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
 
 
   return(
@@ -67,43 +135,37 @@ function ChildMalnutrion(){
         <div className='add-patient'><Link to="/create-child-malnutrition" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Malnutrition</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Child Malnutrition' />
+            <input type="text" className='form-control' placeholder='Search Child Malnutrition' onChange={searchChild}/>
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
-                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Close Child Malnutrition</Link></li>
-                </ul>
+
+          {childList.map((child, index) => (
+            <div className='col-6' key={child.account_id}>
+              <div className='button-box'>
+                <div className={`three-dot my-element2 ${openMenuId === child.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(child.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
+
+                {openMenuId === child.account_id && <div className='drop-menu'>
+                    <ul>
+                      <li><Link to={`/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
+                      <li><Link to={`/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li>
+                      <li><Link to={`/child-upload-prescription/${child.account_key}`}>Upload Prescription</Link></li>
+                      <li><Link to={`/child-upload-test-reports/${child.account_key}`}>Upload Test Reports</Link></li>
+                      <li><Link to={"#"}>Close Child Malnutrition</Link></li>
+                    </ul>
+                  </div>
+                }
+                <Link to="#">
+                  <img src={childprofile} alt='' />
+                  <h6>{child.child_name}</h6>
+                </Link>
               </div>
-              <Link to="#">
-                <img src={childprofile} alt='' />
-                <h6>Child Malnutrition 1</h6>
-              </Link>
             </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"#"}>Close Patient</Link></li>
-                </ul>
-              </div>
-              <Link to="#">
-                <img src={childprofile} alt='' />
-                <h6>Child Malnutrition 2</h6>
-              </Link>
-            </div>
-          </div>
+          ))}
+
+          {childList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
+
         </div>
       </div>
       <Appfooter></Appfooter>

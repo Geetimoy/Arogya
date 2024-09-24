@@ -14,11 +14,11 @@ export default function BasicInformationMain() {
   console.log(decryptedLoginDetails.account_type);
   return (
     <>
-      {decryptedLoginDetails.account_type === 3 && <BasicInformationPatient/>} 
-      {decryptedLoginDetails.account_type === 4 && <BasicInformation/>}
-      {decryptedLoginDetails.account_type === 5 && <BasicInformationDoctor/>}
-      {decryptedLoginDetails.account_type === 6 && <BasicInformationPharmacy/>}
-      {decryptedLoginDetails.account_type === 32 && <BasicInformationYoungWomen/>}
+      {decryptedLoginDetails.account_type === '3' && <BasicInformationPatient/>} 
+      {decryptedLoginDetails.account_type === '4' && <BasicInformation/>}
+      {decryptedLoginDetails.account_type === '5' && <BasicInformationDoctor/>}
+      {decryptedLoginDetails.account_type === '6' && <BasicInformationPharmacy/>}
+      {decryptedLoginDetails.account_type === '32' && <BasicInformationYoungWomen/>}
     </>
   )
 }
