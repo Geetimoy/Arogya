@@ -1,25 +1,19 @@
-import { useState, useContext, useEffect } from 'react';
-import Appfooter from "./AppFooter";
-import CryptoJS from "crypto-js";
-
+import { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import patientprofile from '../assets/images/profile.png';
 
 import SystemContext from "../context/system/SystemContext";
-import AlertContext from '../context/alert/AlertContext';
+import Appfooter from './AppFooter';
 
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
-
-import "./Bookings.css";
+import './patientprofiles/PatientProfiles.css';
 
 import {Modal, Button} from 'react-bootstrap'; 
 
-function AppointmentSchedulingVolunteer(){
-
-  const systemContext = useContext(SystemContext);
-  const alertContext  = useContext(AlertContext);
+function Patientprofiles(){
 
   const [isActive, setIsActive] = useState(false);
 
@@ -27,65 +21,17 @@ function AppointmentSchedulingVolunteer(){
     setIsActive(!isActive); // Toggle the state
   };
 
+  const systemContext = useContext(SystemContext);
+
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
 
-  const [scheduleList, setScheduleList]   = useState([]);
-
-  const listSchedule = async () => {
-
-    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-
-    let jsonData = {};
-    jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["user_account_key"]          = decryptedLoginDetails.account_key;
-    jsonData["user_account_type"]         = decryptedLoginDetails.account_type;
-    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]              = DEVICE_TOKEN;
-    jsonData["user_lat"]                  = localStorage.getItem('latitude');
-    jsonData["user_long"]                 = localStorage.getItem('longitude');
-    jsonData["search_param"]              = {
-                                              "by_keywords": "",
-                                              "schedule_date_from": "2024-01-01",
-                                              "schedule_date_to": "2024-09-28",
-                                              "limit": "4",
-                                              "offset": "0",
-                                              "order_by_field": "schedule_date_from",
-                                              "order_by_value": "desc"
-                                            }
-
-    const response = await fetch(`${API_URL}/doctorSchedulesList`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
-
-    let result = await response.json();
-    
-    if(result.success){
-      if(result.data.length > 0){
-
-      }
-      setScheduleList(result.data.data);
-    }
-    else{
-      setScheduleList([]); 
-    }
-
-  }
-
-  useEffect(() => {
-    if(systemContext.systemDetails.system_id){
-      listSchedule("");
-    }
-    // eslint-disable-next-line
-  }, [systemContext.systemDetails.system_id]);
+  const [showModal, setShowModal] = useState(false); 
+  const modalClose  = () => setShowModal(false);  
+  const modalShow   = () => setShowModal(true);
 
   return(
     <>
@@ -93,11 +39,11 @@ function AppointmentSchedulingVolunteer(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/services" className=''>
+              <Link to="/appointment-scheduling-volunteer" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Doctor Schedules</h5>
+            <h5 className='mx-2 mb-0'>Select Patient </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -122,8 +68,9 @@ function AppointmentSchedulingVolunteer(){
           </div>
         </div>
       </div>
-      <div className="app-body bookings">
-        <div className="d-flex justify-content-between mb-3">
+      <div className="app-body patient-profiles profile-listing booking-patient">
+        {/* <div className='add-patient'><Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div> */}
+        <div className="d-flex justify-content-between mb-3 mt-3">
           <div className='d-flex advaced-search btn btn-sm btn-primary primary-bg-color border-0'>
             
             <span className="search-ultra-plus"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 330">
@@ -136,44 +83,73 @@ function AppointmentSchedulingVolunteer(){
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <path d="M2.5 20c-0.276 0-0.5-0.224-0.5-0.5v-8c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v8c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M2.5 6c-0.276 0-0.5-0.224-0.5-0.5v-5c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v5c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M3.5 10h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM1.5 8c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> <path d="M9.5 20c-0.276 0-0.5-0.224-0.5-0.5v-4c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v4c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M9.5 10c-0.276 0-0.5-0.224-0.5-0.5v-9c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v9c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M10.5 14h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM8.5 12c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> <path d="M16.5 20c-0.276 0-0.5-0.224-0.5-0.5v-10c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v10c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M16.5 4c-0.276 0-0.5-0.224-0.5-0.5v-3c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v3c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M17.5 8h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM15.5 6c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> </svg>
           </span>
         </div>
-      <div className="row">
-          <div className="col-12">
-
-            {scheduleList.map((schedule) => {
-
-              return <div className="button-box mb-3" key={schedule.doctor_avail_schedule_id}> 
-              
-                <p><span className="d-block">Doctor Name:</span> {schedule.display_name}</p>
-                <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p>
-
-                <p>
-                  <span className="d-block">Date of Visit & Appointment Time:</span> 
-                  {
-                    schedule.schedule_dates.map((dateTime, index) => {
-                      return <label key={index}>{dateTime.date} @ {dateTime.time_from} - {dateTime.time_to}</label>
-                    })
-                  }
-                </p>
-
-                <p><span className="d-block">Place:</span> {schedule.clinic_details}</p>
-                <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p>
-                {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
-
-                <div className="mb-3 mt-3 text-center">
-                  <a href='/patientprofiles-booking' className="btn primary-bg-color text-light">Book for Patient</a>
-                </div>
-              </div>
-
-              })}
-
-            {scheduleList.length === 0 && <div className='text-center'>No Records Found</div>}
+        <div className='search-patient mt-3 mb-3'>
+          <div className='input-group'>
+            <input type="text" className='form-control' placeholder='Search a patient' />
+            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
+        <div className='row'>
+          <div className='col-6'>
+            <div className='button-box'>
+              {/* <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div> */}
+              {/* <div className='drop-menu'>
+                <ul>
+                  <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
+                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
+                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
+                  <li><Link to={"#"}>Book Now</Link></li>
+                  <li><Link to={"#"}>Close Patient</Link></li>
+                </ul>
+              </div> */}
+              
+                <img src={patientprofile} alt='' />
+                <h6 className='patient-name'>D Goenka - (M/32yrs)</h6>
+                <p className='disease'><small>Problem - Dental</small></p>
+                <div className="mb-3 mt-3 text-center">
+                  <Link onClick={() => { modalShow(); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
+                </div>
+              
+            </div>
+          </div>
+          <div className='col-6'>
+            <div className='button-box'>
+              
+                <img src={patientprofile} alt='' />
+                <h6>Atanu Patra - (M/42yrs)</h6>
+                <p className='disease'><small>Problem - Skin</small></p>
+                <div className="mb-3 mt-3 text-center">
+                  <a href='#' className="btn btn-box-custom primary-bg-color text-light">Select</a>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+        <Modal show={showModal} onHide={modalClose}>
+          <Modal.Header>  
+            <h3>Patient Details</h3>
+          </Modal.Header>  
+          <Modal.Body>  
+            <div className='form-group'>
+              <p className='mb-0'><strong>Patient Name</strong> - D Goenka</p>
+              <p className='mb-0'><strong>Gender</strong> - Male</p>
+              <p className='mb-0'><strong>Age</strong> - 32</p>
+              <p className='mb-0'><strong>Phone</strong> - 9876543213</p>
+              <p className='mb-0'><strong>Address</strong> - Kalipark, Bablatala</p>
+              <p className='mb-0'><strong>City</strong> - Kolkata</p>
+              <p className='mb-0'><strong>Disease</strong> - Dental Problem</p>
+            </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="primary" className='btn primary-bg-color text-light border-0'>Book Now</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
       </div>
       <Appfooter></Appfooter>
     </>
-  )
+  );
 }
 
-
-export default AppointmentSchedulingVolunteer;
+export default Patientprofiles;

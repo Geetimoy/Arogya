@@ -81,11 +81,25 @@ function Services(){
               <div className='button-box'>
 
                 {
-                  (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <Link to="/appointment-scheduling-volunteer"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>
+                  (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <Link to="/appointment-scheduling-volunteer"><img src={appointmentscheduling} alt='' /><h6>Doctor Schedules</h6></Link>
                 }
 
                 {
                   (decryptedLoginDetails.account_type == 5) && <Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>
+                }
+                
+              </div>
+            </div>
+            <div className='col-6'>
+              <div className='button-box'>
+                {
+                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Doctor Appointments</h6></Link>
+                }
+                {
+                  (decryptedLoginDetails.account_type == 4) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>Patient & Doctor Appointments</h6></Link>
+                }
+                {
+                  (decryptedLoginDetails.account_type == 5) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Bookings</h6></Link>
                 }
                 
               </div>
@@ -102,12 +116,7 @@ function Services(){
                 <h6>Upload Test Report</h6></Link>
               </div>
             </div>
-            <div className='col-6'>
-              <div className='button-box'>
-                <Link to="/my-bookings"><img src={testreport} alt='' />
-                <h6>My Bookings</h6></Link>
-              </div>
-            </div>
+            
            
             <div className='col-6'>
               <div className='button-box disable'>

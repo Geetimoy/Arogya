@@ -45,6 +45,9 @@ import TestReports from './youngwomens/TestReports';
 import AppointmentScheduling from './AppointmentScheduling';
 import AppointmentSchedulingVolunteer from './AppointmentSchedulingVolunteer';
 
+import DoctorAppointments from './DoctorAppointments';
+import PatientProfilesBooking from './PatientProfilesBooking';
+
 import CreateSchedule from './CreateSchedule';
 import Bookings from './Bookings';
 import SelectPatient from './SelectPatient';
@@ -296,6 +299,9 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-upload-prescription/:accountKey" exact element={<YoungWomanUploadPrescription />} />
             <Route path="/youngwomens/TestReports" exact element={<TestReports />} />
             <Route path="/patientprofiles/TestReports" exact element={<TestReports />} />
+
+            <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
+            <Route path="/patientprofiles-booking" exact element={<PatientProfilesBooking />} />
             
             <Route path="/appointment-scheduling" exact element={<AppointmentScheduling />} />
             <Route path="/appointment-scheduling-volunteer" exact element={<AppointmentSchedulingVolunteer />} />
