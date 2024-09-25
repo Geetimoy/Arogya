@@ -48,6 +48,9 @@ import AppointmentSchedulingVolunteer from './AppointmentSchedulingVolunteer';
 import DoctorAppointments from './DoctorAppointments';
 import PatientProfilesBooking from './PatientProfilesBooking';
 
+import UploadPrescription from './UploadPrescription';
+import UploadTestReport from './UploadTestReport';
+
 import CreateSchedule from './CreateSchedule';
 import Bookings from './Bookings';
 import SelectPatient from './SelectPatient';
@@ -302,6 +305,9 @@ export default function Core() {
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
             <Route path="/patientprofiles-booking" exact element={<PatientProfilesBooking />} />
+
+            <Route path="/upload-prescription" exact element={<UploadPrescription />} />
+            <Route path="/upload-test-report" exact element={<UploadTestReport />} />
             
             <Route path="/appointment-scheduling" exact element={<AppointmentScheduling />} />
             <Route path="/appointment-scheduling-volunteer" exact element={<AppointmentSchedulingVolunteer />} />

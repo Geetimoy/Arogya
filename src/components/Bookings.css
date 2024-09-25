@@ -54,3 +54,6 @@
 .bookings .custom-control-inline{
   margin-right:.5rem;
 }
+.patient-category .box img{
+  max-width: 50px;
+}

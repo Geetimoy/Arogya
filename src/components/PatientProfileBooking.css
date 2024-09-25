@@ -1,0 +1,20 @@
+.patient-category{
+  display: flex;
+  flex-wrap: wrap;
+}
+.patient-category .box{
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  line-height: 17px;
+  margin: 0 5px;
+  min-width: 100px;
+  margin-bottom: 20px;
+}
+
+.patient-category .box img{
+  box-shadow: 0px 0px 4px #e7e7e7;
+  border: 1px solid #e5e5e5;
+  padding: 5px;
+  border-radius: 50%;
+}
