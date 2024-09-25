@@ -74,6 +74,7 @@ import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
+import ChildBasicInfo from './childmalnutrition/ChildBasicInfo';
 
 
 export default function Core() {
@@ -292,6 +293,7 @@ export default function Core() {
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
+            <Route path="/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
 
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
             <Route path="/youngwomens/young-woman-basicinfo/:accountKey" exact element={<YoungWomanBasicInformation />} />
