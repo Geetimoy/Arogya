@@ -32,6 +32,7 @@ import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
 
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
+import ChildPrescription from './childmalnutrition/ChildPrescription';
 
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
 import YoungWomanBasicInformation from './youngwomens/YoungWomanBasicInformation';
@@ -294,6 +295,8 @@ export default function Core() {
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
             <Route path="/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
+            <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
+            <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildPrescription />} />
 
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
             <Route path="/youngwomens/young-woman-basicinfo/:accountKey" exact element={<YoungWomanBasicInformation />} />

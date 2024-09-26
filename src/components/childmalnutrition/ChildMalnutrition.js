@@ -150,9 +150,9 @@ function ChildMalnutrion(){
                     <ul>
                       <li><Link to={`/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li>
-                      <li><Link to={`/child-upload-prescription/${child.account_key}`}>Upload Prescription</Link></li>
+                      <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Prescription</Link></li>
                       <li><Link to={`/child-upload-test-reports/${child.account_key}`}>Upload Test Reports</Link></li>
-                      <li><Link to={"#"}>Close Child Malnutrition</Link></li>
+                      <li><Link to={"#"}>Close Profile</Link></li>
                     </ul>
                   </div>
                 }
