@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
@@ -98,7 +98,7 @@ export default function ChildBasicInfo() {
 
         jsonData['system_id']           = systemContext.systemDetails.system_id;
         jsonData["child_account_key"]   = editAccountKey;
-        jsonData["child_account_type"]  = 31;
+        jsonData["child_account_type"]  = 3;
         jsonData["user_login_id"]       = decryptedLoginDetails.login_id
         jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
         jsonData["device_token"]        = DEVICE_TOKEN;
@@ -108,11 +108,11 @@ export default function ChildBasicInfo() {
                                             "by_keywords": "",
                                             "limit": "10",
                                             "offset": "0",
-                                            "order_by_field": "data_processed_on",
+                                            "order_by_field": "account_id",
                                             "order_by_value": "desc"
                                             }
         
-        const response1 = await fetch(`${API_URL}/childPeriodicDataList`, {
+        const response1 = await fetch(`${API_URL}/childBasicInformationList`, {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -124,7 +124,46 @@ export default function ChildBasicInfo() {
         if(result1.data.length > 0){
             let userDetails = result1.data[0];
             
-            console.log(userDetails);
+            formData['child_full_name']         = {value:userDetails.child_name, errorClass:"", errorMessage:""};
+            formData['child_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
+            formData['child_mother_name']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
+            formData['is_premature_birth'] = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
+            formData['child_guardian_occupation'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+            formData['child_bpl_apl']                  = {value:1, errorClass:"", errorMessage:""};
+            formData['child_gender']    = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
+            formData['child_age']    = {value:userDetails.child_age, errorClass:"", errorMessage:""};
+            formData['is_your_personal_mobile_number']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+            formData['child_phone_no']               = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+            formData['child_whatsapp_no']          = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+            formData['child_email']           = {value:userDetails.email_id, errorClass:"", errorMessage:""};
+            formData['child_address']         = {value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
+            formData['child_address_2']          = {value:userDetails.child_addr_2, errorClass:"", errorMessage:""};
+            formData['child_landmark']              = {value:userDetails.child_addr_landmark, errorClass:"", errorMessage:""};
+            formData['child_city']             = {value:userDetails.child_city, errorClass:"", errorMessage:""};
+            formData['child_state']       = {value:userDetails.child_state, errorClass:"", errorMessage:""};
+            formData['child_pincode']      = {value:userDetails.child_postal_code, errorClass:"", errorMessage:""};
+            formData['child_service_area']         = {value:userDetails.women_education, errorClass:"", errorMessage:""};
+            formData['child_school_name']       = {value:userDetails.women_school_name, errorClass:"", errorMessage:""};
+            formData['child_school_class']      = {value:userDetails.women_school_class, errorClass:"", errorMessage:""};
+            formData['child_school_section']    = {value:userDetails.women_school_section, errorClass:"", errorMessage:""};
+            formData['house_type']             = {value:userDetails.women_toilet_type, errorClass:"", errorMessage:""};
+            formData['drinking_water_type']              = {value:userDetails.women_house_type, errorClass:"", errorMessage:""};
+            formData['special_notes']           = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+
+            setFormData({...formData, ...formData});
+
+            if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+              var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+              var array1 = new Array();
+              serviceAreaArray.forEach((item)=>{
+                serviceAreaOption.forEach((opt)=>{
+                  if(opt.value == item){
+                    array1.push(opt);
+                  }
+                })
+              })
+              setSelectedOptions(array1);
+            }
         }
 
     }
@@ -220,6 +259,16 @@ export default function ChildBasicInfo() {
       setFormData({...formData, ...formData});
       return errorCounter;
     }
+
+    useEffect(() => {
+
+      if(systemContext.systemDetails.system_id){
+        getUserDetails();
+      }
+  
+      // eslint-disable-next-line
+      
+    }, [systemContext.systemDetails.system_id]);
   
     return(
       <>

@@ -70,7 +70,7 @@ function CraeteYoungWomen(){
     woman_state: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
-    woman_education: {required: true, value:"", errorClass:"", errorMessage:""},
+    //woman_education: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_school_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_school_class: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -110,7 +110,7 @@ function CraeteYoungWomen(){
   
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
-    let errorCounter = validateForm();
+    let errorCounter = validateForm();console.log(formData);
     if(errorCounter === 0){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -140,7 +140,7 @@ function CraeteYoungWomen(){
       jsonData["woman_landmark"]            = formData['woman_landmark'].value;
       jsonData["woman_city"]                = formData['woman_city'].value;
       jsonData["woman_father_name"]         = formData['woman_father_name'].value;
-      jsonData["woman_education"]           = formData['woman_education'].value;
+      jsonData["woman_education"]           = "";
       jsonData["woman_school_name"]         = formData['woman_school_name'].value;
       jsonData["woman_school_class"]        = formData['woman_school_class'].value;
       jsonData["woman_school_section"]      = formData['woman_school_section'].value;
@@ -349,11 +349,11 @@ function CraeteYoungWomen(){
         onChange={handleChange1} options={serviceAreaOption} />
             <small className="error-mesg">{formData["woman_service_area"].errorMessage}</small>
           </div>
-          <div className={`d-none form-group ${formData["woman_education"].errorClass}`}>
+          {/* <div className={`d-none form-group ${formData["woman_education"].errorClass}`}>
             <label htmlFor="woman_education">Education <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_education"].value ? formData["woman_education"].value : ''} name="woman_education" id="woman_education" placeholder="Education" />
             <small className="error-mesg">{formData["woman_education"].errorMessage}</small>
-          </div>
+          </div> */}
           <div className={`sp-notes form-group ${formData["woman_school_name"].errorClass}`}>
             <label htmlFor="woman_school_name">School Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_school_name"].value ? formData["woman_school_name"].value : ''} name="woman_school_name" id="woman_school_name" placeholder="School Name" />
