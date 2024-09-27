@@ -53,7 +53,7 @@ export default function ChildBasicInfo() {
     };
   
     const handleChange = (e) => {
-      const { name, value } = e.target;
+      const { name, value } = e.target; console.log(value);
       if(value.trim() !== ""){
         setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
       }
@@ -68,7 +68,7 @@ export default function ChildBasicInfo() {
       child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
       is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
       child_guardian_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
-      child_bpl_apl: {required: true, value:"1", errorClass:"", errorMessage:""},
+      child_bpl_apl: {required: true, value:"t", errorClass:"", errorMessage:""},
       child_gender: {required: true, value:"1", errorClass:"", errorMessage:""},
       child_age: {required: true, value:"", errorClass:"", errorMessage:""},
       is_your_personal_mobile_number: {required: true, value:"t", errorClass:"", errorMessage:""},
@@ -123,13 +123,30 @@ export default function ChildBasicInfo() {
 
         if(result1.data.length > 0){
             let userDetails = result1.data[0];
-            
-            formData['child_full_name']         = {value:userDetails.child_name, errorClass:"", errorMessage:""};
-            formData['child_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
-            formData['child_mother_name']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
-            formData['is_premature_birth'] = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
-            formData['child_guardian_occupation'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-            formData['child_bpl_apl']                  = {value:1, errorClass:"", errorMessage:""};
+            console.log(userDetails);
+
+            var serviceAreaArray = [];
+            if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+              serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+              console.log(serviceAreaArray);
+              var array1 = new Array();
+              serviceAreaArray.forEach((item)=>{
+                serviceAreaOption.forEach((opt)=>{
+                  if(opt.value == item){
+                    array1.push(opt);
+                  }
+                })
+              })
+              setSelectedOptions(array1);
+
+            }
+
+            formData['child_full_name']    = {value:userDetails.child_name, errorClass:"", errorMessage:""};
+            formData['child_father_name']  = {value:userDetails.child_father_name, errorClass:"", errorMessage:""};
+            formData['child_mother_name']  = {value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
+            formData['is_premature_birth'] = {value:userDetails.child_is_premature_birth, errorClass:"", errorMessage:""};
+            formData['child_guardian_occupation'] = {value:userDetails.child_father_occupation, errorClass:"", errorMessage:""};
+            formData['child_bpl_apl']      = {value:userDetails.child_is_under_previledged, errorClass:"", errorMessage:""};
             formData['child_gender']    = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
             formData['child_age']    = {value:userDetails.child_age, errorClass:"", errorMessage:""};
             formData['is_your_personal_mobile_number']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
@@ -142,28 +159,17 @@ export default function ChildBasicInfo() {
             formData['child_city']             = {value:userDetails.child_city, errorClass:"", errorMessage:""};
             formData['child_state']       = {value:userDetails.child_state, errorClass:"", errorMessage:""};
             formData['child_pincode']      = {value:userDetails.child_postal_code, errorClass:"", errorMessage:""};
-            formData['child_service_area']         = {value:userDetails.women_education, errorClass:"", errorMessage:""};
-            formData['child_school_name']       = {value:userDetails.women_school_name, errorClass:"", errorMessage:""};
-            formData['child_school_class']      = {value:userDetails.women_school_class, errorClass:"", errorMessage:""};
-            formData['child_school_section']    = {value:userDetails.women_school_section, errorClass:"", errorMessage:""};
-            formData['house_type']             = {value:userDetails.women_toilet_type, errorClass:"", errorMessage:""};
-            formData['drinking_water_type']              = {value:userDetails.women_house_type, errorClass:"", errorMessage:""};
-            formData['special_notes']           = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+            formData['child_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+            formData['child_school_name']       = {value:userDetails.child_school_name, errorClass:"", errorMessage:""};
+            formData['child_school_class']      = {value:userDetails.child_school_class, errorClass:"", errorMessage:""};
+            formData['child_school_section']    = {value:userDetails.child_school_section, errorClass:"", errorMessage:""};
+            formData['house_type']             = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
+            formData['drinking_water_type']    = {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
+            formData['special_notes']          = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
             setFormData({...formData, ...formData});
 
-            if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-              var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
-              var array1 = new Array();
-              serviceAreaArray.forEach((item)=>{
-                serviceAreaOption.forEach((opt)=>{
-                  if(opt.value == item){
-                    array1.push(opt);
-                  }
-                })
-              })
-              setSelectedOptions(array1);
-            }
+            
         }
 
     }
@@ -177,6 +183,8 @@ export default function ChildBasicInfo() {
   
         let jsonData = {};
         jsonData['system_id']                 = systemContext.systemDetails.system_id;
+        jsonData["child_account_key"]         = editAccountKey;
+        jsonData["child_account_type"]        = 3;
         jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
         jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
         jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
@@ -354,8 +362,8 @@ export default function ChildBasicInfo() {
             <div className={`form-group ${formData["child_bpl_apl"].errorClass}`}>
               <label className="no-style"><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
               <select className="form-control" id="child_bpl_apl" name="child_bpl_apl" value={formData["child_bpl_apl"].value} onChange={handleChange}>
-                <option value="1">BPL</option>
-                <option value="2">APL</option>
+                <option value="t">BPL</option>
+                <option value="f">APL</option>
               </select>
               <small className="error-mesg">{formData["child_bpl_apl"].errorMessage}</small>
             </div>
@@ -473,7 +481,7 @@ export default function ChildBasicInfo() {
               <small className="error-mesg">{formData["special_notes"].errorMessage}</small>
             </div>
             <div className='mb-3 mt-3'>
-              <button type="submit" className='btn primary-bg-color text-light w-100'>Create Profile</button>
+              <button type="submit" className='btn primary-bg-color text-light w-100'>Update Profile</button>
             </div>
           </form>
         </div>
