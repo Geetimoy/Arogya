@@ -1,24 +1,72 @@
 import { useState, useContext } from 'react';
+import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
 import docIcon from '../../assets/images/doc-icon.jpg';
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
 function ChildPrescription(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [isMActive, setIsMActive] = useState(false);
+
+  const [urlParam, setUrlParam] = useState(useParams());
+  const [prescriptionList, setPrescriptionList]   = useState([]);
+
+  const editAccountKey = urlParam.accountKey;
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const searchPrescription = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listPrescription(value);
+    }, 1000)
+  }
+
+  const listPrescription = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+
+    const response = await fetch(`${API_URL}/childSurveyPrescriptionList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setPrescriptionList(result.data);
+    }
+    else{
+      setPrescriptionList([]); 
+    }
+
+  }
 
   return(
     <>

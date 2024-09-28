@@ -142,16 +142,16 @@ function ChildMalnutrion(){
         <div className='row'>
 
           {childList.map((child, index) => (
-            <div className='col-6' key={child.account_id}>
+            <div className='col-6 mb-4' key={child.account_id}>
               <div className='button-box'>
                 <div className={`three-dot my-element2 ${openMenuId === child.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(child.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
 
                 {openMenuId === child.account_id && <div className='drop-menu'>
                     <ul>
-                      <li><Link to={`/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
-                      <li><Link to={`/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li>
+                      <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
+                      <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li>
                       <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Prescription</Link></li>
-                      <li><Link to={`/child-upload-test-reports/${child.account_key}`}>Upload Test Reports</Link></li>
+                      <li><Link to={`/childmalnutrition/child-upload-test-reports/${child.account_key}`}>Upload Test Reports</Link></li>
                       <li><Link to={"#"}>Close Profile</Link></li>
                     </ul>
                   </div>

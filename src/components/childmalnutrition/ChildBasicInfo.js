@@ -140,7 +140,7 @@ export default function ChildBasicInfo() {
               setSelectedOptions(array1);
 
             }
-
+            console.log(serviceAreaArray.join(","));
             formData['child_full_name']    = {value:userDetails.child_name, errorClass:"", errorMessage:""};
             formData['child_father_name']  = {value:userDetails.child_father_name, errorClass:"", errorMessage:""};
             formData['child_mother_name']  = {value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
@@ -223,7 +223,7 @@ export default function ChildBasicInfo() {
         jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
         jsonData["special_note"]              = formData['special_notes'].value;
   
-        const response = await fetch(`${API_URL}/addUpdateChildProfile`, {
+        const response = await fetch(`${API_URL}/addUpdateChildBasicInformation`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
