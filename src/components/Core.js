@@ -78,6 +78,7 @@ import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
 import ChildBasicInfo from './childmalnutrition/ChildBasicInfo';
+import ChildUploadPrescription from './childmalnutrition/ChildUploadPrescription';
 
 
 export default function Core() {
@@ -298,7 +299,7 @@ export default function Core() {
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
             <Route path="/childmalnutrition/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
             <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
-            <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildPrescription />} />
+            <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />} />
             <Route path="/childmalnutrition/child-test-reports/:accountKey" exact element={<ChildTestReports />} />
             <Route path="/childmalnutrition/child-medical-history/:accountKey" exact element={<ChildMedicalHistory />} />
 
