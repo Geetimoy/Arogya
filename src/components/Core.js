@@ -296,7 +296,7 @@ export default function Core() {
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
-            <Route path="/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
+            <Route path="/childmalnutrition/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
             <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
             <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildPrescription />} />
             <Route path="/childmalnutrition/child-test-reports/:accountKey" exact element={<ChildTestReports />} />

@@ -77,8 +77,6 @@ function ChildTestReports(){
                 </div>
               </div>
             </div>
-          
-
         </div>
       </div>
       <Appfooter></Appfooter>
