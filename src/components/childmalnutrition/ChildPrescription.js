@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
@@ -68,6 +68,43 @@ function ChildPrescription(){
 
   }
 
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPrescription("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const deletePrescription = async (fileId) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+    jsonData["file_id"]         = fileId;
+
+    const response = await fetch(`${API_URL}/deleteChildSurveyPrescription`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      listPrescription("");
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -105,8 +142,8 @@ function ChildPrescription(){
       </div>
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total - 1</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/childmalnutrition/child-upload-prescription/`}>Upload</Link>
+          <span>Total - {prescriptionList.length}</span>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/childmalnutrition/child-upload-prescription/${editAccountKey}`}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
@@ -115,17 +152,19 @@ function ChildPrescription(){
           </div>
         </div>
         <div className='row'>
-            <div className='col-6'>
+
+          {prescriptionList.map((child, index) => (
+            <div className='col-6' key={child.file_id}>
               <div className='button-box'>
                 <div className='prescription'>
-                  <div className="btn-download"><Link target="_blank"><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                  <div className="btn-download"><Link target="_blank" to={`${child.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(child.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
-                  <p className='mb-1'><strong>Test</strong></p>
+                  <p className='mb-1'><strong>{child.file_name}</strong></p>
                 </div>
               </div>
             </div>
-          
+          ))}
 
         </div>
       </div>
