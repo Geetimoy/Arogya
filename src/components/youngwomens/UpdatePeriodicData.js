@@ -174,7 +174,7 @@ function UpdatePeriodicData(){
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["search_param"]              = {
-                                              "by_keywords": "10",
+                                              "by_keywords": "",
                                               "limit": "10",
                                               "offset": "0",
                                               "order_by_field": "data_processed_on",

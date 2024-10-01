@@ -29,6 +29,7 @@ import BannerUkhra from "./BannerUkhra";
 import BannerB2h from "./BannerB2h";
 import BannerRgvn from "./BannerRgvn";
 import BannerServiceplace from "./BannerServiceplace";
+import { Link } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
@@ -145,7 +146,7 @@ function Dashboard() {
           </div>
       </div>
       {/* <h4 className='mb-3'>Volunteer Abc</h4> */}
-      <div className='red-box primary-bg-color'>
+      {systemContext.systemDetails.system_mobile_no && <div className='red-box primary-bg-color'>
           <div className='d-flex align-items-center'>
             <FontAwesomeIcon icon={faPhone} />
             <div className='mx-3'>
@@ -155,9 +156,9 @@ function Dashboard() {
               </Link>
             </div>
           </div>
-      </div>
-      <div className='red-box primary-bg-color'>
-          <div className='d-flex align-items-center'>
+      </div>}
+      {systemContext.systemDetails.support_email && <div className='red-box primary-bg-color'>
+        <div className='d-flex align-items-center'>
           <FontAwesomeIcon icon={faEnvelope} />
             <div className='mx-3'>
             <Link to={`mailto:${systemContext.systemDetails.email_id}`}>
@@ -166,7 +167,7 @@ function Dashboard() {
               </Link>
             </div>
           </div>
-      </div>
+      </div>}
       {/* <div className="banner">
         <Slider {...settings}>
           <div>
