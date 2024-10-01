@@ -29,6 +29,7 @@ import BannerUkhra from "./BannerUkhra";
 import BannerB2h from "./BannerB2h";
 import BannerRgvn from "./BannerRgvn";
 import BannerServiceplace from "./BannerServiceplace";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
  
@@ -142,24 +143,28 @@ function Dashboard() {
           </div>
       </div>
       {/* <h4 className='mb-3'>Volunteer Abc</h4> */}
-      <div className='red-box primary-bg-color'>
+      {systemContext.systemDetails.system_mobile_no && <div className='red-box primary-bg-color'>
           <div className='d-flex align-items-center'>
             <FontAwesomeIcon icon={faPhone} />
             <div className='mx-3'>
-              <h6 className='mb-2'>Call {systemContext.systemDetails.thp_system_name} Office</h6>
-              <p className='mb-0'>Give a call for any query</p>
+              <Link to={`tel:${systemContext.systemDetails.system_mobile_no}`}>
+                <h6 className='mb-2'>Call {systemContext.systemDetails.thp_system_name} Office</h6>
+                <p className='mb-0'>Give a call for any query</p>
+              </Link>
             </div>
           </div>
-      </div>
-      <div className='red-box primary-bg-color'>
-          <div className='d-flex align-items-center'>
+      </div>}
+      {systemContext.systemDetails.support_email && <div className='red-box primary-bg-color'>
+        <div className='d-flex align-items-center'>
           <FontAwesomeIcon icon={faEnvelope} />
             <div className='mx-3'>
-              <h6 className='mb-2'>Email {systemContext.systemDetails.thp_system_name} </h6>
-              <p className='mb-0'>Send us a Email and we will get back to you within 2 days</p>
+              <Link to={`mailto:${systemContext.systemDetails.support_email}`}>
+                <h6 className='mb-2'>Email {systemContext.systemDetails.thp_system_name} </h6>
+                <p className='mb-0'>Send us a Email and we will get back to you within 2 days</p>
+              </Link>
             </div>
           </div>
-      </div>
+      </div>}
       {/* <div className="banner">
         <Slider {...settings}>
           <div>
