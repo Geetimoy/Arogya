@@ -45,6 +45,9 @@ function ChildPrescription(){
     jsonData['system_id']       = systemContext.systemDetails.system_id;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
+    jsonData["search_param"]    = {
+                                      "keyword": ""
+                                  }
 
     const response = await fetch(`${API_URL}/childSurveyPrescriptionList`, {
       method: "POST",

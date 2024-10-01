@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +23,8 @@ function ChildUploadPrescription(){
   const editAccountKey = urlParam.accountKey;
 
   const [isMActive, setIsMActive] = useState(false);
+
+  const redirect = useNavigate();
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -86,6 +88,7 @@ function ChildUploadPrescription(){
           fileUpload['inputPrescription'].upload   = true;
           fileUpload['inputPrescription'].fileName = "";
           setFileUpload({...fileUpload, ...fileUpload});
+          redirect('/childmalnutrition/child-prescription/'+editAccountKey);
         }, 2000);
       }
       else{
