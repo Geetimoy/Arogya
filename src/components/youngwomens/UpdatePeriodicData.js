@@ -243,7 +243,7 @@ return(
       <p><small>Update Young Women Periodic Data</small></p>
       <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
         <div className='mb-3 mt-3 text-end'>
-          <button type="button" className='btn primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
+          <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
         </div>
         {inputList}
         <div className="form-group">

@@ -30,6 +30,8 @@ import BannerB2h from "./BannerB2h";
 import BannerRgvn from "./BannerRgvn";
 import BannerServiceplace from "./BannerServiceplace";
 
+import { Link } from "react-router-dom";
+
 function Dashboard() {
  
   const systemContext = useContext(SystemContext);
@@ -57,6 +59,7 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchImageData = async () => {
+      //console.log(SystemContext.userDetails);
       try {
         //console.log(jsonData);
         const response = await fetch(`${API_URL}/homeBanners`, {
@@ -146,8 +149,10 @@ function Dashboard() {
           <div className='d-flex align-items-center'>
             <FontAwesomeIcon icon={faPhone} />
             <div className='mx-3'>
+              <Link to={`tel:${systemContext.systemDetails.contact_no}`}>
               <h6 className='mb-2'>Call {systemContext.systemDetails.thp_system_name} Office</h6>
               <p className='mb-0'>Give a call for any query</p>
+              </Link>
             </div>
           </div>
       </div>
@@ -155,8 +160,10 @@ function Dashboard() {
           <div className='d-flex align-items-center'>
           <FontAwesomeIcon icon={faEnvelope} />
             <div className='mx-3'>
+            <Link to={`mailto:${systemContext.systemDetails.email_id}`}>
               <h6 className='mb-2'>Email {systemContext.systemDetails.thp_system_name} </h6>
               <p className='mb-0'>Send us a Email and we will get back to you within 2 days</p>
+              </Link>
             </div>
           </div>
       </div>

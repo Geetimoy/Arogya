@@ -3,3 +3,7 @@
   font-size: 16px;
   position: relative;
 }
+.upload-prescription input[type="file"] {
+  display: inline-block;
+  font-size: 0;
+}

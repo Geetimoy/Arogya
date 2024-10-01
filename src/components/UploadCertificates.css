@@ -44,7 +44,7 @@ span.close{
 .choose-file label{
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 180px;
+  width: calc(100% - 160px);
   overflow: hidden;
   line-height: normal;
 }

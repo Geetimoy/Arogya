@@ -139,81 +139,89 @@ function LogIn(props) {
   };
 
   return (
-    <div className="container">
-      <div className="login-container">
-        <div className="mt-3">
-          <Link to="/">
-            <FontAwesomeIcon icon={faLongArrowAltLeft} />
-          </Link>
-          <span className="m-2">Log In</span>
-        </div>
-        <div className="login-box">
-          <img src={systemContext.systemDetails.thp_app_logo_url} className="mb-3" alt={systemContext.systemDetails.thp_system_name} />
-          <h2>Welcome Back!</h2>
-          <p>Login to your Account</p>
-          <form onSubmit={handleLoginSubmit}>
-            <div className={`form-group ${errorClass.username}`}>
-              <label htmlFor="username"> User ID <span className='text-danger'> *</span></label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                className="form-control"
-                onChange={handleChange}
-              />
-              <small className="error-mesg"> {errorMessage.username} </small>
-            </div>
-            <div className={`form-group ${errorClass.username}`}>
-              <label htmlFor="userpassword"> Password <span className='text-danger'> *</span></label>
-              <input
-                type={passwordType ? `password` : `text`}
-                id="userpassword"
-                name="userpassword"
-                className="form-control"
-                onChange={handleChange}
-              />
-              <div className="icon-font" onClick={changePasswordType}>
-                <FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} />
+    <>
+      <div className="non-login-top">
+        <Link to="/">
+          <FontAwesomeIcon icon={faLongArrowAltLeft} />
+        </Link>
+        <span className="m-2">Log In</span>
+      </div>
+      <div className="container">
+        <div className="login-container">
+          {/* <div className="mt-3">
+            <Link to="/">
+              <FontAwesomeIcon icon={faLongArrowAltLeft} />
+            </Link>
+            <span className="m-2">Log In</span>
+          </div> */}
+          <div className="login-box">
+            <img src={systemContext.systemDetails.thp_app_logo_url} className="mb-3" alt={systemContext.systemDetails.thp_system_name} />
+            <h2>Welcome Back!</h2>
+            <p>Login to your Account</p>
+            <form onSubmit={handleLoginSubmit}>
+              <div className={`form-group ${errorClass.username}`}>
+                <label htmlFor="username"> User ID <span className='text-danger'> *</span></label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  className="form-control"
+                  onChange={handleChange}
+                />
+                <small className="error-mesg"> {errorMessage.username} </small>
               </div>
-              <small className="error-mesg">{errorMessage.userpassword}</small>
-            </div>
-            <p className="text-center link-red">
-              {/* <Link to="/forgotpassword"  style={{color:`${props.colorname}`}}>
-                Forgot Password?
-              </Link> */}
-              <Link to="/forgotpassword"  className="primary-color">
-                Forgot Password?
-              </Link>
-            </p>
-            <div className="text-center mb-4">
-              {/* <button type="submit" className="btn text-light w-100" style={{backgroundColor:`${props.bgcolor}`}}>
-                Login
-              </button> */}
-              <button type="submit" className="btn text-light w-100 primary-bg-color border-0">
-                Login
-              </button>
-            </div>
-            <p className="text-center link-red mb-3">
-              Don't have an account yet?
-              <Link to="/signup" className="primary-color mx-1">
-                Sign Up
-              </Link>
-            </p>
-            <p className="text-center link-red mb-3">
-              Having Trouble?
-              <Link to="/contact-admin" className="primary-color mx-1">
-                Contact Admin
-              </Link>
-            </p>
-            <p className='text-center'>&copy; {(new Date().getFullYear())} {systemContext.systemDetails.thp_domain_name}. {(systemContext.systemDetails.thp_system_id > 0) && <span>Powered by <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_sp_global_name}</Link></span>}</p>
-            <div className="text-center login-logo">
-              {(systemContext.systemDetails.thp_system_id > 0) && <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>}
-              <Link to={systemContext.systemDetails.thp_sp_global_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
-            </div>
-          </form>
+              <div className={`form-group ${errorClass.username}`}>
+                <label htmlFor="userpassword"> Password <span className='text-danger'> *</span></label>
+                <input
+                  type={passwordType ? `password` : `text`}
+                  id="userpassword"
+                  name="userpassword"
+                  className="form-control"
+                  onChange={handleChange}
+                />
+                <div className="icon-font" onClick={changePasswordType}>
+                  <FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} />
+                </div>
+                <small className="error-mesg">{errorMessage.userpassword}</small>
+              </div>
+              <p className="text-center link-red">
+                {/* <Link to="/forgotpassword"  style={{color:`${props.colorname}`}}>
+                  Forgot Password?
+                </Link> */}
+                <Link to="/forgotpassword"  className="primary-color">
+                  Forgot Password?
+                </Link>
+              </p>
+              <div className="text-center mb-4">
+                {/* <button type="submit" className="btn text-light w-100" style={{backgroundColor:`${props.bgcolor}`}}>
+                  Login
+                </button> */}
+                <button type="submit" className="btn text-light w-100 primary-bg-color border-0">
+                  Login
+                </button>
+              </div>
+              <p className="text-center link-red mb-3">
+                Don't have an account yet?
+                <Link to="/signup" className="primary-color mx-1">
+                  Sign Up
+                </Link>
+              </p>
+              <p className="text-center link-red mb-3">
+                Having Trouble?
+                <Link to="/contact-admin" className="primary-color mx-1">
+                  Contact Admin
+                </Link>
+              </p>
+              <p className='text-center'>&copy; {(new Date().getFullYear())} {systemContext.systemDetails.thp_domain_name}. {(systemContext.systemDetails.thp_system_id > 0) && <span>Powered by <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_sp_global_name}</Link></span>}</p>
+              <div className="text-center login-logo">
+                {(systemContext.systemDetails.thp_system_id > 0) && <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img src={systemContext.systemDetails.thp_ngo_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>}
+                <Link to={systemContext.systemDetails.thp_sp_global_url} target='_blank'><img src={systemContext.systemDetails.thp_sp_global_logo_url} style={{ height: "80px" }} className="mx-3" alt={systemContext.systemDetails.thp_system_name} /></Link>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

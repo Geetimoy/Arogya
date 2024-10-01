@@ -242,127 +242,131 @@ function SignUp(){
   }
   
   return(
-    <div className='container'>
-      <div className='login-container'>
-        <div className='mt-3'> 
-          <Link to="/login"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
-          <span className='m-2'>Sign Up</span>
-        </div>
-        <div className='login-box signup'>
-          <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />
-          
-          <p>Create an account to continue your all activities</p>
-          <form className='select-box' onSubmit={handleFormSubmit}>
-            <p className='text-end mandatory'><span className='text-danger'>*</span> marks are mandatory</p>
-            <div className={`form-group ${formData["userType"].errorClass}`}>
-              <label htmlFor="userType"> Register As <span className='text-danger'> *</span></label>
-              <select className="form-control" id="userType" name="userType" onChange={handleChange} defaultValue={formData["userType"].value}>
-                <option value="">Select</option>
-                <option value="3">Patient</option>
-                <option value="31">Child Malnutrition</option>
-                <option value="32">Young Womens</option>
-                <option value="33">Janani</option>
-                <option value="4">Volunteer - MedTech</option>
-                <option value="5">Doctor</option>
-                {/* <option value="6">Pharmacy</option> */}
-              </select>
-              <small className="error-mesg">{formData["userType"].errorMessage}</small>
-            </div>
-            <div className={`form-group ${formData["userName"].errorClass}`}>
-              <label htmlFor="userName"> Name <span className='text-danger'> *</span></label>
-              <input type="text" id="userName" name="userName" className='form-control' placeholder='Enter Name' value={formData["userName"].value} onChange={handleChange}/>
-              <small className="error-mesg">{formData["userName"].errorMessage}</small>
-            </div>
-            <div className={`form-group ${formData["userId"].errorClass}`}>
-              <label htmlFor="userId"> User ID <span className='text-danger'> *</span></label>
-              <input type="text" id="userId" name="userId" className='form-control' placeholder='Enter user id' value={formData["userId"].value} onChange={handleChange}/>
-              <small className="error-mesg">{formData["userId"].errorMessage}</small>
-            </div>
-            <div className={`form-group ${formData["userContactNumber"].errorClass}`}>
-              <label htmlFor="userContactNumber"> Contact Number/Mobile Number <span className='text-danger'> *</span></label>
-              <input type="text" id="userContactNumber" name="userContactNumber" className='form-control' placeholder='Enter contact or mobile number' value={formData["userContactNumber"].value} onChange={handleChange} maxLength={10}/>
-              <small className="error-mesg">{formData["userContactNumber"].errorMessage}</small>
-            </div>
-            <div className={`form-group ${formData["userEmail"].errorClass}`}>
-              <label htmlFor="userEmail"> Email ID <span className='text-danger'> *</span></label>
-              <input type="text" id="userEmail" name="userEmail" className='form-control' placeholder='Enter email id' value={formData["userEmail"].value} onChange={handleChange}/>
-              <small className="error-mesg">{formData["userEmail"].errorMessage}</small>
-            </div>
-            <div className={`form-group ${formData["userPassword"].errorClass}`}>
-              <label htmlFor="userPassword"> Password <span className='text-danger'> *</span> <FontAwesomeIcon icon={faKey} /> <FontAwesomeIcon icon={faQuestionCircle} /></label>
-              <input type={passwordType ? `password` : `text`} id="userPassword" name="userPassword" className='form-control' placeholder='Enter Password' value={formData["userPassword"].value} onChange={handleChange}/>
-              <div className='icon-font' onClick={changePasswordType}><FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} /></div>
-              <small className="error-mesg">{formData["userPassword"].errorMessage}</small>
-            </div>
-            {/* <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
-              <label htmlFor="userServiceArea"> Area <span className='text-danger'> *</span></label>
-              <select className="form-control" id="userServiceArea" multiple name="userServiceArea" onChange={handleChange} defaultValue={formData["userServiceArea"].value}>
-                <option selected value="1">Guwahati Zoo,Fancy bazar</option>
-                <option value="2">Navagraha Temple, Guwahati</option>
-                <option value="3">Umananda Temple, Guwahati</option>
-                <option value="4">Morigaon</option>
-              </select>
-              <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
-            </div> */}
-            <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
-              <label>Area <span className='text-danger'> *</span></label>
-              {/* <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} /> */}
-              <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={options} />
-              <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
-            </div>
-            
-
-            
-            {/* <div className='form-group'>
-              <div className="custom-control custom-checkbox">
-                <input type="checkbox" id="smart_menu" className="checkbox style-0 custom-control-input" />
-                  <label className="custom-control-label" htmlFor="smart_menu">
-                    <span>I agree to <Link to = "/termscondition" className='primary-color'>Terms and Condition</Link></span>
-                  </label>
-              </div>
-            </div> */}
-            <div className='mb-3 mt-3'>
-              {/* <Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>Register</Link> */}
-              <button type="submit" className='btn primary-bg-color text-light w-100 border-0'>Register</button>
-            </div>
-            <div>
-              <p>By registering you read & agreed to the RGVN & ServicePlace <Link to ="/termsofuse" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>
-            </div>
-            <p className="text-center link-red mb-3">
-              Already have an account ?
-              <Link to="/login" className="primary-color mx-1">
-                Login
-              </Link>
-            </p>
-            <p className="text-center link-red mb-3">
-              Having Trouble? 
-              <Link to="/contact-admin" className="primary-color mx-1">
-                Contact Admin
-              </Link>
-            </p>
-            <p className='text-center'>&copy; {(new Date().getFullYear())} {systemContext.systemDetails.thp_domain_name}.  {(systemContext.systemDetails.thp_system_id > 0) && <span>Powered by <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_sp_global_name}</Link></span>}</p>
-            <div className="text-center login-logo">
-              {(systemContext.systemDetails.thp_system_id > 0) && <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img
-                src={systemContext.systemDetails.thp_ngo_logo_url}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt={systemContext.systemDetails.thp_system_name}
-              /></Link>}
-              <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank"><img
-                src={systemContext.systemDetails.thp_sp_global_logo_url}
-                style={{ height: "80px" }}
-                className="mx-3"
-                alt={systemContext.systemDetails.thp_system_name}
-              /></Link>
-            </div>
-          </form>
-          {/* <div className='back-to-login'>
-            Already have an account? <Link to="/login" className='primary-color'> Log In</Link>
-          </div> */}
-        </div>
-        
+    <>
+      <div className='non-login-top'> 
+        <Link to="/login"><FontAwesomeIcon icon={faLongArrowAltLeft} /></Link>
+        <span className='m-2'>Sign Up</span>
       </div>
-    </div>
+    
+      <div className='container'>
+        <div className='login-container'>
+        
+          <div className='login-box signup'>
+            <img src={systemContext.systemDetails.thp_app_logo_url} className="m-auto mb-3" alt={systemContext.systemDetails.thp_system_name} />
+            
+            <p>Create an account to continue your all activities</p>
+            <form className='select-box' onSubmit={handleFormSubmit}>
+              <p className='text-end mandatory'><span className='text-danger'>*</span> marks are mandatory</p>
+              <div className={`form-group ${formData["userType"].errorClass}`}>
+                <label htmlFor="userType"> Register As <span className='text-danger'> *</span></label>
+                <select className="form-control" id="userType" name="userType" onChange={handleChange} defaultValue={formData["userType"].value}>
+                  <option value="">Select</option>
+                  <option value="3">Patient</option>
+                  <option value="31">Child Malnutrition</option>
+                  <option value="32">Young Womens</option>
+                  <option value="33">Janani</option>
+                  <option value="4">Volunteer - MedTech</option>
+                  <option value="5">Doctor</option>
+                  {/* <option value="6">Pharmacy</option> */}
+                </select>
+                <small className="error-mesg">{formData["userType"].errorMessage}</small>
+              </div>
+              <div className={`form-group ${formData["userName"].errorClass}`}>
+                <label htmlFor="userName"> Name <span className='text-danger'> *</span></label>
+                <input type="text" id="userName" name="userName" className='form-control' placeholder='Enter Name' value={formData["userName"].value} onChange={handleChange}/>
+                <small className="error-mesg">{formData["userName"].errorMessage}</small>
+              </div>
+              <div className={`form-group ${formData["userId"].errorClass}`}>
+                <label htmlFor="userId"> User ID <span className='text-danger'> *</span></label>
+                <input type="text" id="userId" name="userId" className='form-control' placeholder='Enter user id' value={formData["userId"].value} onChange={handleChange}/>
+                <small className="error-mesg">{formData["userId"].errorMessage}</small>
+              </div>
+              <div className={`form-group ${formData["userContactNumber"].errorClass}`}>
+                <label htmlFor="userContactNumber"> Contact Number/Mobile Number <span className='text-danger'> *</span></label>
+                <input type="text" id="userContactNumber" name="userContactNumber" className='form-control' placeholder='Enter contact or mobile number' value={formData["userContactNumber"].value} onChange={handleChange} maxLength={10}/>
+                <small className="error-mesg">{formData["userContactNumber"].errorMessage}</small>
+              </div>
+              <div className={`form-group ${formData["userEmail"].errorClass}`}>
+                <label htmlFor="userEmail"> Email ID <span className='text-danger'> *</span></label>
+                <input type="text" id="userEmail" name="userEmail" className='form-control' placeholder='Enter email id' value={formData["userEmail"].value} onChange={handleChange}/>
+                <small className="error-mesg">{formData["userEmail"].errorMessage}</small>
+              </div>
+              <div className={`form-group ${formData["userPassword"].errorClass}`}>
+                <label htmlFor="userPassword"> Password <span className='text-danger'> *</span> <FontAwesomeIcon icon={faKey} /> <FontAwesomeIcon icon={faQuestionCircle} /></label>
+                <input type={passwordType ? `password` : `text`} id="userPassword" name="userPassword" className='form-control' placeholder='Enter Password' value={formData["userPassword"].value} onChange={handleChange}/>
+                <div className='icon-font' onClick={changePasswordType}><FontAwesomeIcon icon={passwordType ? faEyeSlash : faEye} /></div>
+                <small className="error-mesg">{formData["userPassword"].errorMessage}</small>
+              </div>
+              {/* <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
+                <label htmlFor="userServiceArea"> Area <span className='text-danger'> *</span></label>
+                <select className="form-control" id="userServiceArea" multiple name="userServiceArea" onChange={handleChange} defaultValue={formData["userServiceArea"].value}>
+                  <option selected value="1">Guwahati Zoo,Fancy bazar</option>
+                  <option value="2">Navagraha Temple, Guwahati</option>
+                  <option value="3">Umananda Temple, Guwahati</option>
+                  <option value="4">Morigaon</option>
+                </select>
+                <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
+              </div> */}
+              <div className={`form-group ${formData["userServiceArea"].errorClass}`}>
+                <label>Area <span className='text-danger'> *</span></label>
+                {/* <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} /> */}
+                <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={options} />
+                <small className="error-mesg">{formData["userServiceArea"].errorMessage}</small>
+              </div>
+              
+
+              
+              {/* <div className='form-group'>
+                <div className="custom-control custom-checkbox">
+                  <input type="checkbox" id="smart_menu" className="checkbox style-0 custom-control-input" />
+                    <label className="custom-control-label" htmlFor="smart_menu">
+                      <span>I agree to <Link to = "/termscondition" className='primary-color'>Terms and Condition</Link></span>
+                    </label>
+                </div>
+              </div> */}
+              <div className='mb-3 mt-3'>
+                {/* <Link to ="/signup" className='m-auto text-light text-decoration-none d-block'>Register</Link> */}
+                <button type="submit" className='btn primary-bg-color text-light w-100 border-0'>Register</button>
+              </div>
+              <div>
+                <p>By registering you read & agreed to the RGVN & ServicePlace <Link to ="/termsofuse" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>
+              </div>
+              <p className="text-center link-red mb-3">
+                Already have an account ?
+                <Link to="/login" className="primary-color mx-1">
+                  Login
+                </Link>
+              </p>
+              <p className="text-center link-red mb-3">
+                Having Trouble? 
+                <Link to="/contact-admin" className="primary-color mx-1">
+                  Contact Admin
+                </Link>
+              </p>
+              <p className='text-center'>&copy; {(new Date().getFullYear())} {systemContext.systemDetails.thp_domain_name}.  {(systemContext.systemDetails.thp_system_id > 0) && <span>Powered by <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank" className="primary-color">{systemContext.systemDetails.thp_sp_global_name}</Link></span>}</p>
+              <div className="text-center login-logo">
+                {(systemContext.systemDetails.thp_system_id > 0) && <Link to={systemContext.systemDetails.thp_main_ngo_url} target='_blank'><img
+                  src={systemContext.systemDetails.thp_ngo_logo_url}
+                  style={{ height: "80px" }}
+                  className="mx-3"
+                  alt={systemContext.systemDetails.thp_system_name}
+                /></Link>}
+                <Link to={systemContext.systemDetails.thp_sp_global_url} target="_blank"><img
+                  src={systemContext.systemDetails.thp_sp_global_logo_url}
+                  style={{ height: "80px" }}
+                  className="mx-3"
+                  alt={systemContext.systemDetails.thp_system_name}
+                /></Link>
+              </div>
+            </form>
+            {/* <div className='back-to-login'>
+              Already have an account? <Link to="/login" className='primary-color'> Log In</Link>
+            </div> */}
+          </div>
+          
+        </div>
+      </div>
+    </>
   );
 }
 
