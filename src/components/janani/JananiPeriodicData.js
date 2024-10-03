@@ -4,7 +4,7 @@ import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Category from './Category';
 
@@ -241,7 +241,7 @@ function JananiPeriodicData(){
         <p><small>Update Janani Periodic Data</small></p>
         <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
           <div className='mb-3 mt-3 text-end'>
-            <button type="button" className='btn primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
+            <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
           </div>
           {inputList}
           <div className="form-group">
@@ -259,7 +259,7 @@ function JananiPeriodicData(){
               <div className="col-6" key={index}>
                 <div className="jumbotron rounded p-2">
                   <div className="periodic-data position-relative">
-                    {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
+                    <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                     <p className="primary-color"><strong>Date -  {janani.data_processed_on}</strong></p>
                     {
                       janani.sub_periodic_data.map((category, categoryindex) => {

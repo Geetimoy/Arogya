@@ -261,7 +261,7 @@ return(
               <div className="col-6" key={index}>
                 <div className="jumbotron rounded p-2">
                   <div className="periodic-data position-relative">
-                    {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
+                    <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
                     <p className="primary-color"><strong>Date -  {women.data_processed_on}</strong></p>
                     {
                       women.sub_periodic_data.map((category, categoryindex) => {

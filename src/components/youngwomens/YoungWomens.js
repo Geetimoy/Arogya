@@ -151,7 +151,7 @@ function YoungWomens(){
                         <li><Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link></li>
                         <li><Link to={`/youngwomens/young-woman-prescriptions/${women.account_key}`}>Upload Prescriptions</Link></li>
                         {/* <li><Link to={`/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
-                        {/* <li><Link to={"#"}>Close Profile </Link></li> */}
+                        <li><Link to={"#"}>Close Profile </Link></li>
                       </ul>
                     </div>
                   }

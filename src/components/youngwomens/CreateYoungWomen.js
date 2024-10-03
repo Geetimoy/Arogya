@@ -62,7 +62,7 @@ function CraeteYoungWomen(){
     is_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_contact_number: {required: true, value:"", errorClass:"", errorMessage:""},
     whatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
-    woman_email_id: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_email_id: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_address: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_address_2: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_landmark: {required: true, value:"", errorClass:"", errorMessage:""},

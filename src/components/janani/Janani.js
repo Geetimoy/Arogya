@@ -147,7 +147,7 @@ function Janani(){
                       <li><Link to={`/janani/janani-periodic-data/${janani.account_key}`}>Update Periodic Data</Link></li>
                       <li><Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>Update Awareness Survey</Link></li>
                       <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li>
-                      {/* <li><Link to={`#`}>Close Profile </Link></li> */}
+                      <li><Link to={`#`}>Close Profile </Link></li>
                     </ul>
                   </div>
                 }

@@ -45,7 +45,7 @@ function DoctorAppointments(){
                 (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <h5 className='mx-2 mb-0'>My Doctor Appointments </h5>
               }
               {
-                (decryptedLoginDetails.account_type == 4) && <h5 className='mx-2 mb-0'>Patient & Doctor Appointments </h5>
+                (decryptedLoginDetails.account_type == 4) && <h5 className='mx-2 mb-0'> Appointments </h5>
               }
               {
                 (decryptedLoginDetails.account_type == 5) && <h5 className='mx-2 mb-0'>My Bookings </h5>
