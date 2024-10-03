@@ -31,7 +31,6 @@ function ChildMedicalHistory(){
     mouth_type: {required: true, value:"", errorClass:"", errorMessage:""},
     digestive_system_type: {required: true, value:"", errorClass:"", errorMessage:""},
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    urinary_problems_type: {required: true, value:"", errorClass:"", errorMessage:""},
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
@@ -105,7 +104,6 @@ function ChildMedicalHistory(){
       formData['mouth_type']    = {value:medicalHistory.mouth_type, required: true, errorClass:"", errorMessage:""};
       formData['digestive_system_type'] = {value:medicalHistory.digestive_system_type, required: true, errorClass:"", errorMessage:""};
       formData['general_type']  = {value:medicalHistory.general_type, required: true, errorClass:"", errorMessage:""};
-      formData['urinary_problems_type'] = {value:medicalHistory.urinary_problems_type, required: true, errorClass:"", errorMessage:""};
       formData['remarks']   = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
@@ -149,7 +147,6 @@ function ChildMedicalHistory(){
       jsonData["mouth_type"]                = formData['mouth_type'].value;
       jsonData["digestive_system_type"]     = formData['digestive_system_type'].value;
       jsonData["general_type"]              = formData['general_type'].value;
-      jsonData["urinary_problems_type"]     = formData['urinary_problems_type'].value;
       jsonData["remarks"]                   = formData['remarks'].value;
 
       const response = await fetch(`${API_URL}/addUpdateChildMedicalHistory`, {
@@ -278,16 +275,6 @@ function ChildMedicalHistory(){
               <option value="3">Sound while breathing(whezzing)</option>
             </select>
             <small className="error-mesg">{formData["general_type"].errorMessage}</small>
-          </div>
-          <div className={`form-group ${formData["urinary_problems_type"].errorClass}`}>
-            <label><span className="d-block">Urinary Problems <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["urinary_problems_type"].value ? formData["urinary_problems_type"].value : ''} name="urinary_problems_type" id="urinary_problems_type" onChange={handleChange}>
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Frequent Urination</option>
-              <option value="2">Burning during urination</option>
-            </select>
-            <small className="error-mesg">{formData["urinary_problems_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["remarks"].errorClass}`}>
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
