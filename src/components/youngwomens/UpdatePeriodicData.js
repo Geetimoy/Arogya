@@ -14,7 +14,7 @@ import AlertContext from '../../context/alert/AlertContext';
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function UpdatePeriodicData(){
 
@@ -61,6 +61,8 @@ function UpdatePeriodicData(){
   }
 
   const [isMActive, setIsMActive] = useState(false);
+
+  const redirect = useNavigate();
 
   const [inputList, setInputList] = useState([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
 
@@ -135,13 +137,16 @@ function UpdatePeriodicData(){
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
-        setRemarks("");
-        Object.keys(inputValues).forEach(function(k, i){
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 2000);
+        /*Object.keys(inputValues).forEach(function(k, i){
           inputValues[k].category = "";
           inputValues[k].value    = "";
         });
-        listPeriodicData();
+        setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
+        setRemarks("");
+        listPeriodicData();*/
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -201,84 +206,83 @@ function UpdatePeriodicData(){
   }
 
   
-
-
-
-return(
-  <>
-    <div className='app-top inner-app-top services-app-top'>
-        <div className='app-top-box d-flex align-items-center justify-content-between'>
-          <div className='app-top-left d-flex align-items-center'>
-            <div className='scroll-back'>
-              <Link to="/youngwomens" className=''>
-                <FontAwesomeIcon icon={faLongArrowAltLeft} />
-              </Link>
-            </div>
-            <h5 className='mx-2 mb-0'>Update Periodic Data</h5>
-          </div>
-          <div className='app-top-right d-flex'> 
-            <div className='position-relative'>
-              <Link to="/notifications">
-              <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-              <span className='top-header-notification primary-bg-color'>3</span>
-              </Link>
-            </div> 
-            <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
-            <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
-                  {
-                    (systemContext.systemDetails.thp_system_id !== 0) && <li><Link to={"/about-ngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
-                  }
-                  <li><Link to={"/contactus"}>Contact Us</Link></li>
-                  <li><Link to={"/feedback"}>Feedback</Link></li>
-                  <li><Link to={"/help"}>Help</Link></li>
-                  <li><Link to={"/logout"}>Logout</Link></li>
-                </ul>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div className='app-body form-all upadte-periodic-data'>
-      <p><small>Update Young Women Periodic Data</small></p>
-      <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
-        <div className='mb-3 mt-3 text-end'>
-          <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
-        </div>
-        {inputList}
-        <div className="form-group">
-          <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
-          <textarea name="remarks" id="remarks" onChange={handleRemarks} rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
-        </div>
-        <div className='mb-3 mt-3 text-center'>
-          <button type="submit" className='btn primary-bg-color text-light'>Update</button>
-        </div>
-      </form>
-      <div className="saved-periodic-data">
-          <div className="row mt-4">
-
-            {periodicList.map((women, index) => (
-              <div className="col-6" key={index}>
-                <div className="jumbotron rounded p-2">
-                  <div className="periodic-data position-relative">
-                    <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                    <p className="primary-color"><strong>Date -  {women.data_processed_on}</strong></p>
-                    {
-                      women.sub_periodic_data.map((category, categoryindex) => {
-                        return <p key={`${index}${categoryindex}`}>{category.category_name} - {category.value}</p>
-                      })
-                    }
-                  </div>
-                </div>
+  return(
+    <>
+      <div className='app-top inner-app-top services-app-top'>
+          <div className='app-top-box d-flex align-items-center justify-content-between'>
+            <div className='app-top-left d-flex align-items-center'>
+              <div className='scroll-back'>
+                <Link to="/youngwomens" className=''>
+                  <FontAwesomeIcon icon={faLongArrowAltLeft} />
+                </Link>
               </div>
-            ))}
-
+              <h5 className='mx-2 mb-0'>Update Periodic Data</h5>
+            </div>
+            <div className='app-top-right d-flex'> 
+              <div className='position-relative'>
+                <Link to="/notifications">
+                <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
+                <span className='top-header-notification primary-bg-color'>3</span>
+                </Link>
+              </div> 
+              <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                  <ul>
+                    <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
+                    {
+                      (systemContext.systemDetails.thp_system_id !== 0) && <li><Link to={"/about-ngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
+                    }
+                    <li><Link to={"/contactus"}>Contact Us</Link></li>
+                    <li><Link to={"/feedback"}>Feedback</Link></li>
+                    <li><Link to={"/help"}>Help</Link></li>
+                    <li><Link to={"/logout"}>Logout</Link></li>
+                  </ul>
+              </div>
+            </div>
           </div>
       </div>
-    </div>
-  <Appfooter></Appfooter>
-  </>
-)
+      <div className='app-body form-all upadte-periodic-data'>
+        <p><small>Update Young Women Periodic Data</small></p>
+        <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
+          <div className='mb-3 mt-3 text-end'>
+            <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
+          </div>
+
+          {inputList}
+          
+          <div className="form-group">
+            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <textarea name="remarks" id="remarks" onChange={handleRemarks} rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+          </div>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Save</button>
+          </div>
+        </form>
+        <div className="saved-periodic-data">
+            <div className="row mt-4">
+
+              {periodicList.map((women, index) => (
+                <div className="col-6" key={index}>
+                  <div className="jumbotron rounded p-2">
+                    <div className="periodic-data position-relative">
+                      <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                      <p className="primary-color"><strong>Date -  {women.data_processed_on}</strong></p>
+                      {
+                        women.sub_periodic_data.map((category, categoryindex) => {
+                          return <p key={`${index}${categoryindex}`}>{category.category_name} - {category.value}</p>
+                        })
+                      }
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+            </div>
+        </div>
+      </div>
+    <Appfooter></Appfooter>
+    </>
+  )
 
 }
 
