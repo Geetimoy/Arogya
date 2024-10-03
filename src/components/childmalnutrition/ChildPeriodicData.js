@@ -59,7 +59,6 @@ function ChildPeriodicData(){
           <div className='mb-3 mt-3 text-end'>
             <button type="button" className='btn btn-sm primary-bg-color text-light'>Add More Category</button>
           </div>
-          
           <div className="category">
             <div className="text-end mb-2"></div>
             <div className="form-group">
@@ -86,8 +85,6 @@ function ChildPeriodicData(){
             </div>
             <div className="form-group"><input type="text" className="form-control pt-0" name="select1" placeholder="" /></div>
           </div>
-
-
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
             <textarea name="remarks" id="remarks" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
