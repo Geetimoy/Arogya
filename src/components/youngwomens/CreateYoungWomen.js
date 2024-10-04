@@ -407,8 +407,8 @@ function CraeteYoungWomen(){
             <small className="error-mesg">{formData["special_note"].errorMessage}</small>
           </div>
 
-          <div className='mb-3 mt-3'>
-            <button type="submit" className='btn primary-bg-color text-light w-100'>Create Young Women Profiles</button>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Create Young Women Profiles</button>
           </div>
         </form>
       </div>

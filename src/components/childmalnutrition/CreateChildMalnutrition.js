@@ -213,7 +213,7 @@ function CreateChildMalnutrition(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Create Child Malnutrition </h5>
+            <h5 className='mx-2 mb-0'>Create Child Malnutrition Profile </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -399,14 +399,14 @@ function CreateChildMalnutrition(){
             </select>
             <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
           </div>
-
+          <div class="form-group "><label for="sub_volunteer_name">Sub Volunteer Name</label><select class="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
           <div className={`form-group ${formData["special_notes"].errorClass}`}>
             <label htmlFor="special_notes">Special Notes </label>
             <input type="text" className="form-control" name="special_notes" id="special_notes" placeholder="Special Notes" onChange={handleChange} value={formData["special_notes"].value ? formData["special_notes"].value : ''}/>
             <small className="error-mesg">{formData["special_notes"].errorMessage}</small>
           </div>
-          <div className='mb-3 mt-3'>
-            <button type="submit" className='btn primary-bg-color text-light w-100'>Create Profile</button>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Create Child Malnutrition Profile</button>
           </div>
         </form>
       </div>

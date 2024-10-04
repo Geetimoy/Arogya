@@ -36,6 +36,9 @@ import ChildPrescription from './childmalnutrition/ChildPrescription';
 import ChildTestReports from './childmalnutrition/ChildTestReports';
 import ChildMedicalHistory from './childmalnutrition/ChildMedicalHistory';
 import ChildPeriodicData from './childmalnutrition/ChildPeriodicData';
+import ChildAwarenessSurvey from './childmalnutrition/ChildAwarenessSurvey';
+import ChildBasicInfo from './childmalnutrition/ChildBasicInfo';
+import ChildUploadPrescription from './childmalnutrition/ChildUploadPrescription';
 
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
 import YoungWomanBasicInformation from './youngwomens/YoungWomanBasicInformation';
@@ -78,8 +81,8 @@ import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
-import ChildBasicInfo from './childmalnutrition/ChildBasicInfo';
-import ChildUploadPrescription from './childmalnutrition/ChildUploadPrescription';
+
+
 
 
 export default function Core() {
@@ -304,6 +307,7 @@ export default function Core() {
             <Route path="/childmalnutrition/child-test-reports/:accountKey" exact element={<ChildTestReports />} />
             <Route path="/childmalnutrition/child-medical-history/:accountKey" exact element={<ChildMedicalHistory />} />
             <Route path="/childmalnutrition/child-periodic-data/" exact element={<ChildPeriodicData />} />
+            <Route path="/childmalnutrition/child-awareness-survey/" exact element={<ChildAwarenessSurvey />} />
 
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
             <Route path="/youngwomens/young-woman-basicinfo/:accountKey" exact element={<YoungWomanBasicInformation />} />
