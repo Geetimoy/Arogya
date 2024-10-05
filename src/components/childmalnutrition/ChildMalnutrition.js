@@ -11,12 +11,15 @@ import { Link } from "react-router-dom";
 import childprofile from '../../assets/images/profile-child.png';
 
 import SystemContext from "../../context/system/SystemContext";
-
+import AlertContext from '../../context/alert/AlertContext';
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
+import {Modal, Button} from 'react-bootstrap'; 
 
 function ChildMalnutrion(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [childList, setChildList] = useState([]);
   const [openMenuId, setOpenMenuId] = useState(0);
@@ -26,6 +29,13 @@ function ChildMalnutrion(){
   };
 
   const [isActive, setIsActive] = useState(false);
+  const [closeProfileAccountKey, setCloseProfileAccountKey] = useState('');
+  const [closeRemarks, setCloseRemarks] = useState('');
+
+  const [showCloseProfileModal, setShowCloseProfileModal] = useState(false); 
+
+  const modalCloseProfile  = () => setShowCloseProfileModal(false);  
+  const modalShowProfile   = () => setShowCloseProfileModal(true); 
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
@@ -95,6 +105,57 @@ function ChildMalnutrion(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
+  const openCloseProfileModal = (accountKey) => {
+    setCloseProfileAccountKey(accountKey);
+    modalShowProfile();
+  }
+
+  const handleChangeRemarks = (e) => {
+    const { name, value } = e.target;
+    setCloseRemarks(value);
+  }
+
+  const closeProfile = async () => {
+    
+    var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {
+      'system_id': systemContext.systemDetails.system_id,
+      'device_type': DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+      'user_lat': localStorage.getItem('latitude'),
+      'user_long': localStorage.getItem('longitude'),
+      'child_account_key': closeProfileAccountKey,
+      'child_account_type': 3,
+      'introducer_account_key': loginDetails.account_key,
+      'introducer_account_type': loginDetails.account_type,
+      'remarks': closeRemarks
+    };
+
+    const response = await fetch(`${API_URL}/closeChildAccount`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    })
+
+    let result = await response.json();
+
+    if (result.success) { 
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      setOpenMenuId(0);
+      setTimeout(()=>{
+        modalCloseProfile();
+        listChild("");
+      }, 1000);
+    } 
+    else {
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
 
   return(
     <>
@@ -157,7 +218,7 @@ function ChildMalnutrion(){
                       <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Prescription</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-awareness-survey/`}>Update Awareness Survey</Link></li> */}
-                      <li><Link to={"#"}>Close Profile</Link></li>
+                      <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>
                     </ul>
                   </div>
                 }
@@ -172,6 +233,18 @@ function ChildMalnutrion(){
           {childList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
 
         </div>
+
+        <Modal show={showCloseProfileModal} onHide={modalCloseProfile}>
+          <Modal.Body>  
+            <p>Are you sure you want to close this profile?</p> 
+            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChangeRemarks} value={closeRemarks}></textarea>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalCloseProfile}>Cancel</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeProfile}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
       </div>
       <Appfooter></Appfooter>
     </>
