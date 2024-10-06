@@ -241,7 +241,7 @@ function ChildMalnutrion(){
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalCloseProfile}>Cancel</Button>  
-            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeProfile}>Close</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeProfile}>Confirm to Close</Button>  
           </Modal.Footer>  
         </Modal>
 
