@@ -100,7 +100,7 @@ function ChildPeriodicData(){
               <div className="col-6">
                 <div className="jumbotron rounded p-2">
                   <div className="periodic-data position-relative">
-                    <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                    {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
                     <p className="primary-color"><strong>Date -  20-10-2024</strong></p>
                     <p>Body Weight in Kgs - 76</p>
                   </div>

@@ -100,7 +100,7 @@ function Patientprofiles(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div>
-              <Link to="/patientprofiles/viewpatientdetails">
+              <Link to="#">
                 <img src={patientprofile} alt='' />
                 <h6>Patient 1</h6>
               </Link>
