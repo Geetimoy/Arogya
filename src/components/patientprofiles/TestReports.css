@@ -1,4 +1,14 @@
 .test-reports .button-box img{
   max-height: 120px;
   object-fit: contain;
+  margin-top: 15px;
+}
+
+.test-reports .btn-download {
+  position: absolute;
+  right: 30px;
+  top: 7px;
+}
+.test-reports .button-box .prescription a{
+  padding: 0;
 }

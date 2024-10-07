@@ -16,16 +16,18 @@ import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SignUp from './SignUp';
 import Services from './Services';
+
 import PatientProfiles from './patientprofiles/PatientProfiles';
 import ViewPatientDetails from './patientprofiles/ViewPatientDetails';
 import CreatePatientProfile from './patientprofiles/CreatePatientProfile';
-import YoungWomens from './youngwomens/YoungWomens';
+import PatientTestReports from './patientprofiles/PatientTestReports';
+
+
 import Janani from './janani/Janani';
 import CreateJanani from './janani/CreateJanani';
 import JananiBasicInformation from './janani/JananiBasicInformation';
 import JananiUploadPrescriptions from './janani/JananiUploadPrescriptions';
 import JananiPeriodicData from './janani/JananiPeriodicData';
-
 import JananiPrescriptions from './janani/JananiPrescriptions';
 import JananiMedicalHistory from './janani/JananiMedicalHistory';
 import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
@@ -40,6 +42,7 @@ import ChildAwarenessSurvey from './childmalnutrition/ChildAwarenessSurvey';
 import ChildBasicInfo from './childmalnutrition/ChildBasicInfo';
 import ChildUploadPrescription from './childmalnutrition/ChildUploadPrescription';
 
+import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
 import YoungWomanBasicInformation from './youngwomens/YoungWomanBasicInformation';
 import UpdateMedicalHistory from './youngwomens/UpdateMedicalHistory';
@@ -286,10 +289,12 @@ export default function Core() {
             <Route path="/basicinfodoctor" exact element={<BasicInformationDoctor/>} />
             <Route path="/basicinfopatient" exact element={<BasicInformationPatient/>} />
             <Route path="/Services" exact element={<Services />} />
+
             <Route path="/PatientProfiles" exact element={<PatientProfiles />} />
             <Route path="/patientprofiles/ViewPatientDetails" exact element={<ViewPatientDetails />} />
             <Route path="/patientprofiles/CreatePatientProfile" exact element={<CreatePatientProfile />} />
-            <Route path="/YoungWomens" exact element={<YoungWomens />} />
+            <Route path="/patientprofiles/patient-test-reports" exact element={<PatientTestReports />} />
+            
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/janani/create-janani" exact element={<CreateJanani />} />
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
@@ -303,12 +308,13 @@ export default function Core() {
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
             <Route path="/childmalnutrition/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
             <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
-            <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />} />
+            <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />}/>
             <Route path="/childmalnutrition/child-test-reports/:accountKey" exact element={<ChildTestReports />} />
             <Route path="/childmalnutrition/child-medical-history/:accountKey" exact element={<ChildMedicalHistory />} />
             <Route path="/childmalnutrition/child-periodic-data/" exact element={<ChildPeriodicData />} />
             <Route path="/childmalnutrition/child-awareness-survey/" exact element={<ChildAwarenessSurvey />} />
 
+            <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
             <Route path="/youngwomens/young-woman-basicinfo/:accountKey" exact element={<YoungWomanBasicInformation />} />
             <Route path="/youngwomens/update-medical-history/:accountKey" exact element={<UpdateMedicalHistory />} />
@@ -317,7 +323,7 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-prescriptions/:accountKey" exact element={<YoungWomanPrescriptions />} />
             <Route path="/youngwomens/young-woman-upload-prescription/:accountKey" exact element={<YoungWomanUploadPrescription />} />
             <Route path="/youngwomens/TestReports" exact element={<TestReports />} />
-            <Route path="/patientprofiles/TestReports" exact element={<TestReports />} />
+            
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
             <Route path="/patientprofiles-booking" exact element={<PatientProfilesBooking />} />
