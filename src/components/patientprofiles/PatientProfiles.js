@@ -93,8 +93,8 @@ function Patientprofiles(){
               <div className='drop-menu'>
                 <ul>
                   <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
-                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
+                  <li><Link to={"/patientprofiles/patient-medical-history"}>Update Medical History</Link></li>
+                  <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/patientprofiles/patient-test-reports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Book Now</Link></li>
                   <li><Link to={"#"}>Close Patient</Link></li>
