@@ -14,6 +14,15 @@ import patientprofile from '../../assets/images/profile.png';
 
 import SystemContext from "../../context/system/SystemContext";
 
+import {Modal, Button} from 'react-bootstrap'; 
+
+import general from '../../assets/images/therapis.png';
+import childmalnutrition from '../../assets/images/child-malnutrition.png';
+import women from '../../assets/images/prenatal-care.png';
+import dentalcare from '../../assets/images/floss.png';
+import skinhair from '../../assets/images/skin-care.png';
+import more from '../../assets/images/stethoscope.png';
+
 function Patientprofiles(){
 
   const [isActive, setIsActive] = useState(false);
@@ -29,6 +38,14 @@ function Patientprofiles(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const [showModal, setShowModal] = useState(false); 
+  const modalClose  = () => setShowModal(false);  
+  const modalShow   = () => setShowModal(true);
+
+  const [showSearchModal, setShowSearchModal] = useState(false); 
+  const modalCloseSearch  = () => setShowSearchModal(false);  
+  const modalShowSearch   = () => setShowSearchModal(true);
 
   return(
     <>
@@ -68,6 +85,7 @@ function Patientprofiles(){
       <div className="app-body patient-profiles profile-listing">
         <div className='add-patient'><Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
         <div className="d-flex justify-content-between mb-3 mt-3">
+        <Link onClick={() => { modalShowSearch(); }} to="#">
           <div className='d-flex advaced-search btn btn-sm btn-primary primary-bg-color border-0'>
             
             <span className="search-ultra-plus"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 330">
@@ -76,6 +94,7 @@ function Patientprofiles(){
             </svg> </span>
             <span>Advanced Search</span>
           </div>
+        </Link>
           <span id="filters-search-options-toggle" className="btn p-0">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <path d="M2.5 20c-0.276 0-0.5-0.224-0.5-0.5v-8c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v8c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M2.5 6c-0.276 0-0.5-0.224-0.5-0.5v-5c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v5c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M3.5 10h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM1.5 8c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> <path d="M9.5 20c-0.276 0-0.5-0.224-0.5-0.5v-4c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v4c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M9.5 10c-0.276 0-0.5-0.224-0.5-0.5v-9c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v9c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M10.5 14h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM8.5 12c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> <path d="M16.5 20c-0.276 0-0.5-0.224-0.5-0.5v-10c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v10c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M16.5 4c-0.276 0-0.5-0.224-0.5-0.5v-3c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5v3c0 0.276-0.224 0.5-0.5 0.5z" fill="#333"></path> <path d="M17.5 8h-2c-0.827 0-1.5-0.673-1.5-1.5s0.673-1.5 1.5-1.5h2c0.827 0 1.5 0.673 1.5 1.5s-0.673 1.5-1.5 1.5zM15.5 6c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-2z" fill="#333"></path> </svg>
           </span>
@@ -97,7 +116,7 @@ function Patientprofiles(){
                   <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/patientprofiles/patient-test-reports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Book Now</Link></li>
-                  <li><Link to={"#"}>Close Patient</Link></li>
+                  <li><Link onClick={() => { modalShow(); }} to="#">Close Patient</Link></li>
                 </ul>
               </div>
               <Link to="#">
@@ -121,6 +140,55 @@ function Patientprofiles(){
             </div>
           </div>
         </div>
+        <Modal show={showModal} onHide={modalClose}>
+          <Modal.Body>  
+            <p>Are you sure you want to close this profile?</p> 
+            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" ></textarea>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Cancel</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm to Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showSearchModal} onHide={modalCloseSearch}>
+          <Modal.Header>  
+            <h3 className='mb-0'>Advanced Search</h3>
+          </Modal.Header>  
+          <Modal.Body> 
+            <p className='mb-0'><strong>Find a Doctor as a</strong></p> 
+            <div className='patient-category mt-3'>
+              <div className='box'>
+                <img src={general} />
+                <p className='mb-0'>Gneral Physician</p> 
+              </div>
+              <div className='box'>
+                <img src={women} />
+                <p className='mb-0'>Women's Health</p> 
+              </div>
+              <div className='box'>
+                <img src={dentalcare} />
+                <p className='mb-0'>Dental Care</p> 
+              </div>
+              <div className='box'>
+                <img src={childmalnutrition} />
+                <p className='mb-0'>Child Specialist</p> 
+              </div>
+              <div className='box'>
+                <img src={skinhair} />
+                <p className='mb-0'>Skin & Hair</p> 
+              </div>
+              <div className='box'>
+                <img src={more} />
+                <p className='mb-0'>more</p> 
+              </div>
+            </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100'>Search</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalCloseSearch}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
       </div>
       <Appfooter></Appfooter> 
     </>
