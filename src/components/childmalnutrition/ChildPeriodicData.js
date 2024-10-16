@@ -136,7 +136,7 @@ function ChildPeriodicData(){
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
         setTimeout(() => {
-          //window.location.reload(false);
+          window.location.reload(false);
         }, 2000);
         /*Object.keys(inputValues).forEach(function(k, i){
           inputValues[k].category = "";
@@ -203,6 +203,38 @@ function ChildPeriodicData(){
 
   }
 
+  const deletePeriodicData = async (dataProcessedOn) =>{
+    
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["child_account_type"]        = 3;
+    jsonData["child_account_key"]         = editAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["data_processed_on"]         = dataProcessedOn;
+
+    const response = await fetch(`${API_URL}/childDeletePeriodicData`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      listPeriodicData();
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -263,7 +295,7 @@ function ChildPeriodicData(){
               <div className="col-6" key={index}>
                 <div className="jumbotron rounded p-2">
                   <div className="periodic-data position-relative">
-                    {/* <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div> */}
+                    {/* <div className="btn-delete" onClick={()=>{ deletePeriodicData(child.data_processed_on) }}><FontAwesomeIcon icon={faTrash} /></div> */}
                     <p className="primary-color"><strong>Date -  {child.data_processed_on}</strong></p>
                     {
                       child.sub_periodic_data.map((category, categoryindex) => {

@@ -135,13 +135,16 @@ function JananiPeriodicData(){
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 2000);
+        /*setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
         setRemarks("");
         Object.keys(inputValues).forEach(function(k, i){
           inputValues[k].category = "";
           inputValues[k].value    = "";
         });
-        listPeriodicData();
+        listPeriodicData();*/
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
