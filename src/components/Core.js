@@ -23,6 +23,7 @@ import CreatePatientProfile from './patientprofiles/CreatePatientProfile';
 import PatientTestReports from './patientprofiles/PatientTestReports';
 import PatientPrescription from './patientprofiles/PatientPrescription';
 import PatientMedicalHistory from './patientprofiles/PatientMedicalHistory';
+import PatientBooking from './patientprofiles/PatientBooking';
 
 
 import Janani from './janani/Janani';
@@ -298,6 +299,7 @@ export default function Core() {
             <Route path="/patientprofiles/patient-test-reports" exact element={<PatientTestReports />} />
             <Route path="/patientprofiles/patient-prescription" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-medical-history" exact element={<PatientMedicalHistory />} />
+            <Route path="/patientprofiles/patient-booking" exact element={<PatientBooking />} />
             
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/janani/create-janani" exact element={<CreateJanani />} />
