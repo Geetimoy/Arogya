@@ -116,7 +116,7 @@ function Patientprofiles(){
                   <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li>
                   <li><Link to={"/patientprofiles/patient-test-reports"}>Upload Test Reports</Link></li>
                   <li><Link to={"/patientprofiles/patient-booking"}>Book Now</Link></li>
-                  <li><Link onClick={() => { modalShow(); }} to="#">Close Patient</Link></li>
+                  <li><Link onClick={() => { modalShow(); }} to="#">Close Profile</Link></li>
                 </ul>
               </div>
               <Link to="#">

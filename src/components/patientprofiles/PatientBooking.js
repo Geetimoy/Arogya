@@ -8,6 +8,15 @@ import { Link } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
 
+import {Modal, Button} from 'react-bootstrap'; 
+
+import general from '../../assets/images/therapis.png';
+import childmalnutrition from '../../assets/images/child-malnutrition.png';
+import women from '../../assets/images/prenatal-care.png';
+import dentalcare from '../../assets/images/floss.png';
+import skinhair from '../../assets/images/skin-care.png';
+import more from '../../assets/images/stethoscope.png';
+
 function PatientBooking(){
 
   const systemContext = useContext(SystemContext);
@@ -17,6 +26,10 @@ function PatientBooking(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const [showModal, setShowModal] = useState(false); 
+  const modalClose  = () => setShowModal(false);  
+  const modalShow   = () => setShowModal(true);
 
   return(
     <>
@@ -55,7 +68,7 @@ function PatientBooking(){
       </div>
       <div className="app-body bookings appointment-scheduling">
         <div className="d-flex justify-content-between mb-3">
-          <Link to="#">
+          <Link onClick={() => { modalShow(); }} to="#">
             <div className='d-flex advaced-search btn btn-sm btn-primary primary-bg-color border-0'>
               
               <span className="search-ultra-plus"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 330">
@@ -85,7 +98,44 @@ function PatientBooking(){
           </div>
         </div>
 
-        
+        <Modal show={showModal} onHide={modalClose}>
+          <Modal.Header>  
+            <h3 className='mb-0'>Advanced Search</h3>
+          </Modal.Header>  
+          <Modal.Body> 
+            <p className='mb-0'><strong>Find a Doctor as a</strong></p> 
+            <div className='patient-category mt-3'>
+              <div className='box'>
+                <img src={general} />
+                <p className='mb-0'>Gneral Physician</p> 
+              </div>
+              <div className='box'>
+                <img src={women} />
+                <p className='mb-0'>Women's Health</p> 
+              </div>
+              <div className='box'>
+                <img src={dentalcare} />
+                <p className='mb-0'>Dental Care</p> 
+              </div>
+              <div className='box'>
+                <img src={childmalnutrition} />
+                <p className='mb-0'>Child Specialist</p> 
+              </div>
+              <div className='box'>
+                <img src={skinhair} />
+                <p className='mb-0'>Skin & Hair</p> 
+              </div>
+              <div className='box'>
+                <img src={more} />
+                <p className='mb-0'>more</p> 
+              </div>
+            </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100'>Search</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
 
       </div>
       <Appfooter></Appfooter>
