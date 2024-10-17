@@ -185,8 +185,9 @@ function AppointmentSchedulingVolunteer(){
         </div>
 
         <Modal show={showModal} onHide={modalClose}>
-          <Modal.Header>  
+          <Modal.Header className='justify-content-between'>  
             <h3 className='mb-0'>Advanced Search</h3>
+            <Link to={"#"}>Clear</Link>
           </Modal.Header>  
           <Modal.Body> 
             <p className='mb-0'><strong>Find a Doctor </strong></p> 
@@ -213,7 +214,7 @@ function AppointmentSchedulingVolunteer(){
               </div>
               <div className='box'>
                 <img src={more} />
-                <p className='mb-0'>more</p> 
+                <p className='mb-0'>Cardiology</p> 
               </div>
             </div>
           </Modal.Body>  

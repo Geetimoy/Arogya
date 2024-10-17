@@ -4,8 +4,6 @@ import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/
 
 import { Link } from "react-router-dom";
 
-import patientprofile from '../assets/images/profile.png';
-
 import SystemContext from "../context/system/SystemContext";
 import Appfooter from './AppFooter';
 
@@ -16,6 +14,7 @@ import {Modal, Button} from 'react-bootstrap';
 import youngwoman from '../assets/images/woman.png';
 import malnutrition from '../assets/images/malnutrition.png';
 import janani from '../assets/images/icon-janani.png';
+import patientprofile from '../assets/images/icon-patient-profile.png';
 
 function Patientprofiles(){
 
@@ -158,11 +157,12 @@ function Patientprofiles(){
         </Modal>
 
         <Modal show={showModal2} onHide={modalClose2}>
-          <Modal.Header>  
+          <Modal.Header className='justify-content-between'>  
             <h3 className='mb-0'>Advanced Search</h3>
-          </Modal.Header>  
+            <Link to={"#"}>Clear</Link>
+          </Modal.Header>   
           <Modal.Body> 
-            <p className='mb-0'><strong>Find a Patient as a</strong></p> 
+            <p className='mb-0'><strong>Find a Patient </strong></p> 
             <div className='patient-category mt-3'>
               <div className='box'>
                 <img src={malnutrition} />
@@ -175,6 +175,10 @@ function Patientprofiles(){
               <div className='box'>
                 <img src={janani} />
                 <p className='mb-0'>Janani</p> 
+              </div>
+              <div className='box'>
+                <img src={patientprofile} />
+                <p className='mb-0'>General Patient</p> 
               </div>
             </div>
           </Modal.Body>  

@@ -99,11 +99,12 @@ function PatientBooking(){
         </div>
 
         <Modal show={showModal} onHide={modalClose}>
-          <Modal.Header>  
+          <Modal.Header className="justify-content-between">  
             <h3 className='mb-0'>Advanced Search</h3>
+            <Link to={"#"}>Clear</Link>
           </Modal.Header>  
           <Modal.Body> 
-            <p className='mb-0'><strong>Find a Doctor as a</strong></p> 
+            <p className='mb-0'><strong>Find a Doctor</strong></p> 
             <div className='patient-category mt-3'>
               <div className='box'>
                 <img src={general} />
@@ -127,7 +128,7 @@ function PatientBooking(){
               </div>
               <div className='box'>
                 <img src={more} />
-                <p className='mb-0'>more</p> 
+                <p className='mb-0'>Cardiology</p> 
               </div>
             </div>
           </Modal.Body>  
