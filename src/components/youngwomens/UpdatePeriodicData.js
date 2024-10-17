@@ -16,6 +16,9 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 function UpdatePeriodicData(){
 
   const systemContext = useContext(SystemContext);
@@ -44,6 +47,11 @@ function UpdatePeriodicData(){
   const [periodicList, setPeriodicList] = useState([]); 
   const [urlParam, setUrlParam] = useState(useParams());
   const editAccountKey = urlParam.accountKey;
+
+  const [dataProcessedDate, setDataProcessedDate] = useState(new Date());
+  const onChangeDataProcessedDate = (date) => {
+    setDataProcessedDate(date);
+  }
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -100,15 +108,21 @@ function UpdatePeriodicData(){
 
     if(womenCategory.length > 0){
 
+      let strday   = String(dataProcessedDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+      let strmonth = String(dataProcessedDate.getMonth() + 1).padStart(2, '0');  // Months are zero-indexed
+      let stryear  = dataProcessedDate.getFullYear();
+      
+      let dataProcessedOn = `${strday}-${strmonth}-${stryear}`;
+
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
-      var currentDate = new Date();
+      /*var currentDate = new Date();
       var day         = currentDate.getDate();
           day         = (day < 10) ? '0'+day : day;
       var month       = currentDate.getMonth() + 1; // Add 1 as months are zero-based
           month       = (month < 10) ? '0'+month : month;
       var year        = currentDate.getFullYear();
-      var currentDate = `${day}-${month}-${year}`;
+      var currentDate = `${day}-${month}-${year}`;*/
 
       let jsonData = {};
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
@@ -116,7 +130,7 @@ function UpdatePeriodicData(){
       jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
       jsonData["woman_account_type"]        = '3';
       jsonData["woman_account_key"]         = editAccountKey;
-      jsonData["data_processed_on"]         = currentDate;
+      jsonData["data_processed_on"]         = dataProcessedOn;
       jsonData["remarks"]                   = remarks;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
@@ -246,6 +260,11 @@ function UpdatePeriodicData(){
         <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
           <div className='mb-3 mt-3 text-end'>
             <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
+          </div>
+
+          <div className={`form-group`}>
+            <label htmlFor="period_missed">Date <span className="text-danger">*</span></label>
+            <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
           </div>
 
           {inputList}
