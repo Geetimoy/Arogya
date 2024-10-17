@@ -360,7 +360,7 @@ export default function ChildBasicInfo() {
             </div>
   
             <div className={`form-group ${formData["child_bpl_apl"].errorClass}`}>
-              <label className="no-style"><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
+              <label className=""><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
               <select className="form-control" id="child_bpl_apl" name="child_bpl_apl" value={formData["child_bpl_apl"].value} onChange={handleChange}>
                 <option value="t">BPL</option>
                 <option value="f">APL</option>
@@ -368,7 +368,7 @@ export default function ChildBasicInfo() {
               <small className="error-mesg">{formData["child_bpl_apl"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["child_gender"].errorClass}`}>
-              <label className="no-style"><span className="d-block">Gender  <span className="text-danger">*</span></span></label>
+              <label className=""><span className="d-block">Gender  <span className="text-danger">*</span></span></label>
               <select className="form-control" id="child_gender" name="child_gender" value={formData["child_gender"].value} onChange={handleChange}>
                 <option value="1">Male</option>
                 <option value="2">Female</option>
@@ -381,7 +381,7 @@ export default function ChildBasicInfo() {
               <small className="error-mesg">{formData["child_age"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["is_your_personal_mobile_number"].errorClass}`}>
-              <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
+              <label className=""><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
               <select className="form-control" id="is_your_personal_mobile_number" name="is_your_personal_mobile_number" value={formData["is_your_personal_mobile_number"].value} onChange={handleChange}>
                 <option value="t">Yes</option>
                 <option value="f">No</option>

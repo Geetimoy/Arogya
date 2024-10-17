@@ -189,7 +189,7 @@ function AppointmentSchedulingVolunteer(){
             <h3 className='mb-0'>Advanced Search</h3>
           </Modal.Header>  
           <Modal.Body> 
-            <p className='mb-0'><strong>Find a Doctor as a</strong></p> 
+            <p className='mb-0'><strong>Find a Doctor </strong></p> 
             <div className='patient-category mt-3'>
               <div className='box'>
                 <img src={general} />

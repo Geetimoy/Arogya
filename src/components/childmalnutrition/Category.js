@@ -33,9 +33,13 @@ function Category(props){
   }
 
   return(
-    <div className="category">
+    <div className="category form-all">
           <div className='text-end mb-2'>
             {/* <FontAwesomeIcon icon={faTrash} onClick={onRemoveBtnClick}/> */}
+          </div>
+          <div className="form-group">
+            <label><span className="d-block">Date </span></label>
+            <input type="date" className="form-control" />
           </div>
           <div className="form-group">
             <label><span className="d-block">Select Category </span></label>

@@ -38,6 +38,10 @@ function Category(props){
             {/* <FontAwesomeIcon icon={faTrash} onClick={onRemoveBtnClick}/> */}
           </div>
           <div className="form-group">
+            <label><span className="d-block">Date </span></label>
+            <input type="date" className="form-control" />
+          </div>
+          <div className="form-group">
             <label><span className="d-block">Select Category </span></label>
             <select name={props.name} className="form-control" onChange={props.changefunc} default={0}>
               <option value="0">Select</option>
