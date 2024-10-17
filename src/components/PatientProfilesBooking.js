@@ -124,14 +124,12 @@ function Patientprofiles(){
           </div>
           <div className='col-6'>
             <div className='button-box'>
-              
                 <img src={patientprofile} alt='' />
                 <h6>Atanu Patra - (M/42yrs)</h6>
                 <p className='disease'><small>Problem - Skin</small></p>
                 <div className="mb-3 mt-3 text-center">
                   <a href='#' className="btn btn-box-custom primary-bg-color text-light">Select</a>
                 </div>
-              
             </div>
           </div>
         </div>
