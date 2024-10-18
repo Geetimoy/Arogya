@@ -47,6 +47,10 @@ function Patientprofiles(){
   const modalCloseSearch  = () => setShowSearchModal(false);  
   const modalShowSearch   = () => setShowSearchModal(true);
 
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false); 
+  const modalPrescriptionClose  = () => setShowPrescriptionModal(false);  
+  const modalPrescriptionShow   = () => setShowPrescriptionModal(true);
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -113,7 +117,8 @@ function Patientprofiles(){
                 <ul>
                   <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
                   <li><Link to={"/patientprofiles/patient-medical-history"}>Update Medical History</Link></li>
-                  <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li>
+                  {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
+                  <li><Link onClick={() => { modalPrescriptionShow(); }} to="#">Upload Prescription</Link></li>
                   <li><Link to={"/patientprofiles/patient-test-reports"}>Upload Test Reports</Link></li>
                   <li><Link to={"/patientprofiles/patient-booking"}>Book Now</Link></li>
                   <li><Link onClick={() => { modalShow(); }} to="#">Close Profile</Link></li>
@@ -189,6 +194,39 @@ function Patientprofiles(){
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalCloseSearch}>Close</Button>  
           </Modal.Footer>  
         </Modal>
+
+        <Modal show={showPrescriptionModal} onHide={modalPrescriptionClose}>
+          <Modal.Body>  
+            <p>Upload Prescription</p> 
+            <div className="d-flex">
+                <div className="custom-control custom-radio custom-control-inline mt-2">
+                  <input type="radio" id="edit_user_medical_certificates_y" name="basicInfoMedicalCertificate" className="custom-control-input" value="yes" />
+                  <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Initial Prescription</label>
+              </div>
+                <div className="custom-control custom-radio custom-control-inline mt-2">
+                  <input type="radio" id="edit_user_medical_certificates_n" name="basicInfoMedicalCertificate" className="custom-control-input" value="no" />
+                  <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
+                </div>
+              </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
+            <Link onClick={() => { modalShow(); }} to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes, Proceed</Link>  
+          </Modal.Footer>  
+        </Modal>
+
+
+        <Modal show={showModal} onHide={modalClose}>
+          <Modal.Body>  
+            <p>Are you sure you want to close this profile?</p> 
+            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" ></textarea>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Cancel</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm to Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+        
       </div>
       <Appfooter></Appfooter> 
     </>
