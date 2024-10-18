@@ -51,6 +51,10 @@ function Patientprofiles(){
   const modalPrescriptionClose  = () => setShowPrescriptionModal(false);  
   const modalPrescriptionShow   = () => setShowPrescriptionModal(true);
 
+  const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
+  const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
+  const modalPrescriptionShowP2   = () => setShowPrescriptionModalP2(true);
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -211,22 +215,34 @@ function Patientprofiles(){
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
-            <Link onClick={() => { modalShow(); }} to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes, Proceed</Link>  
+            <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes, Proceed</Link>  
           </Modal.Footer>  
         </Modal>
 
 
-        <Modal show={showModal} onHide={modalClose}>
-          <Modal.Body>  
-            <p>Are you sure you want to close this profile?</p> 
-            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" ></textarea>
+        <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
+          <Modal.Body className='form-all'>  
+            <p>Initial Prescription</p> 
+            <form>
+              <div className="form-group">
+                <label><span class="d-block">Appointment </span></label>
+                <select class="form-control" name="eye_type" id="eye_type">
+                  <option value="">Select</option>
+                  <option value="0">None</option>
+                  <option value="1">Dimness of Vision</option>
+                  <option value="2">Eye Pain</option>
+                  <option value="3">Eye Redness</option>
+                  <option value="4">Watery Eyes</option>
+                </select>
+              </div>
+            </form>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Cancel</Button>  
-            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm to Close</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Button>  
           </Modal.Footer>  
         </Modal>
-        
+
       </div>
       <Appfooter></Appfooter> 
     </>
