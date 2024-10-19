@@ -53,6 +53,7 @@ function CreatePatientProfile(){
 
   const [formData, setFormData] = useState({
     patient_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    patient_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_is_bpl: {required: true, value:"t", errorClass:"", errorMessage:""},
     patient_gender: {required: true, value:"male", errorClass:"", errorMessage:""},
     patient_age: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -111,7 +112,54 @@ function CreatePatientProfile(){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+      jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+
+      var serviceArea                       = '{'+formData['patient_service_area'].value+'}';
+
+      jsonData["patient_name"]              = formData['patient_name'].value;
+      jsonData["patient_father_name"]       = formData['patient_father_name'].value;
+      jsonData["patient_contact_number"]    = formData['patient_phone_no'].value;
+      jsonData["patient_whatsup_number"]    = formData['patient_whatsapp_no'].value;
+      jsonData["patient_email_id"]          = formData['patient_email'].value;
+      jsonData["patient_age"]               = formData['patient_age'].value;
+      jsonData["patient_gender"]            = formData['patient_gender'].value;
+      jsonData["patient_address"]           = formData['patient_address'].value;
+      jsonData["patient_address_2"]         = formData['patient_address_2'].value;
+      jsonData["patient_state"]             = formData['patient_state'].value;
+      jsonData["patient_postal_code"]       = formData['patient_pincode'].value;
+      jsonData["patient_landmark"]          = formData['patient_landmark'].value;
+      jsonData["patient_city"]              = formData['patient_city'].value;
+      jsonData["is_bpl"]                    = formData['patient_is_bpl'].value;
+      jsonData["is_your_personal_number"]   = formData['is_personal_mobile_number'].value;
+      jsonData["patient_education"]         = formData['patient_education'].value;
+      jsonData["special_note"]              = formData['patient_special_notes'].value;
+      jsonData["service_area"]              = serviceArea;
+
+      const response = await fetch(`${API_URL}/addUpdatePatientProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
       
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        resetForm();
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
 
     }
   }
@@ -184,6 +232,11 @@ function CreatePatientProfile(){
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="patient_name" id="patient_name" placeholder="Full Name" onChange={handleChange} value={formData["patient_name"].value ? formData["patient_name"].value : ''}/>
             <small className="error-mesg">{formData["patient_name"].errorMessage}</small>
+          </div>
+          <div className={`form-group ${formData["patient_father_name"].errorClass}`}>
+            <label htmlFor="name">Father's Name <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="patient_father_name" id="patient_father_name" placeholder="Father's Name" onChange={handleChange} value={formData["patient_father_name"].value ? formData["patient_father_name"].value : ''}/>
+            <small className="error-mesg">{formData["patient_father_name"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["patient_is_bpl"].errorClass}`}>
             <label className="no-style"><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>

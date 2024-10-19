@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 
 import './PatientProfiles.css'
 
@@ -13,6 +14,9 @@ import { Link } from "react-router-dom";
 import patientprofile from '../../assets/images/profile.png';
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
 import {Modal, Button} from 'react-bootstrap'; 
 
@@ -32,12 +36,96 @@ function Patientprofiles(){
   };
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
+  const [patientList, setPatientList]   = useState([]);
+  const [openMenuId, setOpenMenuId]     = useState(0);
+
+  const handleMenuClick = (accountId) => {
+    setOpenMenuId(openMenuId === accountId ? 0 : accountId);
+  };
 
   const [isMActive, setIsMActive] = useState(false);
+  const [closeProfileAccountKey, setCloseProfileAccountKey] = useState('');
+  const [closeRemarks, setCloseRemarks] = useState('');
+
+  const [showCloseProfileModal, setShowCloseProfileModal] = useState(false);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const modalCloseProfile  = () => setShowCloseProfileModal(false);  
+  const modalShowProfile   = () => setShowCloseProfileModal(true);  
+
+  const searchPatient = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listPatient(value);
+    }, 1000)
+  }
+
+  const listPatient = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": searchKey,
+                                              "limit": "10",
+                                              "offset": "0",
+                                              "order_by_field": "account_id",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/patientProfileList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setPatientList(result.data);
+    }
+    else{
+      setPatientList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPatient("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const openCloseProfileModal = (accountKey) => {
+    setCloseProfileAccountKey(accountKey);
+    modalShowProfile();
+  }
+
+  const handleChangeRemarks = (e) => {
+    const { name, value } = e.target;
+    setCloseRemarks(value);
+  }
+
+
 
   const [showModal, setShowModal] = useState(false); 
   const modalClose  = () => setShowModal(false);  
@@ -109,45 +197,37 @@ function Patientprofiles(){
         </div> */}
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search a patient 1' />
+            <input type="text" className='form-control' placeholder='Search patient' id="searchPatient" name="searchPatient" onChange={searchPatient} />
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/patientprofiles/patient-medical-history"}>Update Medical History</Link></li>
-                  {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
-                  <li><Link onClick={() => { modalPrescriptionShow(); }} to="#">Upload Prescription</Link></li>
-                  <li><Link to={"/patientprofiles/patient-test-reports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"/patientprofiles/patient-booking"}>Book Now</Link></li>
-                  <li><Link onClick={() => { modalShow(); }} to="#">Close Profile</Link></li>
-                </ul>
+
+          {patientList.map((patient, index) => (
+            <div className='col-6' key={patient.account_id}>
+              <div className='button-box'>
+                <div className={`three-dot my-element2 ${openMenuId === patient.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(patient.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
+
+                {openMenuId === patient.account_id && <div className='drop-menu'>
+                    <ul>
+                      <li><Link to={`/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link></li>
+                      <li><Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link></li>
+                      {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
+                      <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
+                      <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li>
+                      <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Now</Link></li>
+                      <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
+                    </ul>
+                  </div>
+                }
+                <Link to="#">
+                  <img src={patientprofile} alt='' />
+                  <h6>{patient.patient_name}</h6>
+                </Link>
               </div>
-              <Link to="#">
-                <img src={patientprofile} alt='' />
-                <h6>Patient 1</h6>
-              </Link>
             </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"#"}>Close Patient</Link></li>
-                </ul>
-              </div>
-              <Link to="/viewpatientdetails">
-                <img src={patientprofile} alt='' />
-                <h6>Patient 2</h6>
-              </Link>
-            </div>
-          </div>
+          ))}
+
         </div>
         <Modal show={showModal} onHide={modalClose}>
           <Modal.Body>  
@@ -218,7 +298,6 @@ function Patientprofiles(){
             <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes, Proceed</Link>  
           </Modal.Footer>  
         </Modal>
-
 
         <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
           <Modal.Body className='form-all'>  
