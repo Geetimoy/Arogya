@@ -119,6 +119,10 @@ function PatientBasicInformation(){
             <input type="text" className="form-control" name="" id="" placeholder="Village/Town/City" />
           </div>
           <div className="form-group">
+            <label htmlFor="name">State <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="patient_state" id="patient_state" placeholder="State"/>
+          </div>
+          <div className="form-group">
             <label htmlFor="name">Pincode <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="" id="" placeholder="Pincode" />
           </div>
