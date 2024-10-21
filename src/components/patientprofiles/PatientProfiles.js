@@ -202,33 +202,28 @@ function Patientprofiles(){
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/patientprofiles/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/patientprofiles/patient-medical-history"}>Update Medical History</Link></li>
-                  {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
-                  <li><Link onClick={() => { modalPrescriptionShow(); }} to="#">Upload Prescription</Link></li>
-                  <li><Link to={"/patientprofiles/patient-test-reports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"/patientprofiles/patient-booking"}>Book Now</Link></li>
-                  <li><Link onClick={() => { modalShow(); }} to="#">Close Profile</Link></li>
-                </ul>
-              </div>
-              <Link to="#">
-                <img src={patientprofile} alt='' />
-                <h6>Patient 1</h6>
-              </Link>
-            </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='three-dot'><FontAwesomeIcon icon={faEllipsisV} /></div>
-              <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"#"}>Close Patient</Link></li>
-                </ul>
+
+          {patientList.map((patient, index) => (
+            <div className='col-6' key={patient.account_id}>
+              <div className='button-box'>
+                <div className={`three-dot my-element2 ${openMenuId === patient.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(patient.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
+
+                {openMenuId === patient.account_id && <div className='drop-menu'>
+                    <ul>
+                      <li><Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link></li>
+                      <li><Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link></li>
+                      {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
+                      <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
+                      <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li>
+                      <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Now</Link></li>
+                      <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
+                    </ul>
+                  </div>
+                }
+                <Link to="#">
+                  <img src={patientprofile} alt='' />
+                  <h6>{patient.patient_name}</h6>
+                </Link>
               </div>
             </div>
           ))}
