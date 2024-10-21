@@ -62,8 +62,8 @@ function PatientBasicInformation(){
             <input type="text" className="form-control" name="" id="" placeholder="Full Name" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">User ID <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="" id="" placeholder="User ID" />
+            <label htmlFor="fname">Father's Name<span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="" id="" placeholder="Father's Name" />
           </div>
           <div className="form-group">
             <label className="no-style"><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
@@ -119,11 +119,11 @@ function PatientBasicInformation(){
             <input type="text" className="form-control" name="" id="" placeholder="Village/Town/City" />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Pincode </label>
+            <label htmlFor="name">Pincode <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="" id="" placeholder="Pincode" />
           </div>
           <div className="form-group">
-            <label className="no-style"><span className="d-block">Servie Area :</span></label>
+            <label className="no-style"><span className="d-block">Servie Area </span><span className="text-danger">*</span></label>
             <select className="form-control">
               <option value="1" selected="">Ukhra</option>
               <option value="2">B2B</option>
