@@ -18,6 +18,7 @@ import SignUp from './SignUp';
 import Services from './Services';
 
 import PatientProfiles from './patientprofiles/PatientProfiles';
+import PatientBasicInformation from './patientprofiles/PatientBasicInformation';
 import ViewPatientDetails from './patientprofiles/ViewPatientDetails';
 import CreatePatientProfile from './patientprofiles/CreatePatientProfile';
 import PatientTestReports from './patientprofiles/PatientTestReports';
@@ -294,6 +295,7 @@ export default function Core() {
             <Route path="/Services" exact element={<Services />} />
 
             <Route path="/PatientProfiles" exact element={<PatientProfiles />} />
+            <Route path="/patientprofiles/patient-basicinfo" exact element={<PatientBasicInformation />} />
             <Route path="/patientprofiles/ViewPatientDetails" exact element={<ViewPatientDetails />} />
             <Route path="/patientprofiles/CreatePatientProfile" exact element={<CreatePatientProfile />} />
             <Route path="/patientprofiles/patient-test-reports" exact element={<PatientTestReports />} />

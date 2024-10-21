@@ -1,17 +1,15 @@
 import { useState, useContext } from 'react';
 
-import Appfooter from '../AppFooter';
+import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
-import './CreatePatientProfile.css';
-
 import SystemContext from "../../context/system/SystemContext";
 
-function CreatePatientProfile(){
+function PatientBasicInformation(){
 
   const systemContext = useContext(SystemContext);
   const [isMActive, setIsMActive] = useState(false);
@@ -19,7 +17,6 @@ function CreatePatientProfile(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
-
 
   return(
     <>
@@ -31,7 +28,7 @@ function CreatePatientProfile(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Create Patient Profile </h5>
+            <h5 className='mx-2 mb-0'>Update Patient Basic Info </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -58,7 +55,7 @@ function CreatePatientProfile(){
       </div>
       <div className='app-body create-patient-profiles'>
        
-        <p><small>Add Patient Information</small></p>
+        <p><small>To update your profile information</small></p>
         <form className="mt-3" name="" id="">
           <div className="form-group">
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
@@ -137,7 +134,7 @@ function CreatePatientProfile(){
             <input type="text" className="form-control" name="" id="" placeholder="Special Notes" />
           </div>
           <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Create Patient Profile</button>
+            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
           </div>
         </form>
       </div>
@@ -146,5 +143,4 @@ function CreatePatientProfile(){
   );
 }
 
-
-export default CreatePatientProfile;
+export default PatientBasicInformation;

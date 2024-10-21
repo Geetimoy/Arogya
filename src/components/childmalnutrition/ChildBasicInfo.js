@@ -288,7 +288,7 @@ export default function ChildBasicInfo() {
                   <FontAwesomeIcon icon={faLongArrowAltLeft} />
                 </Link>
               </div>
-              <h5 className='mx-2 mb-0'>Create Child Malnutrition </h5>
+              <h5 className='mx-2 mb-0'>Update Child Basic Info </h5>
             </div>
             <div className='app-top-right d-flex'> 
               <div className='position-relative'>
@@ -315,7 +315,7 @@ export default function ChildBasicInfo() {
         </div>
         <div className='app-body create-patient-profiles create-child-malnutrition'>
          
-          <p><small>Add Child Malnutrition Information</small></p>
+          <p><small>To update your profile information</small></p>
           <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form" onSubmit={handleFormSubmit}>
             <div className={`form-group ${formData["child_full_name"].errorClass}`}>
               <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
@@ -480,8 +480,8 @@ export default function ChildBasicInfo() {
               <input type="text" className="form-control" name="special_notes" id="special_notes" placeholder="Special Notes" onChange={handleChange} value={formData["special_notes"].value ? formData["special_notes"].value : ''}/>
               <small className="error-mesg">{formData["special_notes"].errorMessage}</small>
             </div>
-            <div className='mb-3 mt-3'>
-              <button type="submit" className='btn primary-bg-color text-light w-100'>Update Profile</button>
+            <div className='mb-3 mt-3 text-center'>
+              <button type="submit" className='btn primary-bg-color text-light'>Update</button>
             </div>
           </form>
         </div>

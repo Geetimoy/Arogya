@@ -119,7 +119,7 @@ function Patientprofiles(){
               <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
               <div className='drop-menu'>
                 <ul>
-                  <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
+                  <li><Link to={"/patientprofiles/patient-basicinfo"}>Edit Basic Information</Link></li>
                   <li><Link to={"/patientprofiles/patient-medical-history"}>Update Medical History</Link></li>
                   {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                   <li><Link onClick={() => { modalPrescriptionShow(); }} to="#">Upload Prescription</Link></li>
