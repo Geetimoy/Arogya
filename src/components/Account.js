@@ -83,16 +83,16 @@ function Account(){
               <div className='status float-end'><span className='red-text'><b>Status: {accountStatus}</b></span></div>
             </div>
             <ul>
-              <li><FontAwesomeIcon icon={faInfoCircle} /> <Link to ="/basicinfo">Update Basic Information</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
-              <li><FontAwesomeIcon icon={faImage} /> <Link to ="/profilephoto">Update Profile Photo</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>  
+              <li><FontAwesomeIcon icon={faInfoCircle} /> <Link to ="/basicinfo">Update Basic Information <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></Link></li>
+              <li><FontAwesomeIcon icon={faImage} /> <Link to ="/profilephoto">Update Profile Photo<FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></Link> </li>  
 
-              {(decryptedLoginDetails.account_type == 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/initialhistory">Initial History</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>}
+              {(decryptedLoginDetails.account_type == 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/initialhistory">Initial History <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /> </Link></li>}
 
-              {(decryptedLoginDetails.account_type != 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/uploadcertificates">Upload Certificates</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>}
+              {(decryptedLoginDetails.account_type != 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/uploadcertificates">Upload Certificates <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></Link></li>}
               
-              <li><FontAwesomeIcon icon={faBell} /> <Link to ="/settings">Settings</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
-              <li><FontAwesomeIcon icon={faLock} /> <Link to ="/changepassword">Change Password</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
-              <li><FontAwesomeIcon icon={faSignOutAlt} /> <Link to ="/logout">Logout</Link> <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></li>
+              <li><FontAwesomeIcon icon={faBell} /> <Link to ="/settings">Settings <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></Link></li>
+              <li><FontAwesomeIcon icon={faLock} /> <Link to ="/changepassword">Change Password<FontAwesomeIcon icon={faAngleRight} className='ms-auto' /> </Link> </li>
+              <li><FontAwesomeIcon icon={faSignOutAlt} /> <Link to ="/logout">Logout <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></Link></li>
             </ul>
           </div>
         </div>

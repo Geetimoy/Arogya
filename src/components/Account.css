@@ -31,6 +31,10 @@
   text-decoration: none;
   color: #818181;
   font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .profile-thumb-box{

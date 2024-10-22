@@ -143,6 +143,10 @@ function Patientprofiles(){
   const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
   const modalPrescriptionShowP2   = () => setShowPrescriptionModalP2(true);
 
+  const [showTestReportsModal, setShowTestReportsModal] = useState(false); 
+  const modalTestReportsClose  = () => setShowTestReportsModal(false);  
+  const modalTestReportsShow   = () => setShowTestReportsModal(true);
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -214,7 +218,8 @@ function Patientprofiles(){
                       <li><Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
-                      <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li>
+                      {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
+                      <li><Link to={"#"} onClick={()=> modalTestReportsShow()}>Upload Test Reports</Link></li>
                       <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Now</Link></li>
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
                     </ul>
@@ -229,6 +234,8 @@ function Patientprofiles(){
           ))}
 
         </div>
+
+
         <Modal show={showModal} onHide={modalClose}>
           <Modal.Body>  
             <p>Are you sure you want to close this profile?</p> 
@@ -319,6 +326,29 @@ function Patientprofiles(){
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
             <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showTestReportsModal} onHide={modalTestReportsClose}>
+          <Modal.Body className='form-all'>  
+            <p>Upload Test Reports</p> 
+            <form>
+              <div className="form-group">
+                <label><span class="d-block">Appointment </span></label>
+                <select class="form-control" name="eye_type" id="eye_type">
+                  <option value="">Select</option>
+                  <option value="0">None</option>
+                  <option value="1">Dimness of Vision</option>
+                  <option value="2">Eye Pain</option>
+                  <option value="3">Eye Redness</option>
+                  <option value="4">Watery Eyes</option>
+                </select>
+              </div>
+            </form>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsClose}>Cancel</Button>  
+            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Link>  
           </Modal.Footer>  
         </Modal>
 

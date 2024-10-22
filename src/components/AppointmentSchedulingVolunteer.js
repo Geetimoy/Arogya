@@ -194,7 +194,7 @@ function AppointmentSchedulingVolunteer(){
             <div className='patient-category mt-3'>
               <div className='box'>
                 <img src={general} />
-                <p className='mb-0'>Gneral Physician</p> 
+                <p className='mb-0'>General Physician</p> 
               </div>
               <div className='box'>
                 <img src={women} />
