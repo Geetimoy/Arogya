@@ -84,6 +84,21 @@ function PatientBasicInformation(){
     if(result1.data.length > 0){
       let userDetails = result1.data[0];
       console.log(userDetails);
+
+      var serviceAreaArray = [];
+      if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        var array1 = new Array();
+        serviceAreaArray.forEach((item)=>{
+          serviceAreaOption.forEach((opt)=>{
+            if(opt.value == item){
+              array1.push(opt);
+            }
+          })
+        })
+        setSelectedOptions(array1);
+      }
+
       formData['patient_name']              = {value:userDetails.patient_name, errorClass:"", errorMessage:""};
       formData['patient_father_name']       = {value:userDetails.patient_father_name, errorClass:"", errorMessage:""};
       formData['patient_is_bpl']            = {value:userDetails.is_under_previledged, errorClass:"", errorMessage:""};
@@ -100,23 +115,10 @@ function PatientBasicInformation(){
       formData['patient_city']              = {value:userDetails.patient_city, errorClass:"", errorMessage:""};
       formData['patient_state']             = {value:userDetails.patient_state, errorClass:"", errorMessage:""};
       formData['patient_pincode']           = {value:userDetails.patient_postal_code, errorClass:"", errorMessage:""};
-      formData['patient_service_area']      = {value:[], errorClass:"", errorMessage:""};
+      formData['patient_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
       formData['patient_special_notes']     = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
-
-      if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
-        var array1 = new Array();
-        serviceAreaArray.forEach((item)=>{
-          serviceAreaOption.forEach((opt)=>{
-            if(opt.value == item){
-              array1.push(opt);
-            }
-          })
-        })
-        setSelectedOptions(array1);
-      }
 
     }
 
