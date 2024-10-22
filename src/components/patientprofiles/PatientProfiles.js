@@ -351,8 +351,8 @@ function Patientprofiles(){
             <p>Initial Prescription</p> 
             <form>
               <div className="form-group">
-                <label><span class="d-block">Appointment </span></label>
-                <select class="form-control" name="eye_type" id="eye_type">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="eye_type" id="eye_type">
                   <option value="">Select</option>
                   <option value="0">None</option>
                   <option value="1">Dimness of Vision</option>
@@ -374,8 +374,8 @@ function Patientprofiles(){
             <p>Upload Test Reports</p> 
             <form>
               <div className="form-group">
-                <label><span class="d-block">Appointment </span></label>
-                <select class="form-control" name="eye_type" id="eye_type">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="eye_type" id="eye_type">
                   <option value="">Select</option>
                   <option value="0">None</option>
                   <option value="1">Dimness of Vision</option>
