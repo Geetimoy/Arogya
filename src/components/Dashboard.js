@@ -113,7 +113,7 @@ function Dashboard() {
 
     let userDetails = result1.data;console.log(userDetails);
     
-    if(userDetails.shared_image !== ""){
+    if(userDetails.shared_image && userDetails.shared_image !== ""){
       setProfileImage(userDetails.shared_image+'?timestamp='+Math.random());
     }
 
