@@ -78,7 +78,7 @@ function DoctorAppointments(){
         
       <div className="row">
           <div className="col-12">
-              <div className="button-box mb-3 position-relative"> 
+            <div className="button-box mb-3 position-relative"> 
               <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div>
               <div className='drop-menu'>
                 <ul>
@@ -111,20 +111,19 @@ function DoctorAppointments(){
                 {/* <div className="mb-3 mt-3 text-center">
                   <a href='/patientprofiles' className="btn primary-bg-color text-light">Confirm</a>
                 </div> */}
-              </div>
+            </div>
 
-              <div className="button-box mb-3"> 
-              
-                <p><span className="d-block">Doctor Name:</span> S Pradhan</p>
-                <p><span className="d-block">Specialization:</span> Neuro</p>
-                <p><span className="d-block">Patient Name:</span> B Patra (Mobile - 9263647748)</p>
-                <p><span className="d-block">Date of Visit & Appointment Time:</span><label>Friday 25th September, 2024 @ 03:00 PM - 05:00 AM</label></p>
-                <p><span className="d-block">Place:</span> Kalipark</p>
-                <p><span className="d-block">Consultation Mode:</span> Offline</p>
-                {/* <div className="mb-3 mt-3 text-center">
-                  <a href='/patientprofiles' className="btn primary-bg-color text-light">Confirm</a>
-                </div> */}
-              </div>
+            <div className="button-box mb-3"> 
+              <p><span className="d-block">Doctor Name:</span> S Pradhan</p>
+              <p><span className="d-block">Specialization:</span> Neuro</p>
+              <p><span className="d-block">Patient Name:</span> B Patra (Mobile - 9263647748)</p>
+              <p><span className="d-block">Date of Visit & Appointment Time:</span><label>Friday 25th September, 2024 @ 03:00 PM - 05:00 AM</label></p>
+              <p><span className="d-block">Place:</span> Kalipark</p>
+              <p><span className="d-block">Consultation Mode:</span> Offline</p>
+              {/* <div className="mb-3 mt-3 text-center">
+                <a href='/patientprofiles' className="btn primary-bg-color text-light">Confirm</a>
+              </div> */}
+            </div>
           </div>
         </div>
       </div>

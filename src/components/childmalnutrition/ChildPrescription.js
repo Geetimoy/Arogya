@@ -151,7 +151,7 @@ function ChildPrescription(){
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Prescription'/>
-            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>

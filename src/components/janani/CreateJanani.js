@@ -376,7 +376,7 @@ function CreateJanani(){
         onChange={handleChange1} options={serviceAreaOption} />
             <small className="error-mesg">{formData["janani_service_area"].errorMessage}</small>
           </div>
-          <div class="form-group "><label for="sub_volunteer_name">Sub Volunteer Name</label><select class="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
+          <div className="form-group "><label htmlFor="sub_volunteer_name">Sub Volunteer Name</label><select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
           <div className={`sp-notes form-group ${formData["special_note"].errorClass}`}>
             <label htmlFor="special_note">Special Notes </label>
             <input type="text" className="form-control" name="special_note" id="special_note" onChange={handleChange} placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''} />

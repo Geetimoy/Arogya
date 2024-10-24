@@ -250,37 +250,37 @@ function JananiMedicalHistory(){
         <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["previous_pregnancy_count"].errorClass}`}>
             <label htmlFor="previous_pregnancy_count"><span className="d-block">Previous Pregnancy Count <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="previous_pregnancy_count" placeholder="Previous Pregnancy Count" onChange={handleChange} value={formData["previous_pregnancy_count"].value ? formData["previous_pregnancy_count"].value : ''} />
+            <input type="text" className="form-control" name="previous_pregnancy_count" placeholder="Previous Pregnancy Count" onChange={handleChange} value={formData["previous_pregnancy_count"].value ? formData["previous_pregnancy_count"].value : ''} />
             <small className="error-mesg">{formData["previous_pregnancy_count"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["previous_boy_birth_count"].errorClass}`}>
             <label htmlFor="previous_boy_birth_count"><span className="d-block">Previous Boy Birth Count <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="previous_boy_birth_count" placeholder="Previous Boy Birth Count" onChange={handleChange} value={formData["previous_boy_birth_count"].value ? formData["previous_boy_birth_count"].value : ''} />
+            <input type="text" className="form-control" name="previous_boy_birth_count" placeholder="Previous Boy Birth Count" onChange={handleChange} value={formData["previous_boy_birth_count"].value ? formData["previous_boy_birth_count"].value : ''} />
             <small className="error-mesg">{formData["previous_boy_birth_count"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["previous_girl_birth_count"].errorClass}`}>
             <label htmlFor="previous_girl_birth_count"><span className="d-block">Previous Girl Birth Count <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="previous_girl_birth_count" placeholder="Previous Girl Birth Count" onChange={handleChange} value={formData["previous_girl_birth_count"].value ? formData["previous_girl_birth_count"].value : ''} />
+            <input type="text" className="form-control" name="previous_girl_birth_count" placeholder="Previous Girl Birth Count" onChange={handleChange} value={formData["previous_girl_birth_count"].value ? formData["previous_girl_birth_count"].value : ''} />
             <small className="error-mesg">{formData["previous_girl_birth_count"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["usg_needed"].errorClass}`}>
             <label htmlFor="usg_needed"><span className="d-block">No. of Ultrasound(USG) Needed <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="usg_needed" placeholder="No. of Ultrasound(USG) Needed" onChange={handleChange} value={formData["usg_needed"].value ? formData["usg_needed"].value : ''} />
+            <input type="text" className="form-control" name="usg_needed" placeholder="No. of Ultrasound(USG) Needed" onChange={handleChange} value={formData["usg_needed"].value ? formData["usg_needed"].value : ''} />
             <small className="error-mesg">{formData["usg_needed"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["usg_done"].errorClass}`}>
             <label htmlFor="usg_done"><span className="d-block">No. of Ultrasound(USG) Done <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="usg_done" placeholder="No. of Ultrasound(USG) Done" onChange={handleChange} value={formData["usg_done"].value ? formData["usg_done"].value : ''} />
+            <input type="text" className="form-control" name="usg_done" placeholder="No. of Ultrasound(USG) Done" onChange={handleChange} value={formData["usg_done"].value ? formData["usg_done"].value : ''} />
             <small className="error-mesg">{formData["usg_done"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["injection_needed"].errorClass}`}>
             <label htmlFor="injection_needed"><span className="d-block">No. of TT Injection Needed <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="injection_needed" placeholder="No. of TT Injection Needed" onChange={handleChange} value={formData["injection_needed"].value ? formData["injection_needed"].value : ''} />
+            <input type="text" className="form-control" name="injection_needed" placeholder="No. of TT Injection Needed" onChange={handleChange} value={formData["injection_needed"].value ? formData["injection_needed"].value : ''} />
             <small className="error-mesg">{formData["injection_needed"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["injection_done"].errorClass}`}>
             <label htmlFor="injection_done"><span className="d-block">No. of TT Injection Done <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="injection_done" placeholder="No. of TT Injection Done"  onChange={handleChange} value={formData["injection_done"].value ? formData["injection_done"].value : ''} />
+            <input type="text" className="form-control" name="injection_done" placeholder="No. of TT Injection Done"  onChange={handleChange} value={formData["injection_done"].value ? formData["injection_done"].value : ''} />
             <small className="error-mesg">{formData["injection_done"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["is_drinking_alcohol"].errorClass}`}>
@@ -299,7 +299,7 @@ function JananiMedicalHistory(){
           </div>
           <div className={`form-group ${formData["drinking_duration"].errorClass}`}>
             <label htmlFor="drinking_duration"><span className="d-block">Drinking Duration in Months <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="drinking_duration" placeholder="Drinking Duration in Months"  onChange={handleChange} value={formData["drinking_duration"].value ? formData["drinking_duration"].value : ''} />
+            <input type="text" className="form-control" name="drinking_duration" placeholder="Drinking Duration in Months"  onChange={handleChange} value={formData["drinking_duration"].value ? formData["drinking_duration"].value : ''} />
             <small className="error-mesg">{formData["drinking_duration"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["is_smoking"].errorClass}`}>
@@ -318,7 +318,7 @@ function JananiMedicalHistory(){
           </div>
           <div className={`form-group ${formData["smoking_duration"].errorClass}`}>
             <label htmlFor="smoking_duration"><span className="d-block">Smoking Duration in Months<span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="smoking_duration" placeholder="Smoking Duration in Months"   onChange={handleChange} value={formData["smoking_duration"].value ? formData["smoking_duration"].value : ''} />
+            <input type="text" className="form-control" name="smoking_duration" placeholder="Smoking Duration in Months"   onChange={handleChange} value={formData["smoking_duration"].value ? formData["smoking_duration"].value : ''} />
             <small className="error-mesg">{formData["smoking_duration"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["is_low_body_weight"].errorClass}`}>
@@ -395,7 +395,7 @@ function JananiMedicalHistory(){
           </div>
           <div className={`form-group ${formData["placenta_problems_desc"].errorClass}`}>
             <label htmlFor="placenta_problems_desc"><span className="d-block">Placenta Problems Desc <span className="text-danger">*</span></span></label>
-            <input type="text" class="form-control" name="placenta_problems_desc" placeholder="Placenta Problems Desc"  onChange={handleChange} value={formData["placenta_problems_desc"].value ? formData["placenta_problems_desc"].value : ''} />
+            <input type="text" className="form-control" name="placenta_problems_desc" placeholder="Placenta Problems Desc"  onChange={handleChange} value={formData["placenta_problems_desc"].value ? formData["placenta_problems_desc"].value : ''} />
             <small className="error-mesg">{formData["placenta_problems_desc"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["is_diabetic"].errorClass}`}>
