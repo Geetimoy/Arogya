@@ -206,7 +206,7 @@ function PatientMedicalHistory(){
         <p><small>Update Patient Medical History</small></p>
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
-          <div className={`form-group ${formData["eye_type"].errorClass}`}>
+          {/* <div className={`form-group ${formData["eye_type"].errorClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
             <select className="form-control" value={formData["eye_type"].value ? formData["eye_type"].value : ''} name="eye_type" id="eye_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -282,7 +282,114 @@ function PatientMedicalHistory(){
           </div>
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
+          </div> */}
+          <div className='form-group'>
+            <label><span className="d-block">Any drug allergy  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="drug_allergy" id="drug_allergy" placeholder="Any drug allergy"/>
           </div>
+          <div className='form-group'>
+            <label><span className="d-block">Any previous illness  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="previous_illness" id="previous_illness" placeholder="Any previous illness"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Any operation  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="operation" id="operation" placeholder="Any operation"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Any previous or recent Medications  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="medications" id="medications" placeholder="Any previous or recent Medications"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Any other medical record  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="medical_record" id="medical_record" placeholder="Any other medical record"/>
+          </div>
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you Excercise?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="excercise_y" name="excercise" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="excercise_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="excercise_n" name="excercise" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="excercise_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you Smoke?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="smoke_y" name="smoke" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="smoke_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="smoke_n" name="smoke" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="smoke_n">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you have Diabetic?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="diabetic_y" name="diabetic" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="diabetic_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="diabetic_n" name="diabetic" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="diabetic_n">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you have Pressure?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="pressure_h" name="pressure" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="pressure_h">High</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="pressure_l" name="pressure" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="pressure_l">Low</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="pressure_n" name="pressure" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="pressure_n">Normal</label>
+              </div>
+            </div>
+          </div>
+
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you have Cholesterol?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="cholesterol_y" name="cholesterol" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="cholesterol_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="cholesterol_n" name="cholesterol" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="cholesterol_n">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you have Thyroid?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="thyroid_y" name="thyroid" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="thyroid_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="thyroid_n" name="thyroid" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="thyroid_n">No</label>
+              </div>
+            </div>
+          </div>
+
         </form>
       </div>
       <Appfooter></Appfooter>
