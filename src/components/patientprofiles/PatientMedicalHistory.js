@@ -284,6 +284,14 @@ function PatientMedicalHistory(){
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
           </div> */}
           <div className='form-group'>
+            <label><span className="d-block">User ID  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="user_id" id="user_id" placeholder="User ID"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">User Name  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="user_name" id="user_name" placeholder="User Name"/>
+          </div>
+          <div className='form-group'>
             <label><span className="d-block">Any drug allergy  <span className="text-danger">*</span></span></label>
             <input type="text" className="form-control" name="drug_allergy" id="drug_allergy" placeholder="Any drug allergy"/>
           </div>
@@ -330,6 +338,73 @@ function PatientMedicalHistory(){
             </div>
           </div>
 
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you Drug Allergy?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="drug_allergy_y" name="drug" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="drug_allergy_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="drug_allergy_n" name="drug" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="drug_allergy_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you Drink Alcohol?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="drink_alcohol_y" name="drink_alcohol" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="drink_alcohol_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="drink_alcohol_n" name="drink_alcohol" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="drink_alcohol_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you Drink Caffeine?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="drink_caffeine_y" name="drink_caffeine" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="drink_caffeine_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="drink_caffeine_n" name="drink_caffeine" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="drink_caffeine_n">No</label>
+              </div>
+            </div>
+          </div>
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you Diet?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="diet_y" name="diet" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="diet_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="diet_n" name="diet" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="diet_n">No</label>
+              </div>
+            </div>
+          </div>
+
+
+          <div className='form-group'>
+            <label className="pos-relative no-style">Do you have Current Medication?  <span className="text-danger">*</span> </label>
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="current_medication_y" name="current_medicationtic" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="current_medication_y">Yes</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="current_medication_n" name="current_medication" className="custom-control-input" />
+                <label className="custom-control-label no-style" htmlFor="current_medication_n">No</label>
+              </div>
+            </div>
+          </div>
           <div className='form-group'>
             <label className="pos-relative no-style">Do you have Diabetic?  <span className="text-danger">*</span> </label>
             <div className="d-flex">
@@ -390,6 +465,42 @@ function PatientMedicalHistory(){
             </div>
           </div>
 
+          <div className='form-group'>
+            <label><span className="d-block">Blood Pressure  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="blood_pressure" id="blood_pressure" placeholder="Blood Pressure"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Blood Cholesterol  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="blood_cholesterol" id="blood_cholesterol" placeholder="Blood Cholesterol"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Blood Sugar  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="blood_sugar" id="blood_sugar" placeholder="Blood Sugar"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Blood Thyroid  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="blood_thyroid" id="blood_thyroid" placeholder="Blood Thyroid"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Body Temperature  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="body_temperature" id="blood_temperature" placeholder="Body Temperature"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Blood Oxygen  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="blood_oxygen" id="blood_oxygen" placeholder="Blood Oxygen"/>
+          </div>
+          <div className='form-group'>
+            <label><span className="d-block">Heart Rate(per minute)  <span className="text-danger">*</span></span></label>
+            <input type="text" className="form-control" name="heart_rate" id="heart_rate" placeholder="Heart Rate"/>
+          </div>
+
+          <div className='form-group'>
+            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems"></textarea>
+          </div>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
+          </div>
         </form>
       </div>
       <Appfooter></Appfooter>
