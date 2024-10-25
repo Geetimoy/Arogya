@@ -390,8 +390,6 @@ function PatientMedicalHistory(){
               </div>
             </div>
           </div>
-
-
           <div className='form-group'>
             <label className="pos-relative no-style">Do you have Current Medication?  <span className="text-danger">*</span> </label>
             <div className="d-flex">
