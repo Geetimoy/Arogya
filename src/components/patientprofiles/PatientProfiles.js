@@ -9,7 +9,7 @@ import Appfooter from '../AppFooter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import patientprofile from '../../assets/images/profile.png';
 
@@ -30,6 +30,7 @@ import more from '../../assets/images/stethoscope.png';
 function Patientprofiles(){
 
   const [isActive, setIsActive] = useState(false);
+  const redirect = useNavigate();
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
@@ -168,6 +169,8 @@ function Patientprofiles(){
 
   }
 
+  const [accountKeyForPatientPrescription, setAccountKeyForPatientPrescription] = useState('');
+
   const [showModal, setShowModal] = useState(false); 
   const modalClose  = () => setShowModal(false);  
   const modalShow   = () => setShowModal(true);
@@ -177,12 +180,30 @@ function Patientprofiles(){
   const modalShowSearch   = () => setShowSearchModal(true);
 
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false); 
-  const modalPrescriptionClose  = () => setShowPrescriptionModal(false);  
-  const modalPrescriptionShow   = () => setShowPrescriptionModal(true);
+  const modalPrescriptionClose  = () => {
+    setAccountKeyForPatientPrescription('');
+    setShowPrescriptionModal(false);  
+  }
+  const modalPrescriptionShow   = (patientAccountKey) => {
+    setAccountKeyForPatientPrescription(patientAccountKey);
+    setShowPrescriptionModal(true);
+  }
+
+  const [prescriptionType, setPrescriptionType] = useState('initial');
+  const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
 
   const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
   const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
-  const modalPrescriptionShowP2   = () => setShowPrescriptionModalP2(true);
+  const modalPrescriptionShowP2   = () => {
+    if(prescriptionType === 'initial'){ 
+      //console.log(prescriptionType);
+      //console.log(`/patientprofiles/patient-upload-prescription/${prescriptionType}/${accountKeyForPatientPrescription}`);
+      redirect(`/patientprofiles/patient-upload-prescription/${prescriptionType}/${accountKeyForPatientPrescription}`);
+    }
+    else{
+      setShowPrescriptionModalP2(true);
+    }
+  }
 
   const [showTestReportsModal, setShowTestReportsModal] = useState(false); 
   const modalTestReportsClose  = () => setShowTestReportsModal(false);  
@@ -330,15 +351,15 @@ function Patientprofiles(){
           <Modal.Body>  
             <p>Upload Prescription</p> 
             <div className="d-flex">
-                <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_y" name="basicInfoMedicalCertificate" className="custom-control-input" value="yes" />
-                  <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Initial Prescription</label>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" value="initial" onChange={choosePrescriptionType} checked={prescriptionType === 'initial' ? true : false}/>
+                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Initial Prescription</label>
               </div>
-                <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="edit_user_medical_certificates_n" name="basicInfoMedicalCertificate" className="custom-control-input" value="no" />
-                  <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
-                </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" onChange={choosePrescriptionType} checked={prescriptionType === 'doctor' ? true : false}/>
+                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
               </div>
+            </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
