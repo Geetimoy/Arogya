@@ -9,7 +9,7 @@ import Appfooter from '../AppFooter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import patientprofile from '../../assets/images/profile.png';
 
@@ -30,7 +30,6 @@ import more from '../../assets/images/stethoscope.png';
 function Patientprofiles(){
 
   const [isActive, setIsActive] = useState(false);
-  const redirect = useNavigate();
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
@@ -194,11 +193,9 @@ function Patientprofiles(){
 
   const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
   const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
-  const modalPrescriptionShowP2   = () => {
+  const modalPrescriptionShowP2   = () => { console.log(prescriptionType);
     if(prescriptionType === 'initial'){ 
-      //console.log(prescriptionType);
-      //console.log(`/patientprofiles/patient-upload-prescription/${prescriptionType}/${accountKeyForPatientPrescription}`);
-      redirect(`/patientprofiles/patient-upload-prescription/${prescriptionType}/${accountKeyForPatientPrescription}`);
+      window.location.href = `/patientprofiles/patient-prescription/${accountKeyForPatientPrescription}/${prescriptionType}`;
     }
     else{
       setShowPrescriptionModalP2(true);

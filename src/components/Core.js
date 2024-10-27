@@ -300,6 +300,8 @@ export default function Core() {
             <Route path="/patientprofiles/CreatePatientProfile/:accountKey" exact element={<CreatePatientProfile />} />
             <Route path="/patientprofiles/patient-test-reports/:accountKey" exact element={<PatientTestReports />} />
             <Route path="/patientprofiles/patient-prescription/:accountKey" exact element={<PatientPrescription />} />
+            <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType" exact element={<PatientPrescription />} />
+            <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-medical-history/:accountKey" exact element={<PatientMedicalHistory />} />
             <Route path="/patientprofiles/patient-booking/:accountKey" exact element={<PatientBooking />} />
             
