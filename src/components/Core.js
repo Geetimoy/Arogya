@@ -88,6 +88,7 @@ import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
+import PatientUploadPrescriptions from './patientprofiles/PatientUploadPrescriptions';
 
 
 
@@ -302,6 +303,8 @@ export default function Core() {
             <Route path="/patientprofiles/patient-prescription/:accountKey" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<PatientPrescription />} />
+            <Route path="/patientprofiles/patient-upload-prescription/:accountKey/:prescriptionType" exact element={<PatientUploadPrescriptions />} />
+            <Route path="/patientprofiles/patient-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<PatientUploadPrescriptions />} />
             <Route path="/patientprofiles/patient-medical-history/:accountKey" exact element={<PatientMedicalHistory />} />
             <Route path="/patientprofiles/patient-booking/:accountKey" exact element={<PatientBooking />} />
             

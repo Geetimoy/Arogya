@@ -25,10 +25,10 @@ function PatientPrescription(){
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
   if(prescriptionType === 'initial'){
-    const uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}`;
+    var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}`;
   }
   else if(prescriptionType === 'doctor'){
-    const uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+    var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
   }
   
 
@@ -76,7 +76,7 @@ function PatientPrescription(){
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - 1</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={"#"}>Upload</Link>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={uploadUrl}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
