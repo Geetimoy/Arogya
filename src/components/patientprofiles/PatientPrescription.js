@@ -1,17 +1,36 @@
 import { useState, useContext } from 'react';
-
+import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
 import docIcon from '../../assets/images/doc-icon.jpg';
 
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
 function PatientPrescription(){
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
+  const [urlParam, setUrlParam] = useState(useParams());
+  const [prescriptionList, setPrescriptionList]   = useState([]);
+
+  const editAccountKey    = urlParam.accountKey;
+  const prescriptionType  = urlParam.prescriptionType;
+  const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
+
+  if(prescriptionType === 'initial'){
+    const uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}`;
+  }
+  else if(prescriptionType === 'doctor'){
+    const uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+  }
+  
 
   const [isMActive, setIsMActive] = useState(false);
 

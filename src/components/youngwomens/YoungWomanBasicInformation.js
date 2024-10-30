@@ -82,10 +82,10 @@ function YoungWomanBasicInformation(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['userServiceArea']: {...formData['userServiceArea'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -121,6 +121,21 @@ function YoungWomanBasicInformation(){
     if(result1.data.length > 0){
       let userDetails = result1.data[0];
       console.log(userDetails);
+      console.log(userDetails.service_area_ids);
+      var serviceAreaArray = [];
+      if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        var array1 = new Array();
+        serviceAreaArray.forEach((item)=>{
+          options.forEach((opt)=>{
+            if(opt.value == item){
+              array1.push(opt);
+            }
+          })
+        })
+        setSelectedOptions(array1);
+      }
+
       formData['woman_name']              = {value:userDetails.women_name, errorClass:"", errorMessage:""};
       formData['woman_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
       formData['is_premature_birth']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
@@ -138,7 +153,7 @@ function YoungWomanBasicInformation(){
       formData['woman_city']              = {value:userDetails.women_city, errorClass:"", errorMessage:""};
       formData['woman_state']             = {value:userDetails.women_state, errorClass:"", errorMessage:""};
       formData['woman_postal_code']       = {value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
-      formData['woman_service_area']      = {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
+      formData['woman_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
       formData['woman_education']         = {value:userDetails.women_education, errorClass:"", errorMessage:""};
       formData['woman_school_name']       = {value:userDetails.women_school_name, errorClass:"", errorMessage:""};
       formData['woman_school_class']      = {value:userDetails.women_school_class, errorClass:"", errorMessage:""};
@@ -149,19 +164,6 @@ function YoungWomanBasicInformation(){
       formData['special_note']            = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
-
-      if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
-        var array1 = new Array();
-        serviceAreaArray.forEach((item)=>{
-          options.forEach((opt)=>{
-            if(opt.value == item){
-              array1.push(opt);
-            }
-          })
-        })
-        setSelectedOptions(array1);
-      }
 
     }
 
@@ -446,7 +448,7 @@ function YoungWomanBasicInformation(){
           </div>
           <div className={`form-group ${formData["house_type"].errorClass}`}>
             <label htmlFor="house_type">House<span className="text-danger">*</span></label>
-            <select className="form-control" name="house_type" id="house_type" defaultValue={formData["house_type"].value ? formData["house_type"].value : '1'} onChange={handleChange}>
+            <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value ? formData["house_type"].value : '1'} onChange={handleChange}>
               <option value="1">Mud House</option>
               <option value="2">Paved House</option>
             </select>
@@ -454,7 +456,7 @@ function YoungWomanBasicInformation(){
           </div>
           <div className={`form-group ${formData["drinking_water_type"].errorClass}`}>
             <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
-            <select className="form-control" name="drinking_water_type" id="drinking_water_type" defaultValue={formData["drinking_water_type"].value ? formData["drinking_water_type"].value : '1'} onChange={handleChange}>
+            <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value ? formData["drinking_water_type"].value : '1'} onChange={handleChange}>
               <option value="1">Tap</option>
               <option value="2">Well</option>
               <option value="3">Pond</option>
@@ -463,7 +465,7 @@ function YoungWomanBasicInformation(){
           </div>
           <div className={`form-group ${formData["toilet_type"].errorClass}`}>
             <label htmlFor="toilet_type">Toilet<span className="text-danger">*</span></label>
-            <select className="form-control" name="toilet_type" id="toilet_type" defaultValue={formData["toilet_type"].value ? formData["toilet_type"].value : '1'} onChange={handleChange}>
+            <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'} onChange={handleChange}>
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>
               <option value="3">Flush-toilet</option>
