@@ -25,6 +25,13 @@ function PatientUploadPrescriptions(){
   const prescriptionType  = urlParam.prescriptionType;
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
+  if(prescriptionType == 'initial'){
+    var appointmentInitialType = 0;
+  }
+  else if(prescriptionType == 'doctor'){
+    var appointmentInitialType = 1;
+  }
+
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
@@ -65,15 +72,18 @@ function PatientUploadPrescriptions(){
       jsonData["device_token"]            = DEVICE_TOKEN;
       jsonData["user_lat"]                = localStorage.getItem('latitude');
       jsonData["user_long"]               = localStorage.getItem('longitude');
+      jsonData["appointment_initial_type"]= appointmentInitialType;
       jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
       jsonData["file"]                    = uploadedFileBase64;
+      jsonData["file_seq"]                = 'initialpatient1';
       jsonData["file_extension"]          = fileExtension;
+      jsonData["initial_summary"]         = 'test1update';
 
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/uploadPatientSurveyPrescription`, {
+      const response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatient`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
