@@ -65,11 +65,16 @@ function PatientUploadPrescriptions(){
 
       fileUpload[`inputPrescription${seq}`].upload   = true;
       fileUpload[`inputPrescription${seq}`].fileName = event.target.files[0].name;
+
+      let nextSeq = seq+1;
+      if(fileUpload[`inputPrescription${nextSeq}`]){
+        fileUpload[`inputPrescription${nextSeq}`].upload   = true;
+        fileUpload[`inputPrescription${nextSeq}`].fileName = '';
+      }
+
       setFileUpload({...fileUpload, ...fileUpload});
 
-      console.log(fileUpload);
-
-      /*const uploadedFileBase64 = await convertFileToBase64(event.target.files[0]);
+      const uploadedFileBase64 = await convertFileToBase64(event.target.files[0]);
       
       let jsonData = {};
 
@@ -83,9 +88,9 @@ function PatientUploadPrescriptions(){
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
       jsonData["file"]                    = uploadedFileBase64;
-      jsonData["file_seq"]                = 'initialpatient1';
+      jsonData["file_seq"]                = 'initialpatient'+seq;
       jsonData["file_extension"]          = fileExtension;
-      jsonData["initial_summary"]         = 'test1update';
+      jsonData["initial_summary"]         = '';
 
       console.log(jsonData);
 
@@ -101,15 +106,15 @@ function PatientUploadPrescriptions(){
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        setTimeout(() => {
-          fileUpload['inputPrescription'].upload   = true;
-          fileUpload['inputPrescription'].fileName = "";
-          setFileUpload({...fileUpload, ...fileUpload});
-        }, 2000);
+        // setTimeout(() => {
+        //   fileUpload['inputPrescription'].upload   = true;
+        //   fileUpload['inputPrescription'].fileName = "";
+        //   setFileUpload({...fileUpload, ...fileUpload});
+        // }, 2000);
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-      }*/
+      }
 
     }
     
@@ -152,39 +157,39 @@ function PatientUploadPrescriptions(){
       </div>
       <div className="app-body young-womens upload-prescription upload-certifiate">
         <div className='row'>
-          <div className='col-12'>
+          <div className={`col-12`}>
             <div className={`form-group brdr-btm parent`}>
               <input type="file" name="inputPrescription" id="inputPrescription1" onChange={(event) => uploadCertificateChange(event, 1)}/>
               <label>{(fileUpload['inputPrescription1'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription1'].fileName}</label>
             </div>
           </div>
-          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+          <div className={`col-12 ${fileUpload['inputPrescription2'].upload === true ? '' : 'disabled'}`} style={{'marginTop':'10px'}}>
             <div className={`form-group brdr-btm parent`}>
               <input type="file" name="inputPrescription" id="inputPrescription2" onChange={(event) => uploadCertificateChange(event, 2)}/>
               <label>{(fileUpload['inputPrescription2'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription2'].fileName}</label>
             </div>
           </div>
-          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+          <div className={`col-12 ${fileUpload['inputPrescription3'].upload === true ? '' : 'disabled'}`} style={{'marginTop':'10px'}}>
             <div className={`form-group brdr-btm parent`}>
               <input type="file" name="inputPrescription" id="inputPrescription3" onChange={(event) => uploadCertificateChange(event, 3)}/>
               <label>{(fileUpload['inputPrescription3'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription3'].fileName}</label>
             </div>
           </div>
-          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+          <div className={`col-12 ${fileUpload['inputPrescription4'].upload === true ? '' : 'disabled'}`} style={{'marginTop':'10px'}}>
             <div className={`form-group brdr-btm parent`}>
               <input type="file" name="inputPrescription" id="inputPrescription4" onChange={(event) => uploadCertificateChange(event, 4)}/>
               <label>{(fileUpload['inputPrescription4'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription4'].fileName}</label>
             </div>
           </div>
-          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+          <div className={`col-12 ${fileUpload['inputPrescription5'].upload === true ? '' : 'disabled'}`} style={{'marginTop':'10px'}}>
             <div className={`form-group brdr-btm parent`}>
               <input type="file" name="inputPrescription" id="inputPrescription5" onChange={(event) => uploadCertificateChange(event, 5)}/>
               <label>{(fileUpload['inputPrescription5'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription5'].fileName}</label>
             </div>
           </div>
-          <div className='col-12 text-center' style={{'marginTop':'10px'}}>
+          {/* <div className='col-12 text-center' style={{'marginTop':'10px'}}>
             <button type="button" className='btn primary-bg-color text-light'>Save</button>
-          </div>
+          </div> */}
           
           <div className='col-12 mt-4'>
             {/* <button type="button" class="btn btn-primary primary-bg-color border-0">
