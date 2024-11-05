@@ -39,7 +39,11 @@ function PatientUploadPrescriptions(){
   };
 
   const [fileUpload, setFileUpload] = useState({
-    inputPrescription : {'upload': true, 'fileName': ''}
+    inputPrescription1 : {'upload': true, 'fileName': ''},
+    inputPrescription2 : {'upload': false, 'fileName': ''},
+    inputPrescription3 : {'upload': false, 'fileName': ''},
+    inputPrescription4 : {'upload': false, 'fileName': ''},
+    inputPrescription5 : {'upload': false, 'fileName': ''}
   });
 
   const convertFileToBase64 = (file) => {
@@ -51,7 +55,7 @@ function PatientUploadPrescriptions(){
     });
   }
 
-  const uploadCertificateChange = async (event) => {
+  const uploadCertificateChange = async (event, seq) => {
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     if(event.target.files[0]){
@@ -59,11 +63,13 @@ function PatientUploadPrescriptions(){
       var fileName        = event.target.files[0].name;
       var fileExtension   = fileName.split('.').pop();
 
-      fileUpload['inputPrescription'].upload   = true;
-      fileUpload['inputPrescription'].fileName = event.target.files[0].name;
+      fileUpload[`inputPrescription${seq}`].upload   = true;
+      fileUpload[`inputPrescription${seq}`].fileName = event.target.files[0].name;
       setFileUpload({...fileUpload, ...fileUpload});
 
-      const uploadedFileBase64 = await convertFileToBase64(event.target.files[0]);
+      console.log(fileUpload);
+
+      /*const uploadedFileBase64 = await convertFileToBase64(event.target.files[0]);
       
       let jsonData = {};
 
@@ -103,7 +109,7 @@ function PatientUploadPrescriptions(){
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-      }
+      }*/
 
     }
     
@@ -148,10 +154,38 @@ function PatientUploadPrescriptions(){
         <div className='row'>
           <div className='col-12'>
             <div className={`form-group brdr-btm parent`}>
-              <input type="file" name="inputPrescription" id="inputPrescription" onChange={(event) => uploadCertificateChange(event)}/>
-              <label>{(fileUpload['inputPrescription'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription'].fileName}</label>
+              <input type="file" name="inputPrescription" id="inputPrescription1" onChange={(event) => uploadCertificateChange(event, 1)}/>
+              <label>{(fileUpload['inputPrescription1'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription1'].fileName}</label>
             </div>
           </div>
+          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+            <div className={`form-group brdr-btm parent`}>
+              <input type="file" name="inputPrescription" id="inputPrescription2" onChange={(event) => uploadCertificateChange(event, 2)}/>
+              <label>{(fileUpload['inputPrescription2'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription2'].fileName}</label>
+            </div>
+          </div>
+          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+            <div className={`form-group brdr-btm parent`}>
+              <input type="file" name="inputPrescription" id="inputPrescription3" onChange={(event) => uploadCertificateChange(event, 3)}/>
+              <label>{(fileUpload['inputPrescription3'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription3'].fileName}</label>
+            </div>
+          </div>
+          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+            <div className={`form-group brdr-btm parent`}>
+              <input type="file" name="inputPrescription" id="inputPrescription4" onChange={(event) => uploadCertificateChange(event, 4)}/>
+              <label>{(fileUpload['inputPrescription4'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription4'].fileName}</label>
+            </div>
+          </div>
+          <div className='col-12 disabled' style={{'marginTop':'10px'}}>
+            <div className={`form-group brdr-btm parent`}>
+              <input type="file" name="inputPrescription" id="inputPrescription5" onChange={(event) => uploadCertificateChange(event, 5)}/>
+              <label>{(fileUpload['inputPrescription5'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription5'].fileName}</label>
+            </div>
+          </div>
+          <div className='col-12 text-center' style={{'marginTop':'10px'}}>
+            <button type="button" className='btn primary-bg-color text-light'>Save</button>
+          </div>
+          
           <div className='col-12 mt-4'>
             {/* <button type="button" class="btn btn-primary primary-bg-color border-0">
               Use Camera
