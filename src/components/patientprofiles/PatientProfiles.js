@@ -275,6 +275,7 @@ function Patientprofiles(){
                     <ul>
                       <li><Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link></li>
+                      <li><Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>Update Periodic Data</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
                       {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
@@ -366,7 +367,7 @@ function Patientprofiles(){
 
         <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
           <Modal.Body className='form-all'>  
-            <p>Initial Prescription</p> 
+            <p>Doctor Prescription</p> 
             <form>
               <div className="form-group">
                 <label><span className="d-block">Appointment </span></label>

@@ -212,7 +212,7 @@ function ChildMalnutrion(){
                       <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Update Medical History</Link></li>
                       <li><Link to={`/childmalnutrition/child-periodic-data/${child.account_key}`}>Update Periodic Data</Link></li>
-                      <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Prescription</Link></li>
+                      <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Survey Report/Prescription</Link></li>
                       {/* <li><Link to={`/childmalnutrition/child-test-reports/${child.account_key}`}>Upload Test Reports</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li> */}
