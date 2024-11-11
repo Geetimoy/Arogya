@@ -92,7 +92,7 @@ function PatientBooking(){
                 <p><span className="d-block">Place:</span> Kalipark</p>
                 <p><span className="d-block">Consultation Mode:</span> Offline (Clinic)</p>
                 <div className="mb-3 mt-3 text-center">
-                  <a href='/patientprofiles-booking' className="btn primary-bg-color text-light">Book for Patient</a>
+                  <a href='/patientprofiles-booking' className="btn primary-bg-color text-light">Book Patient</a>
                 </div>
               </div>
           </div>
