@@ -39,9 +39,13 @@ function PatientBooking(){
   const modalClose  = () => setShowModal(false);  
   const modalShow   = () => setShowModal(true);
 
-  const [confirmDoctorName, setConfirmDoctorName]           = useState('');
-  const [confirmSpecializations, setConfirmSpecializations] = useState('');
-  const [confirmScheduleDate, setConfirmScheduleDate]       = useState('');
+  const [confirmScheduleId, setConfirmScheduleId]             = useState('');
+  const [confirmDoctorAccountKey, setConfirmDoctorAccountKey] = useState('');
+  const [confirmDoctorName, setConfirmDoctorName]             = useState('');
+  const [confirmSpecializations, setConfirmSpecializations]   = useState('');
+  const [confirmScheduleDate, setConfirmScheduleDate]         = useState('');
+  const [confirmScheduleLocation, setConfirmScheduleLocation] = useState('');
+
   const [showBookingConfirmationModal, setShowBookingConfirmationModal] = useState(false); 
   const modalBookingConfirmationClose  = () => setShowBookingConfirmationModal(false);  
   const modalBookingConfirmationShow   = async (scheduleId, doctorAccountKey) => {
@@ -75,26 +79,28 @@ function PatientBooking(){
 
       scheduleDetails = scheduleDetails[0];
 
+      let scheduleId        = scheduleDetails.display_name;
       let doctorName        = scheduleDetails.display_name;
       let specializations   = scheduleDetails.specializations;
+      let location          = scheduleDetails.clinic_details;
       let scheduleDate      = scheduleDetails['schedule_dates'][0].date;
       let scheduleFromTime  = scheduleDetails['schedule_dates'][0].time_from;
       let scheduleToTime    = scheduleDetails['schedule_dates'][0].time_to;
 
+      setConfirmScheduleId(scheduleId);
+      setConfirmDoctorAccountKey(doctorAccountKey);
       setConfirmDoctorName(doctorName);
       setConfirmSpecializations(specializations);
       setConfirmScheduleDate(`${scheduleDate} @ ${scheduleFromTime} - ${scheduleToTime}`);
+      setConfirmScheduleLocation(location);
 
       setShowBookingConfirmationModal(true);
 
     }
-
-    console.log(scheduleDetails);
-
-    
   }
 
-  const [scheduleList, setScheduleList]   = useState([]);
+  const [scheduleList, setScheduleList]     = useState([]);
+  const [patientDetails, setPatientDetails] = useState({});
 
   const listSchedule = async () => {
 
@@ -141,12 +147,51 @@ function PatientBooking(){
 
   }
 
+  const fetchPatientDetails = async () => {
+
+    let jsonData = {};
+
+    jsonData['system_id']             = systemContext.systemDetails.system_id;
+    jsonData["patient_account_key"]   = patientAccountKey;
+    jsonData["patient_account_type"]  = 3;
+    jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]          = DEVICE_TOKEN;
+    jsonData["user_lat"]              = localStorage.getItem('latitude');
+    jsonData["user_long"]             = localStorage.getItem('longitude');
+    jsonData["search_param"]          = {
+                                          "by_keywords": "",
+                                          "limit": "2",
+                                          "offset": "0",
+                                          "order_by_field": "account_id",
+                                          "order_by_value": "desc"
+                                        }
+    
+    const response1 = await fetch(`${API_URL}/patientBasicInformationList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    setPatientDetails(result1.data[0]);
+
+  }
+
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
       listSchedule("");
+      fetchPatientDetails(patientAccountKey);
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
+
+  const confirmBooking = (scheduleId, doctorAccountKey, patientAccountkey) => {
+
+    
+
+  }
 
   return(
     <>
@@ -228,11 +273,9 @@ function PatientBooking(){
                   </div>
                 </div>
 
-                })}
+              })}
 
-                {scheduleList.length === 0 && <div className='text-center'>No Records Found</div>}
-
-
+              {scheduleList.length === 0 && <div className='text-center'>No Records Found</div>}
 
           </div>
         </div>
@@ -285,13 +328,15 @@ function PatientBooking(){
             <p className='mb-2'>You are now one step behind to book an appointment for you.</p> 
             <p className='mb-2'>Please check the details and click confirm button to book an appointment.</p> 
             <p>
+              <strong>Patient Name: </strong>{patientDetails.patient_name}<br/>
               <strong>Doctor Name: </strong>{confirmDoctorName}<br/>
               <strong>Specialization: </strong>{confirmSpecializations}<br/>
-              <strong>Appointment Date & Time: </strong>{confirmScheduleDate}
+              <strong>Appointment Date & Time: </strong>{confirmScheduleDate}<br/>
+              <strong>Place: </strong>{confirmScheduleLocation}
             </p>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100'>Confirm</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100' onClick={() => confirmBooking(confirmScheduleId, confirmDoctorAccountKey.toLowerCase(), patientDetails.account_key.toLowerCase())}>Confirm</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalBookingConfirmationClose}>Cancel</Button>  
           </Modal.Footer>  
         </Modal>
