@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
@@ -26,9 +26,11 @@ function PatientPrescription(){
 
   if(prescriptionType === 'initial'){
     var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForPatient`;
   }
   else if(prescriptionType === 'doctor'){
     var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+    var fetchUrl  = ``;
   }
   
 
@@ -37,6 +39,82 @@ function PatientPrescription(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const searchPrescription = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listPrescription(value);
+    }, 1000)
+  }
+
+  const listPrescription = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+
+    const response = await fetch(`${API_URL}/${fetchUrl}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setPrescriptionList(result.data);
+    }
+    else{
+      setPrescriptionList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPrescription("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const deletePrescription = async (fileId) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["account_key"]     = editAccountKey;
+    jsonData["account_type"]    = 3;
+    jsonData["file_id"]         = fileId;
+
+    /*const response = await fetch(`${API_URL}/deleteWomanSurveyPrescription`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      listPrescription("");
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }*/
+
+  }
 
   return(
     <>
@@ -86,17 +164,19 @@ function PatientPrescription(){
         </div>
         <div className='row'>
 
-          
-            <div className='col-6'>
-              <div className='button-box'>
-                <div className='prescription'>
-                  <div className="btn-download"><Link target="_blank" to={'#'}><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                  <img src={docIcon} alt='' className='w-100' />
-                  <p className='mb-1'><strong>Patient Prescription</strong></p>
+
+            {prescriptionList.map((patient, index) => (
+              <div className='col-6' key={patient.file_id}>
+                <div className='button-box'>
+                  <div className='prescription'>
+                    <div className="btn-download"><Link target="_blank" to={`${patient.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
+                    <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(patient.file_id)}/></div>
+                    <img src={docIcon} alt='' className='w-100' />
+                    <p className='mb-1'><strong>{patient.file_name}</strong></p>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
         
 
         </div>
