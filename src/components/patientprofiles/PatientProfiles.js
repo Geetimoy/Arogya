@@ -191,13 +191,42 @@ function Patientprofiles(){
   const [prescriptionType, setPrescriptionType] = useState('initial');
   const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
 
+  const [appointmentList, setAppointmentList] = useState([]);
+
   const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
   const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
-  const modalPrescriptionShowP2   = () => { console.log(prescriptionType);
+  const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
     if(prescriptionType === 'initial'){ 
       window.location.href = `/patientprofiles/patient-prescription/${accountKeyForPatientPrescription}/${prescriptionType}`;
     }
     else{
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["patient_account_key"]       = accountKeyForPatientPrescription;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "notolderthan": "365"
+                                              }
+      
+      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+      console.log(result);
+
       setShowPrescriptionModalP2(true);
     }
   }
