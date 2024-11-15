@@ -9,7 +9,7 @@ import Appfooter from '../AppFooter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import patientprofile from '../../assets/images/profile.png';
 
@@ -30,6 +30,7 @@ import more from '../../assets/images/stethoscope.png';
 function Patientprofiles(){
 
   const [isActive, setIsActive] = useState(false);
+  const redirect = useNavigate();
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state
@@ -231,9 +232,23 @@ function Patientprofiles(){
     }
   }
 
-  const [showTestReportsModal, setShowTestReportsModal] = useState(false); 
-  const modalTestReportsClose  = () => setShowTestReportsModal(false);  
-  const modalTestReportsShow   = () => setShowTestReportsModal(true);
+  const [testReportAppointmentId, setTestReportAppointmentId] = useState(1);
+  const [testReportPatientKey, setTestReportPatientKey]       = useState('');
+  const [showTestReportsModal, setShowTestReportsModal]       = useState(false); 
+  const modalTestReportsClose  = () => {
+    setShowTestReportsModal(false); 
+    setTestReportPatientKey(''); 
+  }
+  const modalTestReportsShow   = (patientAccountKey) => {
+    setShowTestReportsModal(true);
+    setTestReportPatientKey(patientAccountKey);
+  }
+  const confirmTestReportAppointment = () => {
+    window.location.href = `/patientprofiles/patient-test-reports/${testReportPatientKey}/${testReportAppointmentId}`;
+  }
+
+  const [doctorPrescriptionAppointmentId, setDoctorPrescriptionAppointmentId] = useState(1);
+  
 
   return(
     <>
@@ -308,7 +323,7 @@ function Patientprofiles(){
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
                       {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
-                      <li><Link to={"#"} onClick={()=> modalTestReportsShow()}>Upload Test Reports</Link></li>
+                      <li><Link to={"#"} onClick={()=> modalTestReportsShow(`${patient.account_key}`)}>Upload Test Reports</Link></li>
                       <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Now</Link></li>
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
                     </ul>
@@ -423,20 +438,17 @@ function Patientprofiles(){
             <form>
               <div className="form-group">
                 <label><span className="d-block">Appointment </span></label>
-                <select className="form-control" name="eye_type" id="eye_type">
+                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value={testReportAppointmentId}>
                   <option value="">Select</option>
-                  <option value="0">None</option>
-                  <option value="1">Dimness of Vision</option>
-                  <option value="2">Eye Pain</option>
-                  <option value="3">Eye Redness</option>
-                  <option value="4">Watery Eyes</option>
+                  <option value="1">Appointment 1</option>
+                  <option value="2">Appointment 2</option>
                 </select>
               </div>
             </form>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsClose}>Cancel</Button>  
-            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Link>  
+            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={confirmTestReportAppointment}>Confirm</Link>  
           </Modal.Footer>  
         </Modal>
 
