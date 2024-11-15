@@ -139,13 +139,16 @@ function Patientprofiles(){
           </Modal.Header>  
           <Modal.Body>  
             <div className='form-group'>
-              <p className='mb-0'><strong>Patient Name</strong> - D Goenka</p>
-              <p className='mb-0'><strong>Gender</strong> - Male</p>
-              <p className='mb-0'><strong>Age</strong> - 32</p>
-              <p className='mb-0'><strong>Phone</strong> - 9876543213</p>
-              <p className='mb-0'><strong>Address</strong> - Kalipark, Bablatala</p>
-              <p className='mb-0'><strong>City</strong> - Kolkata</p>
-              <p className='mb-0'><strong>Disease</strong> - Dental Problem</p>
+              <p className='mb-0'><strong>Patient Name</strong> - D Goenka (9876543213)</p>
+              <p className='mb-0'><strong>Gender</strong> - Male, 32</p>
+              {/* <p className='mb-0'><strong>Age</strong> - 32</p> */}
+              {/* <p className='mb-0'><strong>Phone</strong> - 9876543213</p> */}
+              <p className='mb-0'><strong>Address</strong> - Kalipark, Bablatala, Kolkata</p>
+              {/* <p className='mb-0'><strong>City</strong> - Kolkata</p> */}
+              {/* <p className='mb-0'><strong>Disease</strong> - Dental Problem</p> */}
+              <p className='mb-0'><strong>Doctor Name </strong> -  Test</p>
+              <p className='mb-0'><strong>Specialization </strong> -  Test</p>
+              <p className='mb-0'><strong>Location </strong> -  Test</p>
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 

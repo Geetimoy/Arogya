@@ -269,7 +269,7 @@ function PatientBooking(){
                   {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
 
                   <div className="mb-3 mt-3 text-center">
-                    <button onClick={() => { modalBookingConfirmationShow(schedule.doctor_avail_schedule_id, schedule.account_key); }} className="btn primary-bg-color text-light">Book Patient</button>
+                    <button onClick={() => { modalBookingConfirmationShow(schedule.doctor_avail_schedule_id, schedule.account_key); }} className="btn primary-bg-color text-light">Book For Patient</button>
                   </div>
                 </div>
 

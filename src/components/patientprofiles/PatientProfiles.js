@@ -393,7 +393,7 @@ function Patientprofiles(){
             <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes, Proceed</Link>  
           </Modal.Footer>  
         </Modal>
-
+        {/* Doctor Prescription */}
         <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
           <Modal.Body className='form-all'>  
             <p>Doctor Prescription</p> 
@@ -402,18 +402,18 @@ function Patientprofiles(){
                 <label><span className="d-block">Appointment </span></label>
                 <select className="form-control" name="eye_type" id="eye_type">
                   <option value="">Select</option>
-                  <option value="0">None</option>
-                  <option value="1">Dimness of Vision</option>
-                  <option value="2">Eye Pain</option>
-                  <option value="3">Eye Redness</option>
-                  <option value="4">Watery Eyes</option>
+                  <option value="0">Dr. Anil S Dash -- 02/Nov/2024</option>
+                  <option value="1">Dr. S Mukherjee -- 30/Nov/2024</option>
+                  <option value="2">Dr. Anil S Dash -- 17/Oct/2024</option>
+                  <option value="3">Dr. K. Tripathy -- 15/Oct/2024</option>
+                  <option value="4">Dr. Atanu Biswas -- 07/Oct/2024</option>
                 </select>
               </div>
             </form>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
-            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Confirm</Button>  
+            <Link to="/patientprofiles/PatientPrescription" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Proceed</Link>  
           </Modal.Footer>  
         </Modal>
 
