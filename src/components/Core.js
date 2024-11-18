@@ -90,6 +90,7 @@ import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
 import PatientUploadPrescriptions from './patientprofiles/PatientUploadPrescriptions';
+import PatientUploadTestReports from './patientprofiles/PatientUploadTestReports';
 
 
 
@@ -300,7 +301,8 @@ export default function Core() {
             <Route path="/patientprofiles/patient-basicinfo/:accountKey" exact element={<PatientBasicInformation />} />
             <Route path="/patientprofiles/ViewPatientDetails/:accountKey" exact element={<ViewPatientDetails />} />
             <Route path="/patientprofiles/CreatePatientProfile/" exact element={<CreatePatientProfile />} />
-            <Route path="/patientprofiles/patient-test-reports/:accountKey" exact element={<PatientTestReports />} />
+            <Route path="/patientprofiles/patient-test-reports/:patientKey/:appointmentId" exact element={<PatientTestReports />} />
+            <Route path="/patientprofiles/patient-upload-test-reports/:patientKey/:appointmentId" exact element={<PatientUploadTestReports/>} />
             <Route path="/patientprofiles/patient-prescription/:accountKey" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<PatientPrescription />} />

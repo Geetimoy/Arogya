@@ -1,12 +1,15 @@
-import { useState, useContext } from 'react';
-
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 import Appfooter from '../AppFooter';
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
 import patientprescription from '../../assets/images/demo-test-report.jpg';
 
@@ -14,12 +17,67 @@ import './TestReports.css'
 
 function PatientTestReports(){
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
+  const [urlParam, setUrlParam]       = useState(useParams());
+  const [reportList, setReportList]   = useState([]);
+
+  const editPatientKey    = urlParam.patientKey;
+  const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const searchReports = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listReports(value);
+    }, 1000)
+  }
+
+  const listReports = async (searchKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
+    jsonData["account_key"]     = editPatientKey;
+    jsonData["account_type"]    = 3;
+
+    const response = await fetch(`${API_URL}/fetchInitialAppointmentDocumentForPatient`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      if(result.data.length > 0){
+
+      }
+      setReportList(result.data);
+    }
+    else{
+      setReportList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listReports("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+
 
   return(
     <>
@@ -59,7 +117,7 @@ function PatientTestReports(){
       <div className="app-body test-reports">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - 2</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={``}>Upload</Link>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/patientprofiles/patient-upload-test-reports/${editPatientKey}/${appointmentId}`}>Upload</Link>
         </div>
         <div className='search-prescription mt-3 mb-3'>
           <div className='input-group'>
