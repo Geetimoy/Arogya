@@ -43,8 +43,12 @@ function PatientBooking(){
   const [confirmDoctorAccountKey, setConfirmDoctorAccountKey] = useState('');
   const [confirmDoctorName, setConfirmDoctorName]             = useState('');
   const [confirmSpecializations, setConfirmSpecializations]   = useState('');
-  const [confirmScheduleDate, setConfirmScheduleDate]         = useState('');
+  const [confirmScheduleDateTime, setConfirmScheduleDateTime] = useState('');
   const [confirmScheduleLocation, setConfirmScheduleLocation] = useState('');
+
+  const [selectedScheduleDate, setSelectedScheduleDate]           = useState('');
+  const [selectedScheduleTimeFrom, setSelectedScheduleTimeFrom]   = useState('');
+  const [selectedScheduleTimeTo, setSelectedScheduleTimeTo]       = useState('');
 
   const [showBookingConfirmationModal, setShowBookingConfirmationModal] = useState(false); 
   const modalBookingConfirmationClose  = () => setShowBookingConfirmationModal(false);  
@@ -75,14 +79,17 @@ function PatientBooking(){
 
     let scheduleDetails = result1.data.data;
 
+    console.log(scheduleDetails);
+
     if(scheduleDetails.length > 0){ 
 
       scheduleDetails = scheduleDetails[0];
 
-      let scheduleId        = scheduleDetails.display_name;
+      let scheduleId        = scheduleDetails.doctor_avail_schedule_id;
       let doctorName        = scheduleDetails.display_name;
       let specializations   = scheduleDetails.specializations;
       let location          = scheduleDetails.clinic_details;
+      let scheduleDateFrom  = scheduleDetails['schedule_dates'][0].schedule_date_from;
       let scheduleDate      = scheduleDetails['schedule_dates'][0].date;
       let scheduleFromTime  = scheduleDetails['schedule_dates'][0].time_from;
       let scheduleToTime    = scheduleDetails['schedule_dates'][0].time_to;
@@ -91,8 +98,12 @@ function PatientBooking(){
       setConfirmDoctorAccountKey(doctorAccountKey);
       setConfirmDoctorName(doctorName);
       setConfirmSpecializations(specializations);
-      setConfirmScheduleDate(`${scheduleDate} @ ${scheduleFromTime} - ${scheduleToTime}`);
+      setConfirmScheduleDateTime(`${scheduleDate} @ ${scheduleFromTime} - ${scheduleToTime}`);
       setConfirmScheduleLocation(location);
+
+      setSelectedScheduleDate(scheduleDateFrom);
+      setSelectedScheduleTimeFrom(scheduleFromTime);
+      setSelectedScheduleTimeTo(scheduleToTime);
 
       setShowBookingConfirmationModal(true);
 
@@ -187,9 +198,50 @@ function PatientBooking(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
-  const confirmBooking = (scheduleId, doctorAccountKey, patientAccountkey) => {
+  const [showSuccessModal, setShowSuccessModal] = useState(false); 
+  const modalSuccessClose   = () => setShowSuccessModal(false);  
+  const modalSuccessOpen    = () => setShowSuccessModal(true); 
+  const [bookingConfirmationMessage, setBookingConfirmationMessage] = useState('');  
 
-    
+  const confirmBooking = async (scheduleId, doctorAccountKey, patientAccountkey, selectedScheduleDate, selectedScheduleTimeFrom, selectedScheduleTimeTo) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']                   = systemContext.systemDetails.system_id;
+    jsonData["device_type"]                 = DEVICE_TYPE;
+    jsonData["device_token"]                = DEVICE_TOKEN;
+    jsonData["user_lat"]                    = localStorage.getItem('latitude');
+    jsonData["user_long"]                   = localStorage.getItem('longitude');
+    jsonData["volunteer_account_key"]       = decryptedLoginDetails.account_key;
+    jsonData["volunteer_account_type"]      = decryptedLoginDetails.account_type;
+    jsonData["patient_account_key"]         = patientAccountkey;
+    jsonData["patient_account_type"]        = 3;
+    jsonData["doctor_avail_schedule_id"]    = scheduleId;
+    jsonData["appointment_book_date"]       = selectedScheduleDate;
+    jsonData["appointment_book_time_from"]  = selectedScheduleTimeFrom;
+    jsonData["appointment_book_time_to"]    = selectedScheduleTimeTo;
+
+    const response = await fetch(`${API_URL}/bookDoctorAppointment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      //alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      modalBookingConfirmationClose();
+      setBookingConfirmationMessage(result.msg);
+      modalSuccessOpen();
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
 
   }
 
@@ -331,13 +383,25 @@ function PatientBooking(){
               <strong>Patient Name: </strong>{patientDetails.patient_name}<br/>
               <strong>Doctor Name: </strong>{confirmDoctorName}<br/>
               <strong>Specialization: </strong>{confirmSpecializations}<br/>
-              <strong>Appointment Date & Time: </strong>{confirmScheduleDate}<br/>
+              <strong>Appointment Date & Time: </strong>{confirmScheduleDateTime}<br/>
               <strong>Place: </strong>{confirmScheduleLocation}
             </p>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100' onClick={() => confirmBooking(confirmScheduleId, confirmDoctorAccountKey.toLowerCase(), patientDetails.account_key.toLowerCase())}>Confirm</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100' onClick={() => confirmBooking(confirmScheduleId, confirmDoctorAccountKey.toLowerCase(), patientDetails.account_key.toLowerCase(), selectedScheduleDate, selectedScheduleTimeFrom, selectedScheduleTimeTo)}>Confirm</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalBookingConfirmationClose}>Cancel</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showSuccessModal} onHide={modalSuccessClose}>
+          <Modal.Header className="justify-content-between">  
+            <h3 className='mb-0'>Message</h3>
+          </Modal.Header>  
+          <Modal.Body> 
+            <p className='mb-2'>{bookingConfirmationMessage}</p> 
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalSuccessClose}>Close</Button>  
           </Modal.Footer>  
         </Modal>
 
