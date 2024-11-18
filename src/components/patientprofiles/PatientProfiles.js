@@ -449,6 +449,7 @@ function Patientprofiles(){
             <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes, Proceed</Link>  
           </Modal.Footer>  
         </Modal>
+        
         {/* Doctor Prescription */}
         <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
           <Modal.Body className='form-all'>  
@@ -469,7 +470,7 @@ function Patientprofiles(){
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
-            <Link to="/patientprofiles/PatientPrescription" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Proceed</Link>  
+            <Link to="/patientprofiles/patient-prescription" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Proceed</Link>  
           </Modal.Footer>  
         </Modal>
 
