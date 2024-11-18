@@ -384,7 +384,7 @@ function Patientprofiles(){
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
-            <Link to="/patientprofiles/PatientPrescription" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Proceed</Link>  
+            <Link to="/patientprofiles/patient-prescription" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Proceed</Link>  
           </Modal.Footer>  
         </Modal>
 
