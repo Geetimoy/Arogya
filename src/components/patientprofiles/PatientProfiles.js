@@ -232,19 +232,60 @@ function Patientprofiles(){
     }
   }
 
-  const [testReportAppointmentId, setTestReportAppointmentId] = useState(1);
-  const [testReportPatientKey, setTestReportPatientKey]       = useState('');
-  const [showTestReportsModal, setShowTestReportsModal]       = useState(false); 
+  const [testReportAppointmentId, setTestReportAppointmentId]     = useState('');
+  const [testReportPatientKey, setTestReportPatientKey]           = useState('');
+  const [testReportAppointmentList, setTestReportAppointmentList] = useState([]);
+  const [showTestReportsModal, setShowTestReportsModal]           = useState(false); 
   const modalTestReportsClose  = () => {
     setShowTestReportsModal(false); 
     setTestReportPatientKey(''); 
   }
-  const modalTestReportsShow   = (patientAccountKey) => {
+  const modalTestReportsShow   = async (patientAccountKey) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = 'rgvnapp.serviceplace.org.in';
+      jsonData["volunteer_account_key"]     = '1uv23234e49d0';
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["patient_account_key"]       = '0uu24122ce03d';
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "notolderthan": "365"
+                                              }
+      
+      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+      if(result.data && result.data.length > 0){
+        setTestReportAppointmentList(result.data);
+      }
+      else{
+        setTestReportAppointmentList([]);
+      }
+
     setShowTestReportsModal(true);
     setTestReportPatientKey(patientAccountKey);
   }
+  const selectTestReportAppointment = (event) => {
+    setTestReportAppointmentId(event.target.value);
+  }
   const confirmTestReportAppointment = () => {
-    window.location.href = `/patientprofiles/patient-test-reports/${testReportPatientKey}/${testReportAppointmentId}`;
+    if(testReportAppointmentId){
+      window.location.href = `/patientprofiles/patient-test-reports/${testReportPatientKey}/${testReportAppointmentId}`;
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: `Please select an appointment!`});
+    }
   }
 
   const [doctorPrescriptionAppointmentId, setDoctorPrescriptionAppointmentId] = useState(1);
@@ -438,10 +479,11 @@ function Patientprofiles(){
             <form>
               <div className="form-group">
                 <label><span className="d-block">Appointment </span></label>
-                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value={testReportAppointmentId}>
+                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value={testReportAppointmentId} onChange={selectTestReportAppointment}>
                   <option value="">Select</option>
-                  <option value="1">Appointment 1</option>
-                  <option value="2">Appointment 2</option>
+                  {testReportAppointmentList.map((appointment, index) => (
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>{`${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                  ))}
                 </select>
               </div>
             </form>

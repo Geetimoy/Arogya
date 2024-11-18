@@ -43,12 +43,12 @@ function PatientTestReports(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
-    jsonData['system_id']       = systemContext.systemDetails.system_id;
-    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
-    jsonData["account_key"]     = editPatientKey;
-    jsonData["account_type"]    = 3;
+    jsonData['system_id']               = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    jsonData["account_key"]             = editPatientKey;
+    jsonData["account_type"]            = 3;
 
-    const response = await fetch(`${API_URL}/fetchInitialAppointmentDocumentForPatient`, {
+    const response = await fetch(`${API_URL}/fetchTestReportForPatient`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,9 +59,6 @@ function PatientTestReports(){
     let result = await response.json();
     console.log(result);
     if(result.success){
-      if(result.data.length > 0){
-
-      }
       setReportList(result.data);
     }
     else{
@@ -122,30 +119,24 @@ function PatientTestReports(){
         <div className='search-prescription mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Test Reports' />
-            <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='prescription'>
-                <div className="btn-download"><Link target="_blank"><FontAwesomeIcon icon={faDownload}/></Link></div>
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <img src={patientprescription} alt='' className='w-100' />
-                <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
+
+          {reportList.map((report, index) => (
+            <div className='col-6' key={report.file_id}>
+              <div className='button-box'>
+                <div className='prescription'>
+                  <div className="btn-download"><Link target="_blank" to={`${report.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                  <img src={patientprescription} alt='' className='w-100' />
+                  <p className='pb-2'><strong><small>{report.report_name}</small></strong></p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-              <div className='prescription'>
-                <div className="btn-download"><Link target="_blank"><FontAwesomeIcon icon={faDownload}/></Link></div>
-                <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                <img src={patientprescription} alt='' className='w-100' />
-                <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
-              </div>
-            </div>
-          </div>
+          ))}
+
         </div>
       </div>
       <Appfooter></Appfooter>
