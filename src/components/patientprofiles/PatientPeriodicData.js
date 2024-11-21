@@ -76,7 +76,7 @@ function PatientPeriodicData(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/child-malnutrition" className=''>
+              <Link to="/patientprofiles" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>

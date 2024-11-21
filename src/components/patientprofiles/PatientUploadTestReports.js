@@ -241,11 +241,11 @@ function PatientUploadTestReports(){
               <input type="text" className="form-control" name="report_summary" id="report_summary" placeholder="Report Summary" onChange={handleChange} value={formData["report_summary"].value ? formData["report_summary"].value : ''}/>
             </div>
             <div className={`form-group brdr-btm parent`}>
-              <input type="file" name="report_file" id="report_file" onChange={handleChange}/>
+              <input className='pt-0' type="file" name="report_file" id="report_file" onChange={handleChange}/>
               <label>{(formData['report_file_name'].value === '') ? 'Upload Test Report' : formData['report_file_name'].value}</label>
             </div>
             <div className='mb-3 mt-3 text-center'>
-              <button type="submit" className='btn primary-bg-color text-light'>Save</button>
+              <button type="submit" className='btn primary-bg-color text-light min-width-100'>Save</button>
             </div>
           </form>
           {/* <div className='col-12 text-center' style={{'marginTop':'10px'}}>
