@@ -327,7 +327,9 @@ function Patientprofiles(){
         </div>
       </div>
       <div className="app-body patient-profiles profile-listing">
-        <div className='add-patient'><Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
+        <div className='add-patient align-items-center d-flex justify-content-between'>
+        <span>Total- {patientList.length}</span>
+          <Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
         {/* <div className="d-flex justify-content-between mb-3 mt-3">
         <Link onClick={() => { modalShowSearch(); }} to="#">
           <div className='d-flex advaced-search btn btn-sm btn-primary primary-bg-color border-0'>
@@ -489,9 +491,9 @@ function Patientprofiles(){
               </div>
             </form>
           </Modal.Body>  
-          <Modal.Footer className='justify-content-center'>  
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={confirmTestReportAppointment}>Confirm</Link> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsClose}>Cancel</Button>  
-            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={confirmTestReportAppointment}>Confirm</Link>  
           </Modal.Footer>  
         </Modal>
 

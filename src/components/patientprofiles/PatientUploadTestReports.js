@@ -253,23 +253,23 @@ function PatientUploadTestReports(){
         <div className='row'>
           <form className="mt-3 select-box" name="test_report_form" id="test_report_form" onSubmit={handleFormSubmit}>
             <div className={`form-group`}>
-              <label htmlFor="name">Report Name</label>
+              <label htmlFor="name">Report Name <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_name" id="report_name" placeholder="Report Name" onChange={handleChange} value={formData["report_name"].value ? formData["report_name"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="report_date">Report Date</label>
+              <label htmlFor="report_date">Report Date <span className="text-danger">*</span></label>
               <DatePicker dateFormat="yyyy-MM-dd" selected={formData["report_date"].value ? formData["report_date"].value : ''} onChange={(date) => onChangeReportDate(date)} className='form-control' placeholderText="Report Date"/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="report_clinic">Report Clinic/Center</label>
+              <label htmlFor="report_clinic">Report Clinic/Center <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_clinic" id="report_clinic" placeholder="Report Clinic/Center" onChange={handleChange} value={formData["report_clinic"].value ? formData["report_clinic"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="report_approved_doctor">Report Approved By Doctor</label>
+              <label htmlFor="report_approved_doctor">Report Approved By Doctor <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_approved_doctor" id="report_approved_doctor" placeholder="Report Approved By Doctor" onChange={handleChange} value={formData["report_approved_doctor"].value ? formData["report_approved_doctor"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="report_summary">Report Summary</label>
+              <label htmlFor="report_summary">Report Summary <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_summary" id="report_summary" placeholder="Report Summary" onChange={handleChange} value={formData["report_summary"].value ? formData["report_summary"].value : ''}/>
             </div>
             <div className={`form-group brdr-btm parent`}>
