@@ -13,6 +13,9 @@ import Appfooter from "../AppFooter";
 
 import './CreatePatientProfile.css';
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import youngwomenprescription from '../../assets/images/sample-rx.png';
 
 function PatientUploadTestReports(){
@@ -59,6 +62,13 @@ function PatientUploadTestReports(){
     }
   }
 
+  const onChangeReportDate = (date) => {
+
+    formData['report_date']      = {required: false, value:date, errorClass:"", errorMessage:""};
+    setFormData({...formData, ...formData});
+
+  }
+
   const convertFileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -66,6 +76,16 @@ function PatientUploadTestReports(){
       reader.onload = () => resolve(reader.result);
       reader.onerror = reject;
     });
+  }
+
+  const resetForm = () => {
+    const fieldName = Object.keys(formData);
+    fieldName.forEach((element) => {
+      formData[element].value         = "";
+      formData[element].errorClass    = "";
+      formData[element].errorMessage  = "";
+    })
+    setFormData({...formData, ...formData});
   }
 
   const handleFormSubmit = async (e) => {
@@ -79,6 +99,18 @@ function PatientUploadTestReports(){
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
       let jsonData = {};
+
+      var reportDate = '';
+      if(formData['report_date'].value != ''){
+        reportDate = new Date(formData['report_date'].value);
+
+        const year  = reportDate.getFullYear();
+        const month = String(reportDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day   = String(reportDate.getDate()).padStart(2, '0');
+
+        reportDate  = `${year}-${month}-${day}`;
+      }
+
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["user_account_key"]          = editPatientKey;
       jsonData["user_account_type"]         = 3;
@@ -87,7 +119,7 @@ function PatientUploadTestReports(){
       jsonData["initial_summary"]           = formData['report_summary'].value;
       jsonData["report_name"]               = formData['report_name'].value;
       jsonData["file"]                      = formData['report_file'].value;
-      jsonData["report_date"]               = formData['report_date'].value;
+      jsonData["report_date"]               = reportDate;
       jsonData["report_done_from"]          = formData['report_clinic'].value;
       jsonData["report_done_dr_name"]       = formData['report_approved_doctor'].value;
       jsonData["file_extension"]            = formData['report_file_extension'].value;
@@ -108,7 +140,7 @@ function PatientUploadTestReports(){
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        //resetForm();
+        resetForm();
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -225,19 +257,19 @@ function PatientUploadTestReports(){
               <input type="text" className="form-control" name="report_name" id="report_name" placeholder="Report Name" onChange={handleChange} value={formData["report_name"].value ? formData["report_name"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="name">Report Date</label>
-              <input type="text" className="form-control" name="report_date" id="report_date" placeholder="Report Date" onChange={handleChange} value={formData["report_date"].value ? formData["report_date"].value : ''}/>
+              <label htmlFor="report_date">Report Date</label>
+              <DatePicker dateFormat="yyyy-MM-dd" selected={formData["report_date"].value ? formData["report_date"].value : ''} onChange={(date) => onChangeReportDate(date)} className='form-control' placeholderText="Report Date"/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="name">Report Clinic/Center</label>
+              <label htmlFor="report_clinic">Report Clinic/Center</label>
               <input type="text" className="form-control" name="report_clinic" id="report_clinic" placeholder="Report Clinic/Center" onChange={handleChange} value={formData["report_clinic"].value ? formData["report_clinic"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="name">Report Approved By Doctor</label>
+              <label htmlFor="report_approved_doctor">Report Approved By Doctor</label>
               <input type="text" className="form-control" name="report_approved_doctor" id="report_approved_doctor" placeholder="Report Approved By Doctor" onChange={handleChange} value={formData["report_approved_doctor"].value ? formData["report_approved_doctor"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="name">Report Summary</label>
+              <label htmlFor="report_summary">Report Summary</label>
               <input type="text" className="form-control" name="report_summary" id="report_summary" placeholder="Report Summary" onChange={handleChange} value={formData["report_summary"].value ? formData["report_summary"].value : ''}/>
             </div>
             <div className={`form-group brdr-btm parent`}>

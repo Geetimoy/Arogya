@@ -483,7 +483,7 @@ function Patientprofiles(){
                 <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value={testReportAppointmentId} onChange={selectTestReportAppointment}>
                   <option value="">Select</option>
                   {testReportAppointmentList.map((appointment, index) => (
-                    <option key={appointment.appointment_key} value={appointment.appointment_key}>{`${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>{`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
                   ))}
                 </select>
               </div>

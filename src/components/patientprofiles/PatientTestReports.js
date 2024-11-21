@@ -113,7 +113,7 @@ function PatientTestReports(){
       </div>
       <div className="app-body test-reports">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total - 2</span>
+          <span>Total - {reportList.length}</span>
           <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/patientprofiles/patient-upload-test-reports/${editPatientKey}/${appointmentId}`}>Upload</Link>
         </div>
         <div className='search-prescription mt-3 mb-3'>
