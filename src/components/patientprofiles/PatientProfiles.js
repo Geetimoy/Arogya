@@ -245,10 +245,10 @@ function Patientprofiles(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
       let jsonData = {};
-      jsonData['system_id']                 = 'rgvnapp.serviceplace.org.in';
-      jsonData["volunteer_account_key"]     = '1uv23234e49d0';
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
       jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      jsonData["patient_account_key"]       = '0uu24122ce03d';
+      jsonData["patient_account_key"]       = patientAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
       jsonData["user_lat"]                  = localStorage.getItem('latitude');

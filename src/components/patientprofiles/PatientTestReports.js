@@ -13,6 +13,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 
 import patientprescription from '../../assets/images/demo-test-report.jpg';
 
+import {Modal, Button} from 'react-bootstrap'; 
+
 import './TestReports.css'
 
 function PatientTestReports(){
@@ -74,7 +76,51 @@ function PatientTestReports(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
+  const [deleteTestReportFileId, setDeleteTestReportFileId]           = useState('');
+  const [showTestReportsDeleteModal, setShowTestReportsDeleteModal]   = useState(false); 
+  const modalTestReportsDeleteClose  = () => {
+    setShowTestReportsDeleteModal(false); 
+  }
+  const modalTestReportsDeleteShow   = (fileId) => {
+    setDeleteTestReportFileId(fileId);
+    setShowTestReportsDeleteModal(true);
+  }
 
+  const deleteTestReport = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']             = systemContext.systemDetails.system_id;
+    jsonData["account_key"]           = editPatientKey;
+    jsonData["appointment_key"]       = appointmentId;
+    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;;
+    jsonData["file_id"]               = deleteTestReportFileId;
+    jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]          = DEVICE_TOKEN;
+    jsonData["user_lat"]              = localStorage.getItem('latitude');
+    jsonData["user_long"]             = localStorage.getItem('longitude');
+
+    const response = await fetch(`${API_URL}/deleteTestReportForPatient`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      listReports("");
+      setShowTestReportsDeleteModal(false);
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
 
   return(
     <>
@@ -129,7 +175,7 @@ function PatientTestReports(){
               <div className='button-box'>
                 <div className='prescription'>
                   <div className="btn-download"><Link target="_blank" to={`${report.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
+                  <div className="btn-delete" onClick={()=>modalTestReportsDeleteShow(report.file_id)}><FontAwesomeIcon icon={faTrash} /></div>
                   <img src={patientprescription} alt='' className='w-100' />
                   <p className='pb-2'><strong><small>{report.report_name}</small></strong></p>
                 </div>
@@ -138,6 +184,20 @@ function PatientTestReports(){
           ))}
 
         </div>
+
+        <Modal show={showTestReportsDeleteModal} onHide={modalTestReportsDeleteClose}>
+          <Modal.Header>
+            <h4>Delete Test Report</h4>
+          </Modal.Header> 
+          <Modal.Body className='form-all'>  
+            <p>Are you sure to delete this report? Deletion is permanent.</p> 
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={deleteTestReport}>Confirm</Link> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsDeleteClose}>Cancel</Button>  
+          </Modal.Footer>  
+        </Modal>
+
       </div>
       <Appfooter></Appfooter>
     </>

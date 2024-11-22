@@ -34,14 +34,14 @@ function PatientUploadTestReports(){
   };
 
   const [formData, setFormData] = useState({
-    report_name: {required: false, value:"", errorClass:"", errorMessage:""},
-    report_date: {required: false, value:"", errorClass:"", errorMessage:""},
-    report_clinic: {required: false, value:"", errorClass:"", errorMessage:""},
-    report_approved_doctor: {required: false, value:"", errorClass:"", errorMessage:""},
-    report_summary: {required: false, value:"", errorClass:"", errorMessage:""},
-    report_file: {required: false, value:"", errorClass:"", errorMessage:""},
-    report_file_name: {required: false, value:"", errorClass:"", errorMessage:""},
-    report_file_extension: {required: false, value:"", errorClass:"", errorMessage:""}
+    report_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    report_date: {required: true, value:"", errorClass:"", errorMessage:""},
+    report_clinic: {required: true, value:"", errorClass:"", errorMessage:""},
+    report_approved_doctor: {required: true, value:"", errorClass:"", errorMessage:""},
+    report_summary: {required: true, value:"", errorClass:"", errorMessage:""},
+    report_file: {required: true, value:"", errorClass:"", errorMessage:""},
+    report_file_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    report_file_extension: {required: true, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = async (e) => {
@@ -50,16 +50,36 @@ function PatientUploadTestReports(){
       var fileName            = e.target.files[0].name;
       var fileExtension       = fileName.split('.').pop();
       var uploadedFileBase64  = await convertFileToBase64(e.target.files[0]);
+
+      var uploadedFileBase64Array = uploadedFileBase64.split(';base64,');
       
       formData['report_file_name']      = {required: false, value:fileName, errorClass:"", errorMessage:""};
       formData['report_file_extension'] = {required: false, value:fileExtension, errorClass:"", errorMessage:""};
-      formData['report_file']           = {required: false, value:uploadedFileBase64, errorClass:"", errorMessage:""};
+      formData['report_file']           = {required: false, value:uploadedFileBase64Array[1], errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
     }
     else{
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     }
+  }
+
+  const validateForm = () => {
+    const fieldName = Object.keys(formData);
+    let errorCounter = 0;
+    fieldName.forEach((element) => {
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
+        formData[element].errorMessage = "This field is required!";
+        formData[element].errorClass = "form-error";
+        errorCounter++;
+      }
+      else{
+        formData[element].errorMessage = "";
+        formData[element].errorClass = "";
+      }
+    })
+    setFormData({...formData, ...formData});
+    return errorCounter;
   }
 
   const onChangeReportDate = (date) => {
@@ -90,129 +110,73 @@ function PatientUploadTestReports(){
 
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
-    
-    if(formData['report_file'] == ""){
-      alertContext.setAlertMessage({show:true, type: "error", message: "Please choose a report file!"});
-    }
-    else{
-      
-      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
-      let jsonData = {};
+    let errorCounter = validateForm();console.log(formData);
 
-      var reportDate = '';
-      if(formData['report_date'].value != ''){
-        reportDate = new Date(formData['report_date'].value);
+    if(errorCounter === 0){
 
-        const year  = reportDate.getFullYear();
-        const month = String(reportDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-        const day   = String(reportDate.getDate()).padStart(2, '0');
-
-        reportDate  = `${year}-${month}-${day}`;
-      }
-
-      jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["user_account_key"]          = editPatientKey;
-      jsonData["user_account_type"]         = 3;
-      jsonData["appointment_key"]           = appointmentId;
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["initial_summary"]           = formData['report_summary'].value;
-      jsonData["report_name"]               = formData['report_name'].value;
-      jsonData["file"]                      = formData['report_file'].value;
-      jsonData["report_date"]               = reportDate;
-      jsonData["report_done_from"]          = formData['report_clinic'].value;
-      jsonData["report_done_dr_name"]       = formData['report_approved_doctor'].value;
-      jsonData["file_extension"]            = formData['report_file_extension'].value;
-      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-      jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["user_lat"]                  = localStorage.getItem('latitude');
-      jsonData["user_long"]                 = localStorage.getItem('longitude');
-
-      const response = await fetch(`${API_URL}/uploadTestReportForPatient`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
-      
-      let result = await response.json();
-
-      if(result.success){
-        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        resetForm();
+      if(formData['report_file'] == ""){
+        alertContext.setAlertMessage({show:true, type: "error", message: "Please choose a report file!"});
       }
       else{
-        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        
+        var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  
+        let jsonData = {};
+  
+        var reportDate = '';
+        if(formData['report_date'].value != ''){
+          reportDate = new Date(formData['report_date'].value);
+  
+          const year  = reportDate.getFullYear();
+          const month = String(reportDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+          const day   = String(reportDate.getDate()).padStart(2, '0');
+  
+          reportDate  = `${year}-${month}-${day}`;
+        }
+  
+        jsonData['system_id']                 = systemContext.systemDetails.system_id;
+        jsonData["user_account_key"]          = editPatientKey;
+        jsonData["user_account_type"]         = 3;
+        jsonData["appointment_key"]           = appointmentId;
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["initial_summary"]           = formData['report_summary'].value;
+        jsonData["report_name"]               = formData['report_name'].value;
+        jsonData["file"]                      = formData['report_file'].value;
+        jsonData["report_date"]               = reportDate;
+        jsonData["report_done_from"]          = formData['report_clinic'].value;
+        jsonData["report_done_dr_name"]       = formData['report_approved_doctor'].value;
+        jsonData["file_extension"]            = formData['report_file_extension'].value;
+        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+        jsonData["device_token"]              = DEVICE_TOKEN;
+        jsonData["user_lat"]                  = localStorage.getItem('latitude');
+        jsonData["user_long"]                 = localStorage.getItem('longitude');
+  
+        const response = await fetch(`${API_URL}/uploadTestReportForPatient`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+        
+        let result = await response.json();
+  
+        if(result.success){
+          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+          resetForm();
+        }
+        else{
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        }
+  
       }
 
     }
+    
+    
 
   }
-
-  /*const uploadCertificateChange = async (event, seq) => {
-    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-
-    if(event.target.files[0]){
-
-      var fileName        = event.target.files[0].name;
-      var fileExtension   = fileName.split('.').pop();
-
-      fileUpload[`inputTestReport${seq}`].upload   = true;
-      fileUpload[`inputTestReport${seq}`].fileName = event.target.files[0].name;
-
-      let nextSeq = seq+1;
-      if(fileUpload[`inputTestReport${nextSeq}`]){
-        fileUpload[`inputTestReport${nextSeq}`].upload   = true;
-        fileUpload[`inputTestReport${nextSeq}`].fileName = '';
-      }
-
-      setFileUpload({...fileUpload, ...fileUpload});
-
-      const uploadedFileBase64 = await convertFileToBase64(event.target.files[0]);
-      
-      let jsonData = {};
-
-      jsonData['system_id']               = systemContext.systemDetails.system_id;
-      jsonData["device_type"]             = DEVICE_TYPE;
-      jsonData["device_token"]            = DEVICE_TOKEN;
-      jsonData["user_lat"]                = localStorage.getItem('latitude');
-      jsonData["user_long"]               = localStorage.getItem('longitude');
-      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
-      jsonData["user_account_key"]        = editPatientKey;
-      jsonData["appointment_key"]         = appointmentId;
-      jsonData["file"]                    = uploadedFileBase64;
-      jsonData["file_seq"]                = 'initialpatient'+seq;
-      jsonData["file_extension"]          = fileExtension;
-      jsonData["initial_summary"]         = '';
-
-      console.log(jsonData);
-
-      const response = await fetch(`${API_URL}/uploadTestReportForPatient`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
-
-      let result = await response.json();
-
-      if(result.success){
-        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        // setTimeout(() => {
-        //   fileUpload['inputTestReport'].upload   = true;
-        //   fileUpload['inputTestReport'].fileName = "";
-        //   setFileUpload({...fileUpload, ...fileUpload});
-        // }, 2000);
-      }
-      else{
-        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-      }
-
-    }
-    
-  };*/
 
   return(
     <>  
@@ -252,29 +216,35 @@ function PatientUploadTestReports(){
       <div className="app-body create-patient-profiles young-womens upload-prescription upload-certifiate">
         <div className='row'>
           <form className="mt-3 select-box" name="test_report_form" id="test_report_form" onSubmit={handleFormSubmit}>
-            <div className={`form-group`}>
+            <div className={`form-group ${formData["report_name"].errorClass}`}>
               <label htmlFor="name">Report Name <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_name" id="report_name" placeholder="Report Name" onChange={handleChange} value={formData["report_name"].value ? formData["report_name"].value : ''}/>
+              <small className="error-mesg">{formData["report_name"].errorMessage}</small>
             </div>
-            <div className={`form-group`}>
+            <div className={`form-group ${formData["report_date"].errorClass}`}>
               <label htmlFor="report_date">Report Date <span className="text-danger">*</span></label>
               <DatePicker dateFormat="yyyy-MM-dd" selected={formData["report_date"].value ? formData["report_date"].value : ''} onChange={(date) => onChangeReportDate(date)} className='form-control' placeholderText="Report Date"/>
+              <small className="error-mesg">{formData["report_date"].errorMessage}</small>
             </div>
-            <div className={`form-group`}>
+            <div className={`form-group ${formData["report_clinic"].errorClass}`}>
               <label htmlFor="report_clinic">Report Clinic/Center <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_clinic" id="report_clinic" placeholder="Report Clinic/Center" onChange={handleChange} value={formData["report_clinic"].value ? formData["report_clinic"].value : ''}/>
+              <small className="error-mesg">{formData["report_clinic"].errorMessage}</small>
             </div>
-            <div className={`form-group`}>
+            <div className={`form-group ${formData["report_approved_doctor"].errorClass}`}>
               <label htmlFor="report_approved_doctor">Report Approved By Doctor <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_approved_doctor" id="report_approved_doctor" placeholder="Report Approved By Doctor" onChange={handleChange} value={formData["report_approved_doctor"].value ? formData["report_approved_doctor"].value : ''}/>
+              <small className="error-mesg">{formData["report_approved_doctor"].errorMessage}</small>
             </div>
-            <div className={`form-group`}>
+            <div className={`form-group ${formData["report_summary"].errorClass}`}>
               <label htmlFor="report_summary">Report Summary <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="report_summary" id="report_summary" placeholder="Report Summary" onChange={handleChange} value={formData["report_summary"].value ? formData["report_summary"].value : ''}/>
+              <small className="error-mesg">{formData["report_summary"].errorMessage}</small>
             </div>
-            <div className={`form-group brdr-btm parent`}>
+            <div className={`form-group brdr-btm parent ${formData["report_file_name"].errorClass}`}>
               <input className='pt-0' type="file" name="report_file" id="report_file" onChange={handleChange}/>
               <label>{(formData['report_file_name'].value === '') ? 'Upload Test Report' : formData['report_file_name'].value}</label>
+              <small className="error-mesg">{formData["report_file_name"].errorMessage}</small>
             </div>
             <div className='mb-3 mt-3 text-center'>
               <button type="submit" className='btn primary-bg-color text-light min-width-100'>Save</button>
