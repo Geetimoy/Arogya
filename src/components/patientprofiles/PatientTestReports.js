@@ -122,6 +122,13 @@ function PatientTestReports(){
 
   }
 
+  const searchReport = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listReports(value);
+    }, 1000)
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -164,7 +171,7 @@ function PatientTestReports(){
         </div>
         <div className='search-prescription mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Test Reports' />
+            <input type="text" className='form-control' placeholder='Search Test Reports' id="searchReport" name="searchReport" onChange={searchReport}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
