@@ -192,8 +192,7 @@ function Patientprofiles(){
   const [prescriptionType, setPrescriptionType] = useState('initial');
   const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
 
-  const [appointmentList, setAppointmentList] = useState([]);
-
+  const [appointmentListForDoctorPresc, setAppointmentListForDoctorPresc] = useState([]);
   const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
   const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
   const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
@@ -226,7 +225,12 @@ function Patientprofiles(){
       })
   
       let result = await response.json();
-      console.log(result);
+      if(result.data && result.data.length > 0){
+        setAppointmentListForDoctorPresc(result.data);
+      }
+      else{
+        setAppointmentListForDoctorPresc([]);
+      }
 
       setShowPrescriptionModalP2(true);
     }
@@ -245,10 +249,10 @@ function Patientprofiles(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
       let jsonData = {};
-      jsonData['system_id']                 = 'rgvnapp.serviceplace.org.in';
-      jsonData["volunteer_account_key"]     = '1uv23234e49d0';
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
       jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      jsonData["patient_account_key"]       = '0uu24122ce03d';
+      jsonData["patient_account_key"]       = patientAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
       jsonData["user_lat"]                  = localStorage.getItem('latitude');
@@ -459,13 +463,11 @@ function Patientprofiles(){
             <form>
               <div className="form-group">
                 <label><span className="d-block">Appointment </span></label>
-                <select className="form-control" name="eye_type" id="eye_type">
+                <select className="form-control" name="doctor_prescription_appoitment_id" id="doctor_prescription_appoitment_id">
                   <option value="">Select</option>
-                  <option value="0">Dr. Anil S Dash -- 02/Nov/2024</option>
-                  <option value="1">Dr. S Mukherjee -- 30/Nov/2024</option>
-                  <option value="2">Dr. Anil S Dash -- 17/Oct/2024</option>
-                  <option value="3">Dr. K. Tripathy -- 15/Oct/2024</option>
-                  <option value="4">Dr. Atanu Biswas -- 07/Oct/2024</option>
+                  {appointmentListForDoctorPresc.map((appointment, index) => (
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>{`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                  ))}
                 </select>
               </div>
             </form>
