@@ -45,6 +45,7 @@ function CraeteScheduleSingle(){
   const changeSingleFromDate = (date) => {
     setSingleFromDate(date);
     setFormData({...formData, ['scheduleFromDate']: {...formData['scheduleFromDate'], value:date, errorClass:"", errorMessage:""}});
+    changeSingleToDate(date);
   }
   const changeSingleToDate = (date) => {
     setSingleToDate(date);
@@ -90,7 +91,7 @@ function CraeteScheduleSingle(){
 
   const [formData, setFormData] = useState({
     scheduleFromDate: {required: true, value:"", errorClass:"", errorMessage:""},
-    scheduleToDate: {required: true, value:"", errorClass:"", errorMessage:""},
+    scheduleToDate: {required: false, value:"", errorClass:"", errorMessage:""},
     scheduleFromTime: {required: true, value:"", errorClass:"", errorMessage:""},
     scheduleToTime: {required: true, value:"", errorClass:"", errorMessage:""},
     scheduleConsultationMode: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -307,7 +308,7 @@ function CraeteScheduleSingle(){
             <form id="createScheduleForm" name="createScheduleForm" onSubmit={handleFormSubmit}>
                 
               <div className='form-group'>
-                <label htmlFor="date_range" className="no-style">Date Range : <small>(If only one date leave next field empty)</small></label>
+                <label htmlFor="date_range" className="no-style">Date Range : <small className='text-danger'>(If only one date leave next field empty)</small></label>
                 <div className='row'>
                   <div className={`col-12 mb-2 ${formData["scheduleFromDate"].errorClass}`}>
                     <label className='pos'>From :</label>
@@ -316,7 +317,7 @@ function CraeteScheduleSingle(){
                   </div>
                   <div className={`col-12 ${formData["scheduleToDate"].errorClass}`}>
                     <label className='pos'>To :</label>
-                    <DatePicker dateFormat="yyyy-MM-dd" selected={singleToDate} onChange={(date) => changeSingleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
+                    <DatePicker dateFormat="yyyy-MM-dd" readOnly={true} selected={singleToDate} onChange={(date) => changeSingleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     <small className="error-mesg">{formData["scheduleToDate"].errorMessage}</small>
                   </div>
                 </div>
