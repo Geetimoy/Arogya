@@ -106,14 +106,29 @@ function Services(){
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/upload-prescription"><img src={uploadrx} alt='' />
+                
+                {
+                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33 || decryptedLoginDetails.account_type == 4) && <Link to="/upload-prescription"><img src={uploadrx} alt='' />
                 <h6>Upload Rx</h6></Link>
+                }
+
+                {
+                  (decryptedLoginDetails.account_type == 5) && <Link to="/upload-prescription"><img src={uploadrx} alt='' />
+                <h6>View/Upload Rx</h6></Link>
+                }
               </div>
             </div>
             <div className='col-6'>
               <div className='button-box'>
-                <Link to="/upload-test-report"><img src={testreport} alt='' />
-                <h6>Upload Test Report</h6></Link>
+                
+                {
+                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33 || decryptedLoginDetails.account_type == 4) && <Link to="/upload-test-report"><img src={testreport} alt='' />
+                <h6>Upload Test Reports</h6></Link>
+                }
+                {
+                  (decryptedLoginDetails.account_type == 5) && <Link to="/upload-prescription"><img src={uploadrx} alt='' />
+                <h6>View/Upload Reports</h6></Link>
+                }
               </div>
             </div>
             

@@ -283,7 +283,7 @@ function InitialHistroy(){
               {[...Array(MAX_CERTICATE_UPLOAD)].map((e, i) => 
                 <div key={i+1} className={`form-group brdr-btm parent`}>
                   <input type="file" name={`certificate_${i+1}`} id={`certificate_${i+1}`} onChange={(event) => uploadCertificateChange(event, 'certificate_'+(i+1), i+1)}/>
-                  <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Prescription '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
+                  <label>{(fileUpload['certificate_'+(i+1)].fileName === '') ? 'Upload Prescription '+(i+1) : fileUpload['certificate_'+(i+1)].fileName}</label>
                   {(fileUpload['certificate_'+(i+1)].fileName !== '') && <span className="close float-end"><Link to={`${API_URL}/user-data/${userFolder}/${userDetails.account_key}/shared/${fileUpload['certificate_'+(i+1)].fileName}`} target="_blank" download><FontAwesomeIcon icon={faDownload}/></Link><FontAwesomeIcon style={{marginLeft: '10px'}} icon={faTrash} onClick={() => deleteCertificate(fileUpload['certificate_'+(i+1)].fileName)}/></span>}
                 </div>
               )}
@@ -291,6 +291,7 @@ function InitialHistroy(){
                 <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
                 <textarea name="" id="" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
               </div>
+              <div className='text-center'><Link className='btn primary-bg-color text-light min-width-100 border-0'>Save</Link></div>
             </form>
             {/* <div className="form-group">
             <button type="button" id="" name="" class="btn btn-primary primary-bg-color border-0 mx-2">Update Photo<input type="file" name="cover" accept="img/*" style={{ display: "none" }} /></button>

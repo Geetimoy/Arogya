@@ -492,7 +492,7 @@ function Patientprofiles(){
             </form>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={confirmTestReportAppointment}>Confirm</Link> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmTestReportAppointment}>Confirm</Link> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsClose}>Cancel</Button>  
           </Modal.Footer>  
         </Modal>

@@ -388,7 +388,7 @@ function PatientBooking(){
             </p>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100' onClick={() => confirmBooking(confirmScheduleId, confirmDoctorAccountKey.toLowerCase(), patientDetails.account_key.toLowerCase(), selectedScheduleDate, selectedScheduleTimeFrom, selectedScheduleTimeTo)}>Confirm</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100 bg-success' onClick={() => confirmBooking(confirmScheduleId, confirmDoctorAccountKey.toLowerCase(), patientDetails.account_key.toLowerCase(), selectedScheduleDate, selectedScheduleTimeFrom, selectedScheduleTimeTo)}>Confirm</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalBookingConfirmationClose}>Cancel</Button>  
           </Modal.Footer>  
         </Modal>
