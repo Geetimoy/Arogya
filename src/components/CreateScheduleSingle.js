@@ -44,7 +44,14 @@ function CraeteScheduleSingle(){
 
   const changeSingleFromDate = (date) => {
     setSingleFromDate(date);
-    setFormData({...formData, ['scheduleFromDate']: {...formData['scheduleFromDate'], value:date, errorClass:"", errorMessage:""}});
+    setSingleToDate(date);
+    //setFormData({...formData, ['scheduleFromDate']: {...formData['scheduleFromDate'], value:date, errorClass:"", errorMessage:""}});
+
+    formData['scheduleFromDate']  = {required: true, value:date, errorClass:"", errorMessage:""};
+    formData['scheduleToDate']    = {required: true, value:date, errorClass:"", errorMessage:""};
+
+    setFormData({...formData, ...formData});
+    
   }
   const changeSingleToDate = (date) => {
     setSingleToDate(date);
@@ -90,7 +97,7 @@ function CraeteScheduleSingle(){
 
   const [formData, setFormData] = useState({
     scheduleFromDate: {required: true, value:"", errorClass:"", errorMessage:""},
-    scheduleToDate: {required: true, value:"", errorClass:"", errorMessage:""},
+    scheduleToDate: {required: false, value:"", errorClass:"", errorMessage:""},
     scheduleFromTime: {required: true, value:"", errorClass:"", errorMessage:""},
     scheduleToTime: {required: true, value:"", errorClass:"", errorMessage:""},
     scheduleConsultationMode: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -139,6 +146,23 @@ function CraeteScheduleSingle(){
 
       let jsonData = {};
 
+      var fromDate  = '';
+      var toDate    = '';
+      if(formData['scheduleFromDate'].value != ''){
+        fromDate = new Date(formData['scheduleFromDate'].value);
+        const year  = fromDate.getFullYear();
+        const month = String(fromDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day   = String(fromDate.getDate()).padStart(2, '0');
+        fromDate  = `${year}-${month}-${day}`;
+      }
+      if(formData['scheduleToDate'].value != ''){
+        toDate = new Date(formData['scheduleToDate'].value);
+        const year  = toDate.getFullYear();
+        const month = String(toDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day   = String(toDate.getDate()).padStart(2, '0');
+        toDate  = `${year}-${month}-${day}`;
+      }
+
       jsonData['system_id']             = systemContext.systemDetails.system_id;
       jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
       jsonData["doctor_account_type"]   = decryptedLoginDetails.account_type;
@@ -155,16 +179,14 @@ function CraeteScheduleSingle(){
       jsonData["consultation_mode"]     = formData['scheduleConsultationMode'].value;
       jsonData["clinic_details"]        = formData['scheduleContactDetails'].value;
       jsonData["schedule_type"]         = 1;
-      jsonData["date_range_from"]       = formData['scheduleFromDate'].value;
-      jsonData["date_range_to"]         = formData['scheduleToDate'].value;
+      jsonData["date_range_from"]       = fromDate;
+      jsonData["date_range_to"]         = toDate;
       jsonData["time_range_from"]       = formData['scheduleFromTime'].value;
       jsonData["time_range_to"]         = formData['scheduleToTime'].value;
       jsonData["total_appointments"]    = formData['scheduleTotalAppoitments'].value;
       jsonData["is_strict_full"]        = formData['scheduleIsStrictFull'].value;
       jsonData["buffer_percentage"]     = formData['scheduleExtraAppointments'].value;
       
-      console.log(jsonData);
-
       if(scheduleId){
         var response = await fetch(`${API_URL}/updateSingleDayDoctorSchedule`, {
           method: "POST",
@@ -307,7 +329,7 @@ function CraeteScheduleSingle(){
             <form id="createScheduleForm" name="createScheduleForm" onSubmit={handleFormSubmit}>
                 
               <div className='form-group'>
-                <label htmlFor="date_range" className="no-style">Date Range : <small>(If only one date leave next field empty)</small></label>
+                <label htmlFor="date_range" className="no-style">Date Range : <small className='text-danger'>(If only one date leave next field empty)</small></label>
                 <div className='row'>
                   <div className={`col-12 mb-2 ${formData["scheduleFromDate"].errorClass}`}>
                     <label className='pos'>From :</label>
@@ -316,7 +338,7 @@ function CraeteScheduleSingle(){
                   </div>
                   <div className={`col-12 ${formData["scheduleToDate"].errorClass}`}>
                     <label className='pos'>To :</label>
-                    <DatePicker dateFormat="yyyy-MM-dd" selected={singleToDate} onChange={(date) => changeSingleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
+                    <DatePicker dateFormat="yyyy-MM-dd" readOnly={true} selected={singleToDate} onChange={(date) => changeSingleToDate(date)} className='form-control pos' placeholderText="YYYY-MM-DD"/>
                     <small className="error-mesg">{formData["scheduleToDate"].errorMessage}</small>
                   </div>
                 </div>
