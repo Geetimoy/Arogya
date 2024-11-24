@@ -44,8 +44,14 @@ function CraeteScheduleSingle(){
 
   const changeSingleFromDate = (date) => {
     setSingleFromDate(date);
-    setFormData({...formData, ['scheduleFromDate']: {...formData['scheduleFromDate'], value:date, errorClass:"", errorMessage:""}});
-    changeSingleToDate(date);
+    setSingleToDate(date);
+    //setFormData({...formData, ['scheduleFromDate']: {...formData['scheduleFromDate'], value:date, errorClass:"", errorMessage:""}});
+
+    formData['scheduleFromDate']  = {required: true, value:date, errorClass:"", errorMessage:""};
+    formData['scheduleToDate']    = {required: true, value:date, errorClass:"", errorMessage:""};
+
+    setFormData({...formData, ...formData});
+    
   }
   const changeSingleToDate = (date) => {
     setSingleToDate(date);
@@ -140,6 +146,23 @@ function CraeteScheduleSingle(){
 
       let jsonData = {};
 
+      var fromDate  = '';
+      var toDate    = '';
+      if(formData['scheduleFromDate'].value != ''){
+        fromDate = new Date(formData['scheduleFromDate'].value);
+        const year  = fromDate.getFullYear();
+        const month = String(fromDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day   = String(fromDate.getDate()).padStart(2, '0');
+        fromDate  = `${year}-${month}-${day}`;
+      }
+      if(formData['scheduleToDate'].value != ''){
+        toDate = new Date(formData['scheduleToDate'].value);
+        const year  = toDate.getFullYear();
+        const month = String(toDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day   = String(toDate.getDate()).padStart(2, '0');
+        toDate  = `${year}-${month}-${day}`;
+      }
+
       jsonData['system_id']             = systemContext.systemDetails.system_id;
       jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
       jsonData["doctor_account_type"]   = decryptedLoginDetails.account_type;
@@ -156,16 +179,14 @@ function CraeteScheduleSingle(){
       jsonData["consultation_mode"]     = formData['scheduleConsultationMode'].value;
       jsonData["clinic_details"]        = formData['scheduleContactDetails'].value;
       jsonData["schedule_type"]         = 1;
-      jsonData["date_range_from"]       = formData['scheduleFromDate'].value;
-      jsonData["date_range_to"]         = formData['scheduleToDate'].value;
+      jsonData["date_range_from"]       = fromDate;
+      jsonData["date_range_to"]         = toDate;
       jsonData["time_range_from"]       = formData['scheduleFromTime'].value;
       jsonData["time_range_to"]         = formData['scheduleToTime'].value;
       jsonData["total_appointments"]    = formData['scheduleTotalAppoitments'].value;
       jsonData["is_strict_full"]        = formData['scheduleIsStrictFull'].value;
       jsonData["buffer_percentage"]     = formData['scheduleExtraAppointments'].value;
       
-      console.log(jsonData);
-
       if(scheduleId){
         var response = await fetch(`${API_URL}/updateSingleDayDoctorSchedule`, {
           method: "POST",
