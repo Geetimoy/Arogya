@@ -242,9 +242,9 @@ function PatientUploadTestReports(){
               <small className="error-mesg">{formData["report_summary"].errorMessage}</small>
             </div>
             <div className={`form-group brdr-btm parent ${formData["report_file_name"].errorClass}`}>
-              <input className='pt-0' type="file" name="report_file" id="report_file" onChange={handleChange}/>
+              <input className='pt-0 pb-0' type="file" name="report_file" id="report_file" onChange={handleChange}/>
               <label>{(formData['report_file_name'].value === '') ? 'Upload Test Report' : formData['report_file_name'].value}</label>
-              <small className="error-mesg">{formData["report_file_name"].errorMessage}</small>
+              <small className="error-mesg d-block">{formData["report_file_name"].errorMessage}</small>
             </div>
             <div className='mb-3 mt-3 text-center'>
               <button type="submit" className='btn primary-bg-color text-light min-width-100'>Save</button>

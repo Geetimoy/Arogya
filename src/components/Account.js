@@ -88,6 +88,8 @@ function Account(){
 
               {(decryptedLoginDetails.account_type == 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/initialhistory">Initial History <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /> </Link></li>}
 
+              {(decryptedLoginDetails.account_type == 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/medicalhistory">Medical History <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /> </Link></li>}
+
               {(decryptedLoginDetails.account_type != 3) && <li><FontAwesomeIcon icon={faCertificate} /> <Link to ="/uploadcertificates">Upload Certificates <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></Link></li>}
               
               <li><FontAwesomeIcon icon={faBell} /> <Link to ="/settings">Settings <FontAwesomeIcon icon={faAngleRight} className='ms-auto' /></Link></li>
