@@ -104,7 +104,7 @@ function AppointmentScheduling(){
                                               "limit": "4",
                                               "offset": "0",
                                               "order_by_field": "schedule_date_from",
-                                              "order_by_value": "desc"
+                                              "order_by_value": "asc"
                                             }
 
     const response = await fetch(`${API_URL}/doctorSchedules`, {
