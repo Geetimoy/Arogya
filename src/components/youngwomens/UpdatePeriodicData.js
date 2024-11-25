@@ -274,7 +274,7 @@ function UpdatePeriodicData(){
             <textarea name="remarks" id="remarks" onChange={handleRemarks} rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
           </div>
           <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Save</button>
+            <button type="submit" className='btn primary-bg-color text-light min-width-100'>Update</button>
           </div>
         </form>
         <div className="saved-periodic-data">

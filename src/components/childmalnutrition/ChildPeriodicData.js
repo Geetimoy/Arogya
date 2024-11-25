@@ -304,7 +304,7 @@ function ChildPeriodicData(){
             <textarea name="remarks" id="remarks" rows="3" onChange={handleRemarks} className="form-control" placeholder="Describe / Explain Problems"></textarea>
           </div>
           <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
+            <button type="submit" className='btn primary-bg-color text-light min-width-100'>Update</button>
           </div>
         </form>
 
