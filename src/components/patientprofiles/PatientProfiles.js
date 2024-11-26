@@ -450,9 +450,10 @@ function Patientprofiles(){
               </div>
             </div>
           </Modal.Body>  
-          <Modal.Footer className='justify-content-center'>  
+          <Modal.Footer className='justify-content-center'>
+            <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
-            <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes, Proceed</Link>  
+              
           </Modal.Footer>  
         </Modal>
         
@@ -472,9 +473,10 @@ function Patientprofiles(){
               </div>
             </form>
           </Modal.Body>  
-          <Modal.Footer className='justify-content-center'>  
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
+          <Modal.Footer className='justify-content-center'> 
             <Link to="/patientprofiles/patient-prescription" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Proceed</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
+             
           </Modal.Footer>  
         </Modal>
 

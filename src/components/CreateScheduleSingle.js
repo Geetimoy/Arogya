@@ -322,14 +322,13 @@ function CraeteScheduleSingle(){
           </div>
         </div>
       </div>
-      <div className="app-body create-schedule">
+      <div className="app-body create-schedule form-all create-young-woman">
         <p><small>{(scheduleId) ? 'Edit' : 'Add' } Your Schedule - Single Day</small></p>
         <div className="row mb-4">
           <div className='col-12'>
-            <form id="createScheduleForm" name="createScheduleForm" onSubmit={handleFormSubmit}>
-                
+            <form id="createScheduleForm" name="createScheduleForm" onSubmit={handleFormSubmit}> 
               <div className='form-group'>
-                <label htmlFor="date_range" className="no-style">Date Range : <small className='text-danger'>(If only one date leave next field empty)</small></label>
+                <label htmlFor="date_range" className="no-style">Date Range  <span className="text-danger">*</span> <small className=''>(If only one date leave next field empty)</small></label>
                 <div className='row'>
                   <div className={`col-12 mb-2 ${formData["scheduleFromDate"].errorClass}`}>
                     <label className='pos'>From :</label>
@@ -345,7 +344,7 @@ function CraeteScheduleSingle(){
               </div>
 
               <div className='form-group'>
-                <label htmlFor="date_range" className="no-style">Time Range :</label>
+                <label htmlFor="date_range" className="no-style">Time Range <span className="text-danger">*</span></label>
                 <div className='row'>
                   <div className={`col-6 ${formData["scheduleFromTime"].errorClass}`}>
                     <label className='pos'>From :</label>
@@ -372,7 +371,7 @@ function CraeteScheduleSingle(){
 
 
               <div className={`form-group ${formData["scheduleConsultationMode"].errorClass}`}>
-                <label htmlFor="schedule" className="no-style">Consultation Mode :</label>
+                <label htmlFor="schedule" className="no-style">Consultation Mode <span className="text-danger">*</span></label>
                 <div className="">
                   <div className="custom-control custom-radio mt-2">
                     <input type="radio" id="offline" onChange={handleChange} name="scheduleConsultationMode" value="1" className="custom-control-input" checked={(formData["scheduleConsultationMode"].value === '1') ? true : false}/>
@@ -390,17 +389,17 @@ function CraeteScheduleSingle(){
                 <small className="error-mesg">{formData["scheduleConsultationMode"].errorMessage}</small>
               </div>
               <div className={`form-group ${formData["scheduleContactDetails"].errorClass}`}>
-                <label>Clinic Name, Location, Timing & Contact Number:</label>
+                <label>Clinic Name, Location, Timing & Contact Number <span className="text-danger">*</span></label>
                 <textarea id="scheduleContactDetails" name="scheduleContactDetails" rows="3" className="form-control" placeholder="Clinic Name, Location, Timing & Contact Number" value={formData["scheduleContactDetails"].value} onChange={handleChange}></textarea>
                 <small className="error-mesg">{formData["scheduleContactDetails"].errorMessage}</small>
               </div>
               <div className={`form-group ${formData["scheduleTotalAppoitments"].errorClass}`}>
-                <label>Total Appointments : </label>
-                <input type="text" className="form-control" name="scheduleTotalAppoitments" id="scheduleTotalAppoitments"  onChange={handleChange} value={formData["scheduleTotalAppoitments"].value}/>
+                <label>Total Appointments <span className="text-danger">*</span></label>
+                <input type="text" className="form-control" name="scheduleTotalAppoitments" id="scheduleTotalAppoitments" placeholder="Total Appointments"  onChange={handleChange} value={formData["scheduleTotalAppoitments"].value}/>
                 <small className="error-mesg">{formData["scheduleTotalAppoitments"].errorMessage}</small>
               </div>
               <div className={`form-group ${formData["scheduleIsStrictFull"].errorClass}`}>
-                <label htmlFor="booking_confirm" className="no-style">Is Strict Full? : <small className=''>(If yes, no extra patients on those days)</small></label>
+                <label htmlFor="booking_confirm" className="no-style">Is Strict Full? <span className="text-danger">*</span> <small className=''>(If yes, no extra patients on those days)</small></label>
                 <div className="d-flex">
                   <div className="custom-control custom-radio custom-control-inline mt-2">
                     <input type="radio" id="strict_full_y" name="scheduleIsStrictFull" className="custom-control-input" value="Y" onChange={handleChange} checked={(formData["scheduleIsStrictFull"].value === 'Y') ? true : false}/>
@@ -414,8 +413,8 @@ function CraeteScheduleSingle(){
                 <small className="error-mesg">{formData["scheduleIsStrictFull"].errorMessage}</small>
               </div>
               <div className={`form-group ${formData["scheduleExtraAppointments"].errorClass}`}>
-                <label>Extra Appointment (%) : <small>(Buffer percentage. e.g. 10%)</small></label>
-                <input type="text" className="form-control" name="scheduleExtraAppointments" id="scheduleExtraAppointments" onChange={handleChange} value={formData["scheduleExtraAppointments"].value}/>
+                <label>Extra Appointment (%)  <span className="text-danger">*</span> <small>(Buffer percentage. e.g. 10%)</small></label>
+                <input type="text" className="form-control" name="scheduleExtraAppointments" id="scheduleExtraAppointments" placeholder="Extra Appointment (%)" onChange={handleChange} value={formData["scheduleExtraAppointments"].value}/>
                 <small className="error-mesg">{formData["scheduleExtraAppointments"].errorMessage}</small>
               </div>
               <div className="btns-group d-flex justify-content-center">
