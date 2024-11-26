@@ -61,12 +61,12 @@ function AppointmentSchedulingVolunteer(){
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["search_param"]              = {
                                               "by_keywords": "",
-                                              "schedule_date_from": "2024-01-01",
-                                              "schedule_date_to": "2024-09-28",
-                                              "limit": "4",
+                                              "schedule_date_from": "",
+                                              "schedule_date_to": "",
+                                              "limit": "0",
                                               "offset": "0",
                                               "order_by_field": "schedule_date_from",
-                                              "order_by_value": "desc"
+                                              "order_by_value": "asc"
                                             }
 
     const response = await fetch(`${API_URL}/doctorSchedulesList`, {
