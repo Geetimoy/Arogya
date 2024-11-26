@@ -395,7 +395,7 @@ function PatientBooking(){
 
         <Modal show={showSuccessModal} onHide={modalSuccessClose}>
           <Modal.Header className="justify-content-between">  
-            <h3 className='mb-0'>Message</h3>
+            <h3 className='mb-0'>Information</h3>
           </Modal.Header>  
           <Modal.Body> 
             <p className='mb-2'>{bookingConfirmationMessage}</p> 
