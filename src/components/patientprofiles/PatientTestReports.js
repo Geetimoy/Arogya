@@ -49,6 +49,14 @@ function PatientTestReports(){
     jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
     jsonData["account_key"]             = editPatientKey;
     jsonData["account_type"]            = 3;
+    jsonData["search_param"]            = {
+                                            "by_keywords": "",
+                                            "limit": "0",
+                                            "offset": "0",
+                                            "order_by_field": "file_id",
+                                            "order_by_value": "asc"
+                                          }
+
 
     const response = await fetch(`${API_URL}/fetchTestReportForPatient`, {
       method: "POST",
