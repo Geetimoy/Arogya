@@ -398,7 +398,7 @@ function PatientBooking(){
             <h3 className='mb-0'>Information</h3>
           </Modal.Header>  
           <Modal.Body> 
-            <p className='mb-2'>{bookingConfirmationMessage}</p> 
+            <p className='mb-2' dangerouslySetInnerHTML={{ __html: bookingConfirmationMessage }}/>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalSuccessClose}>Close</Button>  
