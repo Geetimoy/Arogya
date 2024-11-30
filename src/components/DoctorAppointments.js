@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js";
 
 import Appfooter from "./AppFooter";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import SystemContext from "../context/system/SystemContext";
 import AlertContext from '../context/alert/AlertContext';
@@ -100,15 +100,19 @@ function DoctorAppointments(){
   }, [systemContext.systemDetails.system_id]);
 
   const [statusToBeChanged, setStatusToBeChanged]                     = useState('');
+  const [confirmationAppointmentKey, setConfirmationAppointmentKey]   = useState('');
+  const [confirmationReason, setConfirmationReason]                   = useState('');
   const [confirmationModalHeaderText, setConfirmationModalHeaderText] = useState('');
   const [confirmationModalBodyText, setConfirmationModalBodyText]     = useState('');
   const [confirmationModalButtonText, setConfirmationModalButtonText] = useState('');
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false); 
   const modalConfirmationClose  = () => { setShowConfirmationModal(false); }
-  const modalConfirmationShow   = (status) => { 
+  const modalConfirmationShow   = (status, appointmentKey) => { 
 
     setStatusToBeChanged(status);
+    setConfirmationAppointmentKey(appointmentKey);
+    setConfirmationReason('');
 
     if(status === 'approve'){
       setConfirmationModalHeaderText('Approve Booking');
@@ -129,6 +133,68 @@ function DoctorAppointments(){
     setShowConfirmationModal(true);
   }
 
+  const inputCancelRejectReason = (e) => {
+    setConfirmationReason(e.target.value);
+  }
+
+  const confirmBookedAppointment = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    var jsonData = {};
+
+    jsonData['system_id']            = systemContext.systemDetails.system_id;
+    jsonData["device_type"]          = DEVICE_TYPE;
+    jsonData["device_token"]         = DEVICE_TOKEN;
+    jsonData["user_lat"]             = localStorage.getItem('latitude');
+    jsonData["user_long"]            = localStorage.getItem('longitude');
+    jsonData["doctor_account_type"]  = decryptedLoginDetails.account_type;
+    jsonData["doctor_account_key"]   = decryptedLoginDetails.account_key;
+    jsonData["appointment_key"]      = confirmationAppointmentKey;
+
+    var apiURL = '';
+
+    if(statusToBeChanged === 'approve'){
+      apiURL = `${API_URL}/doctorConfirmBookedAppointment`;
+    }
+    else if(statusToBeChanged === 'cancel'){
+      apiURL = `${API_URL}/doctorCancelBookedAppointment`;
+      if(confirmationReason === ''){
+        alertContext.setAlertMessage({show:true, type: "error", message: 'Please enter reason to cancel'});
+        return false;
+      }
+      jsonData["cancelled_reason"] = confirmationReason;
+    }
+    else if(statusToBeChanged === 'reject'){
+      apiURL = `${API_URL}/doctorRejectBookedAppointment`;
+      if(confirmationReason === ''){
+        alertContext.setAlertMessage({show:true, type: "error", message: 'Please enter reason to reject'});
+        return false;
+      }
+      jsonData["reject_reason"]    = confirmationReason;
+    }
+
+    const response = await fetch(`${apiURL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      modalConfirmationClose();
+      listAppointment("");
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -140,13 +206,13 @@ function DoctorAppointments(){
               </Link>
             </div>
               {
-                (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <h5 className='mx-2 mb-0'>My Doctor Appointments </h5>
+                (decryptedLoginDetails.account_type === '3' || decryptedLoginDetails.account_type === '31' || decryptedLoginDetails.account_type === '32' || decryptedLoginDetails.account_type === '33') && <h5 className='mx-2 mb-0'>My Doctor Appointments </h5>
               }
               {
-                (decryptedLoginDetails.account_type == 4) && <h5 className='mx-2 mb-0'> Appointments </h5>
+                (decryptedLoginDetails.account_type === '4') && <h5 className='mx-2 mb-0'> Appointments </h5>
               }
               {
-                (decryptedLoginDetails.account_type == 5) && <h5 className='mx-2 mb-0'>My Bookings </h5>
+                (decryptedLoginDetails.account_type === '5') && <h5 className='mx-2 mb-0'>My Bookings </h5>
               }
           </div>
           <div className='app-top-right d-flex'> 
@@ -184,17 +250,17 @@ function DoctorAppointments(){
                   <div className='drop-menu'>
                     <ul>
                       {
-                        (decryptedLoginDetails.account_type == 5 && appointment.appt_status == 'Pending') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('approve')}>Confirm Booking</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Pending') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('approve', appointment.appointment_key)}>Confirm Booking</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type == 5 && appointment.appt_status == 'Pending') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('cancel')}>Cancel Booking</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Pending') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('cancel', appointment.appointment_key)}>Cancel Booking</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type == 5 && appointment.appt_status == 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject')}>Reject Booking</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject', appointment.appointment_key)}>Reject Booking</Link></li>
                       }
                       <li><Link to={"/"}>Send Notifications</Link></li>
                       {
-                        (decryptedLoginDetails.account_type == 4) &&<li> <Link to={"/"}>Doctor Details</Link></li>
+                        (decryptedLoginDetails.account_type === '4') &&<li> <Link to={"/"}>Doctor Details</Link></li>
                       }
                       <li><Link to={"/"}>Patient Details</Link></li>
                       <li><Link to={"#"}>Upload Prescriptions</Link></li>
@@ -206,12 +272,13 @@ function DoctorAppointments(){
                   </div>
                 }
                 {
-                  (decryptedLoginDetails.account_type == 4) &&<p><span className="d-block">Doctor Name:</span> {appointment.doctor_display_name}</p>
+                  (decryptedLoginDetails.account_type === '4') &&<p><span className="d-block">Doctor Name:</span> {appointment.doctor_display_name}</p>
                 }
+                <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
                 <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
                 <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
                 <p><span className="d-block">Place:</span> {appointment.location}</p>
-                <p><span className="d-block">Consultation Mode:</span> {(appointment.consultation_mode == 1) ? `Offline (Clinic)` : ((appointment.consultation_mode == 2) ? `Online` : `Call on Emergency`)}</p>
+                <p><span className="d-block">Consultation Mode:</span> {(appointment.consultation_mode === '1') ? `Offline (Clinic)` : ((appointment.consultation_mode === '2') ? `Online` : `Call on Emergency`)}</p>
                 <p><span className="d-block">Status:</span> {appointment.appt_status}</p>
               </div>
             ))}
@@ -226,9 +293,13 @@ function DoctorAppointments(){
           </Modal.Header>
           <Modal.Body className='form-all'>  
             <p>{confirmationModalBodyText}</p> 
+            {(statusToBeChanged === 'cancel' || statusToBeChanged === 'reject') && <div className="form-group">
+              <label htmlFor="describe">Reason: <span className="text-danger">*</span></label>
+              <textarea name="reason" id="reason" rows="3" value={confirmationReason} className="form-control" placeholder="Reason" onChange={inputCancelRejectReason}></textarea>
+            </div>}
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0'>{confirmationModalButtonText}</Link> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmBookedAppointment}>{confirmationModalButtonText}</Link> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalConfirmationClose}>Close</Button>  
           </Modal.Footer>  
         </Modal>
