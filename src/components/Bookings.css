@@ -57,3 +57,9 @@
 .patient-category .box img{
   max-width: 50px;
 }
+.scheduleactive{
+  right: 25px;
+}
+.app-body .scheduleactive svg{
+  color: #0f8b00;
+}

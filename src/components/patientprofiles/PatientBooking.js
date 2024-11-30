@@ -316,8 +316,8 @@ function PatientBooking(){
                     }
                   </p>
 
-                  <p><span className="d-block">Place:</span> {schedule.clinic_details}</p>
-                  <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p>
+                  <p><span className="d-block">Place:</span> {schedule.clinic_details} - {schedule.consultation_mode_descr}</p>
+                  {/* <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p> */}
                   {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
 
                   <div className="mb-3 mt-3 text-center">
@@ -377,7 +377,7 @@ function PatientBooking(){
             <h3 className='mb-0'>Confirmation</h3>
           </Modal.Header>  
           <Modal.Body> 
-            <p className='mb-2'>You are now one step behind to book an appointment for you.</p> 
+            <p className='mb-2'>You are now one step behind to book an appointment.</p> 
             <p className='mb-2'>Please check the details and click confirm button to book an appointment.</p> 
             <p>
               <strong>Patient Name: </strong>{patientDetails.patient_name}<br/>

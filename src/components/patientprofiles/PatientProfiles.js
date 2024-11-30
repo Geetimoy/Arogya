@@ -351,7 +351,7 @@ function Patientprofiles(){
         </div> */}
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search patient' id="searchPatient" name="searchPatient" onChange={searchPatient} />
+            <input type="text" className='form-control' placeholder='Search Patient' id="searchPatient" name="searchPatient" onChange={searchPatient} />
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
@@ -474,7 +474,7 @@ function Patientprofiles(){
             </form>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Link to="/patientprofiles/patient-prescription" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Proceed</Link>  
+            <Link to="/patientprofiles/patient-prescription" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Proceed</Link>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
              
           </Modal.Footer>  
@@ -488,8 +488,8 @@ function Patientprofiles(){
                 <label><span className="d-block">Appointment </span></label>
                 <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value={testReportAppointmentId} onChange={selectTestReportAppointment}>
                   <option value="">Select</option>
-                  {testReportAppointmentList.map((appointment, index) => (
-                    <option key={appointment.appointment_key} value={appointment.appointment_key}>{`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                   {testReportAppointmentList.map((appointment, index) => (
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>Dr. {`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
                   ))}
                 </select>
               </div>

@@ -133,9 +133,10 @@ function UploadPrescription(){
               </div>
             </div>
           </Modal.Body>  
-          <Modal.Footer className='justify-content-center'>  
+          <Modal.Footer className='justify-content-center'> 
+          <Button variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes to Proceed</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Cancel</Button>  
-            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0'>Yes to Proceed</Button>  
+              
           </Modal.Footer>  
       </Modal>
 

@@ -449,7 +449,7 @@ function PatientMedicalHistory(){
           </div>
           <div className={`form-group ${formData["patient_temperature_faren"].errorClass}`}>
             <label><span className="d-block">Body Temperature  <span className="text-danger">*</span></span></label>
-            <input type="text" className="form-control" name="patient_temperature_faren" id="patient_temperature_faren" onChange={handleChange} value={formData["patient_temperature_faren"].value ? formData["patient_temperature_faren"].value : ''} placeholder="Blood Temperature"/>
+            <input type="text" className="form-control" name="patient_temperature_faren" id="patient_temperature_faren" onChange={handleChange} value={formData["patient_temperature_faren"].value ? formData["patient_temperature_faren"].value : ''} placeholder="Body Temperature"/>
             <small className="error-mesg">{formData["patient_temperature_faren"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["patient_blood_oxygen"].errorClass}`}>
