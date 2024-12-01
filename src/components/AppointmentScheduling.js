@@ -4,7 +4,7 @@ import CryptoJS from "crypto-js";
 import Appfooter from "./AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faLongArrowAltLeft, faBell, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faLongArrowAltLeft, faBell, faFaceSmile, faFaceFrown } from '@fortawesome/free-solid-svg-icons';
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -302,8 +302,13 @@ function AppointmentScheduling(){
                 {/* <p><span className="d-block">Doctor Name:</span> Dr. {schedule.display_name}</p> */}
                 {/* <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p> */}
                 <div className='scheduleactive position-absolute'>
-                  <FontAwesomeIcon icon={faFaceSmile} />
-                  </div>
+                  {
+                    (schedule.schedule_status === 'active') && <FontAwesomeIcon icon={faFaceSmile} />
+                  }
+                  {
+                    (schedule.schedule_status !== 'active') && <FontAwesomeIcon icon={faFaceFrown} />
+                  }
+                </div>
                 {/* <p><span className="d-block">Schedule Status :</span> {schedule.schedule_status}</p> */}
                 {/* <p><span className="d-block">Schedule Type :</span> {schedule.schedule_type_descr}</p> */}
                 <p>
