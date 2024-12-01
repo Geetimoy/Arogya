@@ -92,6 +92,7 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
 import PatientUploadPrescriptions from './patientprofiles/PatientUploadPrescriptions';
 import PatientUploadTestReports from './patientprofiles/PatientUploadTestReports';
+import DoctorAppointmentsVolunteer from './DoctorAppointmentsVolunteer';
 
 
 
@@ -344,6 +345,7 @@ export default function Core() {
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
+            <Route path="/doctor-appointments-volunteer" exact element={<DoctorAppointmentsVolunteer/>} />
             <Route path="/patientprofiles-booking" exact element={<PatientProfilesBooking />} />
 
             <Route path="/upload-prescription" exact element={<UploadPrescription />} />

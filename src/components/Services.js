@@ -96,7 +96,7 @@ function Services(){
                   (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Doctor Appointments</h6></Link>
                 }
                 {
-                  (decryptedLoginDetails.account_type == 4) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>Patient & Doctor Appointments</h6></Link>
+                  (decryptedLoginDetails.account_type == 4) && <Link to="/doctor-appointments-volunteer"><img src={testreport} alt='' /><h6>Patient & Doctor Appointments</h6></Link>
                 }
                 {
                   (decryptedLoginDetails.account_type == 5) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Bookings</h6></Link>
