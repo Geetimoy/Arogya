@@ -50,7 +50,7 @@ function PatientTestReports(){
     jsonData["account_key"]             = editPatientKey;
     jsonData["account_type"]            = 3;
     jsonData["search_param"]            = {
-                                            "by_keywords": "",
+                                            "by_keywords": searchKey,
                                             "limit": "0",
                                             "offset": "0",
                                             "order_by_field": "file_id",
@@ -179,7 +179,7 @@ function PatientTestReports(){
         </div>
         <div className='search-prescription mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Test Reports' id="searchReport" name="searchReport" onChange={searchReport}/>
+            <input type="text" className='form-control' placeholder='Search Test Reports' id="searchReport" name="searchReport" onChange={searchReports}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
