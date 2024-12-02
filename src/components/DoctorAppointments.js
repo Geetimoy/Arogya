@@ -44,6 +44,9 @@ function DoctorAppointments(){
   };
 
   const [appointmentList, setAppointmentList]   = useState([]);
+  const [approvedCounter, setApprovedCounter]   = useState(0);
+  const [pendingCounter, setPendingCounter]     = useState(0);
+  const [rejectedCounter, setRejectedCounter]   = useState(0);
 
   const searchAppointment = (e) => {
     const { name, value } = e.target;
@@ -84,10 +87,16 @@ function DoctorAppointments(){
     let result = await response.json();
     console.log(result);
     if(result.success){
-      setAppointmentList(result.data);
+      setAppointmentList(result.data.appointments);
+      setApprovedCounter(result.data.counts.approved_count);
+      setPendingCounter(result.data.counts.pending_count);
+      setRejectedCounter(result.data.counts.rejected_count);
     }
     else{
       setAppointmentList([]); 
+      setApprovedCounter(0);
+      setPendingCounter(0);
+      setRejectedCounter(0);
     }
 
   }
@@ -241,6 +250,11 @@ function DoctorAppointments(){
       <div className="app-body bookings">
         
         <div className="row">
+          
+          <div className="col-4 mb-3">Approved: {approvedCounter}</div>
+          <div className="col-4 mb-3">Pending: {pendingCounter}</div>
+          <div className="col-4 mb-3">Rejected: {rejectedCounter}</div>
+
           <div className="col-12">
 
             {appointmentList.map((appointment, index) => (
