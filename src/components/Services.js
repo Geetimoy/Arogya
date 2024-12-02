@@ -43,6 +43,30 @@ function Services(){
               </div>
             </div> */}
             {
+                  (decryptedLoginDetails.account_type == 5) && <div className='col-6'>
+                <div className='button-box'><Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link></div></div>
+                }
+            {
+                  (decryptedLoginDetails.account_type == 5) && <div className='col-6'>
+                <div className='button-box'><Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Bookings</h6></Link></div></div>
+                }
+
+
+            {
+                  (decryptedLoginDetails.account_type == 5) && <div className='col-6'>
+                <div className='button-box'><Link to="/upload-prescription"><img src={uploadrx} alt='' />
+                <h6>View/Upload Rx</h6></Link></div></div>
+                }
+
+            {
+                  (decryptedLoginDetails.account_type == 5) &&  <div className='col-6'>
+                <div className='button-box'><Link to="/upload-prescription"><img src={uploadrx} alt='' />
+                <h6>View/Upload Reports</h6></Link></div></div>
+                }
+            
+            
+
+            {
               (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 5) && <div className='col-6'>
                 <div className='button-box'>
                   <Link to="/patientprofiles">
@@ -77,60 +101,50 @@ function Services(){
               </div>
             }
             
-            <div className='col-6'>
-              <div className='button-box'>
+            
 
                 {
-                  (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <Link to="/appointment-scheduling-volunteer"><img src={appointmentscheduling} alt='' /><h6>Doctor Schedules</h6></Link>
+                  (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <div className='col-6'>
+              <div className='button-box'><Link to="/appointment-scheduling-volunteer"><img src={appointmentscheduling} alt='' /><h6>Doctor Schedules</h6></Link></div>
+              </div>
                 }
 
-                {
-                  (decryptedLoginDetails.account_type == 5) && <Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link>
-                }
+               
                 
-              </div>
-            </div>
-            <div className='col-6'>
+              
+            
+                {
+                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && 
+                  <div className='col-6'>
               <div className='button-box'>
-                {
-                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Doctor Appointments</h6></Link>
+                <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Doctor Appointments</h6></Link>
+                </div></div>
                 }
                 {
-                  (decryptedLoginDetails.account_type == 4) && <Link to="/doctor-appointments-volunteer"><img src={testreport} alt='' /><h6>Patient & Doctor Appointments</h6></Link>
-                }
-                {
-                  (decryptedLoginDetails.account_type == 5) && <Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Bookings</h6></Link>
+                  (decryptedLoginDetails.account_type == 4) && <div className='col-6'>
+              <div className='button-box'><Link to="/doctor-appointments-volunteer"><img src={testreport} alt='' /><h6>Patient & Doctor Appointments</h6></Link></div></div>
                 }
                 
-              </div>
-            </div>
-            <div className='col-6'>
-              <div className='button-box'>
+                
+              
+            
                 
                 {
-                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33 || decryptedLoginDetails.account_type == 4) && <Link to="/upload-prescription"><img src={uploadrx} alt='' />
-                <h6>Upload Rx</h6></Link>
+                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33 || decryptedLoginDetails.account_type == 4) && <div className='col-6'>
+              <div className='button-box'><Link to="/upload-prescription"><img src={uploadrx} alt='' />
+                <h6>Upload Rx</h6></Link></div>
+                </div>
                 }
 
-                {
-                  (decryptedLoginDetails.account_type == 5) && <Link to="/upload-prescription"><img src={uploadrx} alt='' />
-                <h6>View/Upload Rx</h6></Link>
-                }
-              </div>
-            </div>
-            <div className='col-6'>
-              <div className='button-box'>
                 
                 {
-                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33 || decryptedLoginDetails.account_type == 4) && <Link to="/upload-test-report"><img src={testreport} alt='' />
-                <h6>Upload Test Reports</h6></Link>
+                  (decryptedLoginDetails.account_type == 3 || decryptedLoginDetails.account_type == 31 || decryptedLoginDetails.account_type == 32 || decryptedLoginDetails.account_type == 33 || decryptedLoginDetails.account_type == 4) && <div className='col-6'>
+              <div className='button-box'><Link to="/upload-test-report"><img src={testreport} alt='' />
+                <h6>Upload Test Reports</h6></Link></div>
+                </div>
                 }
-                {
-                  (decryptedLoginDetails.account_type == 5) && <Link to="/upload-prescription"><img src={uploadrx} alt='' />
-                <h6>View/Upload Reports</h6></Link>
-                }
-              </div>
-            </div>
+                
+              
             
            
             <div className='col-6'>
