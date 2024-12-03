@@ -152,12 +152,25 @@ function DoctorAppointmentsVolunteer(){
         </div>
       </div>
       <div className="app-body bookings">
-        
+      <div className='d-flex justify-content-between align-items-center'>
+          <div className='status d-flex mb-2'>
+            <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>
+            <p className='me-1 mb-0'><small>Pending: <strong>{pendingCounter}</strong></small>,</p>
+            <p className='me-0 mb-0'><small>Rejected: <strong>{rejectedCounter}</strong></small></p>
+          </div>
+          <div className='filter'>
+            <div class="form-check mb-2">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember" /> <small>Pending</small>
+              </label>
+            </div>
+          </div>
+        </div>
         <div className="row">
           
-          <div className="col-4 mb-3">Approved: {approvedCounter}</div>
+          {/* <div className="col-4 mb-3">Approved: {approvedCounter}</div>
           <div className="col-4 mb-3">Pending: {pendingCounter}</div>
-          <div className="col-4 mb-3">Rejected: {rejectedCounter}</div>
+          <div className="col-4 mb-3">Rejected: {rejectedCounter}</div> */}
 
           <div className="col-12">
 

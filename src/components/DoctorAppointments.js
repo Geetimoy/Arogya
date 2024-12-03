@@ -124,14 +124,14 @@ function DoctorAppointments(){
     setConfirmationReason('');
 
     if(status === 'approve'){
-      setConfirmationModalHeaderText('Approve Booking');
-      setConfirmationModalBodyText('Are you sure you want to Approve this booking?');
-      setConfirmationModalButtonText('Approve');
+      setConfirmationModalHeaderText('Confirm Booking');
+      setConfirmationModalBodyText('Are you sure you want to Confirm this booking?');
+      setConfirmationModalButtonText('Confirm');
     }
     else if(status === 'cancel'){
       setConfirmationModalHeaderText('Cancel Booking');
       setConfirmationModalBodyText('Are you sure you want to Cancel this booking?');
-      setConfirmationModalButtonText('Cancel');
+      setConfirmationModalButtonText('Yes, Cancel It');
     }
     else if(status === 'reject'){
       setConfirmationModalHeaderText('Reject Booking');
@@ -248,12 +248,27 @@ function DoctorAppointments(){
         </div>
       </div>
       <div className="app-body bookings">
-        
+        <div className='d-flex justify-content-between align-items-center'>
+          <div className='status d-flex mb-2'>
+            <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>
+            <p className='me-1 mb-0'><small>Pending: <strong>{pendingCounter}</strong></small>,</p>
+            <p className='me-0 mb-0'><small>Rejected: <strong>{rejectedCounter}</strong></small></p>
+          </div>
+          <div className='filter'>
+            <div class="form-check mb-2">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember" /> <small>Pending</small>
+              </label>
+            </div>
+          </div>
+        </div>
         <div className="row">
           
-          <div className="col-4 mb-3">Approved: {approvedCounter}</div>
+          {/* <div className="col-4 mb-3">Approved: {approvedCounter}</div>
           <div className="col-4 mb-3">Pending: {pendingCounter}</div>
-          <div className="col-4 mb-3">Rejected: {rejectedCounter}</div>
+          <div className="col-4 mb-3">Rejected: {rejectedCounter}</div> */}
+
+          
 
           <div className="col-12">
 
@@ -307,10 +322,18 @@ function DoctorAppointments(){
           </Modal.Header>
           <Modal.Body className='form-all'>  
             <p>{confirmationModalBodyText}</p> 
-            {(statusToBeChanged === 'cancel' || statusToBeChanged === 'reject') && <div className="form-group">
-              <label htmlFor="describe">Reason: <span className="text-danger">*</span></label>
-              <textarea name="reason" id="reason" rows="3" value={confirmationReason} className="form-control" placeholder="Reason" onChange={inputCancelRejectReason}></textarea>
+            {(statusToBeChanged === 'cancel') && <div className="form-group">
+              <label htmlFor="describe">Reason <span className="text-danger">*</span></label>
+              <textarea name="reason" id="reason" rows="3" value={confirmationReason} className="form-control" placeholder="Please write reason to cancel it." onChange={inputCancelRejectReason}></textarea>
             </div>}
+
+            {(statusToBeChanged === 'reject') && <div className="form-group">
+              <label htmlFor="describe">Reason <span className="text-danger">*</span></label>
+              <textarea name="reason" id="reason" rows="3" value={confirmationReason} className="form-control" placeholder="Please write your reason to reject it." onChange={inputCancelRejectReason}></textarea>
+              <small>Note: If you reject it...</small>
+            </div>}
+
+
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
             <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmBookedAppointment}>{confirmationModalButtonText}</Link> 
