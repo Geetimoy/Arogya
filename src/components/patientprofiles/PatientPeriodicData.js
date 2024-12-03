@@ -1,9 +1,12 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
+
 import Appfooter from "../AppFooter";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
 import Category from "./Category";
 
@@ -13,9 +16,14 @@ import { faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
 function PatientPeriodicData(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
+  const [periodicDate, setPeriodicDate]     = useState('');
 
   const [inputValues, setInputValues] = useState({
     select1: {category:"", value:""},
@@ -41,6 +49,11 @@ function PatientPeriodicData(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [remarks, setRemarks] = useState(''); 
+  const [periodicList, setPeriodicList] = useState([]); 
+  const [urlParam, setUrlParam] = useState(useParams());
+  const editAccountKey = urlParam.accountKey;
+
   const selectCategory = (e) => {
     const { name, value } = e.target;
     inputValues[name].category = value;
@@ -53,6 +66,14 @@ function PatientPeriodicData(){
   }
 
   const [inputList, setInputList] = useState([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
+
+  const changePeriodicDate = (date) => {
+    setPeriodicDate(date);
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [inputValues]);
 
   const onAddBtnClick = event => {
 
@@ -68,7 +89,117 @@ function PatientPeriodicData(){
 
   };
 
+  const handleRemarks = (e) => {
+    const { name, value } = e.target;
+    setRemarks(value);
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+
+    var patientCategory = [];
+    Object.keys(inputValues).forEach(function(k, i){
+      if(inputValues[k].category != '' && parseInt(inputValues[k].category) > 0){
+        patientCategory[i] = {category: inputValues[k].category, value: inputValues[k].value}
+      }
+    });
+
+    if(patientCategory.length > 0){
+
+      let strday   = String(periodicDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+      let strmonth = String(periodicDate.getMonth() + 1).padStart(2, '0');  // Months are zero-indexed
+      let stryear  = periodicDate.getFullYear();
+      
+      let dataProcessedOn = `${strday}-${strmonth}-${stryear}`;
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
+      jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
+      jsonData["patient_account_key"]       = editAccountKey;
+      jsonData["data_processed_on"]         = dataProcessedOn;
+      jsonData["remarks"]                   = remarks;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["patient_cat_value"]         = patientCategory;
+
+      const response = await fetch(`${API_URL}/patientPeriodicDataAdd`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 2000);
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: "Please select at least one category!"});
+    }
+  }
   
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPeriodicData();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const listPeriodicData = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["patient_account_type"]      = 3;
+    jsonData["patient_account_key"]       = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": "",
+                                              "limit": "0",
+                                              "offset": "0",
+                                              "order_by_field": "data_processed_on",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/patientPeriodicDataList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      setPeriodicList(result.data.data);
+    }
+    else{
+      setPeriodicList([]); 
+    }
+
+  }
 
   return(
     <>
@@ -107,21 +238,21 @@ function PatientPeriodicData(){
       </div>
       <div className='app-body form-all upadte-periodic-data'>
         <p><small>Update Patient Periodic Data</small></p>
-        <form className="mt-3" name="periodicDataForm" id="periodicDataForm" >
+        <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
           <div className='mb-3 mt-3 text-end'>
             <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
           </div>
 
           <div className={`form-group`}>
             <label htmlFor="period_missed">Date <span className="text-danger">*</span></label>
-            <DatePicker dateFormat="dd-MM-yyyy"  className='form-control' />
+            <DatePicker dateFormat="yyyy-MM-dd"  className='form-control' selected={periodicDate} onChange={(date) => changePeriodicDate(date)} placeholderText="YYYY-MM-DD" maxDate={new Date()}/>
           </div>
 
           {inputList}
 
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
-            <textarea name="remarks" id="remarks" rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
+            <textarea name="remarks" id="remarks" rows="3" onChange={handleRemarks} className="form-control" placeholder="Describe / Explain Problems"></textarea>
           </div>
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
@@ -132,15 +263,21 @@ function PatientPeriodicData(){
           <div className="row mt-4">
 
             
-              <div className="col-6">
+            {periodicList.map((patient, index) => (
+              <div className="col-6" key={index}>
                 <div className="jumbotron rounded p-2">
                   <div className="periodic-data position-relative">
                     {/* <div className="btn-delete" onClick={()=>{ deletePeriodicData(child.data_processed_on) }}><FontAwesomeIcon icon={faTrash} /></div> */}
-                    <p className="primary-color"><strong>Date -  </strong></p>
-                    
+                    <p className="primary-color"><strong>Date -  {patient.data_processed_on}</strong></p>
+                    {
+                      patient.sub_periodic_data.map((category, categoryindex) => {
+                        return <p key={`${index}${categoryindex}`}>{category.category_name} - {category.value}</p>
+                      })
+                    }
                   </div>
                 </div>
               </div>
+            ))}
             
 
           </div>
