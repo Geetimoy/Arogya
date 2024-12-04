@@ -332,8 +332,6 @@ function DoctorAppointments(){
               <textarea name="reason" id="reason" rows="3" value={confirmationReason} className="form-control" placeholder="Please write your reason to reject it." onChange={inputCancelRejectReason}></textarea>
               <small>Note: If you reject it...</small>
             </div>}
-
-
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
             <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmBookedAppointment}>{confirmationModalButtonText}</Link> 
