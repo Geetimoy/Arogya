@@ -56,6 +56,13 @@ function PatientPrescription(){
     jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
+    jsonData["search_param"]    = {
+                                    "by_keywords": searchKey,
+                                    "limit": "0",
+                                    "offset": "0",
+                                    "order_by_field": "",
+                                    "order_by_value": "desc"
+                                  }
 
     const response = await fetch(`${API_URL}/${fetchUrl}`, {
       method: "POST",
@@ -158,7 +165,7 @@ function PatientPrescription(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Prescription'/>
+            <input type="text" className='form-control' placeholder='Search Prescription' id="searchPrescription" name="searchPrescription" onChange={searchPrescription}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
