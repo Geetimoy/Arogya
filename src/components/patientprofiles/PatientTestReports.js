@@ -85,12 +85,14 @@ function PatientTestReports(){
   }, [systemContext.systemDetails.system_id]);
 
   const [deleteTestReportFileId, setDeleteTestReportFileId]           = useState('');
+  const [deleteTestReportApptId, setDeleteTestReportApptId]           = useState('');
   const [showTestReportsDeleteModal, setShowTestReportsDeleteModal]   = useState(false); 
   const modalTestReportsDeleteClose  = () => {
     setShowTestReportsDeleteModal(false); 
   }
-  const modalTestReportsDeleteShow   = (fileId) => {
+  const modalTestReportsDeleteShow   = (fileId, apptId) => {
     setDeleteTestReportFileId(fileId);
+    setDeleteTestReportApptId(apptId);
     setShowTestReportsDeleteModal(true);
   }
 
@@ -101,7 +103,7 @@ function PatientTestReports(){
     let jsonData = {};
     jsonData['system_id']             = systemContext.systemDetails.system_id;
     jsonData["account_key"]           = editPatientKey;
-    jsonData["appointment_key"]       = appointmentId;
+    jsonData["appointment_key"]       = deleteTestReportApptId;
     jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;;
     jsonData["file_id"]               = deleteTestReportFileId;
     jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
@@ -190,7 +192,7 @@ function PatientTestReports(){
               <div className='button-box'>
                 <div className='prescription'>
                   <div className="btn-download"><Link target="_blank" to={`${report.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete" onClick={()=>modalTestReportsDeleteShow(report.file_id)}><FontAwesomeIcon icon={faTrash} /></div>
+                  <div className="btn-delete" onClick={()=>modalTestReportsDeleteShow(report.file_id, report.appointment_key)}><FontAwesomeIcon icon={faTrash} /></div>
                   <img src={patientprescription} alt='' className='w-100' />
                   <p className='pb-2'><strong><small>{report.report_name}</small></strong></p>
                 </div>
