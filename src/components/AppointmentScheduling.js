@@ -385,7 +385,7 @@ function AppointmentScheduling(){
             {cancellationReasonErrorMessage && <small className="text-danger">This field is required!</small>}
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={cancelSchedule}>Confirm</Button> 
+            <Button variant="secondary" className='btn bg-success text-light min-width-100 border-0' onClick={cancelSchedule}>Confirm</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>No</Button>  
           </Modal.Footer>  
         </Modal>
@@ -401,7 +401,7 @@ function AppointmentScheduling(){
             {closingReasonErrorMessage && <small className="text-danger">This field is required!</small>}
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeBooking}>Confirm</Button> 
+            <Button variant="secondary" className='btn bg-success text-light min-width-100 border-0' onClick={closeBooking}>Confirm</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose3}>No</Button>  
           </Modal.Footer>  
         </Modal>
