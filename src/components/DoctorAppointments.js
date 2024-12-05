@@ -287,15 +287,15 @@ function DoctorAppointments(){
                       {
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject', appointment.appointment_key)}>Reject Booking</Link></li>
                       }
-                      <li><Link to={"/"}>Send Notifications</Link></li>
+                      {/* <li><Link to={"/"}>Send Notifications</Link></li>
                       {
                         (decryptedLoginDetails.account_type === '4') &&<li> <Link to={"/"}>Doctor Details</Link></li>
-                      }
-                      <li><Link to={"/"}>Patient Details</Link></li>
+                      } */}
+                      {/* <li><Link to={"/"}>Patient Details</Link></li>
                       <li><Link to={"#"}>Upload Prescriptions</Link></li>
                       <li><Link to={"#"}>Download Prescriptions</Link></li>
                       <li><Link to={"#"}>Upload Test Reports</Link></li>
-                      <li><Link to={"#"}>Download Test Reports</Link></li>
+                      <li><Link to={"#"}>Download Test Reports</Link></li> */}
                       
                     </ul>
                   </div>
