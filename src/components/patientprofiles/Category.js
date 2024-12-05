@@ -14,7 +14,7 @@ function Category(props){
 
   const fetchCategoryList = async () => {
 
-    const response = await fetch(`${API_URL}/childPeriodicDataCategory`);
+    const response = await fetch(`${API_URL}/patientPeriodicDataCategory`);
 
     let result = await response.json();
 
