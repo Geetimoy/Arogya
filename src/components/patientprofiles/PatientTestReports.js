@@ -210,7 +210,7 @@ function PatientTestReports(){
             <p>Are you sure to delete this report? Deletion is permanent.</p> 
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={deleteTestReport}>Confirm</Link> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={deleteTestReport}>Yes, Delete It</Link> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsDeleteClose}>Cancel</Button>  
           </Modal.Footer>  
         </Modal>

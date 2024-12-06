@@ -332,7 +332,7 @@ function Patientprofiles(){
       </div>
       <div className="app-body patient-profiles profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-        <span>Total- {patientList.length}</span>
+        <span>Total - {patientList.length}</span>
           <Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
         {/* <div className="d-flex justify-content-between mb-3 mt-3">
         <Link onClick={() => { modalShowSearch(); }} to="#">
@@ -460,14 +460,14 @@ function Patientprofiles(){
         {/* Doctor Prescription */}
         <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
           <Modal.Body className='form-all'>  
-            <p>Doctor Prescription</p> 
+            <p>Upload Doctor Prescription</p> 
             <form>
               <div className="form-group">
                 <label><span className="d-block">Appointment </span></label>
                 <select className="form-control" name="doctor_prescription_appoitment_id" id="doctor_prescription_appoitment_id">
                   <option value="">Select</option>
                   {appointmentListForDoctorPresc.map((appointment, index) => (
-                    <option key={appointment.appointment_key} value={appointment.appointment_key}>{`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>Dr. {`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
                   ))}
                 </select>
               </div>

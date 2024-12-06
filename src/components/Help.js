@@ -63,6 +63,48 @@ function Help(){
       }, []);
 
 
+      const getUserDetails = async () => {
+
+        var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+        let jsonData = {};
+    
+        jsonData['system_id']         = systemContext.systemDetails.system_id;
+        jsonData["account_key"]       = decryptedLoginDetails.account_key;
+        jsonData["account_type"]      = decryptedLoginDetails.account_type;
+        jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+        jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+        jsonData["device_token"]      = DEVICE_TOKEN;
+        jsonData["user_lat"]          = localStorage.getItem('latitude');
+        jsonData["user_long"]         = localStorage.getItem('longitude');
+        
+        const response1 = await fetch(`${API_URL}/getUserProfileDetails`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+        let result1 = await response1.json();
+    
+        let userDetails = result1.data;console.log(userDetails);
+        
+        if(userDetails && userDetails.shared_image && userDetails.shared_image !== ""){
+          setProfileImage(userDetails.shared_image+'?timestamp='+Math.random());
+        }
+    
+      }
+    
+      useEffect(() => {
+    
+        if(systemContext.systemDetails.system_id){
+          getUserDetails();
+        }
+    
+        // eslint-disable-next-line
+        
+      }, [systemContext.systemDetails.system_id])
+
   return(
       <>
         <AppTop></AppTop>
@@ -72,7 +114,7 @@ function Help(){
               <div className='d-flex justify-content-between mb-4'>
                 <div className='d-flex align-items-center'>
                   <div className="profile-img"><img src={profileImage} className='thumb' alt='' style={{height:'50px', width:'50px'}}/></div>
-                  <h5 className='mb-0 mx-3 primary-color'>Hello Volunteer!</h5>
+                  <h5 className='mb-0 mx-3 primary-color'>Hello {decryptedLoginDetails.user_name}!</h5>
                 </div>
                 <div>
                   <img src={systemContext.systemDetails.thp_sp_global_logo_url} alt='' style={{height:'50px'}} />

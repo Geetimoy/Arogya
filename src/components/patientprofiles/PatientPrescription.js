@@ -186,7 +186,7 @@ function PatientPrescription(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Prescription' id="searchPrescription" name="searchPrescription" onChange={searchPrescription}/>
+            <input type="text" className='form-control' placeholder='Search Initial Prescription' id="searchPrescription" name="searchPrescription" onChange={searchPrescription}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
@@ -200,7 +200,7 @@ function PatientPrescription(){
                     <div className="btn-download"><Link target="_blank" to={`${patient.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
                     <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(patient.file_id)}/></div>
                     <img src={docIcon} alt='' className='w-100' />
-                    <p className='mb-1'><small>Date:{patient.prescription_date}</small></p>
+                    <p className='mb-1'><small>Date: {patient.prescription_date}</small></p>
                     <p className='mb-1'><strong>{patient.file_name}</strong></p>
                   </div>
                 </div>

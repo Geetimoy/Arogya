@@ -304,7 +304,7 @@ function PatientBooking(){
 
                 return <div className="button-box mb-3" key={schedule.doctor_avail_schedule_id}> 
 
-                  <p><span className="d-block">Doctor Name:</span> {schedule.display_name}</p>
+                  <p><span className="d-block">Doctor Name:</span> Dr. {schedule.display_name}</p>
                   <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p>
 
                   <p>
@@ -381,7 +381,7 @@ function PatientBooking(){
             <p className='mb-2'>Please check the details and click confirm button to book an appointment.</p> 
             <p>
               <strong>Patient Name: </strong>{patientDetails.patient_name}<br/>
-              <strong>Doctor Name: </strong>{confirmDoctorName}<br/>
+              <strong>Doctor Name: </strong>Dr. {confirmDoctorName}<br/>
               <strong>Specialization: </strong>{confirmSpecializations}<br/>
               <strong>Appointment Date & Time: </strong>{confirmScheduleDateTime}<br/>
               <strong>Place: </strong>{confirmScheduleLocation}
