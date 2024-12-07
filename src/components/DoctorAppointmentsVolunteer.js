@@ -194,7 +194,7 @@ function DoctorAppointmentsVolunteer(){
                   </div>
                 }
                 {
-                  (decryptedLoginDetails.account_type === '4') &&<p><span className="d-block">Doctor Name:</span> {appointment.doctor_display_name}</p>
+                  (decryptedLoginDetails.account_type === '4') &&<p><span className="d-block">Doctor Name:</span> Dr. {appointment.doctor_display_name}</p>
                 }
                 <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
                 <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
