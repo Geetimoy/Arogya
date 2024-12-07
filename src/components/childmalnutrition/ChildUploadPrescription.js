@@ -56,6 +56,7 @@ function ChildUploadPrescription(){
       setFileUpload({...fileUpload, ...fileUpload});
 
       const uploadedFileBase64 = await convertFileToBase64(event.target.files[0]);
+      const uploadedFileBase64Array = uploadedFileBase64.split(';base64,');
       
       let jsonData = {};
 
@@ -67,7 +68,7 @@ function ChildUploadPrescription(){
       jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
-      jsonData["file"]                    = uploadedFileBase64;
+      jsonData["file"]                    = uploadedFileBase64Array[1];
       jsonData["file_extension"]          = fileExtension;
 
       console.log(jsonData);

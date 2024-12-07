@@ -16,6 +16,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 
 import docIcon from '../../assets/images/doc-icon.jpg';
 
+import {Modal, Button} from 'react-bootstrap'; 
+
 function YoungWomanPrescriptions(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -78,7 +80,17 @@ function YoungWomanPrescriptions(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
-  const deletePrescription = async (fileId) => {
+  const [deletePrescriptionFileId, setDeletePrescriptionFileId]         = useState('');
+  const [showPrescriptionDeleteModal, setShowPrescriptionDeleteModal]   = useState(false); 
+  const modalPrescriptionDeleteClose  = () => {
+    setShowPrescriptionDeleteModal(false); 
+  }
+  const modalPrescriptionDeleteShow   = (fileId) => {
+    setDeletePrescriptionFileId(fileId);
+    setShowPrescriptionDeleteModal(true);
+  }
+
+  const deletePrescription = async () => {
 
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -86,7 +98,7 @@ function YoungWomanPrescriptions(){
     jsonData['system_id']       = systemContext.systemDetails.system_id;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
-    jsonData["file_id"]         = fileId;
+    jsonData["file_id"]         = deletePrescriptionFileId;
 
     const response = await fetch(`${API_URL}/deleteWomanSurveyPrescription`, {
       method: "POST",
@@ -101,6 +113,7 @@ function YoungWomanPrescriptions(){
     if(result.success){
       alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
       listPrescription("");
+      setShowPrescriptionDeleteModal(false);
     }
     else{
       alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -168,7 +181,7 @@ function YoungWomanPrescriptions(){
               <div className='button-box'>
                 <div className='prescription'>
                   <div className="btn-download"><Link target="_blank" to={`${women.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => deletePrescription(women.file_id)}/></div>
+                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(women.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
                   <p className='mb-1'><strong>{women.file_name}</strong></p>
                 </div>
@@ -177,6 +190,18 @@ function YoungWomanPrescriptions(){
           ))}
 
         </div>
+        <Modal show={showPrescriptionDeleteModal} onHide={modalPrescriptionDeleteClose}>
+          <Modal.Header>
+            <h4>Delete Prescription</h4>
+          </Modal.Header> 
+          <Modal.Body className='form-all'>  
+            <p>Are you sure to delete this prescription? Deletion is permanent.</p> 
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={deletePrescription}>Confirm</Link> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionDeleteClose}>Cancel</Button>  
+          </Modal.Footer>  
+        </Modal>
       </div>
       <Appfooter></Appfooter>
     </>
