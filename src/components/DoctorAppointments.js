@@ -48,6 +48,13 @@ function DoctorAppointments(){
   const [pendingCounter, setPendingCounter]     = useState(0);
   const [rejectedCounter, setRejectedCounter]   = useState(0);
 
+  const [filterPendingAppointmentChecked, setFilterPendingAppointmentChecked] = useState(false);
+
+  useEffect(() => {
+    listAppointment("");
+    // eslint-disable-next-line
+  }, [filterPendingAppointmentChecked]);
+
   const searchAppointment = (e) => {
     const { name, value } = e.target;
     setTimeout(()=>{
@@ -60,6 +67,7 @@ function DoctorAppointments(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
+    
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
     jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
     jsonData["doctor_account_type"]       = 5;
@@ -68,6 +76,10 @@ function DoctorAppointments(){
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
+    if(filterPendingAppointmentChecked)
+    {
+      jsonData['status']                  = 'pending';
+    }
     jsonData["search_param"]              = {
                                               "by_keywords": searchKey,
                                               "limit": "0",
@@ -204,6 +216,11 @@ function DoctorAppointments(){
 
   }
 
+  const filterPendingAppointments = async() => {
+    setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked);
+    //listAppointment("");
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -255,9 +272,9 @@ function DoctorAppointments(){
             <p className='me-0 mb-0'><small>Rejected: <strong>{rejectedCounter}</strong></small></p>
           </div>
           <div className='filter'>
-            <div class="form-check mb-2">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="remember" /> <small>Pending</small>
+            <div className="form-check mb-2">
+              <label className="form-check-label">
+                <input className="form-check-input" type="checkbox" name="filter_appointment" value="pending" onChange={()=>setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked)} checked={filterPendingAppointmentChecked}/> <small>Pending</small>
               </label>
             </div>
           </div>
