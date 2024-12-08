@@ -194,11 +194,11 @@ function ChildMalnutrion(){
       </div>
       <div className="app-body young-womens profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total- {childList.length}</span>
+          <span>Total - {childList.length}</span>
           <Link to="/create-child-malnutrition" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Malnutrition</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Child Malnutrition' onChange={searchChild}/>
+            <input type="text" className='form-control' placeholder='Search Child' onChange={searchChild}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>

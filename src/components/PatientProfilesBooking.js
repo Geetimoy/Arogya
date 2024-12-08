@@ -75,7 +75,7 @@ function Patientprofiles(){
           </div>
         </div>
       </div>
-      <div className="app-body patient-profiles profile-listing booking-patient">
+      <div className="app-body patient-profiles profile-listing booking-patient patientprofiles-booking">
         {/* <div className='add-patient'><Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div> */}
         <div className="d-flex justify-content-between mb-3 mt-3">
           <Link onClick={() => { modalShow2(); }} to="#">
@@ -112,7 +112,7 @@ function Patientprofiles(){
                   <li><Link to={"#"}>Close Patient</Link></li>
                 </ul>
               </div> */}
-              
+                <div className='position-absolute type-patient primary-bg-color'>Janani</div>
                 <img src={patientprofile} alt='' />
                 <h6 className='patient-name'>D Goenka - (M/32yrs)</h6>
                 <p className='disease'><small>Problem - Dental</small></p>
@@ -124,6 +124,7 @@ function Patientprofiles(){
           </div>
           <div className='col-6'>
             <div className='button-box'>
+                <div className='position-absolute type-patient primary-bg-color'>Young Woman</div>
                 <img src={patientprofile} alt='' />
                 <h6>Atanu Patra - (M/42yrs)</h6>
                 <p className='disease'><small>Problem - Skin</small></p>
@@ -146,7 +147,7 @@ function Patientprofiles(){
               <p className='mb-0'><strong>Address</strong> - Kalipark, Bablatala, Kolkata</p>
               {/* <p className='mb-0'><strong>City</strong> - Kolkata</p> */}
               {/* <p className='mb-0'><strong>Disease</strong> - Dental Problem</p> */}
-              <p className='mb-0'><strong>Doctor Name </strong> -  Test</p>
+              <p className='mb-0'><strong>Doctor Name </strong> -  Dr. Test</p>
               <p className='mb-0'><strong>Specialization </strong> -  Test</p>
               <p className='mb-0'><strong>Location </strong> -  Test</p>
             </div>

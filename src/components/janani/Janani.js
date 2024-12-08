@@ -190,7 +190,7 @@ function Janani(){
       </div>
       <div className="app-body janani profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total- {jananiList.length}</span>
+          <span>Total - {jananiList.length}</span>
           <Link to="/janani/create-janani" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Janani</Link></div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
