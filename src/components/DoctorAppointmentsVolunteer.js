@@ -200,7 +200,6 @@ function DoctorAppointmentsVolunteer(){
                       <li><Link to={"#"}>Download Prescriptions</Link></li>
                       <li><Link to={"#"}>Upload Test Reports</Link></li>
                       <li><Link to={"#"}>Download Test Reports</Link></li>
-                      
                     </ul>
                   </div>
                 }
