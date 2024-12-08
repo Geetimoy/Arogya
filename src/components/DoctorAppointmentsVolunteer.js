@@ -48,6 +48,13 @@ function DoctorAppointmentsVolunteer(){
   const [pendingCounter, setPendingCounter]     = useState(0);
   const [rejectedCounter, setRejectedCounter]   = useState(0);
 
+  const [filterPendingAppointmentChecked, setFilterPendingAppointmentChecked] = useState(false);
+
+  useEffect(() => {
+    listAppointment("");
+    // eslint-disable-next-line
+  }, [filterPendingAppointmentChecked]);
+
   const searchAppointment = (e) => {
     const { name, value } = e.target;
     setTimeout(()=>{
@@ -68,6 +75,10 @@ function DoctorAppointmentsVolunteer(){
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
+    if(filterPendingAppointmentChecked)
+    {
+      jsonData['status_flag']             = 0;
+    }
     jsonData["search_param"]              = {
                                               "by_keywords": searchKey,
                                               "limit": "0",
@@ -161,7 +172,7 @@ function DoctorAppointmentsVolunteer(){
           <div className='filter'>
             <div class="form-check mb-2">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="remember" /> <small>Pending</small>
+              <input className="form-check-input" type="checkbox" name="filter_appointment" value="pending" onChange={()=>setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked)} checked={filterPendingAppointmentChecked}/> <small>Pending</small>
               </label>
             </div>
           </div>

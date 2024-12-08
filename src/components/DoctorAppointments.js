@@ -78,7 +78,7 @@ function DoctorAppointments(){
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     if(filterPendingAppointmentChecked)
     {
-      jsonData['status']                  = 'pending';
+      jsonData['status_flag']             = 0;
     }
     jsonData["search_param"]              = {
                                               "by_keywords": searchKey,
@@ -214,11 +214,6 @@ function DoctorAppointments(){
       alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
     }
 
-  }
-
-  const filterPendingAppointments = async() => {
-    setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked);
-    //listAppointment("");
   }
 
   return(
