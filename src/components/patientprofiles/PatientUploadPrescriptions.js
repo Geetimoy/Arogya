@@ -108,11 +108,6 @@ function PatientUploadPrescriptions(){
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-        // setTimeout(() => {
-        //   fileUpload['inputPrescription'].upload   = true;
-        //   fileUpload['inputPrescription'].fileName = "";
-        //   setFileUpload({...fileUpload, ...fileUpload});
-        // }, 2000);
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
