@@ -192,6 +192,9 @@ function Patientprofiles(){
   const [prescriptionType, setPrescriptionType] = useState('initial');
   const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
 
+  const [selectedDoctorAppointment, setSelectedDoctorAppointment] = useState('');
+  const chooseDoctorAppointment = (e) => setSelectedDoctorAppointment(e.target.value);
+
   const [appointmentListForDoctorPresc, setAppointmentListForDoctorPresc] = useState([]);
   const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
   const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
@@ -234,6 +237,9 @@ function Patientprofiles(){
 
       setShowPrescriptionModalP2(true);
     }
+  }
+  const redirectToUploadDoctorPrescription = () => {
+    window.location.href = `/patientprofiles/patient-prescription/${accountKeyForPatientPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
   }
 
   const [testReportAppointmentId, setTestReportAppointmentId]     = useState('');
@@ -358,7 +364,7 @@ function Patientprofiles(){
         <div className='row'>
 
           {patientList.map((patient, index) => (
-            <div className='col-6' key={patient.account_id}>
+            <div className='col-6 mb-3' key={patient.account_id}>
               <div className='button-box'>
                 <div className={`three-dot my-element2 ${openMenuId === patient.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(patient.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
 
@@ -464,7 +470,7 @@ function Patientprofiles(){
             <form>
               <div className="form-group">
                 <label><span className="d-block">Appointment </span></label>
-                <select className="form-control" name="doctor_prescription_appoitment_id" id="doctor_prescription_appoitment_id">
+                <select className="form-control" name="doctor_prescription_appoitment_id" id="doctor_prescription_appoitment_id" onChange={chooseDoctorAppointment}>
                   <option value="">Select</option>
                   {appointmentListForDoctorPresc.map((appointment, index) => (
                     <option key={appointment.appointment_key} value={appointment.appointment_key}>Dr. {`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
@@ -474,7 +480,7 @@ function Patientprofiles(){
             </form>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Link to="/patientprofiles/patient-prescription" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Proceed</Link>  
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={redirectToUploadDoctorPrescription}>Proceed</Link>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
              
           </Modal.Footer>  
