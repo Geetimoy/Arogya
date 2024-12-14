@@ -303,10 +303,10 @@ function AppointmentScheduling(){
                 {/* <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p> */}
                 <div className='scheduleactive position-absolute'>
                   {
-                    (schedule.schedule_status === 'Active') && <div className='active'>A</div>
+                    (schedule.schedule_status === 'Active') && <div className='actives'>A</div>
                   }
                   {
-                    (schedule.schedule_status !== 'Active') && <div className='not-active'>N/A</div>
+                    (schedule.schedule_status !== 'Active') && <div className='not-active'>N-A</div>
                   }
                 </div>
                 {/* <p><span className="d-block">Schedule Status :</span> {schedule.schedule_status}</p> */}

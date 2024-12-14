@@ -203,15 +203,24 @@ function DoctorAppointmentsVolunteer(){
                     </ul>
                   </div>
                 }
+                <div className='scheduleactive position-absolute'>
+                  {
+                    (appointment.appt_status === 'Active') && <div className='actives'>A</div>
+                  }
+                  {
+                    (appointment.appt_status !== 'Active') && <div className='not-active'>N-A</div>
+                  }
+                </div>
                 {
                   (decryptedLoginDetails.account_type === '4') &&<p><span className="d-block">Doctor Name:</span> Dr. {appointment.doctor_display_name}</p>
                 }
+                
                 <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
                 <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
                 <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
                 <p><span className="d-block">Place:</span> {appointment.location} - {(appointment.consultation_mode === '1') ? `Offline (Clinic)` : ((appointment.consultation_mode === '2') ? `Online` : `Call on Emergency`)}</p>
                 {/* <p><span className="d-block">Consultation Mode:</span> {(appointment.consultation_mode === '1') ? `Offline (Clinic)` : ((appointment.consultation_mode === '2') ? `Online` : `Call on Emergency`)}</p> */}
-                <p><span className="d-block">Status:</span> {appointment.appt_status}</p>
+                {/* <p><span className="d-block">Status:</span> {appointment.appt_status}</p> */}
               </div>
             ))}
 
