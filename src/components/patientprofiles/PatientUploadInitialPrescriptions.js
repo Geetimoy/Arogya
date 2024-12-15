@@ -15,7 +15,7 @@ import './PatientUploadPrescription.css'
 
 import youngwomenprescription from '../../assets/images/sample-rx.png';
 
-function PatientUploadPrescriptions(){
+function PatientUploadInitialPrescriptions(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -200,4 +200,4 @@ function PatientUploadPrescriptions(){
   )
 }
 
-export default PatientUploadPrescriptions;
+export default PatientUploadInitialPrescriptions;

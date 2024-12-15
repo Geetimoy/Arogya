@@ -90,9 +90,10 @@ import SystemContext from '../context/system/SystemContext';
 import Alert from './util/Alert';
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from './util/Constants';
 import SignUpVerification from './SignUpVerification';
-import PatientUploadPrescriptions from './patientprofiles/PatientUploadPrescriptions';
+import PatientUploadInitialPrescriptions from './patientprofiles/PatientUploadInitialPrescriptions';
 import PatientUploadTestReports from './patientprofiles/PatientUploadTestReports';
 import DoctorAppointmentsVolunteer from './DoctorAppointmentsVolunteer';
+import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoctorPrescriptions';
 
 
 
@@ -308,8 +309,8 @@ export default function Core() {
             <Route path="/patientprofiles/patient-prescription/:accountKey" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType" exact element={<PatientPrescription />} />
             <Route path="/patientprofiles/patient-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<PatientPrescription />} />
-            <Route path="/patientprofiles/patient-upload-prescription/:accountKey/:prescriptionType" exact element={<PatientUploadPrescriptions />} />
-            <Route path="/patientprofiles/patient-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<PatientUploadPrescriptions />} />
+            <Route path="/patientprofiles/patient-upload-prescription/:accountKey/:prescriptionType" exact element={<PatientUploadInitialPrescriptions />} />
+            <Route path="/patientprofiles/patient-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<PatientUploadDoctorPrescriptions /> } />
             <Route path="/patientprofiles/patient-medical-history/:accountKey" exact element={<PatientMedicalHistory />} />
             <Route path="/patientprofiles/patient-booking/:accountKey" exact element={<PatientBooking />} />
             <Route path="/patientprofiles/patient-periodic-data/:accountKey" exact element={<PatientPeriodicData />} />
