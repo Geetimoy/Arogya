@@ -289,7 +289,7 @@ function PatientUploadDoctorPrescriptions(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Upload Doctor Prescriptions </h5>
+            <h5 className='mx-2 mb-0 me-0'>Upload Doctor Prescriptions </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -344,13 +344,13 @@ function PatientUploadDoctorPrescriptions(){
             </div>
             <div className={`col-12`}>
               <div className={`form-group brdr-btm parent`}>
-                <input type="file" name="inputPrescription" id="inputPrescription1" onChange={(event) => uploadCertificateChange(event, 1)}/>
+                <input type="file" className='pt-0' name="inputPrescription" id="inputPrescription1" onChange={(event) => uploadCertificateChange(event, 1)}/>
                 <label>{(fileUpload['inputPrescription1'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription1'].fileName}</label>
               </div>
             </div>
             <div className={`col-12 ${fileUpload['inputPrescription2'].upload === true ? '' : 'disabled'}`} style={{'marginTop':'10px'}}>
               <div className={`form-group brdr-btm parent`}>
-                <input type="file" name="inputPrescription" id="inputPrescription2" onChange={(event) => uploadCertificateChange(event, 2)}/>
+                <input type="file" className='pt-0' name="inputPrescription" id="inputPrescription2" onChange={(event) => uploadCertificateChange(event, 2)}/>
                 <label>{(fileUpload['inputPrescription2'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription2'].fileName}</label>
               </div>
             </div>

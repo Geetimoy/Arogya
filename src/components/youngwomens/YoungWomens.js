@@ -47,6 +47,10 @@ function YoungWomens(){
   const modalPrescriptionClose  = () => setShowPrescriptionModal(false);  
   const modalPrescriptionShow   = () => setShowPrescriptionModal(true);
 
+  const [showTestReportModal, setShowTestReportModal] = useState(false);
+  const modalTestReportClose  = () => setShowTestReportModal(false);  
+  const modalTestReportShow   = () => setShowTestReportModal(true);
+
   const searchWomen = (e) => {
     const { name, value } = e.target;
     setTimeout(()=>{
@@ -217,7 +221,8 @@ function YoungWomens(){
                         <li><Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>Update Periodic Data</Link></li>
                         <li><Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link></li>
                         <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li>
-                        <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li>
+                        {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
+                        <li><Link onClick={() => { modalTestReportShow(women.account_key); }} to="#">Upload Test Reports</Link></li>
                         <li><Link to={`/youngwomens/patient-booking/${women.account_key}`}>Book Now</Link></li>
                         <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${women.account_key}`) }}>Close Profile </Link></li>
                       </ul>
@@ -252,7 +257,7 @@ function YoungWomens(){
             <p>Upload Prescription</p> 
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" value="initial" />
+                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" checked value="initial" />
                 <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Initial Prescription</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
@@ -262,8 +267,28 @@ function YoungWomens(){
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>
-            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
+            <Link to="/youngwomens/young-woman-prescriptions/:accountKey" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
+              
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showTestReportModal} onHide={modalTestReportClose}>
+          <Modal.Body className='form-all'>  
+            <p>Upload Test Report</p> 
+            <form>
+              <div className="form-group">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value="">
+                  <option value="">Select</option>
+                  <option value="">Select</option>
+                </select>
+              </div>
+            </form>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>
+            <Link to="/youngwomens/testreports" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Confirm</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportClose}>Cancel</Button>  
               
           </Modal.Footer>  
         </Modal>
