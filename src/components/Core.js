@@ -56,6 +56,7 @@ import UpdateAwarenessSurvey from './youngwomens/UpdateAwarenessSurvey';
 import YoungWomanUploadPrescription from './youngwomens/YoungWomanUploadPrescription';
 import YoungWomanPrescriptions from './youngwomens/YoungWomanPrescriptions';
 import TestReports from './youngwomens/TestReports';
+import YoungWomanPatientBooking from './youngwomens/YoungWomanPatientBooking';
 
 import AppointmentScheduling from './AppointmentScheduling';
 import AppointmentSchedulingVolunteer from './AppointmentSchedulingVolunteer';
@@ -343,6 +344,7 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-prescriptions/:accountKey" exact element={<YoungWomanPrescriptions />} />
             <Route path="/youngwomens/young-woman-upload-prescription/:accountKey" exact element={<YoungWomanUploadPrescription />} />
             <Route path="/youngwomens/TestReports" exact element={<TestReports />} />
+            <Route path="/youngwomens/young-woman-patient-booking" exact element={<YoungWomanPatientBooking />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

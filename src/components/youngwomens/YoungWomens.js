@@ -223,7 +223,7 @@ function YoungWomens(){
                         <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li>
                         {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
                         <li><Link onClick={() => { modalTestReportShow(women.account_key); }} to="#">Upload Test Reports</Link></li>
-                        <li><Link to={`/youngwomens/patient-booking/${women.account_key}`}>Book Now</Link></li>
+                        <li><Link to={`/youngwomens/young-woman-patient-booking/`}>Book Now</Link></li>
                         <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${women.account_key}`) }}>Close Profile </Link></li>
                       </ul>
                     </div>
@@ -258,7 +258,7 @@ function YoungWomens(){
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" checked value="initial" />
-                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Initial Prescription</label>
+                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Survey Form</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" />
