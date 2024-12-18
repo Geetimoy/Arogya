@@ -18,6 +18,7 @@ import uploadsupply from '../assets/images/icon-upload-supply.png';
 import youngwoman from '../assets/images/woman.png';
 import malnutrition from '../assets/images/malnutrition.png';
 import testreport from '../assets/images/icon-upload-test-report.png';
+import elder from '../assets/images/grandparents.png'
 
 function Services(){
 
@@ -135,7 +136,12 @@ function Services(){
                 </div>
                 }
                 
-           
+            <div className='col-6'>
+              <div className='button-box'>
+                <Link to="/elder-persons"><img src={elder} alt='' />
+                <h6>Elder Persons (Age&gt;60yrs)</h6></Link>
+              </div>
+            </div>
             <div className='col-6'>
               <div className='button-box disable'>
                 <Link to="/viewappointments"><img src={rxpharmacy} alt='' />
