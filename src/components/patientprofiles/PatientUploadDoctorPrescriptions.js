@@ -187,7 +187,7 @@ function PatientUploadDoctorPrescriptions(){
         let fieldName = Object.keys(fileUpload);
         fieldName.forEach((element) => {
           if(fileUpload[element].fileName != ''){
-            fileUploadArray.push({'file':fileUpload[element].file, 'fileExt':fileUpload[element].fileExt, 'fileName':fileUpload[element].fileName})
+            fileUploadArray.push({'file':fileUpload[element].file, 'file_extension':fileUpload[element].fileExt, 'fileName':fileUpload[element].fileName})
           }
         })
 
@@ -210,7 +210,23 @@ function PatientUploadDoctorPrescriptions(){
         jsonData["recheck_date"]              = recheckDate;
         jsonData["files"]                     = fileUploadArray;
 
-        console.log(jsonData);
+        const response = await fetch(`${API_URL}/uploadAppointmentDocumentForPatient`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+  
+        let result = await response.json();
+  
+        if(result.success){
+          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+          resetForm();
+        }
+        else{
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        }
 
       }
     }
