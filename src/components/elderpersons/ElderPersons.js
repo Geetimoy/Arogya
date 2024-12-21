@@ -10,6 +10,10 @@ import SystemContext from "../../context/system/SystemContext";
 
 import elderpersons from '../../assets/images/profile.png';
 
+import CryptoJS from "crypto-js";
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
 function ElderPersons(){
 
   const systemContext = useContext(SystemContext);
@@ -26,6 +30,8 @@ function ElderPersons(){
     // Toggle the state when the button is clicked
     setIsActive(!isActive);
   };
+
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   return(
     <>
@@ -65,7 +71,12 @@ function ElderPersons(){
       <div className="app-body patient-profiles profile-listing elder-persons">
         <div className='add-patient align-items-center d-flex justify-content-between'>
         <span>Total - 1</span>
-          <Link to="/elderpersons/createelderpersons" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Persons</Link></div>
+          
+
+          {
+            (decryptedLoginDetails.account_type !== '5') && <Link to="/elderpersons/createelderpersons" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Person</Link>
+          }
+        </div>
         
         <div className='search-elder-persons mt-3 mb-3'>
           <div className='input-group'>

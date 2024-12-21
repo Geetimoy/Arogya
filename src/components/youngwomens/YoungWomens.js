@@ -66,6 +66,7 @@ function YoungWomens(){
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
     jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
     jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    // jsonData["user_account_type"]         = decryptedLoginDetails.account_type;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -160,6 +161,9 @@ function YoungWomens(){
 
   }
 
+
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -198,7 +202,11 @@ function YoungWomens(){
       <div className="app-body young-womens profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {womenList.length}</span>
-          <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link>
+
+          {
+            (decryptedLoginDetails.account_type !== '5') && <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link>
+          }
+          
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>

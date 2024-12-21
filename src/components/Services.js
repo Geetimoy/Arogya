@@ -46,7 +46,7 @@ function Services(){
             {
                   (decryptedLoginDetails.account_type == 5) && <div className='col-6'>
                 <div className='button-box'><Link to="/appointment-scheduling"><img src={appointmentscheduling} alt='' /><h6>Appointment Scheduling</h6></Link></div></div>
-                }
+            }
             {
                   (decryptedLoginDetails.account_type == 5) && <div className='col-6'>
                 <div className='button-box'><Link to="/doctor-appointments"><img src={testreport} alt='' /><h6>My Bookings</h6></Link></div></div>
@@ -100,6 +100,13 @@ function Services(){
                 </div>
               </div>
             }
+
+<div className='col-6'>
+              <div className='button-box'>
+                <Link to="/elder-persons"><img src={elder} alt='' />
+                <h6>Elder Persons (Age&gt;60yrs)</h6></Link>
+              </div>
+            </div>
             
 
                 {
@@ -136,12 +143,12 @@ function Services(){
                 </div>
                 }
                 
-            <div className='col-6'>
+            {/* <div className='col-6'>
               <div className='button-box'>
                 <Link to="/elder-persons"><img src={elder} alt='' />
                 <h6>Elder Persons (Age&gt;60yrs)</h6></Link>
               </div>
-            </div>
+            </div> */}
             <div className='col-6'>
               <div className='button-box disable'>
                 <Link to="/viewappointments"><img src={rxpharmacy} alt='' />

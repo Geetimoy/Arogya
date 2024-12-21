@@ -389,8 +389,8 @@ function CraeteScheduleSingle(){
                 <small className="error-mesg">{formData["scheduleConsultationMode"].errorMessage}</small>
               </div>
               <div className={`form-group ${formData["scheduleContactDetails"].errorClass}`}>
-                <label>Clinic Name, Location, Timing & Contact Number <span className="text-danger">*</span></label>
-                <textarea id="scheduleContactDetails" name="scheduleContactDetails" rows="3" className="form-control" placeholder="Clinic Name, Location, Timing & Contact Number" value={formData["scheduleContactDetails"].value} onChange={handleChange}></textarea>
+                <label>Clinic Name, Location & Clinic Contact Number <span className="text-danger">*</span></label>
+                <textarea id="scheduleContactDetails" name="scheduleContactDetails" rows="3" className="form-control" placeholder="Clinic Name, Location & Clinic Contact Number" value={formData["scheduleContactDetails"].value} onChange={handleChange}></textarea>
                 <small className="error-mesg">{formData["scheduleContactDetails"].errorMessage}</small>
               </div>
               <div className={`form-group ${formData["scheduleTotalAppoitments"].errorClass}`}>

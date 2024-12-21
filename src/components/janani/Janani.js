@@ -153,6 +153,8 @@ function Janani(){
 
   }
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -191,7 +193,11 @@ function Janani(){
       <div className="app-body janani profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {jananiList.length}</span>
-          <Link to="/janani/create-janani" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Janani</Link></div>
+          
+          {
+            (decryptedLoginDetails.account_type !== '5') && <Link to="/janani/create-janani" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Janani</Link>
+          }
+        </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
             <input type="text" className='form-control' placeholder='Search Janani' onChange={searchJanani}/>
