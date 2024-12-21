@@ -72,7 +72,6 @@ function ElderPersons(){
         <div className='add-patient align-items-center d-flex justify-content-between'>
         <span>Total - 1</span>
           
-
           {
             (decryptedLoginDetails.account_type !== '5') && <Link to="/elderpersons/createelderpersons" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Person</Link>
           }
