@@ -32,7 +32,7 @@ function PatientPrescription(){
   }
   else if(prescriptionType === 'doctor'){
     var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
-    var fetchUrl  = ``;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForPatient`;
   }
   
 
@@ -58,6 +58,7 @@ function PatientPrescription(){
     jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
+    jsonData["file_type"]       = prescriptionType;
     jsonData["search_param"]    = {
                                     "by_keywords": searchKey,
                                     "limit": "0",
@@ -186,7 +187,7 @@ function PatientPrescription(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Initial Prescription' id="searchPrescription" name="searchPrescription" onChange={searchPrescription}/>
+            <input type="text" className='form-control' placeholder={(prescriptionType == 'doctor') ? 'Search Doctor Prescription' : 'Search Initial Prescription'} id="searchPrescription" name="searchPrescription" onChange={searchPrescription}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
