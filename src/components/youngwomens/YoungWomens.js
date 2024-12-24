@@ -243,8 +243,23 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-medical-history/${women.account_key}`}>View Medical History</Link>
                         }
                         </li>
-                        <li><Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>Update Periodic Data</Link></li>
-                        <li><Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link></li>
+                        <li>
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>Update Periodic Data</Link>
+                          
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>View Periodic Data</Link>
+                        }
+                        </li>
+                        <li>
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>View Awareness Survey</Link>
+                        }
+                        </li>
                         <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li>
                         {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
                         <li><Link onClick={() => { modalTestReportShow(women.account_key); }} to="#">Upload Test Reports</Link></li>

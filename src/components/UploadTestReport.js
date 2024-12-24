@@ -10,6 +10,9 @@ import Appfooter from './AppFooter';
 
 import docIcon from '../assets/images/pdf.png';
 
+import CryptoJS from "crypto-js";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+
 function UploadTestReport(){
 
   const systemContext = useContext(SystemContext);
@@ -19,6 +22,9 @@ function UploadTestReport(){
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -29,7 +35,12 @@ function UploadTestReport(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Upload Test Report </h5>
+            {
+              (decryptedLoginDetails.account_type !== '5') && <h5 className='mx-2 mb-0'>Upload Test Report </h5>
+            }
+            {
+              (decryptedLoginDetails.account_type == '5') && <h5 className='mx-2 mb-0'>Test Report List & Upload</h5>
+            }
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -56,7 +67,17 @@ function UploadTestReport(){
       </div>
       <div className="app-body upload-prescription upload-test-report">
       <div className='add-patient align-items-center d-flex justify-content-between'>
-        <span>Total - 2</span>
+        {/* <span>Total - 2</span> */}
+        <Link to="#">
+            <div className='d-flex advaced-search btn btn-sm btn-primary primary-bg-color border-0'>
+              
+              <span className="search-ultra-plus"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 330">
+                <path d="M325.606 304.394 223.328 202.117c16.707-21.256 26.683-48.041 26.683-77.111C250.011 56.077 193.934 0 125.005 0 56.077 0 0 56.077 0 125.006 0 193.933 56.077 250.01 125.005 250.01c29.07 0 55.855-9.975 77.11-26.681l102.278 102.277c2.929 2.93 6.768 4.394 10.607 4.394s7.678-1.464 10.606-4.394c5.859-5.857 5.859-15.355 0-21.212zM30 125.006C30 72.619 72.619 30 125.005 30c52.387 0 95.006 42.619 95.006 95.005 0 52.386-42.619 95.004-95.006 95.004C72.619 220.01 30 177.391 30 125.006z"></path>
+
+              </svg> </span>
+              <span>Advanced Search</span>
+            </div>
+        </Link>
         <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={'#'}>Upload</Link>
       </div>
       <div className='search-patient mt-3 mb-3'>

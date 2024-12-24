@@ -15,6 +15,8 @@ import {Modal, Button} from 'react-bootstrap';
 import general from '../assets/images/therapis.png';
 import date from '../assets/images/calendar.png';
 
+import CryptoJS from "crypto-js";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 function UploadPrescription(){
 
@@ -35,6 +37,8 @@ function UploadPrescription(){
   const modalSearchClose  = () => setShowSearchModal(false);  
   const modalSearchShow   = () => setShowSearchModal(true);
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   return(
     <>
     <div className='app-top inner-app-top services-app-top'>
@@ -45,7 +49,12 @@ function UploadPrescription(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Upload Prescriptions </h5>
+            {
+              (decryptedLoginDetails.account_type !== '5') && <h5 className='mx-2 mb-0'>Upload Prescriptions </h5>
+            }
+            {
+              (decryptedLoginDetails.account_type == '5') && <h5 className='mx-2 mb-0'>Prescription List & Upload </h5>
+            }
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -82,7 +91,7 @@ function UploadPrescription(){
               </svg> </span>
               <span>Advanced Search</span>
             </div>
-          </Link>
+        </Link>
         <Link className='btn btn-sm btn-primary primary-bg-color border-0' onClick={()=> modalShow()} to={'#'}>Upload</Link>
       </div>
       <div className='search-patient mt-3 mb-3'>
