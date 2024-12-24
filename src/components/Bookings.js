@@ -59,6 +59,13 @@ function Bookings(){
 
   }, [bookingStatus])
 
+  const [comments, setComments] = useState("");
+
+  const commentsChangeHandler = (event) =>{
+    setComments(event.target.value);
+    console.log(comments);
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -108,8 +115,8 @@ function Bookings(){
                   <li><Link to={"/testreports"}>Upload Test Reports</Link></li>
                   <li><Link to={"#"}>Cancel Booking</Link></li>
                   <li><Link to={"#"}>Close Booking</Link></li>
-                  <li><Link onClick={() => { modalShow2(); }} to="#">View Review</Link></li>
-                  <li><Link onClick={() => { modalShow2(); }} to="#">Write Review</Link></li>
+                  <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review</Link></li>
+                  {/* <li><Link onClick={() => { modalShow2(); }} to="#">Write Review</Link></li> */}
                 </ul>
               </div>
               <p><span className="d-block">Appointment ID:</span> APP24462D573</p>
@@ -200,24 +207,49 @@ function Bookings(){
           <Modal.Header>  
             <h3>Write Review</h3>
           </Modal.Header>  
-          <Modal.Body>
-            <p>Servicewise Experience</p>
+          <Modal.Body className='feedback-form'>
+            <h5>Servicewise Experience</h5>
+            <h6 className='mb-1'>Review & Rating for Patient :</h6>
+            <p className='mb-0'>Name : N Mondal</p>
             <div className="rating-star mb-3">
-              <span className="">Not at all likely</span>
+              {/* <span className="">Not at all likely</span> */}
               <span>
-                <div className="rating-symbol mx-2">
+                <div className="rating-symbol">
                   <Rating sendDataToParent={handleStarClick}></Rating>
                 </div>
               </span>
-              <span className="">Extremely likely</span>
+              {/* <span className="">Extremely likely</span> */}
             </div>
-            <label><span className="d-block">Would you like to share any other comments:</span></label>
-            <textarea className='form-control' value=''>Thank you so much for your help</textarea>
+            <div className="form-group">
+                  <label htmlFor="comments">Would you like to share any other comments: </label>
+                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
+                </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
           </Modal.Footer>  
+          <Modal.Body className='feedback-form'>
+            <h6 className='mb-1'>Review & Rating for Volunteer :</h6>
+            <p className='mb-0'>Name : S Kar</p>
+            <div className="rating-star mb-3">
+              {/* <span className="">Not at all likely</span> */}
+              <span>
+                <div className="rating-symbol">
+                  <Rating sendDataToParent={handleStarClick}></Rating>
+                </div>
+              </span>
+              {/* <span className="">Extremely likely</span> */}
+            </div>
+            <div className="form-group">
+                  <label htmlFor="comments">Would you like to share any other comments: </label>
+                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
+                </div>
+          </Modal.Body>
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
+          </Modal.Footer> 
         </Modal>
       </div>
       <Appfooter></Appfooter>

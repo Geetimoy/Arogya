@@ -224,8 +224,25 @@ function YoungWomens(){
 
                   {openMenuId === women.account_id && <div className='drop-menu'>
                       <ul>
-                        <li><Link to={`/youngwomens/young-woman-basicinfo/${women.account_key}`}>Edit Basic Information</Link></li>
-                        <li><Link to={`/youngwomens/update-medical-history/${women.account_key}`}>Update Medical History</Link></li>
+                        <li>
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/young-woman-basicinfo/${women.account_key}`}>Edit Basic Information</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/youngwomens/young-woman-basicinfo/${women.account_key}`}>View Basic Information</Link>
+                        }
+                        </li>
+
+                        
+
+                        <li>
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/update-medical-history/${women.account_key}`}>Update Medical History</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-medical-history/${women.account_key}`}>View Medical History</Link>
+                        }
+                        </li>
                         <li><Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>Update Periodic Data</Link></li>
                         <li><Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link></li>
                         <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li>
