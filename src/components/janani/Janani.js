@@ -30,6 +30,14 @@ function Janani(){
   const modalCloseProfile  = () => setShowCloseProfileModal(false);  
   const modalShowProfile   = () => setShowCloseProfileModal(true);  
 
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
+  const modalPrescriptionClose  = () => setShowPrescriptionModal(false);  
+  const modalPrescriptionShow   = () => setShowPrescriptionModal(true);
+
+  const [showTestReportModal, setShowTestReportModal] = useState(false);
+  const modalTestReportClose  = () => setShowTestReportModal(false);  
+  const modalTestReportShow   = () => setShowTestReportModal(true);
+
   const [jananiList, setJananiList]   = useState([]);
   const [openMenuId, setOpenMenuId]   = useState(0);
 
@@ -217,7 +225,10 @@ function Janani(){
                       <li><Link to={`/janani/janani-medical-history/${janani.account_key}`}>Update Medical History</Link></li>
                       <li><Link to={`/janani/janani-periodic-data/${janani.account_key}`}>Update Periodic Data</Link></li>
                       <li><Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>Update Awareness Survey</Link></li>
-                      <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li>
+                      {/* <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li> */}
+                      <li><Link onClick={() => { modalPrescriptionShow(janani.account_key); }} to="#">Upload Prescriptions</Link></li>
+                      <li><Link onClick={() => { modalTestReportShow(janani.account_key); }} to="#">Upload Test Reports</Link></li>
+                      <li><Link to={`/janani/janani-patient-booking/`}>Book Now</Link></li>
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
                     </ul>
                   </div>
@@ -241,6 +252,47 @@ function Janani(){
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalCloseProfile}>Cancel</Button>  
             <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeProfile}>Confirm to Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showPrescriptionModal} onHide={modalPrescriptionClose}>
+          <Modal.Body>  
+            <p>Upload Prescription</p> 
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" checked value="initial" />
+                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Survey Form</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" />
+                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
+              </div>
+            </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>
+            <Link to="/janani/janani-prescriptions/:accountKey" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
+              
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showTestReportModal} onHide={modalTestReportClose}>
+          <Modal.Body className='form-all'>  
+            <p>Upload Test Report</p> 
+            <form>
+              <div className="form-group">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value="">
+                  <option value="">Select</option>
+                  <option value="">Select</option>
+                </select>
+              </div>
+            </form>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>
+            <Link to="/janani/janani-test-reports/:accountKey" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Confirm</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportClose}>Cancel</Button>  
+              
           </Modal.Footer>  
         </Modal>
 

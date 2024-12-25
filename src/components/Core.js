@@ -36,6 +36,7 @@ import JananiPeriodicData from './janani/JananiPeriodicData';
 import JananiPrescriptions from './janani/JananiPrescriptions';
 import JananiMedicalHistory from './janani/JananiMedicalHistory';
 import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
+import JananiTestReports from './janani/JananiTestReports';
 
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
@@ -326,6 +327,7 @@ export default function Core() {
             <Route path="/janani/janani-periodic-data/:accountKey" exact element={<JananiPeriodicData />} />
             <Route path="/janani/janani-awareness-survey/:accountKey" exact element={<JananiAwarenesssurvey />} />
             <Route path="/janani/janani-medical-history/:accountKey" exact element={<JananiMedicalHistory />} />
+            <Route path="/janani/janani-test-reports/:accountKey" exact element={<JananiTestReports />} />
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
