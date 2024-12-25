@@ -226,9 +226,9 @@ function Janani(){
                       <li><Link to={`/janani/janani-periodic-data/${janani.account_key}`}>Update Periodic Data</Link></li>
                       <li><Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>Update Awareness Survey</Link></li>
                       {/* <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li> */}
-                      <li><Link onClick={() => { modalPrescriptionShow(janani.account_key); }} to="#">Upload Prescriptions</Link></li>
-                      <li><Link onClick={() => { modalTestReportShow(janani.account_key); }} to="#">Upload Test Reports</Link></li>
-                      <li><Link to={`/janani/janani-patient-booking/`}>Book Now</Link></li>
+                      {/* <li><Link onClick={() => { modalPrescriptionShow(janani.account_key); }} to="#">Upload Prescriptions</Link></li> */}
+                      {/* <li><Link onClick={() => { modalTestReportShow(janani.account_key); }} to="#">Upload Test Reports</Link></li> */}
+                      {/* <li><Link to={`/janani/janani-patient-booking/`}>Book Now</Link></li> */}
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
                     </ul>
                   </div>

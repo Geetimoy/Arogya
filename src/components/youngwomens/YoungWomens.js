@@ -262,8 +262,8 @@ function YoungWomens(){
                         </li>
                         {/* <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li> */}
                         {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
-                        <li><Link onClick={() => { modalTestReportShow(women.account_key); }} to="#">Upload Test Reports</Link></li>
-                        <li><Link to={`/youngwomens/young-woman-patient-booking/`}>Book Now</Link></li>
+                        {/* <li><Link onClick={() => { modalTestReportShow(women.account_key); }} to="#">Upload Test Reports</Link></li> */}
+                        {/* <li><Link to={`/youngwomens/young-woman-patient-booking/`}>Book Now</Link></li> */}
                         <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${women.account_key}`) }}>Close Profile </Link></li>
                       </ul>
                     </div>
