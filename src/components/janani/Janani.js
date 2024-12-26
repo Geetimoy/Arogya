@@ -21,6 +21,9 @@ function Janani(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+  const loginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  const loginAccountType  = loginDetails.account_type;
+
   const [isActive, setIsActive] = useState(false);
   const [closeProfileAccountKey, setCloseProfileAccountKey] = useState('');
   const [closeRemarks, setCloseRemarks] = useState('');
@@ -67,9 +70,19 @@ function Janani(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      var apiUrl                            = 'jananiProfileListFromDoctorLogin';
+    }
+    else{
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      var apiUrl                            = 'jananiProfileList';
+    }
+
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -83,7 +96,7 @@ function Janani(){
                                               "order_by_value": "desc"
                                             }
 
-    const response = await fetch(`${API_URL}/jananiProfileList`, {
+    const response = await fetch(`${API_URL}/${apiUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -230,6 +243,7 @@ function Janani(){
                       {/* <li><Link onClick={() => { modalTestReportShow(janani.account_key); }} to="#">Upload Test Reports</Link></li> */}
                       {/* <li><Link to={`/janani/janani-patient-booking/`}>Book Now</Link></li> */}
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
+                      {loginAccountType === '5' && <li><Link to={`#`}>View/Write Review </Link></li>}
                     </ul>
                   </div>
                 }

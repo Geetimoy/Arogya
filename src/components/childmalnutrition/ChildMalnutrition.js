@@ -21,6 +21,9 @@ function ChildMalnutrion(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+  const loginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  const loginAccountType  = loginDetails.account_type;
+
   const [childList, setChildList] = useState([]);
   const [openMenuId, setOpenMenuId] = useState(0);
 
@@ -68,9 +71,19 @@ function ChildMalnutrion(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      var apiUrl                            = 'childProfileListFromDoctorLogin';
+    }
+    else{
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      var apiUrl                            = 'childProfileList';
+    }
+
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -84,7 +97,7 @@ function ChildMalnutrion(){
                                               "order_by_value": "desc"
                                             }
 
-    const response = await fetch(`${API_URL}/childProfileList`, {
+    const response = await fetch(`${API_URL}/${apiUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -238,6 +251,7 @@ function ChildMalnutrion(){
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Prescription</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-awareness-survey/`}>Update Awareness Survey</Link></li> */}
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>
+                      {loginAccountType === '5' && <li><Link to={`#`}>View/Write Review </Link></li>}
                     </ul>
                   </div>
                 }

@@ -39,6 +39,9 @@ function Patientprofiles(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+  const loginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  const loginAccountType  = loginDetails.account_type;
+
   const [patientList, setPatientList]   = useState([]);
   const [openMenuId, setOpenMenuId]     = useState(0);
 
@@ -71,9 +74,19 @@ function Patientprofiles(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      var apiUrl                            = 'patientProfileListFromDoctorLogin';
+    }
+    else{
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      var apiUrl                            = 'patientProfileList';
+    }
+
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -87,7 +100,7 @@ function Patientprofiles(){
                                               "order_by_value": "desc"
                                             }
 
-    const response = await fetch(`${API_URL}/patientProfileList`, {
+    const response = await fetch(`${API_URL}/${apiUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -379,6 +392,7 @@ function Patientprofiles(){
                       <li><Link to={"#"} onClick={()=> modalTestReportsShow(`${patient.account_key}`)}>Upload Test Reports</Link></li>
                       <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Now</Link></li>
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
+                      {loginAccountType === '5' && <li><Link to={`#`}>View/Write Review </Link></li>}
                     </ul>
                   </div>
                 }
