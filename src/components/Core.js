@@ -365,7 +365,7 @@ export default function Core() {
             <Route path="/create-schedule/:scheduleType/:scheduleId" exact element={<CreateSchedule />} />
             <Route path="/create-schedule/:scheduleType" exact element={<CreateSchedule />} />
 
-            <Route path="/Bookings" exact element={<Bookings />} />
+            <Route path="/Bookings/:scheduleId" exact element={<Bookings />} />
             <Route path="/SelectPatient" exact element={<SelectPatient />} />
             <Route path="/Notifications" exact element={<Notifications />} />
             <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />

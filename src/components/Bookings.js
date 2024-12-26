@@ -6,7 +6,7 @@ import Rating from "./Rating"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import "./Bookings.css";
 
@@ -18,6 +18,9 @@ function Bookings(){
   const systemContext = useContext(SystemContext);
 
   const [isActive, setIsActive] = useState(false);
+
+  const [urlParam, setUrlParam] = useState(useParams());
+  const editScheduleId          = urlParam.scheduleId;
 
   const handleClick = () => {
     setIsActive(!isActive); // Toggle the state

@@ -325,7 +325,7 @@ function AppointmentScheduling(){
                 <p><span className="d-block">Total Appointment Allowed/Booked:</span> {schedule.total_appointments}/2</p>
 
                 <div className="mb-3 mt-3 text-center d-flex justify-content-around">
-                  <a href='./bookings' className="btn primary-bg-color text-light">Bookings</a>
+                  <Link to={`/bookings/${schedule.doctor_avail_schedule_id}`} className="btn primary-bg-color text-light">Bookings</Link>
                   {/* <a href='/patientprofiles' className="btn primary-bg-color text-light">Book Now</a> */}
                 </div>
               </div>
