@@ -1,21 +1,20 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
 
-import docIcon from '../../assets/images/doc-icon.jpg';
+import patientprescription from '../../assets/images/demo-test-report.jpg';
 
+function JananiTestReports(){
 
-function ChildTestReports(){
   const systemContext = useContext(SystemContext);
 
   const [isMActive, setIsMActive] = useState(false);
-
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
@@ -26,11 +25,11 @@ function ChildTestReports(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/child-malnutrition" className=''>
+              <Link to="/janani" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Test Reports </h5>
+            <h5 className='mx-2 mb-0'>Test Reports</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -55,33 +54,33 @@ function ChildTestReports(){
           </div>
         </div>
       </div>
-      <div className="app-body young-womens upload-prescription">
-        <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total - 1</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/childmalnutrition/child-upload-prescription/`}>Upload</Link>
-        </div>
-        <div className='search-patient mt-3 mb-3'>
+      <div className="app-body test-reports">
+        <div className='search-prescription mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Test Reports'/>
+            <input type="text" className='form-control' placeholder='Search a prescription' />
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
-            <div className='col-6'>
-              <div className='button-box'>
-                <div className='prescription'>
-                  <div className="btn-download"><Link target="_blank"><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                  <img src={docIcon} alt='' className='w-100' />
-                  <p className='mb-1'><strong>Test Report</strong></p>
-                </div>
-              </div>
+          <div className='col-6'>
+            <div className='button-box'>
+              <p>A1</p>
+              <img src={patientprescription} alt='' className='w-100' />
+              <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
             </div>
+          </div>
+          <div className='col-6'>
+            <div className='button-box'>
+              <p>A2</p>
+              <img src={patientprescription} alt='' className='w-100' />
+              <p className='pb-2'><strong><small>PRE24594428A</small></strong></p>
+            </div>
+          </div>
         </div>
       </div>
       <Appfooter></Appfooter>
     </>
-  );
+  )
 }
 
-export default ChildTestReports;
+export default JananiTestReports;
