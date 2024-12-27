@@ -73,7 +73,7 @@ function ElderPersons(){
         <span>Total - 1</span>
           
           {
-            (decryptedLoginDetails.account_type !== '5') && <Link to="/elderpersons/createelderpersons" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Person</Link>
+            (decryptedLoginDetails.account_type !== '5') && <Link to="/elderpersons/create-elder-person" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Person</Link>
           }
         </div>
         

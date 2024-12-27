@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 
 import Appfooter from "./AppFooter";
+import Rating from "./Rating"
 
 import { Link } from "react-router-dom";
 
@@ -47,6 +48,17 @@ function DoctorAppointments(){
   const [approvedCounter, setApprovedCounter]   = useState(0);
   const [pendingCounter, setPendingCounter]     = useState(0);
   const [rejectedCounter, setRejectedCounter]   = useState(0);
+
+  const [showModal2, setShowModal2] = useState(false); 
+  const modalClose2  = () => setShowModal2(false);  
+  const modalShow2   = () => setShowModal2(true);
+
+  const [rating, setRating] = useState(0);
+
+  const handleStarClick = (data) => {
+    setRating(data); // Toggle the state
+    console.log(data);
+  };
 
   const [filterPendingAppointmentChecked, setFilterPendingAppointmentChecked] = useState(false);
 
@@ -216,6 +228,13 @@ function DoctorAppointments(){
 
   }
 
+  const [comments, setComments] = useState("");
+
+  const commentsChangeHandler = (event) =>{
+    setComments(event.target.value);
+    console.log(comments);
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -308,7 +327,7 @@ function DoctorAppointments(){
                       <li><Link to={"#"}>Download Prescriptions</Link></li>
                       <li><Link to={"#"}>Upload Test Reports</Link></li>
                       <li><Link to={"#"}>Download Test Reports</Link></li> */}
-                      
+                      <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review</Link></li>
                     </ul>
                   </div>
                 }
@@ -349,6 +368,55 @@ function DoctorAppointments(){
             <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmBookedAppointment}>{confirmationModalButtonText}</Link> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalConfirmationClose}>Close</Button>  
           </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showModal2} onHide={modalClose2}>
+          <Modal.Header>  
+            <h3>Write Review</h3>
+          </Modal.Header>  
+          <Modal.Body className='feedback-form'>
+            <h5>Servicewise Experience</h5>
+            <h6 className='mb-1'>Review & Rating for Patient :</h6>
+            <p className='mb-0'>Name : N Mondal</p>
+            <div className="rating-star mb-3">
+              {/* <span className="">Not at all likely</span> */}
+              <span>
+                <div className="rating-symbol">
+                  <Rating sendDataToParent={handleStarClick}></Rating>
+                </div>
+              </span>
+              {/* <span className="">Extremely likely</span> */}
+            </div>
+            <div className="form-group">
+                  <label htmlFor="comments">Would you like to share any other comments: </label>
+                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
+                </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
+          </Modal.Footer>  
+          <Modal.Body className='feedback-form'>
+            <h6 className='mb-1'>Review & Rating for Volunteer :</h6>
+            <p className='mb-0'>Name : S Kar</p>
+            <div className="rating-star mb-3">
+              {/* <span className="">Not at all likely</span> */}
+              <span>
+                <div className="rating-symbol">
+                  <Rating sendDataToParent={handleStarClick}></Rating>
+                </div>
+              </span>
+              {/* <span className="">Extremely likely</span> */}
+            </div>
+            <div className="form-group">
+                  <label htmlFor="comments">Would you like to share any other comments: </label>
+                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
+                </div>
+          </Modal.Body>
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
+          </Modal.Footer> 
         </Modal>
 
       </div>

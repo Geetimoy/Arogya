@@ -386,11 +386,12 @@ function Patientprofiles(){
                       <li><Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link></li>
                       <li><Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>Update Periodic Data</Link></li>
+                      <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Doctor Appointment</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
                       {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
                       <li><Link to={"#"} onClick={()=> modalTestReportsShow(`${patient.account_key}`)}>Upload Test Reports</Link></li>
-                      <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Now</Link></li>
+                     
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
                       {loginAccountType === '5' && <li><Link to={`#`}>View/Write Review </Link></li>}
                     </ul>

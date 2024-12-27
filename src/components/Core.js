@@ -60,6 +60,8 @@ import TestReports from './youngwomens/TestReports';
 import YoungWomanPatientBooking from './youngwomens/YoungWomanPatientBooking';
 
 import ElderPersons from './elderpersons/ElderPersons';
+import CreateElderPerson from './elderpersons/CreateElderPerson';
+
 
 import AppointmentScheduling from './AppointmentScheduling';
 import AppointmentSchedulingVolunteer from './AppointmentSchedulingVolunteer';
@@ -98,6 +100,7 @@ import PatientUploadInitialPrescriptions from './patientprofiles/PatientUploadIn
 import PatientUploadTestReports from './patientprofiles/PatientUploadTestReports';
 import DoctorAppointmentsVolunteer from './DoctorAppointmentsVolunteer';
 import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoctorPrescriptions';
+
 
 
 
@@ -352,6 +355,7 @@ export default function Core() {
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
+            <Route path="/elderpersons/Create-Elder-Person" exact element={<CreateElderPerson />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
