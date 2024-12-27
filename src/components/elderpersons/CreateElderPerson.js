@@ -160,7 +160,6 @@ function CreateElderPerson(){
             <label htmlFor="special_note">Special Notes </label>
             <input type="text" className="form-control" value="" name="special_note" id="special_note" placeholder="Special Notes" />
           </div>
-
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Create Elder Profiles</button>
           </div>
