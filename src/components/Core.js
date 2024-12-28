@@ -61,6 +61,7 @@ import YoungWomanPatientBooking from './youngwomens/YoungWomanPatientBooking';
 
 import ElderPersons from './elderpersons/ElderPersons';
 import CreateElderPerson from './elderpersons/CreateElderPerson';
+import ElderBasicInformation from './elderpersons/ElderBasicInformation';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -356,6 +357,7 @@ export default function Core() {
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
             <Route path="/elderpersons/Create-Elder-Person" exact element={<CreateElderPerson />} />
+            <Route path="/elderpersons/Elder-Basic-Info" exact element={<ElderBasicInformation />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

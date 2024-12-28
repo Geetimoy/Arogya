@@ -93,7 +93,7 @@ function ElderPersons(){
 
                   <div className='drop-menu'>
                     <ul>
-                      <li><Link to={"#"}>Edit Basic Information</Link></li>
+                      <li><Link to={"/elderpersons/elder-basic-info"}>Edit Basic Information</Link></li>
                       <li><Link to={"#"}>Update Medical History</Link></li>
                       <li><Link to={"#"}>Update Periodic Data</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
