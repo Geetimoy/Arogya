@@ -49,21 +49,73 @@ function DoctorAppointments(){
   const [pendingCounter, setPendingCounter]     = useState(0);
   const [rejectedCounter, setRejectedCounter]   = useState(0);
 
-  const [showModal2, setShowModal2] = useState(false); 
-  const modalClose2  = () => setShowModal2(false);  
-  const modalShow2   = () => setShowModal2(true);
+  const [reviewModalDetails, setReviewModalDetails] = useState({
+    'appointment_key':'',
+    'patient_display_name':'',
+    'volunteer_display_name':'',
+    'patient_key':'',
+    'volunteer_key':''
+  });
+  const [showReviewModal, setShowReviewModal]       = useState(false); 
+  const modalReviewClose  = () => setShowReviewModal(false);  
+  const modalReviewShow   = async (appointment_key, patient_display_name, volunteer_display_name, patient_key, volunteer_key) => {
+    reviewModalDetails['appointment_key']         = appointment_key;
+    reviewModalDetails['patient_display_name']    = patient_display_name;
+    reviewModalDetails['volunteer_display_name']  = volunteer_display_name;
+    reviewModalDetails['patient_key']             = patient_key;
+    reviewModalDetails['volunteer_key']           = volunteer_key;
+    setReviewModalDetails({...reviewModalDetails, ...reviewModalDetails});
 
-  const [rating, setRating] = useState(0);
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
-  const handleStarClick = (data) => {
-    setRating(data); // Toggle the state
+    let jsonData = {};
+    
+    jsonData['system_id']        = systemContext.systemDetails.system_id;
+    jsonData["account_key"]      = decryptedLoginDetails.account_key;
+    jsonData["appointment_key"]  = appointment_key;
+    jsonData["device_type"]      = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]     = DEVICE_TOKEN;
+    jsonData["user_lat"]         = localStorage.getItem('latitude');
+    jsonData["user_long"]        = localStorage.getItem('longitude');
+
+    const response = await fetch(`${API_URL}/appointmentReviewList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    console.log(result);
+
+    setShowReviewModal(true);
+  }
+
+  const [ratingForPatient, setRatingForPatient] = useState(0);
+  const handleStarClickForPatient = (data) => {
+    setRatingForPatient(data); // Toggle the state
+    console.log(data);
+  };
+
+  const [ratingForVolunteer, setRatingForVolunteer] = useState(0);
+  const handleStarClickForVolunteer = (data) => {
+    setRatingForVolunteer(data); // Toggle the state
     console.log(data);
   };
 
   const [filterPendingAppointmentChecked, setFilterPendingAppointmentChecked] = useState(false);
 
   useEffect(() => {
-    listAppointment("");
+    if(filterPendingAppointmentChecked){
+      listAppointment("");
+    }
+    else{
+      if(systemContext.systemDetails.system_id){
+        listAppointment("");
+      }
+    }
     // eslint-disable-next-line
   }, [filterPendingAppointmentChecked]);
 
@@ -228,11 +280,84 @@ function DoctorAppointments(){
 
   }
 
-  const [comments, setComments] = useState("");
+  const [commentsForPatient, setCommentsForPatient] = useState("");
+  const commentsChangeHandlerForPatient = (event) =>{
+    setCommentsForPatient(event.target.value);
+    console.log(commentsForPatient);
+  }
+  const [commentsForVolunteer, setCommentsForVolunteer] = useState("");
+  const commentsChangeHandlerForVolunteer = (event) =>{
+    setCommentsForVolunteer(event.target.value);
+    console.log(commentsForVolunteer);
+  }
 
-  const commentsChangeHandler = (event) =>{
-    setComments(event.target.value);
-    console.log(comments);
+  const postReview = async (userType) => {
+    if(userType === "patient"){
+      var reviewAccountKey  = reviewModalDetails['patient_key'];
+      var reviewAccountType = 3;
+      var reviewRating      = ratingForPatient;
+      var reviewComment     = commentsForPatient;
+      if(commentsForPatient == ""){
+        alertContext.setAlertMessage({show:true, type: "error", message: "Please write a review for patient!"});
+        return false;
+      }
+    }
+    else if(userType === "volunteer"){
+      var reviewAccountKey  = reviewModalDetails['volunteer_key'];
+      var reviewAccountType = 4;
+      var reviewRating      = ratingForVolunteer;
+      var reviewComment     = commentsForVolunteer;
+      if(commentsForVolunteer == ""){
+        alertContext.setAlertMessage({show:true, type: "error", message: "Please write a review for volunteer!"});
+        return false;
+      }
+    }
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+    jsonData['system_id']             = systemContext.systemDetails.system_id;
+    jsonData["poster_acc_type"]       = decryptedLoginDetails.account_type;
+    jsonData["poster_acc_key"]        = decryptedLoginDetails.account_key;
+    jsonData["receiver_acc_type"]     = reviewAccountType;
+    jsonData["receiver_acc_key"]      = reviewAccountKey;
+    jsonData["appointment_key"]       = reviewModalDetails['appointment_key'];
+    jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]          = DEVICE_TOKEN;
+    jsonData["user_lat"]              = localStorage.getItem('latitude');
+    jsonData["user_long"]             = localStorage.getItem('longitude');
+    jsonData["rating"]                = reviewRating;
+    jsonData["comments"]              = reviewComment;
+
+    const response = await fetch(`${API_URL}/appointmentPostReview`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    
+    let result = await response.json();
+
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      resetReviewForm(userType);
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
+  const resetReviewForm = (userType) => {
+    if(userType === "patient"){
+      setRatingForPatient(0);
+      setCommentsForPatient("");
+    }
+    else if(userType === "volunteer"){
+      setRatingForVolunteer(0);
+      setCommentsForVolunteer("");
+    }
   }
 
   return(
@@ -327,7 +452,7 @@ function DoctorAppointments(){
                       <li><Link to={"#"}>Download Prescriptions</Link></li>
                       <li><Link to={"#"}>Upload Test Reports</Link></li>
                       <li><Link to={"#"}>Download Test Reports</Link></li> */}
-                      <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review</Link></li>
+                      <li><Link onClick={() => { modalReviewShow(appointment.appointment_key, appointment.patient_display_name, appointment.volunteer_display_name, appointment.patient_key, appointment.volunteer_key); }} to="#">Write/View Review</Link></li>
                     </ul>
                   </div>
                 }
@@ -370,52 +495,48 @@ function DoctorAppointments(){
           </Modal.Footer>  
         </Modal>
 
-        <Modal show={showModal2} onHide={modalClose2}>
+        <Modal show={showReviewModal} onHide={modalReviewClose}>
           <Modal.Header>  
             <h3>Write Review</h3>
           </Modal.Header>  
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : N Mondal</p>
+            <p className='mb-0'>Name : {reviewModalDetails.patient_display_name}</p>
             <div className="rating-star mb-3">
-              {/* <span className="">Not at all likely</span> */}
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClick}></Rating>
+                  <Rating sendDataToParent={handleStarClickForPatient}></Rating>
                 </div>
               </span>
-              {/* <span className="">Extremely likely</span> */}
             </div>
             <div className="form-group">
-                  <label htmlFor="comments">Would you like to share any other comments: </label>
-                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
-                </div>
+              <label htmlFor="comments_for_patient">Would you like to share any other comments: </label>
+              <textarea id="comments_for_patient" rows="3"  className="form-control" placeholder="Write a review for patient" name='comments_for_patient' value={commentsForPatient} onChange={commentsChangeHandlerForPatient}></textarea>
+            </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('patient')}>Submit</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
           </Modal.Footer>  
           <Modal.Body className='feedback-form'>
             <h6 className='mb-1'>Review & Rating for Volunteer :</h6>
-            <p className='mb-0'>Name : S Kar</p>
+            <p className='mb-0'>Name : {reviewModalDetails.volunteer_display_name}</p>
             <div className="rating-star mb-3">
-              {/* <span className="">Not at all likely</span> */}
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClick}></Rating>
+                  <Rating sendDataToParent={handleStarClickForVolunteer}></Rating>
                 </div>
               </span>
-              {/* <span className="">Extremely likely</span> */}
             </div>
             <div className="form-group">
-                  <label htmlFor="comments">Would you like to share any other comments: </label>
-                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
-                </div>
+              <label htmlFor="comments_for_volunteer">Would you like to share any other comments: </label>
+              <textarea id="comments_for_volunteer" rows="3"  className="form-control" placeholder="Write a review for volunteer" name='comments_for_volunteer' value={commentsForVolunteer} onChange={commentsChangeHandlerForVolunteer}></textarea>
+            </div>
           </Modal.Body>
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('volunteer')}>Submit</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
           </Modal.Footer> 
         </Modal>
 
