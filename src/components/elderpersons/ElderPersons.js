@@ -97,10 +97,11 @@ function ElderPersons(){
                       <li><Link to={"#"}>Update Medical History</Link></li>
                       <li><Link to={"#"}>Update Periodic Data</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
-                      <li><Link  to="#">Upload Prescription</Link></li>
+                      <li><Link to={"/elderpersons/elder-awareness-survey"}>Update Awareness Survey</Link></li>
+                      {/* <li><Link  to="#">Upload Prescription</Link></li> */}
                       {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
-                      <li><Link to={"#"}>Upload Test Reports</Link></li>
-                      <li><Link to="#">Book Now</Link></li>
+                      {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
+                      {/* <li><Link to="#">Book Now</Link></li> */}
                       <li><Link to={"#"}>Close Profile </Link></li>
                     </ul>
                   </div>
