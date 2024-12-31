@@ -49,6 +49,30 @@ function DoctorAppointments(){
   const [pendingCounter, setPendingCounter]     = useState(0);
   const [rejectedCounter, setRejectedCounter]   = useState(0);
 
+  const [reviewForPatientEnabled, setReviewForPatientEnabled] = useState(true);
+  const [ratingForPatient, setRatingForPatient] = useState(0);
+  const handleStarClickForPatient = (data) => {
+    setRatingForPatient(data); // Toggle the state
+    console.log(data);
+  };
+  const [reviewForVolunteerEnabled, setReviewForVolunteerEnabled] = useState(true);
+  const [ratingForVolunteer, setRatingForVolunteer] = useState(0);
+  const handleStarClickForVolunteer = (data) => {
+    setRatingForVolunteer(data); // Toggle the state
+    console.log(data);
+  };
+
+  const [commentsForPatient, setCommentsForPatient] = useState("");
+  const commentsChangeHandlerForPatient = (event) =>{
+    setCommentsForPatient(event.target.value);
+    console.log(commentsForPatient);
+  }
+  const [commentsForVolunteer, setCommentsForVolunteer] = useState("");
+  const commentsChangeHandlerForVolunteer = (event) =>{
+    setCommentsForVolunteer(event.target.value);
+    console.log(commentsForVolunteer);
+  }
+
   const [reviewModalDetails, setReviewModalDetails] = useState({
     'appointment_key':'',
     'patient_display_name':'',
@@ -88,22 +112,32 @@ function DoctorAppointments(){
 
     let result = await response.json();
 
+    if(result.data && result.data.length > 0){
+
+      setReviewForPatientEnabled(true);
+      setReviewForVolunteerEnabled(true);
+
+      result.data.forEach(element => {
+        
+        if(element.patient_id){
+          setRatingForPatient(element.review_rating);
+          setCommentsForPatient(element.review_comments);
+          setReviewForPatientEnabled(false);
+        }
+
+        if(element.volunteer_id){
+          setRatingForVolunteer(element.review_rating);
+          setCommentsForVolunteer(element.review_comments);
+          setReviewForVolunteerEnabled(false);
+        }
+
+      });
+
+    }
     console.log(result);
 
     setShowReviewModal(true);
   }
-
-  const [ratingForPatient, setRatingForPatient] = useState(0);
-  const handleStarClickForPatient = (data) => {
-    setRatingForPatient(data); // Toggle the state
-    console.log(data);
-  };
-
-  const [ratingForVolunteer, setRatingForVolunteer] = useState(0);
-  const handleStarClickForVolunteer = (data) => {
-    setRatingForVolunteer(data); // Toggle the state
-    console.log(data);
-  };
 
   const [filterPendingAppointmentChecked, setFilterPendingAppointmentChecked] = useState(false);
 
@@ -278,17 +312,6 @@ function DoctorAppointments(){
       alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
     }
 
-  }
-
-  const [commentsForPatient, setCommentsForPatient] = useState("");
-  const commentsChangeHandlerForPatient = (event) =>{
-    setCommentsForPatient(event.target.value);
-    console.log(commentsForPatient);
-  }
-  const [commentsForVolunteer, setCommentsForVolunteer] = useState("");
-  const commentsChangeHandlerForVolunteer = (event) =>{
-    setCommentsForVolunteer(event.target.value);
-    console.log(commentsForVolunteer);
   }
 
   const postReview = async (userType) => {
@@ -515,10 +538,12 @@ function DoctorAppointments(){
               <textarea id="comments_for_patient" rows="3"  className="form-control" placeholder="Write a review for patient" name='comments_for_patient' value={commentsForPatient} onChange={commentsChangeHandlerForPatient}></textarea>
             </div>
           </Modal.Body>  
-          <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('patient')}>Submit</Button> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
-          </Modal.Footer>  
+          {
+            (reviewForPatientEnabled) && <Modal.Footer className='justify-content-center'> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('patient')}>Submit</Button> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
+            </Modal.Footer> 
+          } 
           <Modal.Body className='feedback-form'>
             <h6 className='mb-1'>Review & Rating for Volunteer :</h6>
             <p className='mb-0'>Name : {reviewModalDetails.volunteer_display_name}</p>
@@ -534,10 +559,20 @@ function DoctorAppointments(){
               <textarea id="comments_for_volunteer" rows="3"  className="form-control" placeholder="Write a review for volunteer" name='comments_for_volunteer' value={commentsForVolunteer} onChange={commentsChangeHandlerForVolunteer}></textarea>
             </div>
           </Modal.Body>
-          <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('volunteer')}>Submit</Button> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
-          </Modal.Footer> 
+          {
+            (reviewForVolunteerEnabled) && <Modal.Footer className='justify-content-center'> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('volunteer')}>Submit</Button> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
+            </Modal.Footer> 
+          }
+
+          {
+            (!reviewForVolunteerEnabled && !reviewForPatientEnabled) && <Modal.Footer className='justify-content-center'> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Close</Button>  
+            </Modal.Footer> 
+          }
+
+          
         </Modal>
 
       </div>
