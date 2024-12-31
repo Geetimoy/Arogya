@@ -112,10 +112,10 @@ function DoctorAppointments(){
 
     let result = await response.json();
 
-    if(result.data && result.data.length > 0){
+    setReviewForPatientEnabled(true);
+    setReviewForVolunteerEnabled(true);
 
-      setReviewForPatientEnabled(true);
-      setReviewForVolunteerEnabled(true);
+    if(result.data && result.data.length > 0){
 
       result.data.forEach(element => {
         
@@ -134,7 +134,12 @@ function DoctorAppointments(){
       });
 
     }
-    console.log(result);
+    else{
+      setRatingForPatient(0);
+      setCommentsForPatient("");
+      setRatingForVolunteer(0);
+      setCommentsForVolunteer("");
+    }
 
     setShowReviewModal(true);
   }
@@ -364,7 +369,8 @@ function DoctorAppointments(){
 
     if(result.success){
       alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-      resetReviewForm(userType);
+      //resetReviewForm(userType);
+      modalReviewShow(reviewModalDetails['appointment_key'], reviewModalDetails['patient_display_name'], reviewModalDetails['volunteer_display_name'], reviewModalDetails['patient_key'], reviewModalDetails['volunteer_key']);
     }
     else{
       alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
