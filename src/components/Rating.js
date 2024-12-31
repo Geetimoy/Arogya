@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const StarRating = ({ sendDataToParent }) => {
-  const [rating, setRating] = useState(0);
+const StarRating = ({ sendDataToParent, value }) => { 
+  const [rating, setRating] = useState((value) ? value : 0);
 
   const handleStarClick = (selectedRating) => {
     // If the selected rating is equal to the current rating, toggle between half and full stars

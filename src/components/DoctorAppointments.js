@@ -529,7 +529,7 @@ function DoctorAppointments(){
             <div className="rating-star mb-3">
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClickForPatient}></Rating>
+                  <Rating sendDataToParent={handleStarClickForPatient} value={ratingForPatient}></Rating>
                 </div>
               </span>
             </div>
@@ -550,7 +550,7 @@ function DoctorAppointments(){
             <div className="rating-star mb-3">
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClickForVolunteer}></Rating>
+                  <Rating sendDataToParent={handleStarClickForVolunteer} value={ratingForVolunteer}></Rating>
                 </div>
               </span>
             </div>
