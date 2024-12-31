@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 
 import Appfooter from "./AppFooter";
-import Rating from "./Rating"
+import Rating from "./Ratingsave"
 
 import { Link } from "react-router-dom";
 
@@ -138,6 +138,28 @@ function DoctorAppointmentsVolunteer(){
     console.log(comments);
   }
 
+  const [savedRating, setSavedRating] = useState(0); // Track the saved rating separately
+
+  // Load the saved rating from localStorage when the component mounts
+    useEffect(() => {
+      const savedValue = localStorage.getItem('userRating');
+      if (savedValue) {
+        const parsedValue = parseFloat(savedValue);
+        setRating(parsedValue);
+        setSavedRating(parsedValue); // Also set the saved rating
+      }
+    }, []);
+
+  const handleSaveRating = () => {
+    localStorage.setItem('userRating', rating);
+    setSavedRating(rating); // Update the saved rating state
+  };
+
+  const handleSaveRating2 = () => {
+    localStorage.setItem('userRating', rating);
+    setSavedRating(rating); // Update the saved rating state
+  };
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -271,7 +293,7 @@ function DoctorAppointmentsVolunteer(){
                 </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
+            <Button onClick={handleSaveRating} variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
           </Modal.Footer>  
           <Modal.Body className='feedback-form'>
@@ -292,7 +314,7 @@ function DoctorAppointmentsVolunteer(){
                 </div>
           </Modal.Body>
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
+            <Button onClick={handleSaveRating2} variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
           </Modal.Footer> 
         </Modal>
