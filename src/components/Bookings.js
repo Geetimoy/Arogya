@@ -73,70 +73,83 @@ function Bookings(){
     'patient_display_name':'',
     'volunteer_display_name':'',
     'patient_key':'',
-    'volunteer_key':''
+    'volunteer_key':'',
+    'appointment_status':''
   });
   const [showReviewModal, setShowReviewModal]       = useState(false); 
   const modalReviewClose  = () => setShowReviewModal(false);  
-  const modalReviewShow   = async (appointment_key, patient_display_name, volunteer_display_name, patient_key, volunteer_key) => {
-    reviewModalDetails['appointment_key']         = appointment_key;
-    reviewModalDetails['patient_display_name']    = patient_display_name;
-    reviewModalDetails['volunteer_display_name']  = volunteer_display_name;
-    reviewModalDetails['patient_key']             = patient_key;
-    reviewModalDetails['volunteer_key']           = volunteer_key;
-    setReviewModalDetails({...reviewModalDetails, ...reviewModalDetails});
+  const modalReviewShow   = async (appointment_key, patient_display_name, volunteer_display_name, patient_key, volunteer_key, appointment_status) => {
 
-    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    if(appointment_status === 'Approved'){
 
-    let jsonData = {};
-    
-    jsonData['system_id']        = systemContext.systemDetails.system_id;
-    jsonData["account_key"]      = decryptedLoginDetails.account_key;
-    jsonData["appointment_key"]  = appointment_key;
-    jsonData["device_type"]      = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]     = DEVICE_TOKEN;
-    jsonData["user_lat"]         = localStorage.getItem('latitude');
-    jsonData["user_long"]        = localStorage.getItem('longitude');
+      reviewModalDetails['appointment_key']         = appointment_key;
+      reviewModalDetails['patient_display_name']    = patient_display_name;
+      reviewModalDetails['volunteer_display_name']  = volunteer_display_name;
+      reviewModalDetails['patient_key']             = patient_key;
+      reviewModalDetails['volunteer_key']           = volunteer_key;
+      reviewModalDetails['appointment_status']      = appointment_status;
+      setReviewModalDetails({...reviewModalDetails, ...reviewModalDetails});
 
-    const response = await fetch(`${API_URL}/appointmentReviewList`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
-    let result = await response.json();
+      let jsonData = {};
+      
+      jsonData['system_id']        = systemContext.systemDetails.system_id;
+      jsonData["account_key"]      = decryptedLoginDetails.account_key;
+      jsonData["appointment_key"]  = appointment_key;
+      jsonData["device_type"]      = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]     = DEVICE_TOKEN;
+      jsonData["user_lat"]         = localStorage.getItem('latitude');
+      jsonData["user_long"]        = localStorage.getItem('longitude');
 
-    setReviewForPatientEnabled(true);
-    setReviewForVolunteerEnabled(true);
-
-    if(result.data && result.data.length > 0){
-
-      result.data.forEach(element => {
-        
-        if(element.patient_id){
-          setRatingForPatient(element.review_rating);
-          setCommentsForPatient(element.review_comments);
-          setReviewForPatientEnabled(false);
-        }
-
-        if(element.volunteer_id){
-          setRatingForVolunteer(element.review_rating);
-          setCommentsForVolunteer(element.review_comments);
-          setReviewForVolunteerEnabled(false);
-        }
-
+      const response = await fetch(`${API_URL}/appointmentReviewList`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
       });
+
+      let result = await response.json();
+
+      setReviewForPatientEnabled(true);
+      setReviewForVolunteerEnabled(true);
+
+      if(result.data && result.data.length > 0){
+
+        result.data.forEach(element => {
+          
+          if(element.patient_id){
+            setRatingForPatient(element.review_rating);
+            setCommentsForPatient(element.review_comments);
+            setReviewForPatientEnabled(false);
+          }
+
+          if(element.volunteer_id){
+            setRatingForVolunteer(element.review_rating);
+            setCommentsForVolunteer(element.review_comments);
+            setReviewForVolunteerEnabled(false);
+          }
+
+        });
+
+      }
+      else{
+        setRatingForPatient(0);
+        setCommentsForPatient("");
+        setRatingForVolunteer(0);
+        setCommentsForVolunteer("");
+      }
+
+      setShowReviewModal(true);
 
     }
     else{
-      setRatingForPatient(0);
-      setCommentsForPatient("");
-      setRatingForVolunteer(0);
-      setCommentsForVolunteer("");
-    }
 
-    setShowReviewModal(true);
+      alertContext.setAlertMessage({show:true, type: "error", message: "You can write review only for approved appointments!"});
+      
+    }
+    
   }
 
   const [isMActive, setIsMActive] = useState(false);
@@ -395,7 +408,7 @@ function Bookings(){
     if(result.success){
       alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
       //resetReviewForm(userType);
-      modalReviewShow(reviewModalDetails['appointment_key'], reviewModalDetails['patient_display_name'], reviewModalDetails['volunteer_display_name'], reviewModalDetails['patient_key'], reviewModalDetails['volunteer_key']);
+      modalReviewShow(reviewModalDetails['appointment_key'], reviewModalDetails['patient_display_name'], reviewModalDetails['volunteer_display_name'], reviewModalDetails['patient_key'], reviewModalDetails['volunteer_key'], reviewModalDetails['appointment_status']);
     }
     else{
       alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -493,7 +506,7 @@ function Bookings(){
                       <li><Link to={"#"}>Download Prescriptions</Link></li>
                       <li><Link to={"#"}>Upload Test Reports</Link></li>
                       <li><Link to={"#"}>Download Test Reports</Link></li> */}
-                      <li><Link onClick={() => { modalReviewShow(appointment.appointment_key, appointment.patient_display_name, appointment.volunteer_display_name, appointment.patient_key, appointment.volunteer_key); }} to="#">Write/View Review</Link></li>
+                      <li><Link onClick={() => { modalReviewShow(appointment.appointment_key, appointment.patient_display_name, appointment.volunteer_display_name, appointment.patient_key, appointment.volunteer_key, appointment.appt_status); }} to="#">Write/View Review</Link></li>
                     </ul>
                   </div>
                 }
