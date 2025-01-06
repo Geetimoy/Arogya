@@ -64,6 +64,7 @@ import CreateElderPerson from './elderpersons/CreateElderPerson';
 import ElderBasicInformation from './elderpersons/ElderBasicInformation';
 import ElderAwarenessSurvey from './elderpersons/ElderAwarenessSurvey';
 import ElderPeriodicData from './elderpersons/ElderPeriodicData';
+import ElderMedicalHistory from './elderpersons/ElderMedicalHistory';
 
 
 
@@ -364,6 +365,7 @@ export default function Core() {
             <Route path="/elderpersons/Elder-Basic-Info" exact element={<ElderBasicInformation />} />
             <Route path="/elderpersons/Elder-Awareness-Survey" exact element={<ElderAwarenessSurvey />} />
             <Route path="/elderpersons/Elder-Periodic-Data" exact element={<ElderPeriodicData />} />
+            <Route path="/elderpersons/Elder-Medical-History" exact element={<ElderMedicalHistory />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
