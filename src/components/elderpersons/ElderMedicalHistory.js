@@ -25,7 +25,6 @@ function ElderMedicalHistory(){
     setIsActive(!isActive);
   };
 
-
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
