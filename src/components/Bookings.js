@@ -523,7 +523,7 @@ function Bookings(){
             ))}
 
             {
-              (appointmentList.length == 0) && <div className='mb-3 text-center'><h3>No Record Found!</h3></div>
+              (appointmentList.length == 0) && <div className='mb-3 text-center'>No Record Found!</div>
             }
 
           </div>

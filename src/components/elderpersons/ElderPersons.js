@@ -26,10 +26,81 @@ function ElderPersons(){
 
   const [isActive, setIsActive]     = useState(0);
 
-  const handleMenuClick = () => {
-    // Toggle the state when the button is clicked
-    setIsActive(!isActive);
+  const [elderList, setElderList]   = useState([]);
+  const [openMenuId, setOpenMenuId]   = useState(0);
+
+
+  const handleMenuClick = (accountId) => {
+    setOpenMenuId(openMenuId === accountId ? 0 : accountId);
   };
+  // const handleMenuClick = () => {
+  //   // Toggle the state when the button is clicked
+  //   setIsActive(!isActive);
+  // };
+
+  const searchElder = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listElder(value);
+    }, 1000)
+  }
+
+  const listElder = async (searchKey) => {
+  
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  
+      let jsonData = {};
+  
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+        var apiUrl                            = 'elderProfileListFromDoctorLogin';
+      }
+      else{
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+        var apiUrl                            = 'elderProfileList';
+      }
+  
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "by_keywords": searchKey,
+                                                "limit": "10",
+                                                "offset": "0",
+                                                "order_by_field": "account_id",
+                                                "order_by_value": "desc"
+                                              }
+  
+      const response = await fetch(`${API_URL}/${apiUrl}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+  
+      let result = await response.json();
+  
+      if(result.success){
+        setElderList(result.data);
+      }
+      else{
+        setElderList([]); 
+      }
+  
+    }
+
+    useEffect(() => {
+      if(systemContext.systemDetails.system_id){
+        listElder("");
+      }
+      // eslint-disable-next-line
+    }, [systemContext.systemDetails.system_id]);
 
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -70,7 +141,7 @@ function ElderPersons(){
       </div>
       <div className="app-body patient-profiles profile-listing elder-persons">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-        <span>Total - 1</span>
+        <span>Total - {elderList.length}</span>
           
           {
             (decryptedLoginDetails.account_type !== '5') && <Link to="/elderpersons/create-elder-person" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Person</Link>
@@ -79,40 +150,40 @@ function ElderPersons(){
         
         <div className='search-elder-persons mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Elder Persons' id="ElderPersons" name="searchElderPersons" />
+            <input type="text" className='form-control' placeholder='Search Elder Persons' id="ElderPersons" name="searchElderPersons" onChange={searchElder} />
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
 
-          
-            <div className='col-6 mb-3'>
+        {elderList.map((elder, index) => (
+            <div className='col-6 mb-3' key={elder.account_id}>
               <div className='button-box'>
-                <div className={`my-element2 three-dot ${isActive ? 'active' : ''}`} onClick={handleMenuClick}>
+                <div className={`my-element2 three-dot ${openMenuId === elder.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(elder.account_id)}>
                   <FontAwesomeIcon icon={faEllipsisV} /></div>
 
-                  <div className='drop-menu'>
-                    <ul>
-                      <li><Link to={"/elderpersons/elder-basic-info"}>Edit Basic Information</Link></li>
-                      <li><Link to={"/elderpersons/elder-medical-history"}>Update Medical History</Link></li>
-                      <li><Link to={"/elderpersons/elder-periodic-data"}>Update Periodic Data</Link></li>
-                      {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
-                      <li><Link to={"/elderpersons/elder-awareness-survey"}>Update Awareness Survey</Link></li>
-                      {/* <li><Link  to="#">Upload Prescription</Link></li> */}
-                      {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
-                      {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
-                      {/* <li><Link to="#">Book Now</Link></li> */}
-                      <li><Link to={"#"}>Close Profile </Link></li>
-                    </ul>
-                  </div>
-                
+                  {openMenuId === elder.account_id && <div className='drop-menu'>
+                      <ul>
+                        <li><Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link></li>
+                        <li><Link to={"/elderpersons/elder-medical-history"}>Update Medical History</Link></li>
+                        <li><Link to={"/elderpersons/elder-periodic-data"}>Update Periodic Data</Link></li>
+                        {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
+                        <li><Link to={"/elderpersons/elder-awareness-survey"}>Update Awareness Survey</Link></li>
+                        {/* <li><Link  to="#">Upload Prescription</Link></li> */}
+                        {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
+                        {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
+                        {/* <li><Link to="#">Book Now</Link></li> */}
+                        <li><Link to={"#"}>Close Profile </Link></li>
+                      </ul>
+                    </div>
+                  }
                 <Link to="#">
                   <img src={elderpersons} alt='' />
-                  <h6>S Saha</h6>
+                  <h6>{elder.elder_name}</h6>
                 </Link>
               </div>
             </div>
-
+        ))}
         </div>    
 
       </div>

@@ -118,10 +118,35 @@ function ElderMedicalHistory(){
             </select>
           </div>
           <div className="form-group">
+            <label><span className="d-block">Lungs/Pulmonary <span className="text-danger">*</span></span></label>
+            <select className="form-control" value="" name="lungs" id="digestive_system_type">
+              <option value="">Select</option>
+              <option value="0">None</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label><span className="d-block">Heart/BP Issue <span className="text-danger">*</span></span></label>
+            <select className="form-control" value="" name="lungs" id="digestive_system_type">
+              <option value="">Select</option>
+              <option value="0">Yes</option>
+              <option value="1">No</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label><span className="d-block">Diabetic <span className="text-danger">*</span></span></label>
+            <select className="form-control" value="" name="lungs" id="digestive_system_type">
+              <option value="">Select</option>
+              <option value="0">Yes</option>
+              <option value="1">No</option>
+            </select>
+          </div>
+          <div className="form-group">
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
             <select className="form-control" value="" name="general_type" id="general_type">
               <option value="">Select</option>
               <option value="0">None</option>
+              <option value="1">Skin Problem</option>
+              <option value="1">Ankylosing spondylitis(Orthopedics)</option>
               <option value="1">Cough - dry/productive?</option>
               <option value="2">Shortness of breath</option>
               <option value="3">Sound while breathing(whezzing)</option>

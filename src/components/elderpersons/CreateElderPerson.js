@@ -121,12 +121,8 @@ function CreateElderPerson(){
         var serviceArea                       = '{'+formData['elder_service_area'].value+'}';
   
         jsonData["elder_name"]                = formData['elder_name'].value;
-        // jsonData["elder_father_name"]         = formData['elder_father_name'].value;
         jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
         jsonData["elder_email_id"]            = formData['elder_email_id'].value;
-        // jsonData["woman_body_height"]         = '0';
-        // jsonData["woman_body_weight"]         = '0';
-        // jsonData["sub_volunteer_name"]         = formData['sub_volunteer_name'].value;
         jsonData["elder_age"]                 = formData['elder_age'].value;
         jsonData["elder_address"]             = formData['elder_address'].value;
         jsonData["elder_address_2"]           = formData['elder_address_2'].value;
@@ -136,18 +132,10 @@ function CreateElderPerson(){
         jsonData["elder_city"]                = formData['elder_city'].value;
         jsonData["elder_father_name"]         = formData['elder_father_name'].value;
         jsonData["elder_education"]           = "";
-        // jsonData["woman_school_name"]         = formData['woman_school_name'].value;
-        // jsonData["woman_school_class"]        = formData['woman_school_class'].value;
-        // jsonData["woman_school_section"]      = formData['woman_school_section'].value;
-        // jsonData["toilet_type"]               = formData['toilet_type'].value;
-        // jsonData["house_type"]                = formData['house_type'].value;
-        // jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
-        // jsonData["is_premature_birth"]        = formData['is_premature_birth'].value;
-        // jsonData["is_bpl"]                    = 'f';
         jsonData["elder_occupation"]          = formData['elder_occupation'].value;
-        jsonData["gender"]                    = formData['gender'].value;
-        jsonData["is_personal_mobile_number"] = formData['is_personal_mobile_number'].value;
-        jsonData["special_note"]              = formData['special_note'].value;
+        jsonData["elder_gender"]              = formData['elder_gender'].value;
+        jsonData["elder_is_mobile_phone"]     = formData['elder_is_mobile_phone'].value;
+        jsonData["special_notes"]              = formData['special_notes'].value;
         jsonData["whatsapp"]                  = formData['whatsapp'].value;
         jsonData["service_area"]              = serviceArea;
   
