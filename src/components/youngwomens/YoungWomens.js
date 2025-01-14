@@ -272,7 +272,7 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>View Awareness Survey</Link>
                         }
                         </li>
-                        {/* <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li> */}
+                        <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li>
                         {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
                         {/* <li><Link onClick={() => { modalTestReportShow(women.account_key); }} to="#">Upload Test Reports</Link></li> */}
                         {/* <li><Link to={`/youngwomens/young-woman-patient-booking/`}>Book Now</Link></li> */}
@@ -313,10 +313,10 @@ function YoungWomens(){
                 <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" checked value="initial" />
                 <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Survey Form</label>
               </div>
-              <div className="custom-control custom-radio custom-control-inline mt-2">
+              {/* <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" />
                 <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
-              </div>
+              </div> */}
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>

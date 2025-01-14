@@ -1,35 +1,22 @@
 import { useState, useContext, useEffect } from 'react';
-import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
-import AlertContext from '../../context/alert/AlertContext';
 
 import elderpersons from '../../assets/images/profile.png';
 
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+import CryptoJS from "crypto-js";
 
-import {Modal, Button} from 'react-bootstrap'; 
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
 function ElderPersons(){
 
   const systemContext = useContext(SystemContext);
-  const alertContext  = useContext(AlertContext);
-
-  const loginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-  const loginAccountType  = loginDetails.account_type;
-
-  const [elderList, setElderList]   = useState([]);
-  const [openMenuId, setOpenMenuId]     = useState(0);
-
-  const handleMenuClick = (accountId) => {
-    setOpenMenuId(openMenuId === accountId ? 0 : accountId);
-  };
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -37,20 +24,19 @@ function ElderPersons(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
-  const [closeProfileAccountKey, setCloseProfileAccountKey] = useState('');
-  const [closeRemarks, setCloseRemarks] = useState('');
-
-  const [showCloseProfileModal, setShowCloseProfileModal] = useState(false);
-
   const [isActive, setIsActive]     = useState(0);
 
+  const [elderList, setElderList]   = useState([]);
+  const [openMenuId, setOpenMenuId]   = useState(0);
+
+
+  const handleMenuClick = (accountId) => {
+    setOpenMenuId(openMenuId === accountId ? 0 : accountId);
+  };
   // const handleMenuClick = () => {
   //   // Toggle the state when the button is clicked
   //   setIsActive(!isActive);
   // };
-
-  const modalCloseProfile  = () => setShowCloseProfileModal(false);  
-  const modalShowProfile   = () => setShowCloseProfileModal(true);  
 
   const searchElder = (e) => {
     const { name, value } = e.target;
@@ -59,117 +45,62 @@ function ElderPersons(){
     }, 1000)
   }
 
-  const listElder = async (searchKey) => {console.log("ddasdadasd");
+  const listElder = async (searchKey) => {
   
-    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-
-    let jsonData = {};
-
-    if(decryptedLoginDetails.account_type === '5'){
-      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
-      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
-      var apiUrl                            = 'patientProfileListFromDoctorLogin';
-    }
-    else{
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      var apiUrl                            = 'elderProfileList';
-    }
-
-    jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]              = DEVICE_TOKEN;
-    jsonData["user_lat"]                  = localStorage.getItem('latitude');
-    jsonData["user_long"]                 = localStorage.getItem('longitude');
-    jsonData["search_param"]              = {
-                                              "by_keywords": searchKey,
-                                              "limit": "0",
-                                              "offset": "0",
-                                              "order_by_field": "account_id",
-                                              "order_by_value": "desc"
-                                            }
-
-    const response = await fetch(`${API_URL}/${apiUrl}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
-
-    let result = await response.json();
-
-    if(result.success){
-      if(result.data.length > 0){
-
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  
+      let jsonData = {};
+  
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+        var apiUrl                            = 'elderProfileListFromDoctorLogin';
       }
-      setElderList(result.data);
+      else{
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+        var apiUrl                            = 'elderProfileList';
+      }
+  
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "by_keywords": searchKey,
+                                                "limit": "10",
+                                                "offset": "0",
+                                                "order_by_field": "account_id",
+                                                "order_by_value": "desc"
+                                              }
+  
+      const response = await fetch(`${API_URL}/${apiUrl}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+  
+      let result = await response.json();
+  
+      if(result.success){
+        setElderList(result.data);
+      }
+      else{
+        setElderList([]); 
+      }
+  
     }
-    else{
-      setElderList([]); 
-    }
 
-  }
-
-  useEffect(() => {
-    if(systemContext.systemDetails.system_id){
-      listElder("");
-    }
-    // eslint-disable-next-line
-  }, [systemContext.systemDetails.system_id]);
-
-  const openCloseProfileModal = (accountKey) => {
-    setCloseProfileAccountKey(accountKey);
-    modalShowProfile();
-  }
-
-  const handleChangeRemarks = (e) => {
-    const { name, value } = e.target;
-    setCloseRemarks(value);
-  }
-
-  const closeProfile = async () => {
-      
-    /*var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
-    var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
-    
-    let jsonData = {
-      'system_id': systemContext.systemDetails.system_id,
-      'device_type': DEVICE_TYPE,
-      'device_token': DEVICE_TOKEN,
-      'user_lat': localStorage.getItem('latitude'),
-      'user_long': localStorage.getItem('longitude'),
-      'patient_account_key': closeProfileAccountKey,
-      'patient_account_type': 3,
-      'introducer_account_key': loginDetails.account_key,
-      'introducer_account_type': loginDetails.account_type,
-      'remarks': closeRemarks
-    };
-
-    const response = await fetch(`${API_URL}/closeElderAccount`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData)
-    })
-
-    let result = await response.json();
-
-    if (result.success) { 
-      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-      setOpenMenuId(0);
-      setTimeout(()=>{
-        modalCloseProfile();
+    useEffect(() => {
+      if(systemContext.systemDetails.system_id){
         listElder("");
-      }, 1000);
-    } 
-    else {
-      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-    }*/
-
-  }
+      }
+      // eslint-disable-next-line
+    }, [systemContext.systemDetails.system_id]);
 
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -219,40 +150,40 @@ function ElderPersons(){
         
         <div className='search-elder-persons mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Elder Persons' id="ElderPersons" name="searchElderPersons" onChange={searchElder}/>
+            <input type="text" className='form-control' placeholder='Search Elder Persons' id="ElderPersons" name="searchElderPersons" onChange={searchElder} />
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
 
-            {elderList.map((elder, index) => (
-              <div className='col-6 mb-3' key={elder.account_id}>
-                <div className='button-box'>
-                  <div className={`three-dot my-element2 ${openMenuId === elder.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(elder.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
-  
+        {elderList.map((elder, index) => (
+            <div className='col-6 mb-3' key={elder.account_id}>
+              <div className='button-box'>
+                <div className={`my-element2 three-dot ${openMenuId === elder.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(elder.account_id)}>
+                  <FontAwesomeIcon icon={faEllipsisV} /></div>
+
                   {openMenuId === elder.account_id && <div className='drop-menu'>
                       <ul>
                         <li><Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link></li>
-                        <li><Link to={`#`}>Update Medical History</Link></li>
-                        <li><Link to={`/elderpersons/elder-periodic-data/${elder.account_key}`}>Update Periodic Data</Link></li>
-                        {/* <li><Link to={"/elderprofiles/elder-prescription"}>Upload Prescription</Link></li> */}
-                        <li><Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>Update Awareness Survey</Link></li>
+                        <li><Link to={"/elderpersons/elder-medical-history"}>Update Medical History</Link></li>
+                        <li><Link to={"/elderpersons/elder-periodic-data"}>Update Periodic Data</Link></li>
+                        {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
+                        <li><Link to={"/elderpersons/elder-awareness-survey"}>Update Awareness Survey</Link></li>
                         {/* <li><Link  to="#">Upload Prescription</Link></li> */}
-                        {/* <li><Link to={`/elderprofiles/elder-test-reports/${elder.account_key}`}>Upload Test Reports</Link></li> */}
+                        {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to="#">Book Now</Link></li> */}
                         <li><Link to={"#"}>Close Profile </Link></li>
                       </ul>
                     </div>
                   }
-                  <Link to="#">
-                    <img src={elderpersons} alt='' />
-                    <h6>{elder.patient_name}</h6>
-                  </Link>
-                </div>
+                <Link to="#">
+                  <img src={elderpersons} alt='' />
+                  <h6>{elder.elder_name}</h6>
+                </Link>
               </div>
-            ))}
-
+            </div>
+        ))}
         </div>    
 
       </div>
