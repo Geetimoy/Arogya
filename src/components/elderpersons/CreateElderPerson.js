@@ -55,7 +55,7 @@ function CreateElderPerson(){
     elder_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
-    gender: {required: true, value:"", errorClass:"", errorMessage:""},
+    elder_gender: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_age: {required: true, value:"", errorClass:"", errorMessage:""},
     is_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_contact_number: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -70,7 +70,7 @@ function CreateElderPerson(){
     elder_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_education: {required: true, value:"", errorClass:"", errorMessage:""},
-    special_note: {required: false, value:"", errorClass:"", errorMessage:""}
+    special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -87,7 +87,7 @@ function CreateElderPerson(){
     const fieldName = Object.keys(formData);
     setSelectedOptions([]);
     fieldName.forEach((element) => {
-      if(element === "gender" || element === "toilet_type" || element === "house_type" || element === "drinking_water_type"){
+      if(element === "elder_gender" || element === "toilet_type" || element === "house_type" || element === "drinking_water_type"){
         formData[element].value         = "1";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
@@ -101,91 +101,91 @@ function CreateElderPerson(){
     setFormData({...formData, ...formData});
   }
 
-   const handleFormSubmit = async (e) => {
-      e.preventDefault(); 
-      let errorCounter = validateForm();console.log(formData);
-      if(errorCounter === 0){
-  
-        var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-  
-        let jsonData = {};
-        jsonData['system_id']                 = systemContext.systemDetails.system_id;
-        jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
-        jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
-        jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-        jsonData["device_token"]              = DEVICE_TOKEN;
-        jsonData["user_lat"]                  = localStorage.getItem('latitude');
-        jsonData["user_long"]                 = localStorage.getItem('longitude');
-  
-        var serviceArea                       = '{'+formData['elder_service_area'].value+'}';
-  
-        jsonData["elder_name"]                = formData['elder_name'].value;
-        jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
-        jsonData["elder_email_id"]            = formData['elder_email_id'].value;
-        jsonData["elder_age"]                 = formData['elder_age'].value;
-        jsonData["elder_address"]             = formData['elder_address'].value;
-        jsonData["elder_address_2"]           = formData['elder_address_2'].value;
-        jsonData["elder_state"]               = formData['elder_state'].value;
-        jsonData["elder_postal_code"]         = formData['elder_postal_code'].value;
-        jsonData["elder_landmark"]            = formData['elder_landmark'].value;
-        jsonData["elder_city"]                = formData['elder_city'].value;
-        jsonData["elder_father_name"]         = formData['elder_father_name'].value;
-        jsonData["elder_education"]           = "";
-        jsonData["elder_occupation"]          = formData['elder_occupation'].value;
-        jsonData["elder_gender"]              = formData['elder_gender'].value;
-        jsonData["elder_is_mobile_phone"]     = formData['elder_is_mobile_phone'].value;
-        jsonData["special_notes"]              = formData['special_notes'].value;
-        jsonData["whatsapp"]                  = formData['whatsapp'].value;
-        jsonData["service_area"]              = serviceArea;
-  
-        const response = await fetch(`${API_URL}/addUpdateElderProfile`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        });
-        console.log(response)
-        let result = await response.json();
-  
-        if(result.success){
-          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-          resetForm();
-        }
-        else{
-          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-        }
-  
-  
-  
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+    let errorCounter = validateForm();console.log(formData);
+    if(errorCounter === 0){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+      jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+
+      var serviceArea                       = '{'+formData['elder_service_area'].value+'}';
+
+      jsonData["elder_name"]                = formData['elder_name'].value;
+      jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
+      jsonData["elder_email_id"]            = formData['elder_email_id'].value;
+      jsonData["elder_age"]                 = formData['elder_age'].value;
+      jsonData["elder_address"]             = formData['elder_address'].value;
+      jsonData["elder_address_2"]           = formData['elder_address_2'].value;
+      jsonData["elder_state"]               = formData['elder_state'].value;
+      jsonData["elder_postal_code"]         = formData['elder_postal_code'].value;
+      jsonData["elder_landmark"]            = formData['elder_landmark'].value;
+      jsonData["elder_city"]                = formData['elder_city'].value;
+      jsonData["elder_father_name"]         = formData['elder_father_name'].value;
+      jsonData["elder_education"]           = formData['elder_education'].value;;
+      jsonData["elder_occupation"]          = formData['elder_occupation'].value;
+      jsonData["elder_gender"]              = formData['elder_gender'].value;
+      jsonData["elder_is_mobile_phone"]     = formData['is_personal_mobile_number'].value;
+      jsonData["special_notes"]             = formData['special_notes'].value;
+      jsonData["whatsapp"]                  = formData['whatsapp'].value;
+      jsonData["service_area"]              = serviceArea;
+
+      const response = await fetch(`${API_URL}/addUpdateElderProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      console.log(response)
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        resetForm();
       }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+
+
     }
-  
-    const validateForm = () => {
-      const fieldName = Object.keys(formData);
-      let errorCounter = 0;
-      fieldName.forEach((element) => {
-        if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
-          formData[element].errorMessage = "This field is required!";
+  }
+
+  const validateForm = () => {
+    const fieldName = Object.keys(formData);
+    let errorCounter = 0;
+    fieldName.forEach((element) => {
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
+        formData[element].errorMessage = "This field is required!";
+        formData[element].errorClass = "form-error";
+        errorCounter++;
+      }
+      else{
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if((element === "woman_email_id") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
+          formData[element].errorMessage = "Please enter a valid email!";
           formData[element].errorClass = "form-error";
-          errorCounter++;
         }
         else{
-          var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-          if((element === "woman_email_id") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
-            formData[element].errorMessage = "Please enter a valid email!";
-            formData[element].errorClass = "form-error";
-          }
-          else{
-            formData[element].errorMessage = "";
-            formData[element].errorClass = "";
-          }
+          formData[element].errorMessage = "";
+          formData[element].errorClass = "";
         }
-      })
-      setFormData({...formData, ...formData});
-      return errorCounter;
-    }
+      }
+    })
+    setFormData({...formData, ...formData});
+    return errorCounter;
+  }
 
   return(
     <>
@@ -243,14 +243,14 @@ function CreateElderPerson(){
             <small className="error-mesg">{formData["elder_occupation"].errorMessage}</small>
           </div>
 
-          <div className={`form-group ${formData["gender"].errorClass}`}>
+          <div className={`form-group ${formData["elder_gender"].errorClass}`}>
             <label>Gender  <span className="text-danger">*</span></label>
-            <select className="form-control" value={formData["gender"].value} name="gender" id="gender" onChange={handleChange}>
+            <select className="form-control" value={formData["elder_gender"].value} name="elder_gender" id="elder_gender" onChange={handleChange}>
               <option value="0">Select</option>
               <option value="1">Male</option>
               <option value="2">Female</option>
             </select>
-            <small className="error-mesg">{formData["gender"].errorMessage}</small>
+            <small className="error-mesg">{formData["elder_gender"].errorMessage}</small>
           </div>
 
           <div className={`form-group ${formData["elder_age"].errorClass}`}>
@@ -300,7 +300,7 @@ function CreateElderPerson(){
 
           <div className={`form-group ${formData["elder_address_2"].errorClass}`}>
             <label htmlFor="elder_address_2">Address 2 </label>
-            <input type="text" className="form-control" onChange={handleChange} value={formData["elder_address"].value ? formData["elder_address"].value : ''} name="elder_address_2" id="elder_address_2" placeholder="Address 2" />
+            <input type="text" className="form-control" onChange={handleChange} value={formData["elder_address_2"].value ? formData["elder_address_2"].value : ''} name="elder_address_2" id="elder_address_2" placeholder="Address 2" />
             <small className="error-mesg">{formData["elder_address_2"].errorMessage}</small>
           </div>
 
@@ -350,10 +350,10 @@ function CreateElderPerson(){
             </select>
           </div>
 
-          <div className={`form-group ${formData["special_note"].errorClass}`}>
-            <label htmlFor="special_note">Special Notes </label>
-            <input type="text" className="form-control" onChange={handleChange} value={formData["special_note"].value ? formData["special_note"].value : ''} name="special_note" id="special_note" placeholder="Special Notes" />
-            <small className="error-mesg">{formData["special_note"].errorMessage}</small>
+          <div className={`form-group ${formData["special_notes"].errorClass}`}>
+            <label htmlFor="special_notes">Special Notes </label>
+            <input type="text" className="form-control" onChange={handleChange} value={formData["special_notes"].value ? formData["special_notes"].value : ''} name="special_notes" id="special_notes" placeholder="Special Notes" />
+            <small className="error-mesg">{formData["special_notes"].errorMessage}</small>
           </div>
 
           <div className='mb-3 mt-3 text-center'>

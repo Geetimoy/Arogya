@@ -57,7 +57,7 @@ function ElderBasicInformation(){
     elder_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
-    gender: {required: true, value:"", errorClass:"", errorMessage:""},
+    elder_gender: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_age: {required: true, value:"", errorClass:"", errorMessage:""},
     is_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_contact_number: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -89,7 +89,7 @@ function ElderBasicInformation(){
     const fieldName = Object.keys(formData);
     setSelectedOptions([]);
     fieldName.forEach((element) => {
-      if(element === "gender" || element === "toilet_type" || element === "house_type" || element === "drinking_water_type"){
+      if(element === "elder_gender" || element === "toilet_type" || element === "house_type" || element === "drinking_water_type"){
         formData[element].value         = "1";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
@@ -127,9 +127,6 @@ function ElderBasicInformation(){
           // jsonData["elder_father_name"]         = formData['elder_father_name'].value;
           jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
           jsonData["elder_email_id"]            = formData['elder_email_id'].value;
-          // jsonData["woman_body_height"]         = '0';
-          // jsonData["woman_body_weight"]         = '0';
-          // jsonData["sub_volunteer_name"]         = formData['sub_volunteer_name'].value;
           jsonData["elder_age"]                 = formData['elder_age'].value;
           jsonData["elder_address"]             = formData['elder_address'].value;
           jsonData["elder_address_2"]           = formData['elder_address_2'].value;
@@ -138,17 +135,9 @@ function ElderBasicInformation(){
           jsonData["elder_landmark"]            = formData['elder_landmark'].value;
           jsonData["elder_city"]                = formData['elder_city'].value;
           jsonData["elder_father_name"]         = formData['elder_father_name'].value;
-          jsonData["elder_education"]           = "";
-          // jsonData["woman_school_name"]         = formData['woman_school_name'].value;
-          // jsonData["woman_school_class"]        = formData['woman_school_class'].value;
-          // jsonData["woman_school_section"]      = formData['woman_school_section'].value;
-          // jsonData["toilet_type"]               = formData['toilet_type'].value;
-          // jsonData["house_type"]                = formData['house_type'].value;
-          // jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
-          // jsonData["is_premature_birth"]        = formData['is_premature_birth'].value;
-          // jsonData["is_bpl"]                    = 'f';
+          jsonData["elder_education"]           = formData['elder_education'].value;
           jsonData["elder_occupation"]          = formData['elder_occupation'].value;
-          jsonData["gender"]                    = formData['gender'].value;
+          jsonData["gender"]                    = formData['elder_gender'].value;
           jsonData["is_personal_mobile_number"] = formData['is_personal_mobile_number'].value;
           jsonData["special_note"]              = formData['special_note'].value;
           jsonData["whatsapp"]                  = formData['whatsapp'].value;
@@ -207,8 +196,8 @@ function ElderBasicInformation(){
     let jsonData = {};
 
     jsonData['system_id']           = systemContext.systemDetails.system_id;
-    jsonData["elder_account_key"]  = editAccountKey;
-    jsonData["elder_account_type"] = 3;
+    jsonData["elder_account_key"]   = editAccountKey;
+    jsonData["elder_account_type"]  = 3;
     jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]        = DEVICE_TOKEN;
     jsonData["user_lat"]            = localStorage.getItem('latitude');
@@ -240,7 +229,7 @@ function ElderBasicInformation(){
         formData["elder_father_name"]  = {value:userDetails.elder_father_name, errorClass:"", errorMessage:""};
         formData['elder_occupation']   = {value:userDetails.elder_occupation, errorClass:"", errorMessage:""};
 
-        formData['gender']             = {value:userDetails.gender, errorClass:"", errorMessage:""};
+        formData['elder_gender']       = {value:userDetails.gender, errorClass:"", errorMessage:""};
         formData['elder_age']          = {value:userDetails.elder_age, errorClass:"", errorMessage:""};
         formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
         formData['elder_contact_number'] = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
@@ -329,14 +318,14 @@ function ElderBasicInformation(){
             <input type="text" className="form-control" onChange={handleChange} name="elder_occupation" id="elder_occupation" value={formData["elder_occupation"].value ? formData["elder_occupation"].value : ''} placeholder="Occupation" />
             <small className="error-mesg">{formData["elder_occupation"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["gender"].errorClass}`}>
+          <div className={`form-group ${formData["elder_gender"].errorClass}`}>
             <label>Gender  <span className="text-danger">*</span></label>
-            <select className="form-control" value={formData["gender"].value} name="gender" id="gender" onChange={handleChange}>
+            <select className="form-control" value={formData["elder_gender"].value} name="elder_gender" id="elder_gender" onChange={handleChange}>
               <option value="0">Select</option>
               <option value="1">Male</option>
               <option value="2">Female</option>
             </select>
-            <small className="error-mesg">{formData["gender"].errorMessage}</small>
+            <small className="error-mesg">{formData["elder_gender"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["elder_age"].errorClass}`}>
             <label htmlFor="elder_age">Age <span className="text-danger">*</span></label>
