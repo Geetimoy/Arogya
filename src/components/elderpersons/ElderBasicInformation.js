@@ -59,7 +59,7 @@ function ElderBasicInformation(){
     elder_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_gender: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_age: {required: true, value:"", errorClass:"", errorMessage:""},
-    is_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
+    elder_is_mobile_phone: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_contact_number: {required: true, value:"", errorClass:"", errorMessage:""},
     whatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
     elder_email_id: {required: false, value:"", errorClass:"", errorMessage:""},
@@ -137,10 +137,10 @@ function ElderBasicInformation(){
           jsonData["elder_father_name"]         = formData['elder_father_name'].value;
           jsonData["elder_education"]           = formData['elder_education'].value;
           jsonData["elder_occupation"]          = formData['elder_occupation'].value;
-          jsonData["gender"]                    = formData['elder_gender'].value;
-          jsonData["is_personal_mobile_number"] = formData['is_personal_mobile_number'].value;
+          jsonData["elder_gender"]              = formData['elder_gender'].value;
+          jsonData["elder_is_mobile_phone"]     = formData['elder_is_mobile_phone'].value;
           jsonData["special_note"]              = formData['special_note'].value;
-          jsonData["whatsapp"]                  = formData['whatsapp'].value;
+          jsonData["elder_whatsup_number"]      = formData['whatsapp'].value;
           jsonData["service_area"]              = serviceArea;
     
           const response = await fetch(`${API_URL}/addUpdateElderProfile`, {
@@ -155,7 +155,7 @@ function ElderBasicInformation(){
     
           if(result.success){
             alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-            resetForm();
+            //resetForm();
           }
           else{
             alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -203,8 +203,8 @@ function ElderBasicInformation(){
     jsonData["user_lat"]            = localStorage.getItem('latitude');
     jsonData["user_long"]           = localStorage.getItem('longitude');
     jsonData["search_param"]        = {
-                                        "by_keywords": "test",
-                                        "limit": "2",
+                                        "by_keywords": "",
+                                        "limit": "0",
                                         "offset": "0",
                                         "order_by_field": "account_id",
                                         "order_by_value": "desc"
@@ -225,13 +225,27 @@ function ElderBasicInformation(){
       if(result1.data.length > 0){
         let userDetails = result1.data[0];
 
+        var serviceAreaArray = [];
+        if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+          var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+          var array1 = new Array();
+          serviceAreaArray.forEach((item)=>{
+            serviceAreaOption.forEach((opt)=>{
+              if(opt.value == item){
+                array1.push(opt);
+              }
+            })
+          })
+          setSelectedOptions(array1);
+        }
+
         formData['elder_name']         = {value:userDetails.elder_name, errorClass:"", errorMessage:""};
         formData["elder_father_name"]  = {value:userDetails.elder_father_name, errorClass:"", errorMessage:""};
         formData['elder_occupation']   = {value:userDetails.elder_occupation, errorClass:"", errorMessage:""};
 
-        formData['elder_gender']       = {value:userDetails.gender, errorClass:"", errorMessage:""};
+        formData['elder_gender']       = {value:userDetails.elder_gender, errorClass:"", errorMessage:""};
         formData['elder_age']          = {value:userDetails.elder_age, errorClass:"", errorMessage:""};
-        formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+        formData['elder_is_mobile_phone'] = {value:userDetails.elder_is_mobile_phone, errorClass:"", errorMessage:""};
         formData['elder_contact_number'] = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
         formData['whatsapp']           = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
         formData['elder_email_id']     = {value:userDetails.email_id, errorClass:"", errorMessage:""};
@@ -241,7 +255,7 @@ function ElderBasicInformation(){
         formData['elder_city']         = {value:userDetails.elder_state, errorClass:"", errorMessage:""};
         formData['elder_state']        = {value:userDetails.elder_city, errorClass:"", errorMessage:""};
         formData['elder_postal_code']  = {value:userDetails.elder_postal_code, errorClass:"", errorMessage:""};
-
+        formData['elder_service_area'] = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
         formData['elder_education']  = {value:userDetails.elder_education, errorClass:"", errorMessage:""};
         
         formData['special_note']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
@@ -332,19 +346,19 @@ function ElderBasicInformation(){
             <input type="text" className="form-control" name="elder_age" id="elder_age" placeholder="Age" onChange={handleChange} value={formData["elder_age"].value ? formData["elder_age"].value : ''} />
             <small className="error-mesg">{formData["elder_age"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
+          <div className={`form-group ${formData["elder_is_mobile_phone"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="personal_mobile_number_y" name="is_personal_mobile_number" className="custom-control-input" value="t" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 't') ? true : false} />
+                <input type="radio" id="personal_mobile_number_y" name="elder_is_mobile_phone" className="custom-control-input" value="t" onChange={handleChange} checked={(formData["elder_is_mobile_phone"].value === 't') ? true : false} />
                 <label className="custom-control-label no-style" htmlFor="personal_mobile_number_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="personal_mobile_number_n" name="is_personal_mobile_number" className="custom-control-input" value="f" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 'f') ? true : false}/>
+                <input type="radio" id="personal_mobile_number_n" name="elder_is_mobile_phone" className="custom-control-input" value="f" onChange={handleChange} checked={(formData["elder_is_mobile_phone"].value === 'f') ? true : false}/>
                 <label className="custom-control-label no-style" htmlFor="personal_mobile_number_n">No</label>
               </div>
             </div>
-            <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
+            <small className="error-mesg">{formData["elder_is_mobile_phone"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["elder_contact_number"].errorClass}`}>
             <label htmlFor="elder_contact_number">Phone No <span className="text-danger">*</span></label>
@@ -393,9 +407,8 @@ function ElderBasicInformation(){
           </div>
           <div className={`form-group ${formData["elder_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            <Select className='form-control select-multi' isMulti value={selectedOptions}
-        onChange={handleChange1} options={serviceAreaOption} />
-              <small className="error-mesg">{formData["elder_service_area"].errorMessage}</small>
+            <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={serviceAreaOption} />
+            <small className="error-mesg">{formData["elder_service_area"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["elder_education"].errorClass}`}>
             <label htmlFor="elder_education">Education <span className="text-danger">*</span></label>
