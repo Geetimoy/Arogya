@@ -149,7 +149,7 @@ function PatientTestReports(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Update Test Reports </h5>
+            <h5 className='mx-2 mb-0'>Upload Test Reports </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>

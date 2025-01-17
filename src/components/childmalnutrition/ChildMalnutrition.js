@@ -190,7 +190,7 @@ function ChildMalnutrion(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Child Malnutrition </h5>
+            <h5 className='mx-2 mb-0'>Child Health </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -220,7 +220,7 @@ function ChildMalnutrion(){
           <span>Total - {childList.length}</span>
           
           {
-            (decryptedLoginDetails.account_type !== '5') && <Link to="/create-child-malnutrition" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Malnutrition</Link>
+            (decryptedLoginDetails.account_type !== '5') && <Link to="/create-child-malnutrition" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Health</Link>
           }
         </div>
         <div className='search-patient mt-3 mb-3'>

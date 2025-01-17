@@ -53,7 +53,7 @@ function Services(){
                 }
 
 
-            {
+            {/* {
                   (decryptedLoginDetails.account_type == 5) && <div className='col-6'>
                 <div className='button-box'><Link to="/upload-prescription"><img src={uploadrx} alt='' />
                 <h6>View/Upload Rx</h6></Link></div></div>
@@ -63,7 +63,7 @@ function Services(){
                   (decryptedLoginDetails.account_type == 5) &&  <div className='col-6'>
                 <div className='button-box'><Link to="/upload-test-report"><img src={uploadrx} alt='' />
                 <h6>View/Upload Reports</h6></Link></div></div>
-                }
+                } */}
             
 
             {
@@ -79,7 +79,7 @@ function Services(){
               (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 5) && <div className='col-6'>
                 <div className='button-box'>
                   <Link to="/child-malnutrition"><img src={malnutrition} alt='' />
-                  <h6>Child Malnutrition</h6></Link>
+                  <h6>Child Health</h6></Link>
                 </div>
               </div>
             }
@@ -104,7 +104,7 @@ function Services(){
             <div className='col-6'>
               <div className='button-box'>
                 <Link to="/elder-persons"><img src={elder} alt='' />
-                <h6>Elder Persons (Age&gt;60yrs)</h6></Link>
+                <h6>Elder Persons </h6></Link>
               </div>
             </div>
             

@@ -213,7 +213,7 @@ function CreateChildMalnutrition(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Create Child Malnutrition Profile </h5>
+            <h5 className='mx-2 mb-0'>Create Child Health Profile </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -240,7 +240,7 @@ function CreateChildMalnutrition(){
       </div>
       <div className='app-body create-patient-profiles create-child-malnutrition'>
        
-        <p><small>Add Child Malnutrition Information</small></p>
+        <p><small>Add Child Health Information</small></p>
         <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["child_full_name"].errorClass}`}>
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
@@ -406,7 +406,7 @@ function CreateChildMalnutrition(){
             <small className="error-mesg">{formData["special_notes"].errorMessage}</small>
           </div>
           <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Create Child Malnutrition Profile</button>
+            <button type="submit" className='btn primary-bg-color text-light'>Create Child Health Profile</button>
           </div>
         </form>
       </div>
