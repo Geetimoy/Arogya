@@ -1,10 +1,13 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import SystemContext from "../context/system/SystemContext";
+import AlertContext from '../context/alert/AlertContext';
 import Appfooter from './AppFooter';
 
 import './PatientProfileBooking.css';
@@ -24,7 +27,18 @@ function Patientprofiles(){
     setIsActive(!isActive); // Toggle the state
   };
 
+  const [urlParam, setUrlParam] = useState(useParams());
+
+  const doctorAccountKey  = urlParam.doctorAccountKey;
+  const scheduleId        = urlParam.scheduleId;
+
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
+  const loginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  const loginAccountType  = loginDetails.account_type;
+
+  const [patientList, setPatientList]   = useState([]);
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -32,13 +46,113 @@ function Patientprofiles(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [patientDetailsModalData, setPatientDetailsModalData] = useState({
+    patientName: "",
+    patientAddress: "",
+    patientContactNo: "",
+    patientGender: "",
+    patientAge: "",
+    doctorName: "",
+    doctorSpecialization: "",
+    doctorLocation: ""
+  });
+
   const [showModal, setShowModal] = useState(false); 
   const modalClose  = () => setShowModal(false);  
-  const modalShow   = () => setShowModal(true);
+  const modalShow   = async (patient_name, patient_address, patient_contact_no, patient_age, patient_gender) => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']         = systemContext.systemDetails.system_id;
+    jsonData["user_account_key"]  = doctorAccountKey;
+    jsonData["user_account_type"] = 5;
+    jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
+    jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]      = DEVICE_TOKEN;
+    jsonData["user_lat"]          = localStorage.getItem('latitude');
+    jsonData["user_long"]         = localStorage.getItem('longitude');
+    jsonData["schedule_id"]       = scheduleId;
+
+    const response1 = await fetch(`${API_URL}/singleDoctorSchedules`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+    let result1 = await response1.json();
+
+    let scheduleDetails = result1.data.data[0];
+
+    patientDetailsModalData['patientName']          = patient_name;
+    patientDetailsModalData['patientAddress']       = patient_address;
+    patientDetailsModalData['patientContactNo']     = patient_contact_no;
+    patientDetailsModalData['patientAge']           = patient_age;
+    patientDetailsModalData['patientGender']        = patient_gender;
+    patientDetailsModalData['doctorName']           = scheduleDetails.display_name;
+    patientDetailsModalData['doctorSpecialization'] = scheduleDetails.specializations;
+    patientDetailsModalData['doctorLocation']       = scheduleDetails.clinic_details;
+
+    setPatientDetailsModalData({...patientDetailsModalData, ...patientDetailsModalData});
+
+    setShowModal(true);
+  }
 
   const [showModal2, setShowModal2] = useState(false); 
   const modalClose2  = () => setShowModal2(false);  
   const modalShow2   = () => setShowModal2(true);
+
+  const listPatient = async (searchKey) => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData["user_account_key"]          = decryptedLoginDetails.account_key;
+    jsonData["user_account_type"]         = decryptedLoginDetails.account_type;
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": "",
+                                              "limit": "0",
+                                              "offset": "0",
+                                              "order_by_field": "",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/userListForSchedules`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      if(result.data.data.length > 0){
+
+      }
+      setPatientList(result.data.data);
+    }
+    else{
+      setPatientList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPatient("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
 
   return(
     <>
@@ -99,40 +213,22 @@ function Patientprofiles(){
           </div>
         </div>
         <div className='row'>
-          <div className='col-6'>
-            <div className='button-box'>
-              {/* <div className={`three-dot my-element2 ${isActive ? 'active' : ''}`} onClick={handleClick}><FontAwesomeIcon icon={faEllipsisV} /></div> */}
-              {/* <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/patient-basicinfo"}>Edit Basic Information</Link></li>
-                  <li><Link to={"/basic-medical-history"}>Edit Basic Medical History</Link></li>
-                  <li><Link to={"/upload-prescription"}>Upload Prescription</Link></li>
-                  <li><Link to={"./testreports"}>Upload Test Reports</Link></li>
-                  <li><Link to={"#"}>Book Now</Link></li>
-                  <li><Link to={"#"}>Close Patient</Link></li>
-                </ul>
-              </div> */}
-                <div className='position-absolute type-patient primary-bg-color'>Janani</div>
-                <img src={patientprofile} alt='' />
-                <h6 className='patient-name'>D Goenka - (M/32yrs)</h6>
-                <p className='disease'><small>Problem - Dental</small></p>
-                <div className="mb-3 mt-3 text-center">
-                  <Link onClick={() => { modalShow(); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
-                </div>
-              
+
+          {patientList.map((patient, index) => (
+            <div className='col-6 mb-3' key={patient.account_key}>
+              <div className='button-box'>
+                  <div className='position-absolute type-patient primary-bg-color'>{String(patient.patient_type).charAt(0).toUpperCase() + String(patient.patient_type).slice(1)}</div>
+                  <img src={patientprofile} alt='' />
+                  <h6>{patient.display_name}</h6>
+                  <h6>{patient.gender} / {patient.age} yrs</h6>
+                  <p className='disease'><small>Problem - Skin</small></p>
+                  <div className="mb-3 mt-3 text-center">
+                    <Link onClick={() => { modalShow(patient.display_name, patient.patient_addr_1, patient.contact_no, patient.age, patient.gender); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
+                  </div>
+              </div>
             </div>
-          </div>
-          <div className='col-6'>
-            <div className='button-box'>
-                <div className='position-absolute type-patient primary-bg-color'>Young Woman</div>
-                <img src={patientprofile} alt='' />
-                <h6>Atanu Patra - (M/42yrs)</h6>
-                <p className='disease'><small>Problem - Skin</small></p>
-                <div className="mb-3 mt-3 text-center">
-                  <a href='#' className="btn btn-box-custom primary-bg-color text-light">Select</a>
-                </div>
-            </div>
-          </div>
+          ))}
+
         </div>
         <Modal show={showModal} onHide={modalClose}>
           <Modal.Header>  
@@ -140,16 +236,16 @@ function Patientprofiles(){
           </Modal.Header>  
           <Modal.Body>  
             <div className='form-group'>
-              <p className='mb-0'><strong>Patient Name</strong> - D Goenka (9876543213)</p>
-              <p className='mb-0'><strong>Gender</strong> - Male, 32</p>
+              <p className='mb-0'><strong>Patient Name</strong> - {patientDetailsModalData['patientName']} (9876543213)</p>
+              <p className='mb-0'><strong>Gender</strong> - {patientDetailsModalData['patientGender']}, 32</p>
               {/* <p className='mb-0'><strong>Age</strong> - 32</p> */}
               {/* <p className='mb-0'><strong>Phone</strong> - 9876543213</p> */}
-              <p className='mb-0'><strong>Address</strong> - Kalipark, Bablatala, Kolkata</p>
+              <p className='mb-0'><strong>Address</strong> - {patientDetailsModalData['patientAddress']}</p>
               {/* <p className='mb-0'><strong>City</strong> - Kolkata</p> */}
               {/* <p className='mb-0'><strong>Disease</strong> - Dental Problem</p> */}
-              <p className='mb-0'><strong>Doctor Name </strong> -  Dr. Test</p>
-              <p className='mb-0'><strong>Specialization </strong> -  Test</p>
-              <p className='mb-0'><strong>Location </strong> -  Test</p>
+              <p className='mb-0'><strong>Doctor Name </strong> -  {patientDetailsModalData['doctorName']}</p>
+              <p className='mb-0'><strong>Specialization </strong> -  {patientDetailsModalData['doctorSpecialization']}</p>
+              <p className='mb-0'><strong>Location </strong> -  {patientDetailsModalData['doctorLocation']}</p>
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 

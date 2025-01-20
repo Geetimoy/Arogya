@@ -370,7 +370,7 @@ export default function Core() {
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
             <Route path="/doctor-appointments-volunteer" exact element={<DoctorAppointmentsVolunteer/>} />
-            <Route path="/patientprofiles-booking" exact element={<PatientProfilesBooking />} />
+            <Route path="/patientprofiles-booking/:doctorAccountKey/:scheduleId" exact element={<PatientProfilesBooking />} />
 
             <Route path="/upload-prescription" exact element={<UploadPrescription />} />
             <Route path="/upload-test-report" exact element={<UploadTestReport />} />
