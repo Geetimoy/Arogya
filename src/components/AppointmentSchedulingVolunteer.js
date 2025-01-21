@@ -174,7 +174,7 @@ function AppointmentSchedulingVolunteer(){
                 {/* <p><span className="d-block">Booking Status:</span> Doctor Confirmation Pending</p> */}
 
                 <div className="mb-3 mt-3 text-center">
-                  <a href='/patientprofiles-booking' className="btn primary-bg-color text-light">Book for Patient</a>
+                  <a href={`/patientprofiles-booking/${schedule.account_key.toLowerCase()}/${schedule.doctor_avail_schedule_id}`} className="btn primary-bg-color text-light">Book for Patient</a>
                 </div>
               </div>
 

@@ -40,9 +40,70 @@ function ChildMalnutrion(){
   const modalCloseProfile  = () => setShowCloseProfileModal(false);  
   const modalShowProfile   = () => setShowCloseProfileModal(true); 
 
+  const [accountKeyForPatientPrescription, setAccountKeyForPatientPrescription] = useState('');
+
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
-  const modalPrescriptionClose  = () => setShowPrescriptionModal(false);  
-  const modalPrescriptionShow   = () => setShowPrescriptionModal(true);
+  const modalPrescriptionClose  = () => {
+    setAccountKeyForPatientPrescription('');
+    setShowPrescriptionModal(false);  
+  }
+  const modalPrescriptionShow   = (childAccountKey) => {
+    setAccountKeyForPatientPrescription(childAccountKey);
+    setShowPrescriptionModal(true);
+  }
+
+  const [prescriptionType, setPrescriptionType] = useState('initial');
+  const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
+
+  const [selectedDoctorAppointment, setSelectedDoctorAppointment] = useState('');
+  const chooseDoctorAppointment = (e) => setSelectedDoctorAppointment(e.target.value);
+
+  const [appointmentListForDoctorPresc, setAppointmentListForDoctorPresc] = useState([]);
+  const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
+  const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
+  const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
+    if(prescriptionType === 'initial'){ 
+      window.location.href = `/patientprofiles/patient-prescription/${accountKeyForPatientPrescription}/${prescriptionType}`;
+    }
+    else{
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["patient_account_key"]       = accountKeyForPatientPrescription;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "notolderthan": "365"
+                                              }
+      
+      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+      if(result.data && result.data.length > 0){
+        setAppointmentListForDoctorPresc(result.data);
+      }
+      else{
+        setAppointmentListForDoctorPresc([]);
+      }
+
+      setShowPrescriptionModalP2(true);
+    }
+  }
+  const redirectToUploadDoctorPrescription = () => {
+    window.location.href = `/patientprofiles/patient-prescription/${accountKeyForPatientPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
+  }
 
   const [showTestReportModal, setShowTestReportModal] = useState(false);
   const modalTestReportClose  = () => setShowTestReportModal(false);  
@@ -249,6 +310,7 @@ function ChildMalnutrion(){
                       {/* <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Prescription</Link></li> */}
+                      <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Prescription</Link></li>
                       {/* <li><Link to={`/childmalnutrition/child-awareness-survey/`}>Update Awareness Survey</Link></li> */}
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>
                       {loginAccountType === '5' && <li><Link to={`#`}>View/Write Review </Link></li>}
