@@ -47,6 +47,7 @@ function Patientprofiles(){
   };
 
   const [patientDetailsModalData, setPatientDetailsModalData] = useState({
+    patientAccountKey: "",
     patientName: "",
     patientAddress: "",
     patientContactNo: "",
@@ -54,12 +55,15 @@ function Patientprofiles(){
     patientAge: "",
     doctorName: "",
     doctorSpecialization: "",
-    doctorLocation: ""
+    doctorLocation: "",
+    scheduleDateFrom: "",
+    scheduleFromTime: "",
+    scheduleToTime: ""
   });
 
   const [showModal, setShowModal] = useState(false); 
   const modalClose  = () => setShowModal(false);  
-  const modalShow   = async (patient_name, patient_address, patient_contact_no, patient_age, patient_gender) => {
+  const modalShow   = async (patient_name, patient_address, patient_contact_no, patient_age, patient_gender, patient_account_key, patient_account_type) => {
 
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -86,6 +90,8 @@ function Patientprofiles(){
 
     let scheduleDetails = result1.data.data[0];
 
+    patientDetailsModalData['patientAccountKey']    = patient_account_key;
+    patientDetailsModalData['patientAccountType']   = patient_account_type;
     patientDetailsModalData['patientName']          = patient_name;
     patientDetailsModalData['patientAddress']       = patient_address;
     patientDetailsModalData['patientContactNo']     = patient_contact_no;
@@ -94,6 +100,9 @@ function Patientprofiles(){
     patientDetailsModalData['doctorName']           = scheduleDetails.display_name;
     patientDetailsModalData['doctorSpecialization'] = scheduleDetails.specializations;
     patientDetailsModalData['doctorLocation']       = scheduleDetails.clinic_details;
+    patientDetailsModalData['scheduleDateFrom']     = scheduleDetails['schedule_dates'][0].schedule_date_from;;
+    patientDetailsModalData['scheduleFromTime']     = scheduleDetails['schedule_dates'][0].time_from;
+    patientDetailsModalData['scheduleToTime']       = scheduleDetails['schedule_dates'][0].time_to;
 
     setPatientDetailsModalData({...patientDetailsModalData, ...patientDetailsModalData});
 
@@ -153,6 +162,52 @@ function Patientprofiles(){
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false); 
+  const modalSuccessClose   = () => setShowSuccessModal(false);  
+  const modalSuccessOpen    = () => setShowSuccessModal(true); 
+  const [bookingConfirmationMessage, setBookingConfirmationMessage] = useState('');  
+
+  const confirmBooking = async (scheduleId, doctorAccountKey, patientAccountkey, patientAccountType, selectedScheduleDate, selectedScheduleTimeFrom, selectedScheduleTimeTo) => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+
+    jsonData['system_id']                   = systemContext.systemDetails.system_id;
+    jsonData["device_type"]                 = DEVICE_TYPE;
+    jsonData["device_token"]                = DEVICE_TOKEN;
+    jsonData["user_lat"]                    = localStorage.getItem('latitude');
+    jsonData["user_long"]                   = localStorage.getItem('longitude');
+    jsonData["volunteer_account_key"]       = decryptedLoginDetails.account_key;
+    jsonData["volunteer_account_type"]      = decryptedLoginDetails.account_type;
+    jsonData["patient_account_key"]         = patientAccountkey;
+    jsonData["patient_account_type"]        = patientAccountType;
+    jsonData["doctor_avail_schedule_id"]    = scheduleId;
+    jsonData["appointment_book_date"]       = selectedScheduleDate;
+    jsonData["appointment_book_time_from"]  = selectedScheduleTimeFrom;
+    jsonData["appointment_book_time_to"]    = selectedScheduleTimeTo;
+
+    const response = await fetch(`${API_URL}/bookDoctorAppointment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      modalClose();
+      setBookingConfirmationMessage(result.msg);
+      modalSuccessOpen();
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
 
   return(
     <>
@@ -223,7 +278,7 @@ function Patientprofiles(){
                   <h6>{patient.gender} / {patient.age} yrs</h6>
                   <p className='disease'><small>Problem - Skin</small></p>
                   <div className="mb-3 mt-3 text-center">
-                    <Link onClick={() => { modalShow(patient.display_name, patient.patient_addr_1, patient.contact_no, patient.age, patient.gender); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
+                    <Link onClick={() => { modalShow(patient.display_name, patient.patient_addr_1, patient.contact_no, patient.age, patient.gender, patient.account_key, '3'); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
                   </div>
               </div>
             </div>
@@ -249,7 +304,7 @@ function Patientprofiles(){
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
-            <Button variant="primary" className='btn primary-bg-color text-light border-0'>Book Now</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light border-0' onClick={() => confirmBooking(scheduleId, doctorAccountKey.toLowerCase(), patientDetailsModalData['patientAccountKey'].toLowerCase(), patientDetailsModalData['patientAccountType'], patientDetailsModalData['scheduleDateFrom'], patientDetailsModalData['scheduleFromTime'], patientDetailsModalData['scheduleToTime'])}>Book Now</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
           </Modal.Footer>  
         </Modal>
@@ -283,6 +338,18 @@ function Patientprofiles(){
           <Modal.Footer className='justify-content-center'> 
             <Button variant="primary" className='btn primary-bg-color text-light border-0 min-width-100'>Search</Button>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showSuccessModal} onHide={modalSuccessClose}>
+          <Modal.Header className="justify-content-between">  
+            <h3 className='mb-0'>Information</h3>
+          </Modal.Header>  
+          <Modal.Body> 
+            <p className='mb-2' dangerouslySetInnerHTML={{ __html: bookingConfirmationMessage }}/>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalSuccessClose}>Close</Button>  
           </Modal.Footer>  
         </Modal>
       </div>
