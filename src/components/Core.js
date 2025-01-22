@@ -363,7 +363,7 @@ export default function Core() {
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
             <Route path="/elderpersons/Create-Elder-Person" exact element={<CreateElderPerson />} />
             <Route path="/elderpersons/Elder-Basic-Info/:accountKey" exact element={<ElderBasicInformation />} />
-            <Route path="/elderpersons/Elder-Awareness-Survey" exact element={<ElderAwarenessSurvey />} />
+            <Route path="/elderpersons/Elder-Awareness-Survey/:accountKey" exact element={<ElderAwarenessSurvey />} />
             <Route path="/elderpersons/Elder-Periodic-Data" exact element={<ElderPeriodicData />} />
             <Route path="/elderpersons/Elder-Medical-History/:accountKey" exact element={<ElderMedicalHistory />} />
             
