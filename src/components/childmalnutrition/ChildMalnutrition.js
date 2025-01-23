@@ -63,7 +63,7 @@ function ChildMalnutrion(){
   const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
   const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
     if(prescriptionType === 'initial'){ 
-      window.location.href = `/patientprofiles/patient-prescription/${accountKeyForPatientPrescription}/${prescriptionType}`;
+      window.location.href = `/childmalnutrition/child-prescription/${accountKeyForPatientPrescription}/${prescriptionType}`;
     }
     else{
 
@@ -102,7 +102,7 @@ function ChildMalnutrion(){
     }
   }
   const redirectToUploadDoctorPrescription = () => {
-    window.location.href = `/patientprofiles/patient-prescription/${accountKeyForPatientPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
+    window.location.href = `/childmalnutrition/child-prescription/${accountKeyForPatientPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
   }
 
   const [showTestReportModal, setShowTestReportModal] = useState(false);
@@ -345,19 +345,41 @@ function ChildMalnutrion(){
             <p>Upload Prescription</p> 
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" checked value="initial" />
+                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" value="initial" onChange={choosePrescriptionType} checked={prescriptionType === 'initial' ? true : false}/>
                 <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Survey Form</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" />
+                <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" onChange={choosePrescriptionType} checked={prescriptionType === 'doctor' ? true : false}/>
                 <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
               </div>
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>
-            <Link to="/childmalnutrition/child-prescription/:accountKey" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
+            <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
               
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
+          <Modal.Body className='form-all'>  
+            <p>Upload Doctor Prescription</p> 
+            <form>
+              <div className="form-group">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="doctor_prescription_appoitment_id" id="doctor_prescription_appoitment_id" onChange={chooseDoctorAppointment}>
+                  <option value="">Select</option>
+                  {appointmentListForDoctorPresc.map((appointment, index) => (
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>Dr. {`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                  ))}
+                </select>
+              </div>
+            </form>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={redirectToUploadDoctorPrescription}>Proceed</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
+             
           </Modal.Footer>  
         </Modal>
 

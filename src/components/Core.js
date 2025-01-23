@@ -47,6 +47,8 @@ import ChildPeriodicData from './childmalnutrition/ChildPeriodicData';
 import ChildAwarenessSurvey from './childmalnutrition/ChildAwarenessSurvey';
 import ChildBasicInfo from './childmalnutrition/ChildBasicInfo';
 import ChildUploadPrescription from './childmalnutrition/ChildUploadPrescription';
+import ChildUploadInitialPrescriptions from './childmalnutrition/ChildUploadInitialPrescriptions';
+import ChildUploadDoctorPrescriptions from './childmalnutrition/ChildUploadDoctorPrescriptions';
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -342,11 +344,16 @@ export default function Core() {
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
             <Route path="/childmalnutrition/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
             <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
-            <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />}/>
+            <Route path="/childmalnutrition/child-prescription/:accountKey/:prescriptionType" exact element={<ChildPrescription />} />
+            <Route path="/childmalnutrition/child-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ChildPrescription />} />
+            {/* <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />}/> */}
+            <Route path="/childmalnutrition/child-upload-prescription/:accountKey/:prescriptionType" exact element={<ChildUploadInitialPrescriptions />} />
+            <Route path="/childmalnutrition/child-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ChildUploadDoctorPrescriptions /> } />
             <Route path="/childmalnutrition/child-test-reports/:accountKey" exact element={<ChildTestReports />} />
             <Route path="/childmalnutrition/child-medical-history/:accountKey" exact element={<ChildMedicalHistory />} />
             <Route path="/childmalnutrition/child-periodic-data/:accountKey" exact element={<ChildPeriodicData />} />
             <Route path="/childmalnutrition/child-awareness-survey/:accountKey" exact element={<ChildAwarenessSurvey />} />
+            
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />

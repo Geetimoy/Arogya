@@ -27,6 +27,17 @@ function ChildPrescription(){
   const [prescriptionList, setPrescriptionList]   = useState([]);
 
   const editAccountKey = urlParam.accountKey;
+  const prescriptionType  = urlParam.prescriptionType;
+  const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
+
+  if(prescriptionType === 'initial'){
+    var uploadUrl = `/childmalnutrition/child-upload-prescription/${editAccountKey}/${prescriptionType}`;
+    var fetchUrl  = `childSurveyPrescriptionList`;
+  }
+  else if(prescriptionType === 'doctor'){
+    var uploadUrl = `/childmalnutrition/child-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+    var fetchUrl  = `childSurveyPrescriptionList`;
+  }
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -51,7 +62,7 @@ function ChildPrescription(){
                                       "keyword": ""
                                   }
 
-    const response = await fetch(`${API_URL}/childSurveyPrescriptionList`, {
+    const response = await fetch(`${API_URL}/${fetchUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +170,7 @@ function ChildPrescription(){
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {prescriptionList.length}</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/childmalnutrition/child-upload-prescription/${editAccountKey}`}>Upload</Link>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={uploadUrl}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
