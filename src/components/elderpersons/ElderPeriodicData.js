@@ -60,8 +60,8 @@ function ElderPeriodicData(){
     setDataProcessedDate(date);
   }
 
-  
 
+  
   const selectCategory = (e) => {
     const { name, value } = e.target;
     inputValues[name].category = value;
