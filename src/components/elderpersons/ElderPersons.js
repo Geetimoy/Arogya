@@ -166,7 +166,7 @@ function ElderPersons(){
                       <ul>
                         <li><Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link></li>
                         <li><Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>Update Medical History</Link></li>
-                        <li><Link to={"/elderpersons/elder-periodic-data"}>Update Periodic Data</Link></li>
+                        <li><Link to={`/elderpersons/elder-periodic-data/${elder.account_key}`}>Update Periodic Data</Link></li>
                         {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                         <li><Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>Update Awareness Survey</Link></li>
                         {/* <li><Link  to="#">Upload Prescription</Link></li> */}
