@@ -32,11 +32,11 @@ function ChildPrescription(){
 
   if(prescriptionType === 'initial'){
     var uploadUrl = `/childmalnutrition/child-upload-prescription/${editAccountKey}/${prescriptionType}`;
-    var fetchUrl  = `childSurveyPrescriptionList`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForChild`;
   }
   else if(prescriptionType === 'doctor'){
     var uploadUrl = `/childmalnutrition/child-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
-    var fetchUrl  = `childSurveyPrescriptionList`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForChild`;
   }
 
   const handle2Click = () => {
@@ -56,11 +56,17 @@ function ChildPrescription(){
 
     let jsonData = {};
     jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
+    jsonData["file_type"]       = prescriptionType;
     jsonData["search_param"]    = {
-                                      "keyword": ""
-                                  }
+                                    "by_keywords": searchKey,
+                                    "limit": "0",
+                                    "offset": "0",
+                                    "order_by_field": "",
+                                    "order_by_value": "desc"
+                                  }
 
     const response = await fetch(`${API_URL}/${fetchUrl}`, {
       method: "POST",
