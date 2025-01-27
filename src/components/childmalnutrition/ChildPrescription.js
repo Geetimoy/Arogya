@@ -55,18 +55,18 @@ function ChildPrescription(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
-    jsonData['system_id']       = systemContext.systemDetails.system_id;
-    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
-    jsonData["account_key"]     = editAccountKey;
-    jsonData["account_type"]    = 3;
-    jsonData["file_type"]       = prescriptionType;
-    jsonData["search_param"]    = {
-                                    "by_keywords": searchKey,
-                                    "limit": "0",
-                                    "offset": "0",
-                                    "order_by_field": "",
-                                    "order_by_value": "desc"
-                                  }
+    jsonData['system_id']               = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    jsonData["account_key"]             = editAccountKey;
+    jsonData["account_type"]            = 3;
+    jsonData["file_type"]               = prescriptionType;
+    jsonData["search_param"]            = {
+                                            "by_keywords": searchKey,
+                                            "limit": "0",
+                                            "offset": "0",
+                                            "order_by_field": "",
+                                            "order_by_value": "desc"
+                                          }
 
     const response = await fetch(`${API_URL}/${fetchUrl}`, {
       method: "POST",
@@ -180,7 +180,7 @@ function ChildPrescription(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Prescription' nChange={searchPrescription}/>
+            <input type="text" className='form-control' placeholder='Search Prescription' onChange={searchPrescription}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>

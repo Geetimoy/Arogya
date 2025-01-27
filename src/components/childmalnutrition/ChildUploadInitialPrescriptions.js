@@ -94,7 +94,7 @@ function ChildUploadInitialPrescriptions(){
 
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatient`, {
+      const response = await fetch(`${API_URL}/uploadInitialDocumentForChild`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

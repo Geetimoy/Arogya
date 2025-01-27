@@ -208,7 +208,7 @@ function ChildUploadDoctorPrescriptions(){
         jsonData["recheck_date"]              = recheckDate;
         jsonData["files"]                     = fileUploadArray;
 
-        const response = await fetch(`${API_URL}/uploadAppointmentDocumentForPatient`, {
+        const response = await fetch(`${API_URL}/uploadAppointmentDocumentForChild`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
