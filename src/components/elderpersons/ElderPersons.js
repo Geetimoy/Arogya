@@ -7,6 +7,7 @@ import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/
 import { Link } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
 
 import elderpersons from '../../assets/images/profile.png';
 
@@ -14,15 +15,26 @@ import CryptoJS from "crypto-js";
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
+import {Modal, Button} from 'react-bootstrap'; 
+
 function ElderPersons(){
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [isMActive, setIsMActive] = useState(false);
+  const [closeProfileAccountKey, setCloseProfileAccountKey] = useState('');
+  const [closeRemarks, setCloseRemarks] = useState('');
+  
+
+  const [showCloseProfileModal, setShowCloseProfileModal] = useState(false); 
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const modalCloseProfile  = () => setShowCloseProfileModal(false);  
+  const modalShowProfile   = () => setShowCloseProfileModal(true); 
 
   const [isActive, setIsActive]     = useState(0);
 
@@ -102,6 +114,58 @@ function ElderPersons(){
       // eslint-disable-next-line
     }, [systemContext.systemDetails.system_id]);
 
+  const openCloseProfileModal = (accountKey) => {
+    setCloseProfileAccountKey(accountKey);
+    modalShowProfile();
+  }
+
+  const handleChangeRemarks = (e) => {
+    const { name, value } = e.target;
+    setCloseRemarks(value);
+  }
+
+  const closeProfile = async () => {
+      
+      var decryptedLoginDetails = CryptoJS.AES.decrypt(localStorage.getItem('cred'), ENCYPTION_KEY);
+      var loginDetails          = JSON.parse(decryptedLoginDetails.toString(CryptoJS.enc.Utf8));
+      
+      let jsonData = {
+        'system_id': systemContext.systemDetails.system_id,
+        'device_type': DEVICE_TYPE,
+        'device_token': DEVICE_TOKEN,
+        'user_lat': localStorage.getItem('latitude'),
+        'user_long': localStorage.getItem('longitude'),
+        'patient_account_key': closeProfileAccountKey,
+        'patient_account_type': 3,
+        'introducer_account_key': loginDetails.account_key,
+        'introducer_account_type': loginDetails.account_type,
+        'remarks': closeRemarks
+      };
+  
+      const response = await fetch(`${API_URL}/closeElderAccount`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+  
+      if (result.success) { 
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setOpenMenuId(0);
+        setTimeout(()=>{
+          modalCloseProfile();
+          listElder("");
+        }, 1000);
+      } 
+      else {
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+  
+    }
+
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   return(
@@ -173,7 +237,7 @@ function ElderPersons(){
                         {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to="#">Book Now</Link></li> */}
-                        <li><Link to={"#"}>Close Profile </Link></li>
+                        <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${elder.account_key}`) }}>Close Profile </Link></li>
                       </ul>
                     </div>
                   }
@@ -184,7 +248,18 @@ function ElderPersons(){
               </div>
             </div>
         ))}
-        </div>    
+        </div>   
+
+        <Modal show={showCloseProfileModal} onHide={modalCloseProfile}>
+          <Modal.Body>  
+            <p>Are you sure you want to close this profile?</p> 
+            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChangeRemarks} value={closeRemarks}></textarea>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalCloseProfile}>Cancel</Button>  
+            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeProfile}>Confirm to Close</Button>  
+          </Modal.Footer>  
+        </Modal>
 
       </div>
       <Appfooter></Appfooter>
