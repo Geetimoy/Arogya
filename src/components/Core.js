@@ -37,6 +37,8 @@ import JananiPrescriptions from './janani/JananiPrescriptions';
 import JananiMedicalHistory from './janani/JananiMedicalHistory';
 import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
 import JananiTestReports from './janani/JananiTestReports';
+import JananiUploadInitialPrescriptions from './janani/JananiUploadInitialPrescriptions';
+import JananiUploadDoctorPrescriptions from './janani/JananiUploadDoctorPrescriptions';
 
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
@@ -335,8 +337,14 @@ export default function Core() {
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/janani/create-janani" exact element={<CreateJanani />} />
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
-            <Route path="/janani/janani-prescriptions/:accountKey" exact element={<JananiPrescriptions/>} />
-            <Route path="/janani/janani-upload-prescriptions/:accountKey" exact element={<JananiUploadPrescriptions />} />
+
+            <Route path="/janani/janani-prescription/:accountKey" exact element={<JananiPrescriptions />} />
+            <Route path="/janani/janani-prescription/:accountKey/:prescriptionType" exact element={<JananiPrescriptions />} />
+            <Route path="/janani/janani-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<JananiPrescriptions />} />
+            <Route path="/janani/janani-upload-prescription/:accountKey/:prescriptionType" exact element={<JananiUploadInitialPrescriptions />} />
+            <Route path="/janani/janani-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<JananiUploadDoctorPrescriptions /> } />
+
+
             <Route path="/janani/janani-periodic-data/:accountKey" exact element={<JananiPeriodicData />} />
             <Route path="/janani/janani-awareness-survey/:accountKey" exact element={<JananiAwarenesssurvey />} />
             <Route path="/janani/janani-medical-history/:accountKey" exact element={<JananiMedicalHistory />} />
