@@ -291,8 +291,8 @@ function Patientprofiles(){
           </Modal.Header>  
           <Modal.Body>  
             <div className='form-group'>
-              <p className='mb-0'><strong>Patient Name</strong> - {patientDetailsModalData['patientName']} (9876543213)</p>
-              <p className='mb-0'><strong>Gender</strong> - {patientDetailsModalData['patientGender']}, 32</p>
+              <p className='mb-0'><strong>Patient Name</strong> - {patientDetailsModalData['patientName']} {patientDetailsModalData['patientContactNo']}</p>
+              <p className='mb-0'><strong>Gender</strong> - {patientDetailsModalData['patientGender']}, {patientDetailsModalData['patientAge']}</p>
               {/* <p className='mb-0'><strong>Age</strong> - 32</p> */}
               {/* <p className='mb-0'><strong>Phone</strong> - 9876543213</p> */}
               <p className='mb-0'><strong>Address</strong> - {patientDetailsModalData['patientAddress']}</p>
