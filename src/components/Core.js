@@ -37,6 +37,8 @@ import JananiPrescriptions from './janani/JananiPrescriptions';
 import JananiMedicalHistory from './janani/JananiMedicalHistory';
 import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
 import JananiTestReports from './janani/JananiTestReports';
+import JananiUploadInitialPrescriptions from './janani/JananiUploadInitialPrescriptions';
+import JananiUploadDoctorPrescriptions from './janani/JananiUploadDoctorPrescriptions';
 
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
@@ -67,7 +69,9 @@ import ElderBasicInformation from './elderpersons/ElderBasicInformation';
 import ElderAwarenessSurvey from './elderpersons/ElderAwarenessSurvey';
 import ElderPeriodicData from './elderpersons/ElderPeriodicData';
 import ElderMedicalHistory from './elderpersons/ElderMedicalHistory';
-
+import ElderPrescription from './elderpersons/ElderPrescription';
+import ElderUploadDoctorPrescriptions from './elderpersons/ElderUploadDoctorPrescriptions';
+import ElderUploadInitialPrescriptions from './elderpersons/ElderUploadInitialPrescriptions';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -333,8 +337,14 @@ export default function Core() {
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/janani/create-janani" exact element={<CreateJanani />} />
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
-            <Route path="/janani/janani-prescriptions/:accountKey" exact element={<JananiPrescriptions/>} />
-            <Route path="/janani/janani-upload-prescriptions/:accountKey" exact element={<JananiUploadPrescriptions />} />
+
+            <Route path="/janani/janani-prescription/:accountKey" exact element={<JananiPrescriptions />} />
+            <Route path="/janani/janani-prescription/:accountKey/:prescriptionType" exact element={<JananiPrescriptions />} />
+            <Route path="/janani/janani-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<JananiPrescriptions />} />
+            <Route path="/janani/janani-upload-prescription/:accountKey/:prescriptionType" exact element={<JananiUploadInitialPrescriptions />} />
+            <Route path="/janani/janani-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<JananiUploadDoctorPrescriptions /> } />
+
+
             <Route path="/janani/janani-periodic-data/:accountKey" exact element={<JananiPeriodicData />} />
             <Route path="/janani/janani-awareness-survey/:accountKey" exact element={<JananiAwarenesssurvey />} />
             <Route path="/janani/janani-medical-history/:accountKey" exact element={<JananiMedicalHistory />} />
@@ -373,6 +383,11 @@ export default function Core() {
             <Route path="/elderpersons/Elder-Awareness-Survey/:accountKey" exact element={<ElderAwarenessSurvey />} />
             <Route path="/elderpersons/Elder-Periodic-Data/:accountKey" exact element={<ElderPeriodicData />} />
             <Route path="/elderpersons/Elder-Medical-History/:accountKey" exact element={<ElderMedicalHistory />} />
+            <Route path="/elderpersons/elder-prescription/:accountKey" exact element={<ElderPrescription />} />
+            <Route path="/elderpersons/elder-prescription/:accountKey/:prescriptionType" exact element={<ElderPrescription />} />
+            <Route path="/elderpersons/elder-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderPrescription />} />
+            <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType" exact element={<ElderUploadInitialPrescriptions />} />
+            <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderUploadDoctorPrescriptions /> } />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

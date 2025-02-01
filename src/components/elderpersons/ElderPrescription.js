@@ -2,25 +2,20 @@ import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
-import './Janani.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Link, useParams, useNavigate } from "react-router-dom";
-
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
-import youngwomenprescription from '../../assets/images/sample-rx.png';
+import docIcon from '../../assets/images/doc-icon.jpg';
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
-import docIcon from '../../assets/images/doc-icon.jpg';
-
 import {Modal, Button} from 'react-bootstrap'; 
 
-function JananiPrescriptions(){
+function ElderPrescription(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -32,17 +27,16 @@ function JananiPrescriptions(){
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
   if(prescriptionType === 'initial'){
-    var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForJanani`;
+    var uploadUrl = `/elderpersons/elder-upload-prescription/${editAccountKey}/${prescriptionType}`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForElder`;
   }
   else if(prescriptionType === 'doctor'){
-    var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForJanani`;
+    var uploadUrl = `/elderpersons/elder-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForElder`;
   }
+  
 
   const [isMActive, setIsMActive] = useState(false);
-
-  const redirect = useNavigate();
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -128,7 +122,7 @@ function JananiPrescriptions(){
     jsonData["user_lat"]              = localStorage.getItem('latitude');
     jsonData["user_long"]             = localStorage.getItem('longitude');
 
-    const response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForJanani`, {
+    const response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForElder`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +131,7 @@ function JananiPrescriptions(){
     });
 
     let result = await response.json();
-    console.log(result);
+    
     if(result.success){
       alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
       listPrescription("");
@@ -149,17 +143,19 @@ function JananiPrescriptions(){
 
   }
 
+
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/janani" className=''>
+              <Link to="/elder-persons" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Upload Prescriptions</h5>
+            <h5 className='mx-2 mb-0'>Upload Prescriptions </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -186,29 +182,35 @@ function JananiPrescriptions(){
       </div>
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total- {prescriptionList.length}</span>
+          <span>Total - {prescriptionList.length}</span>
           <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={uploadUrl}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Prescription' onChange={searchPrescription}/>
+            <input type="text" className='form-control' placeholder={(prescriptionType == 'doctor') ? 'Search Doctor Prescription' : 'Search Initial Prescription'} id="searchPrescription" name="searchPrescription" onChange={searchPrescription}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
-          {prescriptionList.map((janani, index) => (
-            <div className='col-6' key={janani.file_id}>
-              <div className='button-box'>
-                <div className='prescription'>
-                  <div className="btn-download"><Link target="_blank" to={`${janani.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(janani.file_id)}/></div>
-                  <img src={docIcon} alt='' className='w-100' />
-                  <p className='mb-1'><strong>{janani.file_name}</strong></p>
+
+
+            {prescriptionList.map((elder, index) => (
+              <div className='col-6' key={elder.file_id}>
+                <div className='button-box'>
+                  <div className='prescription'>
+                    <div className="btn-download"><Link target="_blank" to={`${elder.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
+                    <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(elder.file_id)}/></div>
+                    <img src={docIcon} alt='' className='w-100' />
+                    <p className='mb-1'><small>Date: {elder.prescription_date}</small></p>
+                    <p className='mb-1'><strong>{elder.file_name}</strong></p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+        
+
         </div>
+
         <Modal show={showPrescriptionDeleteModal} onHide={modalPrescriptionDeleteClose}>
           <Modal.Header>
             <h4>Delete Prescription</h4>
@@ -221,11 +223,11 @@ function JananiPrescriptions(){
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionDeleteClose}>Cancel</Button>  
           </Modal.Footer>  
         </Modal>    
+
       </div>
       <Appfooter></Appfooter>
     </>
   )
 }
 
-
-export default JananiPrescriptions;
+export default ElderPrescription;
