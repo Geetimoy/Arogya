@@ -312,7 +312,7 @@ function Patientprofiles(){
   }
 
   const [doctorPrescriptionAppointmentId, setDoctorPrescriptionAppointmentId] = useState(1);
-  
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   return(
     <>
@@ -383,9 +383,34 @@ function Patientprofiles(){
 
                 {openMenuId === patient.account_id && <div className='drop-menu'>
                     <ul>
-                      <li><Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link></li>
-                      <li><Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link></li>
-                      <li><Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>Update Periodic Data</Link></li>
+                      <li>
+                        {/* <Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link> */}
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>View Basic Information</Link>
+                        }
+                      </li>
+                      <li>
+                        {/* <Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link> */}
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>View Medical History</Link>
+                        }
+                      </li>
+                      <li>
+                        {/* <Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>Update Periodic Data</Link> */}
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>Update Periodic Data</Link>
+                          
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>View Periodic Data</Link>
+                        }
+                      </li>
                       <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Doctor Appointment</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
