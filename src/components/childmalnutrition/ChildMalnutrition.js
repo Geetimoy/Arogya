@@ -105,9 +105,61 @@ function ChildMalnutrion(){
     window.location.href = `/childmalnutrition/child-prescription/${accountKeyForPatientPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
   }
 
-  const [showTestReportModal, setShowTestReportModal] = useState(false);
-  const modalTestReportClose  = () => setShowTestReportModal(false);  
-  const modalTestReportShow   = () => setShowTestReportModal(true);
+  const [testReportAppointmentId, setTestReportAppointmentId]     = useState('');
+  const [testReportChildKey, setTestReportChildKey]           = useState('');
+  const [testReportAppointmentList, setTestReportAppointmentList] = useState([]);
+  const [showTestReportsModal, setShowTestReportsModal]           = useState(false); 
+  const modalTestReportsClose  = () => {
+    setShowTestReportsModal(false); 
+    setTestReportChildKey(''); 
+  }
+  const modalTestReportsShow   = async (childAccountKey) => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["patient_account_key"]       = childAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "notolderthan": "365"
+                                              }
+      
+      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+      if(result.data && result.data.length > 0){
+        setTestReportAppointmentList(result.data);
+      }
+      else{
+        setTestReportAppointmentList([]);
+      }
+
+    setShowTestReportsModal(true);
+    setTestReportChildKey(childAccountKey);
+  }
+  const selectTestReportAppointment = (event) => {
+    setTestReportAppointmentId(event.target.value);
+  }
+  const confirmTestReportAppointment = () => {
+    if(testReportAppointmentId){
+      window.location.href = `/childmalnutrition/child-test-reports/${testReportChildKey}/${testReportAppointmentId}`;
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: `Please select an appointment!`});
+    }
+  }
 
 
   const handleClick = () => {
@@ -305,7 +357,7 @@ function ChildMalnutrion(){
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-test-reports/${child.account_key}`}>Upload Test Reports</Link></li> */}
-                      {/* <li><Link onClick={() => { modalTestReportShow(child.account_key); }} to="#">Upload Test Reports</Link></li> */}
+                      <li><Link onClick={() => { modalTestReportsShow(child.account_key); }} to="#">Upload Test Reports</Link></li>
                       {/* <li><Link to={`/childmalnutrition/child-patient-booking/`}>Book Now</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li> */}
@@ -383,23 +435,24 @@ function ChildMalnutrion(){
           </Modal.Footer>  
         </Modal>
 
-        <Modal show={showTestReportModal} onHide={modalTestReportClose}>
+        <Modal show={showTestReportsModal} onHide={modalTestReportsClose}>
           <Modal.Body className='form-all'>  
-            <p>Upload Test Report</p> 
+            <p>Upload Test Reports</p> 
             <form>
               <div className="form-group">
                 <label><span className="d-block">Appointment </span></label>
-                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value="">
+                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value={testReportAppointmentId} onChange={selectTestReportAppointment}>
                   <option value="">Select</option>
-                  <option value="">Select</option>
+                   {testReportAppointmentList.map((appointment, index) => (
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>Dr. {`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                  ))}
                 </select>
               </div>
             </form>
           </Modal.Body>  
-          <Modal.Footer className='justify-content-center'>
-            <Link to="/childmalnutrition/child-test-reports/:accountKey" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Confirm</Link>  
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportClose}>Cancel</Button>  
-              
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmTestReportAppointment}>Confirm</Link> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsClose}>Cancel</Button>  
           </Modal.Footer>  
         </Modal>
 

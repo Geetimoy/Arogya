@@ -67,7 +67,9 @@ import ElderBasicInformation from './elderpersons/ElderBasicInformation';
 import ElderAwarenessSurvey from './elderpersons/ElderAwarenessSurvey';
 import ElderPeriodicData from './elderpersons/ElderPeriodicData';
 import ElderMedicalHistory from './elderpersons/ElderMedicalHistory';
-
+import ElderPrescription from './elderpersons/ElderPrescription';
+import ElderUploadDoctorPrescriptions from './elderpersons/ElderUploadDoctorPrescriptions';
+import ElderUploadInitialPrescriptions from './elderpersons/ElderUploadInitialPrescriptions';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -373,6 +375,11 @@ export default function Core() {
             <Route path="/elderpersons/Elder-Awareness-Survey/:accountKey" exact element={<ElderAwarenessSurvey />} />
             <Route path="/elderpersons/Elder-Periodic-Data/:accountKey" exact element={<ElderPeriodicData />} />
             <Route path="/elderpersons/Elder-Medical-History/:accountKey" exact element={<ElderMedicalHistory />} />
+            <Route path="/elderpersons/elder-prescription/:accountKey" exact element={<ElderPrescription />} />
+            <Route path="/elderpersons/elder-prescription/:accountKey/:prescriptionType" exact element={<ElderPrescription />} />
+            <Route path="/elderpersons/elder-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderPrescription />} />
+            <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType" exact element={<ElderUploadInitialPrescriptions />} />
+            <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderUploadDoctorPrescriptions /> } />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

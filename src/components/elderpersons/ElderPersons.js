@@ -166,7 +166,77 @@ function ElderPersons(){
   
     }
 
+  const [accountKeyForElderPrescription, setAccountKeyForElderPrescription] = useState('');
+
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false); 
+  const modalPrescriptionClose  = () => {
+    setAccountKeyForElderPrescription('');
+    setShowPrescriptionModal(false);  
+  }
+  const modalPrescriptionShow   = (elderAccountKey) => {
+    setAccountKeyForElderPrescription(elderAccountKey);
+    setShowPrescriptionModal(true);
+  }
+
+  const [prescriptionType, setPrescriptionType] = useState('initial');
+  const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
+
+  const [selectedDoctorAppointment, setSelectedDoctorAppointment] = useState('');
+  const chooseDoctorAppointment = (e) => setSelectedDoctorAppointment(e.target.value);
+
+  const [appointmentListForDoctorPresc, setAppointmentListForDoctorPresc] = useState([]);
+  const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
+  const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
+  const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
+    if(prescriptionType === 'initial'){ 
+      window.location.href = `/elderpersons/elder-prescription/${accountKeyForElderPrescription}/${prescriptionType}`;
+    }
+    else{
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["patient_account_key"]       = accountKeyForElderPrescription;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "notolderthan": "365"
+                                              }
+      
+      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+      if(result.success){
+        if(result.data && result.data.length > 0){
+          setAppointmentListForDoctorPresc(result.data);
+        }
+        else{
+          setAppointmentListForDoctorPresc([]);
+        }
+  
+        setShowPrescriptionModalP2(true);
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+    }
+  }
+  const redirectToUploadDoctorPrescription = () => {
+    window.location.href = `/elderpersons/elder-prescription/${accountKeyForElderPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
+  }
 
   return(
     <>
@@ -231,10 +301,10 @@ function ElderPersons(){
                         <li><Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link></li>
                         <li><Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>Update Medical History</Link></li>
                         <li><Link to={`/elderpersons/elder-periodic-data/${elder.account_key}`}>Update Periodic Data</Link></li>
-                        {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
+                        {/* <li><Link to={"/elderpersons/patient-prescription"}>Upload Prescription</Link></li> */}
                         <li><Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>Update Awareness Survey</Link></li>
-                        {/* <li><Link  to="#">Upload Prescription</Link></li> */}
-                        {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
+                        <li><Link onClick={() => { modalPrescriptionShow(elder.account_key); }} to="#">Upload Prescription</Link></li>
+                        {/* <li><Link to={`/elderpersons/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to="#">Book Now</Link></li> */}
                         <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${elder.account_key}`) }}>Close Profile </Link></li>
@@ -258,6 +328,49 @@ function ElderPersons(){
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalCloseProfile}>Cancel</Button>  
             <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={closeProfile}>Confirm to Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showPrescriptionModal} onHide={modalPrescriptionClose}>
+          <Modal.Body>  
+            <p>Upload Prescription</p> 
+            <div className="d-flex">
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" value="initial" onChange={choosePrescriptionType} checked={prescriptionType === 'initial' ? true : false}/>
+                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Initial Prescription</label>
+              </div>
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" onChange={choosePrescriptionType} checked={prescriptionType === 'doctor' ? true : false}/>
+                <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
+              </div>
+            </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>
+            <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
+              
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
+          <Modal.Body className='form-all'>  
+            <p>Upload Doctor Prescription</p> 
+            <form>
+              <div className="form-group">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="doctor_prescription_appoitment_id" id="doctor_prescription_appoitment_id" onChange={chooseDoctorAppointment}>
+                  <option value="">Select</option>
+                  {appointmentListForDoctorPresc.map((appointment, index) => (
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>Dr. {`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                  ))}
+                </select>
+              </div>
+            </form>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={redirectToUploadDoctorPrescription}>Proceed</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
+             
           </Modal.Footer>  
         </Modal>
 
