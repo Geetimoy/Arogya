@@ -278,7 +278,7 @@ function Patientprofiles(){
                   <h6>{patient.gender} / {patient.age} yrs</h6>
                   <p className='disease'><small>Problem - Skin</small></p>
                   <div className="mb-3 mt-3 text-center">
-                    <Link onClick={() => { modalShow(patient.display_name, patient.patient_addr_1, patient.contact_no, patient.age, patient.gender, patient.account_key, '3'); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
+                    <Link onClick={() => { modalShow(patient.display_name, patient.addr1+", "+patient.city, patient.contact_no, patient.age, patient.gender, patient.account_key, '3'); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
                   </div>
               </div>
             </div>
