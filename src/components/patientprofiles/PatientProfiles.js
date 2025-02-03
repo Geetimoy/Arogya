@@ -411,6 +411,7 @@ function Patientprofiles(){
                           (decryptedLoginDetails.account_type == '5') &&<Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>View Periodic Data</Link>
                         }
                       </li>
+                      <li><Link to={`/patientprofiles/patient-booked/${patient.account_key}`}>Booked Appointment</Link></li>
                       <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Doctor Appointment</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>

@@ -22,6 +22,9 @@ function ElderPersons(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+  const loginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  const loginAccountType  = loginDetails.account_type;
+
   const [isMActive, setIsMActive] = useState(false);
   const [closeProfileAccountKey, setCloseProfileAccountKey] = useState('');
   const [closeRemarks, setCloseRemarks] = useState('');
@@ -298,16 +301,56 @@ function ElderPersons(){
 
                   {openMenuId === elder.account_id && <div className='drop-menu'>
                       <ul>
-                        <li><Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link></li>
-                        <li><Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>Update Medical History</Link></li>
-                        <li><Link to={`/elderpersons/elder-periodic-data/${elder.account_key}`}>Update Periodic Data</Link></li>
+                        <li>
+                          
+                          {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>View Basic Information</Link>
+                        }
+
+                        </li>
+                        <li>
+                          
+                          {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>Update Medical History</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>View Medical History</Link>
+                        }
+                        </li>
+                        <li>
+                          
+                          {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-periodic-data/${elder.account_key}`}>Update Periodic Data</Link>
+                          
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-periodic-data/${elder.account_key}`}>View Periodic Data</Link>
+                        }
+                        </li>
                         {/* <li><Link to={"/elderpersons/patient-prescription"}>Upload Prescription</Link></li> */}
-                        <li><Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>Update Awareness Survey</Link></li>
+                        <li>
+                          
+                          {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>Update Awareness Survey</Link>
+                          
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>View Awareness Survey</Link>
+                        }
+                        </li>
+
+                        <li><Link to={`/elderpersons/elder-booked/${elder.account_key}`}>Booked Appointment</Link></li>
+                        <li><Link to={`/elderpersons/elder-booking/${elder.account_key}`}>Book Doctor Appointment</Link></li>
+
                         <li><Link onClick={() => { modalPrescriptionShow(elder.account_key); }} to="#">Upload Prescription</Link></li>
                         {/* <li><Link to={`/elderpersons/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
                         {/* <li><Link to="#">Book Now</Link></li> */}
                         <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${elder.account_key}`) }}>Close Profile </Link></li>
+                        {loginAccountType === '5' && <li><Link to={`#`}>View/Write Review </Link></li>}
                       </ul>
                     </div>
                   }

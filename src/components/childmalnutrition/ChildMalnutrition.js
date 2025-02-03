@@ -351,12 +351,39 @@ function ChildMalnutrion(){
 
                 {openMenuId === child.account_id && <div className='drop-menu'>
                     <ul>
-                      <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
-                      <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Update Medical History</Link></li>
-                      <li><Link to={`/childmalnutrition/child-periodic-data/${child.account_key}`}>Update Periodic Data</Link></li>
+                      <li>
+                        
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>View Basic Information</Link>
+                        }
+                      </li>
+                      <li>
+                        
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Update Medical History</Link>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>View Medical History</Link>
+                        }
+                      </li>
+                      <li>
+                        
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/childmalnutrition/child-periodic-data/${child.account_key}`}>Update Periodic Data</Link>
+                          
+                        }
+                        {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-periodic-data/${child.account_key}`}>View Periodic Data</Link>
+                        }
+                      </li>
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-test-reports/${child.account_key}`}>Upload Test Reports</Link></li> */}
+                      <li><Link to={`/childmalnutrition/child-booked/${child.account_key}`}>Booked Appointment</Link></li>
+                      <li><Link to={`/childmalnutrition/child-booking/${child.account_key}`}>Book Doctor Appointment</Link></li>
                       <li><Link onClick={() => { modalTestReportsShow(child.account_key); }} to="#">Upload Test Reports</Link></li>
                       {/* <li><Link to={`/childmalnutrition/child-patient-booking/`}>Book Now</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
