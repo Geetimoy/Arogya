@@ -611,7 +611,6 @@ function Patientprofiles(){
             <Button onClick={handleSaveRating} variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
           </Modal.Footer>  
-          
         </Modal>
 
       </div>
