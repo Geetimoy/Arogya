@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
+import Rating from "./Ratingsave";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +21,17 @@ function ChildMalnutrion(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
+
+  const [showModal2, setShowModal2] = useState(false); 
+  const modalClose2  = () => setShowModal2(false);  
+  const modalShow2   = () => setShowModal2(true);
+
+  const [rating, setRating] = useState(0);
+
+  const handleStarClick = (data) => {
+    setRating(data); // Toggle the state
+    console.log(data);
+  };
 
   const loginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
   const loginAccountType  = loginDetails.account_type;
@@ -291,6 +303,32 @@ function ChildMalnutrion(){
     }
 
   }
+
+  const [comments, setComments] = useState("");
+
+  const commentsChangeHandler = (event) =>{
+    setComments(event.target.value);
+    console.log(comments);
+  }
+
+  const [savedRating, setSavedRating] = useState(0); // Track the saved rating separately
+
+  // Load the saved rating from localStorage when the component mounts
+    useEffect(() => {
+      const savedValue = localStorage.getItem('userRating');
+      if (savedValue) {
+        const parsedValue = parseFloat(savedValue);
+        setRating(parsedValue);
+        setSavedRating(parsedValue); // Also set the saved rating
+      }
+    }, []);
+
+  const handleSaveRating = () => {
+    localStorage.setItem('userRating', rating);
+    setSavedRating(rating); // Update the saved rating state
+  };
+
+ 
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   return(
@@ -392,7 +430,7 @@ function ChildMalnutrion(){
                       <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Prescription</Link></li>
                       {/* <li><Link to={`/childmalnutrition/child-awareness-survey/`}>Update Awareness Survey</Link></li> */}
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>
-                      {loginAccountType === '5' && <li><Link to={`#`}>View/Write Review </Link></li>}
+                      {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
                     </ul>
                   </div>
                 }
@@ -481,6 +519,35 @@ function ChildMalnutrion(){
             <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmTestReportAppointment}>Confirm</Link> 
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportsClose}>Cancel</Button>  
           </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showModal2} onHide={modalClose2}>
+          <Modal.Header>  
+            <h3>Write Review</h3>
+          </Modal.Header>  
+          <Modal.Body className='feedback-form'>
+            <h5>Servicewise Experience</h5>
+            <h6 className='mb-1'>Review & Rating for Patient :</h6>
+            <p className='mb-0'>Name : N Mondal</p>
+            <div className="rating-star mb-3">
+              {/* <span className="">Not at all likely</span> */}
+              <span>
+                <div className="rating-symbol">
+                  <Rating sendDataToParent={handleStarClick}></Rating>
+                </div>
+              </span>
+              {/* <span className="">Extremely likely</span> */}
+            </div>
+            <div className="form-group">
+                  <label htmlFor="comments">Would you like to share any other comments: </label>
+                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
+                </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Button onClick={handleSaveRating} variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
+          </Modal.Footer>  
+          
         </Modal>
 
       </div>

@@ -93,6 +93,10 @@ ul, li{
   color: #717171;
 }
 
+.three-dot.my-element2.active + .drop-menu{
+  /* padding-bottom: 60px; */
+}
+
 .top-header-notification{
   position: absolute;
   top: -4px;
