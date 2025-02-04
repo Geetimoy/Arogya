@@ -25,7 +25,18 @@ function YoungWomanPrescriptions(){
   const [urlParam, setUrlParam] = useState(useParams());
   const [prescriptionList, setPrescriptionList]   = useState([]);
 
-  const editAccountKey = urlParam.accountKey;
+  const editAccountKey    = urlParam.accountKey;
+  const prescriptionType  = urlParam.prescriptionType;
+  const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
+
+  if(prescriptionType === 'initial'){
+    var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForWoman`;
+  }
+  else if(prescriptionType === 'doctor'){
+    var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForWoman`;
+  }
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -48,10 +59,19 @@ function YoungWomanPrescriptions(){
 
     let jsonData = {};
     jsonData['system_id']       = systemContext.systemDetails.system_id;
+    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
+    jsonData["file_type"]       = prescriptionType;
+    jsonData["search_param"]    = {
+                                    "by_keywords": searchKey,
+                                    "limit": "0",
+                                    "offset": "0",
+                                    "order_by_field": "",
+                                    "order_by_value": "desc"
+                                  }
 
-    const response = await fetch(`${API_URL}/womanSurveyPrescriptionList`, {
+    const response = await fetch(`${API_URL}/${fetchUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,12 +115,18 @@ function YoungWomanPrescriptions(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
-    jsonData['system_id']       = systemContext.systemDetails.system_id;
-    jsonData["account_key"]     = editAccountKey;
-    jsonData["account_type"]    = 3;
-    jsonData["file_id"]         = deletePrescriptionFileId;
+    jsonData['system_id']             = systemContext.systemDetails.system_id;
+    jsonData["account_key"]           = editAccountKey;
+    jsonData["account_type"]          = 3;
+    jsonData["file_id"]               = deletePrescriptionFileId;
+    jsonData["file_type"]             = prescriptionType;
+    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;
+    jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]          = DEVICE_TOKEN;
+    jsonData["user_lat"]              = localStorage.getItem('latitude');
+    jsonData["user_long"]             = localStorage.getItem('longitude');
 
-    const response = await fetch(`${API_URL}/deleteWomanSurveyPrescription`, {
+    const response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForWoman`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -121,12 +147,6 @@ function YoungWomanPrescriptions(){
 
   }
 
-  const downloadPrescription = async (filePath) => {
-
-    console.log(filePath);
-    //redirect(filePath);
-
-  }
 
   return(
     <>  
@@ -166,7 +186,7 @@ function YoungWomanPrescriptions(){
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {prescriptionList.length}</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/youngwomens/young-woman-upload-prescription/${editAccountKey}`}>Upload</Link>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={uploadUrl}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>

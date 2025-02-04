@@ -46,9 +46,75 @@ function YoungWomens(){
   const modalCloseProfile  = () => setShowCloseProfileModal(false);  
   const modalShowProfile   = () => setShowCloseProfileModal(true);  
   
-  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
-  const modalPrescriptionClose  = () => setShowPrescriptionModal(false);  
-  const modalPrescriptionShow   = () => setShowPrescriptionModal(true);
+  const [accountKeyForWomenPrescription, setAccountKeyForWomenPrescription] = useState('');
+
+
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false); 
+    const modalPrescriptionClose  = () => {
+      setAccountKeyForWomenPrescription('');
+      setShowPrescriptionModal(false);  
+    }
+    const modalPrescriptionShow   = (womenAccountKey) => {
+      setAccountKeyForWomenPrescription(womenAccountKey);
+      setShowPrescriptionModal(true);
+    }
+  
+    const [prescriptionType, setPrescriptionType] = useState('initial');
+    const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
+  
+    const [selectedDoctorAppointment, setSelectedDoctorAppointment] = useState('');
+    const chooseDoctorAppointment = (e) => setSelectedDoctorAppointment(e.target.value);
+  
+    const [appointmentListForDoctorPresc, setAppointmentListForDoctorPresc] = useState([]);
+    const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
+    const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
+    const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
+    if(prescriptionType === 'initial'){ 
+      window.location.href = `/youngwomens/young-woman-prescriptions/${accountKeyForWomenPrescription}/${prescriptionType}`;
+    }
+    else{
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["patient_account_key"]       = accountKeyForWomenPrescription;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "notolderthan": "365"
+                                              }
+      
+      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+      if(result.data && result.data.length > 0){
+        setAppointmentListForDoctorPresc(result.data);
+      }
+      else{
+        setAppointmentListForDoctorPresc([]);
+      }
+
+      setShowPrescriptionModalP2(true);
+    }
+  }
+  const redirectToUploadDoctorPrescription = () => {
+    window.location.href = `/youngwomens/young-woman-prescriptions/${accountKeyForWomenPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
+  }
+
+
+
+
 
   const [showTestReportModal, setShowTestReportModal] = useState(false);
   const modalTestReportClose  = () => setShowTestReportModal(false);  
@@ -310,19 +376,40 @@ function YoungWomens(){
             <p>Upload Prescription</p> 
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" checked value="initial" />
+                <input type="radio" id="edit_user_medical_certificates_y" name="prescription_type" className="custom-control-input" value="initial" onChange={choosePrescriptionType} checked={prescriptionType === 'initial' ? true : false}/>
                 <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_y">Survey Form</label>
               </div>
-              {/* <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" />
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                <input type="radio" id="edit_user_medical_certificates_n" name="prescription_type" className="custom-control-input" value="doctor" onChange={choosePrescriptionType} checked={prescriptionType === 'doctor' ? true : false}/>
                 <label className="custom-control-label no-style" htmlFor="edit_user_medical_certificates_n">Doctor Prescription</label>
-              </div> */}
+              </div>
             </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>
-            <Link to="/youngwomens/young-woman-prescriptions/:accountKey" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
+            <Link onClick={() => { modalPrescriptionShowP2(); }} to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Yes, Proceed</Link>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionClose}>Cancel</Button>  
-              
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showPrescriptionModalP2} onHide={modalPrescriptionCloseP2}>
+          <Modal.Body className='form-all'>  
+            <p>Upload Doctor Prescription</p> 
+            <form>
+              <div className="form-group">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="doctor_prescription_appoitment_id" id="doctor_prescription_appoitment_id" onChange={chooseDoctorAppointment}>
+                  <option value="">Select</option>
+                  {appointmentListForDoctorPresc.map((appointment, index) => (
+                    <option key={appointment.appointment_key} value={appointment.appointment_key}>Dr. {`${appointment.doctor_display_name} - ${appointment.appointment_date} @ ${appointment.appointment_time}`}</option>
+                  ))}
+                </select>
+              </div>
+            </form>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={redirectToUploadDoctorPrescription}>Proceed</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
+             
           </Modal.Footer>  
         </Modal>
 

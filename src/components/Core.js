@@ -59,6 +59,8 @@ import UpdateMedicalHistory from './youngwomens/UpdateMedicalHistory';
 import UpdatePeriodicData from './youngwomens/UpdatePeriodicData';
 import UpdateAwarenessSurvey from './youngwomens/UpdateAwarenessSurvey';
 import YoungWomanUploadPrescription from './youngwomens/YoungWomanUploadPrescription';
+import YoungWomanUploadDoctorPrescriptions from './youngwomens/YoungWomanUploadDoctorPrescriptions';
+import YoungWomanUploadInitialPrescriptions from './youngwomens/YoungWomanUploadInitialPrescriptions';
 import YoungWomanPrescriptions from './youngwomens/YoungWomanPrescriptions';
 import TestReports from './youngwomens/TestReports';
 import YoungWomanPatientBooking from './youngwomens/YoungWomanPatientBooking';
@@ -372,7 +374,11 @@ export default function Core() {
             <Route path="/youngwomens/update-periodic-data/:accountKey" exact element={<UpdatePeriodicData />} />
             <Route path="/youngwomens/update-awareness-survey/:accountKey" exact element={<UpdateAwarenessSurvey />} />
             <Route path="/youngwomens/young-woman-prescriptions/:accountKey" exact element={<YoungWomanPrescriptions />} />
+            <Route path="/youngwomens/young-woman-prescriptions/:accountKey/:prescriptionType" exact element={<YoungWomanPrescriptions />} />
+            <Route path="/youngwomens/young-woman-prescriptions/:accountKey/:prescriptionType/:appointmentId" exact element={<YoungWomanPrescriptions />} />
             <Route path="/youngwomens/young-woman-upload-prescription/:accountKey" exact element={<YoungWomanUploadPrescription />} />
+            <Route path="/youngwomens/young-woman-upload-prescription/:accountKey/:prescriptionType" exact element={<YoungWomanUploadInitialPrescriptions />} />
+            <Route path="/youngwomens/young-woman-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<YoungWomanUploadDoctorPrescriptions /> } />
             <Route path="/youngwomens/TestReports" exact element={<TestReports />} />
             <Route path="/youngwomens/young-woman-patient-booking" exact element={<YoungWomanPatientBooking />} />
 
