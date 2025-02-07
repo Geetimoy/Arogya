@@ -449,7 +449,7 @@ function Patientprofiles(){
                         }
                       </li>
                       <li><Link to={`/patientprofiles/patient-booked/${patient.account_key}`}>Booked Appointment</Link></li>
-                      <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book Doctor Appointment</Link></li>
+                      <li><Link to={`/patientprofiles/patient-booking/${patient.account_key}`}>Book New Doctor Appointment</Link></li>
                       {/* <li><Link to={"/patientprofiles/patient-prescription"}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(patient.account_key); }} to="#">Upload Prescription</Link></li>
                       {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}

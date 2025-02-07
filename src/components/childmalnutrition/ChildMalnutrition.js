@@ -421,13 +421,14 @@ function ChildMalnutrion(){
                       {/* <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-test-reports/${child.account_key}`}>Upload Test Reports</Link></li> */}
                       <li><Link to={`/childmalnutrition/child-booked/${child.account_key}`}>Booked Appointment</Link></li>
-                      <li><Link to={`/childmalnutrition/child-booking/${child.account_key}`}>Book Doctor Appointment</Link></li>
-                      <li><Link onClick={() => { modalTestReportsShow(child.account_key); }} to="#">Upload Test Reports</Link></li>
+                      <li><Link to={`/childmalnutrition/child-booking/${child.account_key}`}>Book New Doctor Appointment</Link></li>
+                      
                       {/* <li><Link to={`/childmalnutrition/child-patient-booking/`}>Book Now</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
                       <li><Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Edit Basic Medical History</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Prescription</Link></li> */}
                       <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Prescription</Link></li>
+                      <li><Link onClick={() => { modalTestReportsShow(child.account_key); }} to="#">Upload Test Reports</Link></li>
                       {/* <li><Link to={`/childmalnutrition/child-awareness-survey/`}>Update Awareness Survey</Link></li> */}
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>
                       {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}

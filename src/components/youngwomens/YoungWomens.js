@@ -375,7 +375,7 @@ function YoungWomens(){
                         }
                         </li>
                         <li><Link to={`/youngwomens/youngwomen-booked/${women.account_key}`}>Booked Appointment</Link></li>
-                        <li><Link to={`/youngwomens/youngwomen-booking/${women.account_key}`}>Book Doctor Appointment</Link></li>
+                        <li><Link to={`/youngwomens/youngwomen-booking/${women.account_key}`}>Book New Doctor Appointment</Link></li>
                         <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescriptions</Link></li>
                         {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
                         {/* <li><Link onClick={() => { modalTestReportShow(women.account_key); }} to="#">Upload Test Reports</Link></li> */}

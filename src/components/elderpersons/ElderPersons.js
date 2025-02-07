@@ -381,7 +381,7 @@ function ElderPersons(){
                         </li>
 
                         <li><Link to={`/elderpersons/elder-booked/${elder.account_key}`}>Booked Appointment</Link></li>
-                        <li><Link to={`/elderpersons/elder-booking/${elder.account_key}`}>Book Doctor Appointment</Link></li>
+                        <li><Link to={`/elderpersons/elder-booking/${elder.account_key}`}>Book New Doctor Appointment</Link></li>
 
                         <li><Link onClick={() => { modalPrescriptionShow(elder.account_key); }} to="#">Upload Prescription</Link></li>
                         {/* <li><Link to={`/elderpersons/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
