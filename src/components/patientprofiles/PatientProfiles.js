@@ -412,7 +412,6 @@ function Patientprofiles(){
           </div>
         </div>
         <div className='row'>
-
           {patientList.map((patient, index) => (
             <div className='col-6 mb-3' key={patient.account_id}>
               <div className='button-box'>
