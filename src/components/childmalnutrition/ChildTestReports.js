@@ -1,24 +1,142 @@
-import { useState, useContext } from 'react';
-import Appfooter from "../AppFooter";
-
+import { useState, useContext, useEffect } from 'react';
+import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
+import AlertContext from '../../context/alert/AlertContext';
+import Appfooter from '../AppFooter';
 
-import docIcon from '../../assets/images/doc-icon.jpg';
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+
+import patientprescription from '../../assets/images/demo-test-report.jpg';
+
+import {Modal, Button} from 'react-bootstrap'; 
 
 
 function ChildTestReports(){
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
+
+  const [urlParam, setUrlParam]       = useState(useParams());
+  const [reportList, setReportList]   = useState([]);
+
+  const editPatientKey    = urlParam.patientKey;
+  const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
   const [isMActive, setIsMActive] = useState(false);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const searchReports = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listReports(value);
+    }, 1000)
+  }
+
+  const listReports = async (searchKey) => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']               = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    jsonData["account_key"]             = editPatientKey;
+    jsonData["account_type"]            = 3;
+    jsonData["search_param"]            = {
+                                            "by_keywords": searchKey,
+                                            "limit": "0",
+                                            "offset": "0",
+                                            "order_by_field": "file_id",
+                                            "order_by_value": "asc"
+                                          }
+
+
+    const response = await fetch(`${API_URL}/fetchTestReportForChild`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    console.log(result);
+    if(result.success){
+      setReportList(result.data);
+    }
+    else{
+      setReportList([]); 
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listReports("");
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const [deleteTestReportFileId, setDeleteTestReportFileId]           = useState('');
+  const [deleteTestReportApptId, setDeleteTestReportApptId]           = useState('');
+  const [showTestReportsDeleteModal, setShowTestReportsDeleteModal]   = useState(false); 
+  const modalTestReportsDeleteClose  = () => {
+    setShowTestReportsDeleteModal(false); 
+  }
+  const modalTestReportsDeleteShow   = (fileId, apptId) => {
+    setDeleteTestReportFileId(fileId);
+    setDeleteTestReportApptId(apptId);
+    setShowTestReportsDeleteModal(true);
+  }
+
+  const deleteTestReport = async () => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']             = systemContext.systemDetails.system_id;
+    jsonData["account_key"]           = editPatientKey;
+    jsonData["appointment_key"]       = deleteTestReportApptId;
+    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;;
+    jsonData["file_id"]               = deleteTestReportFileId;
+    jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]          = DEVICE_TOKEN;
+    jsonData["user_lat"]              = localStorage.getItem('latitude');
+    jsonData["user_long"]             = localStorage.getItem('longitude');
+
+    const response = await fetch(`${API_URL}/deleteTestReportForChild`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      listReports("");
+      setShowTestReportsDeleteModal(false);
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    }
+
+  }
+
+  const searchReport = (e) => {
+    const { name, value } = e.target;
+    setTimeout(()=>{
+      listReports(value);
+    }, 1000)
+  }
 
   return(
     <>
@@ -57,8 +175,8 @@ function ChildTestReports(){
       </div>
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total - 1</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/childmalnutrition/child-upload-prescription/`}>Upload</Link>
+          <span>Total - {reportList.length}</span>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/childmalnutrition/child-upload-test-reports/${editPatientKey}/${appointmentId}`}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
@@ -67,16 +185,20 @@ function ChildTestReports(){
           </div>
         </div>
         <div className='row'>
-            <div className='col-6'>
+
+          {reportList.map((report, index) => (
+            <div className='col-6' key={report.file_id}>
               <div className='button-box'>
                 <div className='prescription'>
-                  <div className="btn-download"><Link target="_blank"><FontAwesomeIcon icon={faDownload}/></Link></div>
-                  <div className="btn-delete"><FontAwesomeIcon icon={faTrash} /></div>
-                  <img src={docIcon} alt='' className='w-100' />
-                  <p className='mb-1'><strong>Test Report</strong></p>
+                  <div className="btn-download"><Link target="_blank" to={`${report.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
+                  <div className="btn-delete" onClick={()=>modalTestReportsDeleteShow(report.file_id, report.appointment_key)}><FontAwesomeIcon icon={faTrash} /></div>
+                  <img src={patientprescription} alt='' className='w-100' />
+                  <p className='pb-2'><strong><small>{report.report_name}</small></strong></p>
                 </div>
               </div>
             </div>
+          ))}
+
         </div>
       </div>
       <Appfooter></Appfooter>
