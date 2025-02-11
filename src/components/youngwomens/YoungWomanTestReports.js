@@ -16,7 +16,7 @@ import patientprescription from '../../assets/images/demo-test-report.jpg';
 import {Modal, Button} from 'react-bootstrap'; 
 
 
-function ChildTestReports(){
+function YoungWomanTestReports(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -57,7 +57,7 @@ function ChildTestReports(){
                                           }
 
 
-    const response = await fetch(`${API_URL}/fetchTestReportForChild`, {
+    const response = await fetch(`${API_URL}/fetchTestReportForWoman`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ function ChildTestReports(){
     jsonData["user_lat"]              = localStorage.getItem('latitude');
     jsonData["user_long"]             = localStorage.getItem('longitude');
 
-    const response = await fetch(`${API_URL}/deleteTestReportForChild`, {
+    const response = await fetch(`${API_URL}/deleteTestReportForWoman`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -144,7 +144,7 @@ function ChildTestReports(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/child-malnutrition" className=''>
+              <Link to="/youngwomens" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -176,7 +176,7 @@ function ChildTestReports(){
       <div className="app-body young-womens upload-prescription">
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {reportList.length}</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/childmalnutrition/child-upload-test-reports/${editPatientKey}/${appointmentId}`}>Upload</Link>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={`/youngwomens/young-woman-upload-test-reports/${editPatientKey}/${appointmentId}`}>Upload</Link>
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
@@ -220,4 +220,4 @@ function ChildTestReports(){
   );
 }
 
-export default ChildTestReports;
+export default YoungWomanTestReports;

@@ -11,14 +11,14 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 
 import Appfooter from "../AppFooter";
 
-import './CreateChildMalnutrition.css';
+import './CreateYoungWoman.css';
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import youngwomenprescription from '../../assets/images/sample-rx.png';
 
-function ChildUploadTestReports(){
+function YoungWomanUploadTestReports(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -152,7 +152,7 @@ function ChildUploadTestReports(){
         jsonData["user_lat"]                  = localStorage.getItem('latitude');
         jsonData["user_long"]                 = localStorage.getItem('longitude');
   
-        const response = await fetch(`${API_URL}/uploadTestReportForChild`, {
+        const response = await fetch(`${API_URL}/uploadTestReportForWoman`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -184,7 +184,7 @@ function ChildUploadTestReports(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to={`/childmalnutrition/child-test-reports/${editPatientKey}/${appointmentId}`} className=''>
+              <Link to={`/youngwomens/young-woman-test-reports/${editPatientKey}/${appointmentId}`} className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -266,4 +266,4 @@ function ChildUploadTestReports(){
   )
 }
 
-export default ChildUploadTestReports;
+export default YoungWomanUploadTestReports;
