@@ -32,13 +32,6 @@ function YoungWomanTestReports(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
-  const searchReports = (e) => {
-    const { name, value } = e.target;
-    setTimeout(()=>{
-      listReports(value);
-    }, 1000)
-  }
-
   const listReports = async (searchKey) => {
   
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -180,7 +173,7 @@ function YoungWomanTestReports(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Test Reports'/>
+            <input type="text" className='form-control' placeholder='Search Test Reports' onChange={searchReport}/>
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>

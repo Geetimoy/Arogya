@@ -180,7 +180,7 @@ function ChildTestReports(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Test Reports'/>
+            <input type="text" className='form-control' placeholder='Search Test Reports' onChange={searchReport}/>
             <span class="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
