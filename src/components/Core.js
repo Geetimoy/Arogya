@@ -37,6 +37,7 @@ import JananiPrescriptions from './janani/JananiPrescriptions';
 import JananiMedicalHistory from './janani/JananiMedicalHistory';
 import JananiAwarenesssurvey from './janani/JananiAwarenessSurvey';
 import JananiTestReports from './janani/JananiTestReports';
+import JananiUploadTestReports from './janani/JananiUploadTestReports';
 import JananiUploadInitialPrescriptions from './janani/JananiUploadInitialPrescriptions';
 import JananiUploadDoctorPrescriptions from './janani/JananiUploadDoctorPrescriptions';
 
@@ -77,6 +78,7 @@ import ElderMedicalHistory from './elderpersons/ElderMedicalHistory';
 import ElderPrescription from './elderpersons/ElderPrescription';
 import ElderUploadDoctorPrescriptions from './elderpersons/ElderUploadDoctorPrescriptions';
 import ElderUploadInitialPrescriptions from './elderpersons/ElderUploadInitialPrescriptions';
+import ElderTestReports from './elderpersons/ElderTestReports';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -354,6 +356,7 @@ export default function Core() {
             <Route path="/janani/janani-awareness-survey/:accountKey" exact element={<JananiAwarenesssurvey />} />
             <Route path="/janani/janani-medical-history/:accountKey" exact element={<JananiMedicalHistory />} />
             <Route path="/janani/janani-test-reports/:accountKey" exact element={<JananiTestReports />} />
+            <Route path="/janani/janani-upload-test-reports/:patientKey/:appointmentId" exact element={<JananiUploadTestReports/>} />
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
@@ -400,6 +403,7 @@ export default function Core() {
             <Route path="/elderpersons/elder-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderPrescription />} />
             <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType" exact element={<ElderUploadInitialPrescriptions />} />
             <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderUploadDoctorPrescriptions /> } />
+            <Route path="/elderpersons/elder-test-reports/:accountKey/:appointmentId" exact element={<ElderTestReports /> } />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

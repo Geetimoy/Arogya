@@ -254,6 +254,10 @@ function ElderPersons(){
     window.location.href = `/elderpersons/elder-prescription/${accountKeyForElderPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
   }
 
+  const [showTestReportModal, setShowTestReportModal] = useState(false);
+  const modalTestReportClose  = () => setShowTestReportModal(false);  
+  const modalTestReportShow   = () => setShowTestReportModal(true);
+
   const [comments, setComments] = useState("");
 
   const commentsChangeHandler = (event) =>{
@@ -382,10 +386,8 @@ function ElderPersons(){
 
                         <li><Link to={`/elderpersons/elder-booked/${elder.account_key}`}>Booked Appointment</Link></li>
                         <li><Link to={`/elderpersons/elder-booking/${elder.account_key}`}>Book New Doctor Appointment</Link></li>
-
                         <li><Link onClick={() => { modalPrescriptionShow(elder.account_key); }} to="#">Upload Prescription</Link></li>
-                        {/* <li><Link to={`/elderpersons/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
-                        {/* <li><Link to={"#"}>Upload Test Reports</Link></li> */}
+                        <li><Link onClick={() => { modalTestReportShow(elder.account_key); }} to="#">Upload Test Reports</Link></li>
                         {/* <li><Link to="#">Book Now</Link></li> */}
                         <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${elder.account_key}`) }}>Close Profile </Link></li>
                         {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
@@ -452,6 +454,26 @@ function ElderPersons(){
             <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={redirectToUploadDoctorPrescription}>Proceed</Link>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalPrescriptionCloseP2}>Cancel</Button>  
              
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showTestReportModal} onHide={modalTestReportClose}>
+          <Modal.Body className='form-all'>  
+            <p>Upload Test Report</p> 
+            <form>
+              <div className="form-group">
+                <label><span className="d-block">Appointment </span></label>
+                <select className="form-control" name="test_report_appoitment_id" id="test_report_appoitment_id" value="">
+                  <option value="">Select</option>
+                  <option value="">Select</option>
+                </select>
+              </div>
+            </form>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>
+            <Link to="/elderpersons/elder-test-reports/:accountKey" variant="primary" className='btn bg-success text-light min-width-100 border-0'>Confirm</Link>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalTestReportClose}>Cancel</Button>  
+              
           </Modal.Footer>  
         </Modal>
 
