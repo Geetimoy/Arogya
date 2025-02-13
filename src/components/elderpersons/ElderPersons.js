@@ -217,16 +217,20 @@ function ElderPersons(){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
       jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      jsonData["patient_account_key"]       = accountKeyForElderPrescription;
+      jsonData["patient_key"]       				= accountKeyForElderPrescription;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
       jsonData["user_lat"]                  = localStorage.getItem('latitude');
       jsonData["user_long"]                 = localStorage.getItem('longitude');
       jsonData["search_param"]              = {
-                                                "notolderthan": "365"
+                                                "by_keywords": "",
+																								"limit": "",
+																								"offset": "0",
+																								"order_by_field": "appointment_id",
+																								"order_by_value": "desc"
                                               }
       
-      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+      const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -236,8 +240,8 @@ function ElderPersons(){
   
       let result = await response.json();
       if(result.success){
-        if(result.data && result.data.length > 0){
-          setAppointmentListForDoctorPresc(result.data);
+        if(result.data && result.data.appointments.length > 0){
+          setAppointmentListForDoctorPresc(result.data.appointments);
         }
         else{
           setAppointmentListForDoctorPresc([]);
@@ -272,16 +276,20 @@ function ElderPersons(){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
       jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      jsonData["patient_account_key"]       = elderAccountKey;
+      jsonData["patient_key"]       				= elderAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
       jsonData["user_lat"]                  = localStorage.getItem('latitude');
       jsonData["user_long"]                 = localStorage.getItem('longitude');
       jsonData["search_param"]              = {
-                                                "notolderthan": "365"
+                                                "by_keywords": "",
+																								"limit": "",
+																								"offset": "0",
+																								"order_by_field": "appointment_id",
+																								"order_by_value": "desc"
                                               }
       
-      const response = await fetch(`${API_URL}/patientListMyBookedAppointments`, {
+      const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -290,8 +298,8 @@ function ElderPersons(){
       })
   
       let result = await response.json();
-      if(result.data && result.data.length > 0){
-        setTestReportAppointmentList(result.data);
+      if(result.data && result.data.appointments.length > 0){
+        setTestReportAppointmentList(result.data.appointments);
       }
       else{
         setTestReportAppointmentList([]);
