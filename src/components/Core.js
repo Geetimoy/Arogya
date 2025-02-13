@@ -70,6 +70,7 @@ import TestReports from './youngwomens/TestReports';
 import YoungWomanPatientBooking from './youngwomens/YoungWomanPatientBooking';
 import YoungWomanTestReports from './youngwomens/YoungWomanTestReports';
 import YoungWomanUploadTestReports from './youngwomens/YoungWomanUploadTestReports';
+import YoungWomanBooking from './youngwomens/YoungWomanBooking';
 
 import ElderPersons from './elderpersons/ElderPersons';
 import CreateElderPerson from './elderpersons/CreateElderPerson';
@@ -392,6 +393,7 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-test-reports/:patientKey/:appointmentId" exact element={<YoungWomanTestReports />} />
             <Route path="/youngwomens/young-woman-upload-test-reports/:patientKey/:appointmentId" exact element={<YoungWomanUploadTestReports/>} />
             <Route path="/youngwomens/young-woman-patient-booking" exact element={<YoungWomanPatientBooking />} />
+            <Route path="/youngwomens/youngwomen-booking/:accountKey" exact element={<YoungWomanBooking />} />
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
