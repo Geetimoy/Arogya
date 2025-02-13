@@ -79,6 +79,7 @@ import ElderPrescription from './elderpersons/ElderPrescription';
 import ElderUploadDoctorPrescriptions from './elderpersons/ElderUploadDoctorPrescriptions';
 import ElderUploadInitialPrescriptions from './elderpersons/ElderUploadInitialPrescriptions';
 import ElderTestReports from './elderpersons/ElderTestReports';
+import ElderUploadTestReports from './elderpersons/ElderUploadTestReports';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -350,8 +351,6 @@ export default function Core() {
             <Route path="/janani/janani-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<JananiPrescriptions />} />
             <Route path="/janani/janani-upload-prescription/:accountKey/:prescriptionType" exact element={<JananiUploadInitialPrescriptions />} />
             <Route path="/janani/janani-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<JananiUploadDoctorPrescriptions /> } />
-
-
             <Route path="/janani/janani-periodic-data/:accountKey" exact element={<JananiPeriodicData />} />
             <Route path="/janani/janani-awareness-survey/:accountKey" exact element={<JananiAwarenesssurvey />} />
             <Route path="/janani/janani-medical-history/:accountKey" exact element={<JananiMedicalHistory />} />
@@ -369,7 +368,6 @@ export default function Core() {
             <Route path="/childmalnutrition/child-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ChildUploadDoctorPrescriptions /> } />
             <Route path="/childmalnutrition/child-test-reports/:patientKey/:appointmentId" exact element={<ChildTestReports />} />
             <Route path="/childmalnutrition/child-upload-test-reports/:patientKey/:appointmentId" exact element={<ChildUploadTestReports/>} />
-
             <Route path="/childmalnutrition/child-medical-history/:accountKey" exact element={<ChildMedicalHistory />} />
             <Route path="/childmalnutrition/child-periodic-data/:accountKey" exact element={<ChildPeriodicData />} />
             <Route path="/childmalnutrition/child-awareness-survey/:accountKey" exact element={<ChildAwarenessSurvey />} />
@@ -403,7 +401,8 @@ export default function Core() {
             <Route path="/elderpersons/elder-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderPrescription />} />
             <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType" exact element={<ElderUploadInitialPrescriptions />} />
             <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderUploadDoctorPrescriptions /> } />
-            <Route path="/elderpersons/elder-test-reports/:accountKey/:appointmentId" exact element={<ElderTestReports /> } />
+            <Route path="/elderpersons/elder-test-reports/:patientKey/:appointmentId" exact element={<ElderTestReports /> } />
+            <Route path="/elderpersons/elder-upload-test-reports/:patientKey/:appointmentId" exact element={<ElderUploadTestReports/>} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
