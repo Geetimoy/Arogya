@@ -53,6 +53,7 @@ import ChildUploadPrescription from './childmalnutrition/ChildUploadPrescription
 import ChildUploadInitialPrescriptions from './childmalnutrition/ChildUploadInitialPrescriptions';
 import ChildUploadDoctorPrescriptions from './childmalnutrition/ChildUploadDoctorPrescriptions';
 import ChildUploadTestReports from './childmalnutrition/ChildUploadTestReports';
+import ChildBooking from './childmalnutrition/ChildBooking';
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -371,6 +372,7 @@ export default function Core() {
             <Route path="/childmalnutrition/child-medical-history/:accountKey" exact element={<ChildMedicalHistory />} />
             <Route path="/childmalnutrition/child-periodic-data/:accountKey" exact element={<ChildPeriodicData />} />
             <Route path="/childmalnutrition/child-awareness-survey/:accountKey" exact element={<ChildAwarenessSurvey />} />
+            <Route path="/childmalnutrition/child-booking/:accountKey" exact element={<ChildBooking />} />
             
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
