@@ -83,6 +83,7 @@ import ElderUploadDoctorPrescriptions from './elderpersons/ElderUploadDoctorPres
 import ElderUploadInitialPrescriptions from './elderpersons/ElderUploadInitialPrescriptions';
 import ElderTestReports from './elderpersons/ElderTestReports';
 import ElderUploadTestReports from './elderpersons/ElderUploadTestReports';
+import ElderBooking from './elderpersons/ElderBooking';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -409,6 +410,7 @@ export default function Core() {
             <Route path="/elderpersons/elder-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ElderUploadDoctorPrescriptions /> } />
             <Route path="/elderpersons/elder-test-reports/:patientKey/:appointmentId" exact element={<ElderTestReports /> } />
             <Route path="/elderpersons/elder-upload-test-reports/:patientKey/:appointmentId" exact element={<ElderUploadTestReports/>} />
+            <Route path="/elderpersons/elder-booking/:accountKey" exact element={<ElderBooking />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
