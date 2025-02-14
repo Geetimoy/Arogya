@@ -204,7 +204,7 @@ function DoctorAppointmentsVolunteer(){
         </div>
       </div>
       <div className="app-body bookings">
-      <div className='d-flex justify-content-between align-items-center'>
+        <div className='d-flex justify-content-between align-items-center'>
           <div className='status d-flex mb-2'>
             <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>
             <p className='me-1 mb-0'><small>Pending: <strong>{pendingCounter}</strong></small>,</p>
