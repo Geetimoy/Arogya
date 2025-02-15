@@ -55,6 +55,7 @@ import ChildUploadInitialPrescriptions from './childmalnutrition/ChildUploadInit
 import ChildUploadDoctorPrescriptions from './childmalnutrition/ChildUploadDoctorPrescriptions';
 import ChildUploadTestReports from './childmalnutrition/ChildUploadTestReports';
 import ChildBooking from './childmalnutrition/ChildBooking';
+import ChildBookedAppointment from './childmalnutrition/ChildBookedAppointment';
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -378,6 +379,7 @@ export default function Core() {
             <Route path="/childmalnutrition/child-periodic-data/:accountKey" exact element={<ChildPeriodicData />} />
             <Route path="/childmalnutrition/child-awareness-survey/:accountKey" exact element={<ChildAwarenessSurvey />} />
             <Route path="/childmalnutrition/child-booking/:accountKey" exact element={<ChildBooking />} />
+            <Route path="/childmalnutrition/child-booked-appointment/:patientKey" exact element={<ChildBookedAppointment />} />
             
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
@@ -412,7 +414,7 @@ export default function Core() {
             <Route path="/elderpersons/elder-test-reports/:patientKey/:appointmentId" exact element={<ElderTestReports /> } />
             <Route path="/elderpersons/elder-upload-test-reports/:patientKey/:appointmentId" exact element={<ElderUploadTestReports/>} />
             <Route path="/elderpersons/elder-booking/:accountKey" exact element={<ElderBooking />} />
-            <Route path="/elderpersons/elder-booked-appointment" exact element={<ElderBookedAppointment />} />
+            <Route path="/elderpersons/elder-booked-appointment/:patientKey" exact element={<ElderBookedAppointment />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

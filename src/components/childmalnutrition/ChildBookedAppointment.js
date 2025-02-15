@@ -16,7 +16,7 @@ import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/
 
 import {Modal, Button} from 'react-bootstrap'; 
 
-function ElderBookedAppointment(){
+function ChildBookedAppointment(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -118,7 +118,7 @@ function ElderBookedAppointment(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Elder Booked Appointment </h5>
+            <h5 className='mx-2 mb-0'>Child Booked Appointment </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -186,4 +186,4 @@ function ElderBookedAppointment(){
 }
 
 
-export default ElderBookedAppointment;
+export default ChildBookedAppointment;
