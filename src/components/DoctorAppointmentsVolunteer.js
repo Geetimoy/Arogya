@@ -232,7 +232,7 @@ function DoctorAppointmentsVolunteer(){
                 {openMenuId === appointment.appointment_id && 
                   <div className='drop-menu'>
                     <ul>
-                      <li><Link to={"/"}>Send Notifications</Link></li>
+                      {/* <li><Link to={"/"}>Send Notifications</Link></li>
                       {
                         (decryptedLoginDetails.account_type === '4') &&<li> <Link to={"/"}>Doctor Details</Link></li>
                       }
@@ -240,7 +240,7 @@ function DoctorAppointmentsVolunteer(){
                       <li><Link to={"#"}>Upload Prescriptions</Link></li>
                       <li><Link to={"#"}>Download Prescriptions</Link></li>
                       <li><Link to={"#"}>Upload Test Reports</Link></li>
-                      <li><Link to={"#"}>Download Test Reports</Link></li>
+                      <li><Link to={"#"}>Download Test Reports</Link></li> */}
                       <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review</Link></li>
                     </ul>
                   </div>
