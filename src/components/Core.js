@@ -26,6 +26,7 @@ import PatientPrescription from './patientprofiles/PatientPrescription';
 import PatientMedicalHistory from './patientprofiles/PatientMedicalHistory';
 import PatientBooking from './patientprofiles/PatientBooking';
 import PatientPeriodicData from './patientprofiles/PatientPeriodicData';
+import PatientBookedAppointment from './patientprofiles/PatientBookedAppointment';
 
 
 import Janani from './janani/Janani';
@@ -41,6 +42,7 @@ import JananiUploadTestReports from './janani/JananiUploadTestReports';
 import JananiUploadInitialPrescriptions from './janani/JananiUploadInitialPrescriptions';
 import JananiUploadDoctorPrescriptions from './janani/JananiUploadDoctorPrescriptions';
 import JananiBooking from './janani/JananiBooking';
+import JananiBookedAppointment from './janani/JananiBookedAppointment';
 
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
@@ -72,6 +74,7 @@ import YoungWomanPatientBooking from './youngwomens/YoungWomanPatientBooking';
 import YoungWomanTestReports from './youngwomens/YoungWomanTestReports';
 import YoungWomanUploadTestReports from './youngwomens/YoungWomanUploadTestReports';
 import YoungWomanBooking from './youngwomens/YoungWomanBooking';
+import YoungWomanBookedAppointment from './youngwomens/YoungWomanBookedAppointment';
 
 import ElderPersons from './elderpersons/ElderPersons';
 import CreateElderPerson from './elderpersons/CreateElderPerson';
@@ -347,11 +350,12 @@ export default function Core() {
             <Route path="/patientprofiles/patient-medical-history/:accountKey" exact element={<PatientMedicalHistory />} />
             <Route path="/patientprofiles/patient-booking/:accountKey" exact element={<PatientBooking />} />
             <Route path="/patientprofiles/patient-periodic-data/:accountKey" exact element={<PatientPeriodicData />} />
+            <Route path="/patientprofiles/patient-booked-appointment/:patientKey" exact element={<PatientBookedAppointment />} />
+
             
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/janani/create-janani" exact element={<CreateJanani />} />
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
-
             <Route path="/janani/janani-prescription/:accountKey" exact element={<JananiPrescriptions />} />
             <Route path="/janani/janani-prescription/:accountKey/:prescriptionType" exact element={<JananiPrescriptions />} />
             <Route path="/janani/janani-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<JananiPrescriptions />} />
@@ -363,6 +367,8 @@ export default function Core() {
             <Route path="/janani/janani-test-reports/:patientKey/:appointmentId" exact element={<JananiTestReports />} />
             <Route path="/janani/janani-upload-test-reports/:patientKey/:appointmentId" exact element={<JananiUploadTestReports/>} />
             <Route path="/janani/janani-booking/:accountKey" exact element={<JananiBooking />} />
+            <Route path="/janani/janani-booked-appointment/:patientKey" exact element={<JananiBookedAppointment />} />
+
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
@@ -398,6 +404,7 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-upload-test-reports/:patientKey/:appointmentId" exact element={<YoungWomanUploadTestReports/>} />
             <Route path="/youngwomens/young-woman-patient-booking" exact element={<YoungWomanPatientBooking />} />
             <Route path="/youngwomens/youngwomen-booking/:accountKey" exact element={<YoungWomanBooking />} />
+            <Route path="/youngwomens/youngwomen-booked-appointment/:patientKey" exact element={<YoungWomanBookedAppointment />} />
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
