@@ -20,6 +20,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 
 function PatientPeriodicData(){
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -211,7 +213,7 @@ function PatientPeriodicData(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Update Periodic Data</h5>
+            <h5 className='mx-2 mb-0'>{decryptedLoginDetails.account_type !== '5' && 'Update'} Periodic Data</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -237,8 +239,9 @@ function PatientPeriodicData(){
         </div>
       </div>
       <div className='app-body form-all upadte-periodic-data'>
-        <p><small>Update Patient Periodic Data</small></p>
-        <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
+        <p><small>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Periodic Data</small></p>
+        
+        {decryptedLoginDetails.account_type !== '5' && <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
           <div className='mb-3 mt-3 text-end'>
             <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
           </div>
@@ -257,7 +260,7 @@ function PatientPeriodicData(){
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
           </div>
-        </form>
+        </form>}
 
         <div className="saved-periodic-data">
           <div className="row mt-4">
