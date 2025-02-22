@@ -371,7 +371,7 @@ function ElderBasicInformation(){
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["elder_email_id"].errorClass}`}>
-            <label htmlFor="elder_email_id">Email </label>
+            <label htmlFor="elder_email_id">Email <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["elder_email_id"].value ? formData["elder_email_id"].value : ''} name="elder_email_id" id="elder_email_id" placeholder="Email" />
             <small className="error-mesg">{formData["elder_email_id"].errorMessage}</small>
           </div>

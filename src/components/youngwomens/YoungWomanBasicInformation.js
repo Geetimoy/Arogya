@@ -376,12 +376,12 @@ function YoungWomanBasicInformation(){
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["woman_email_id"].errorClass}`}>
-            <label htmlFor="woman_email_id">Email </label>
+            <label htmlFor="woman_email_id">Email <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["woman_age"].errorClass}`}>
-            <label htmlFor="woman_age">Age </label>
+            <label htmlFor="woman_age">Age <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_age" id="woman_age" placeholder="Age" value={formData["woman_age"].value ? formData["woman_age"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["woman_age"].errorMessage}</small>
           </div>

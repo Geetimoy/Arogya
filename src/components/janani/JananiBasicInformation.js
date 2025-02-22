@@ -365,7 +365,7 @@ function CreateJanani(){
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["janani_email_id"].errorClass}`}>
-            <label htmlFor="janani_email_id">Email </label>
+            <label htmlFor="janani_email_id">Email <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="janani_email_id" id="janani_email_id" placeholder="Email" onChange={handleChange} value={formData["janani_email_id"].value ? formData["janani_email_id"].value : ''} />
             <small className="error-mesg">{formData["janani_email_id"].errorMessage}</small>
           </div>

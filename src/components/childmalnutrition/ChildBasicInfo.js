@@ -409,7 +409,7 @@ export default function ChildBasicInfo() {
               <small className="error-mesg">{formData["child_address"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["child_address_2"].errorClass}`}>
-              <label htmlFor="child_address_2">Address 2 </label>
+              <label htmlFor="child_address_2">Address 2 <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="child_address_2" id="child_address_2" placeholder="Address 2" onChange={handleChange} value={formData["child_address_2"].value ? formData["child_address_2"].value : ''}/>
               <small className="error-mesg">{formData["child_address_2"].errorMessage}</small>
             </div>
