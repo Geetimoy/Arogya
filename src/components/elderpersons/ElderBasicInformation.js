@@ -347,7 +347,7 @@ function ElderBasicInformation(){
             <small className="error-mesg">{formData["elder_age"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["elder_is_mobile_phone"].errorClass}`}>
-            <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
+            <label className="no-style"><span className="d-block">Is elder's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="personal_mobile_number_y" name="elder_is_mobile_phone" className="custom-control-input" value="t" onChange={handleChange} checked={(formData["elder_is_mobile_phone"].value === 't') ? true : false} />

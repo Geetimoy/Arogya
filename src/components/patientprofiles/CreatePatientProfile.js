@@ -265,7 +265,7 @@ function CreatePatientProfile(){
             <small className="error-mesg">{formData["patient_education"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
-            <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
+            <label className="no-style"><span className="d-block">Is patient's personal mobile number? <span className="text-danger">*</span></span> </label>
             <select className="form-control" name="is_personal_mobile_number" id="is_personal_mobile_number" value={formData["is_personal_mobile_number"].value} onChange={handleChange}>
               <option value="t">Yes</option>
               <option value="f">No</option>

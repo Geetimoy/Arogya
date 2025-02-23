@@ -306,7 +306,7 @@ function CreateChildMalnutrition(){
             <small className="error-mesg">{formData["child_age"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["is_your_personal_mobile_number"].errorClass}`}>
-            <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
+            <label className="no-style"><span className="d-block">Is guardian's personal mobile number? <span className="text-danger">*</span></span> </label>
             <select className="form-control" id="is_your_personal_mobile_number" name="is_your_personal_mobile_number" value={formData["is_your_personal_mobile_number"].value} onChange={handleChange}>
               <option value="t">Yes</option>
               <option value="f">No</option>

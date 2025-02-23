@@ -341,7 +341,7 @@ function CreateJanani(){
             <small className="error-mesg">{formData["hospital_name"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
-            <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
+            <label className="no-style"><span className="d-block">Is janani's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
                 <input type="radio" id="personal_mobile_number_y" name="is_personal_mobile_number" className="custom-control-input" value="t" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 't') ? true : false}/>
