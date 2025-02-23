@@ -276,7 +276,7 @@ function Patientprofiles(){
                   <img src={patientprofile} alt='' />
                   <h6>{patient.display_name}</h6>
                   <h6>{patient.gender} / {patient.age} yrs</h6>
-                  <p className='disease'><small>Problem - Skin</small></p>
+                  {/* <p className='disease'><small>Problem - Skin</small></p> */}
                   <div className="mb-3 mt-3 text-center">
                     <Link onClick={() => { modalShow(patient.display_name, patient.addr1+", "+patient.city, patient.contact_no, patient.age, patient.gender, patient.account_key, '3'); }} to="#" className="btn btn-box-custom primary-bg-color text-light">Select</Link>
                   </div>
