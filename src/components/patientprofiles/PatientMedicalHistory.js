@@ -14,6 +14,8 @@ import AlertContext from '../../context/alert/AlertContext';
 
 function PatientMedicalHistory(){
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -225,7 +227,7 @@ function PatientMedicalHistory(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Update Medical History </h5>
+            <h5 className='mx-2 mb-0'>{decryptedLoginDetails.account_type !== '5' && 'Update'} Medical History </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -251,7 +253,7 @@ function PatientMedicalHistory(){
         </div>
       </div>
       <div className='app-body form-all create-young-woman'>
-        <p><small>Update Patient Medical History</small></p>
+        <p><small>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Medical History</small></p>
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["drug_allergy"].errorClass}`}>
@@ -467,9 +469,9 @@ function PatientMedicalHistory(){
             <textarea rows="3" name="remarks" id="remarks" onChange={handleChange} value={formData["remarks"].value ? formData["remarks"].value : ''} className="form-control" placeholder="Describe / Explain Problems"></textarea>
             <small className="error-mesg">{formData["remarks"].errorMessage}</small>
           </div>
-          <div className='mb-3 mt-3 text-center'>
+          {decryptedLoginDetails.account_type !== '5' && <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
-          </div>
+          </div>}
         </form>
       </div>
       <Appfooter></Appfooter>

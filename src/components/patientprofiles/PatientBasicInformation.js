@@ -17,6 +17,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 
 function PatientBasicInformation(){
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -260,7 +262,8 @@ function PatientBasicInformation(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Update Patient Basic Info </h5>
+            <h5 className='mx-2 mb-0'>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Basic Info </h5>
+            
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -388,9 +391,9 @@ function PatientBasicInformation(){
             <input type="text" className="form-control" name="patient_special_notes" id="patient_special_notes" placeholder="Special Notes" onChange={handleChange} value={formData["patient_special_notes"].value ? formData["patient_special_notes"].value : ''}/>
             <small className="error-mesg">{formData["patient_special_notes"].errorMessage}</small>
           </div>
-          <div className='mb-3 mt-3 text-center'>
+          {decryptedLoginDetails.account_type !== '5' && <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
-          </div>
+          </div>}
         </form>
       </div>
       <Appfooter></Appfooter>

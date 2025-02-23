@@ -16,6 +16,7 @@ import SystemContext from "../context/system/SystemContext";
 import AlertContext from '../context/alert/AlertContext';
 
 import Dropdown from 'react-dropdown-select';
+import Select from 'react-select';
 
 function BasicInformationDoctor(){
 
@@ -41,6 +42,9 @@ function BasicInformationDoctor(){
     basicInfoEmail: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoGender: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoAge: {required: true, value:"", errorClass:"", errorMessage:""},
+    basicInfoEducationalDegree: {required: false, value:"", errorClass:"", errorMessage:""},
+    basicInfoSpecializations: {required: false, value:"", errorClass:"", errorMessage:""},
+    basicInfoAvailOnEmerCall: {required: false, value:"", errorClass:"", errorMessage:""},
     basicInfoCommute: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMedicalExperience: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMedicalCertificate: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -96,25 +100,6 @@ function BasicInformationDoctor(){
 
     setAccountDetails(userDetails);
 
-    formData['basicInfoName']         = {value:userDetails.display_name, errorClass:"", errorMessage:""};
-    formData['basicInfoMobileNo']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-    formData['basicInfoWhatsapp']     = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-    formData['basicInfoEmail']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-    formData['basicInfoGender']       = {value:userDetails.gender, errorClass:"", errorMessage:""};
-    formData['basicInfoAge']          = {value:userDetails.age, errorClass:"", errorMessage:""};
-    formData['basicInfoCommute']      = {value:userDetails.how_commute, errorClass:"", errorMessage:""};
-    formData['basicInfoMedicalExperience']  = {value:userDetails.medical_experiences, errorClass:"", errorMessage:""};
-    formData['basicInfoMedicalCertificate'] = {value:userDetails.medical_certificates, errorClass:"", errorMessage:""};
-    formData['basicInfoAddress1']     = {value:userDetails.addr_1, errorClass:"", errorMessage:""};
-    formData['basicInfoAddress2']     = {value:userDetails.addr_2, errorClass:"", errorMessage:""};
-    formData['basicInfoLandmark']     = {value:userDetails.addr_landmark, errorClass:"", errorMessage:""};
-    formData['basicInfoTown']         = {value:userDetails.city, errorClass:"", errorMessage:""};
-    formData['basicInfoPostalCode']   = {value:userDetails.postal_code, errorClass:"", errorMessage:""};
-    formData['basicInfoServiceArea']  = {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
-    formData['basicInfoSpecialNotes'] = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
-
-    setFormData({...formData, ...formData});
-    
     if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
       var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
       var array1 = new Array();
@@ -127,6 +112,29 @@ function BasicInformationDoctor(){
       })
       setSelectedOptions(array1);
     }
+
+    formData['basicInfoName']         = {value:userDetails.display_name, errorClass:"", errorMessage:""};
+    formData['basicInfoMobileNo']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+    formData['basicInfoWhatsapp']     = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+    formData['basicInfoEmail']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
+    formData['basicInfoGender']       = {value:userDetails.gender, errorClass:"", errorMessage:""};
+    formData['basicInfoAge']          = {value:userDetails.age, errorClass:"", errorMessage:""};
+    formData['basicInfoEducationalDegree']       = {value:userDetails.educational_degree, errorClass:"", errorMessage:""};
+    formData['basicInfoSpecializations']          = {value:userDetails.specializations, errorClass:"", errorMessage:""};
+    formData['basicInfoAvailOnEmerCall']    = {value:userDetails.avail_on_emer_call, errorClass:"", errorMessage:""};
+    formData['basicInfoCommute']      = {value:userDetails.how_commute, errorClass:"", errorMessage:""};
+    formData['basicInfoMedicalExperience']  = {value:userDetails.medical_experiences, errorClass:"", errorMessage:""};
+    formData['basicInfoMedicalCertificate'] = {value:userDetails.medical_certificates, errorClass:"", errorMessage:""};
+    formData['basicInfoAddress1']     = {value:userDetails.addr_1, errorClass:"", errorMessage:""};
+    formData['basicInfoAddress2']     = {value:userDetails.addr_2, errorClass:"", errorMessage:""};
+    formData['basicInfoLandmark']     = {value:userDetails.addr_landmark, errorClass:"", errorMessage:""};
+    formData['basicInfoTown']         = {value:userDetails.city, errorClass:"", errorMessage:""};
+    formData['basicInfoPostalCode']   = {value:userDetails.postal_code, errorClass:"", errorMessage:""};
+    formData['basicInfoServiceArea']  = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+    formData['basicInfoSpecialNotes'] = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+
+    setFormData({...formData, ...formData});
+
   }
 
   const handleChange1 = (values) => {
@@ -174,12 +182,17 @@ function BasicInformationDoctor(){
       jsonData["user_lat"]          = localStorage.getItem('latitude');
       jsonData["user_long"]         = localStorage.getItem('longitude');
 
+      var serviceArea                       = '{'+formData['basicInfoServiceArea'].value+'}';
+
       jsonData["basicInfoName"]             = formData['basicInfoName'].value;
       jsonData["basicInfoMobileNo"]         = formData['basicInfoMobileNo'].value;
       jsonData["basicInfoWhatsapp"]         = formData['basicInfoWhatsapp'].value;
       jsonData["basicInfoEmail"]            = formData['basicInfoEmail'].value;
       jsonData["basicInfoGender"]           = formData['basicInfoGender'].value;
       jsonData["basicInfoAge"]              = formData['basicInfoAge'].value;
+      jsonData["basicInfoEducationalDegree"]  = formData['basicInfoEducationalDegree'].value;
+      jsonData["basicInfoSpecializations"]    = formData['basicInfoSpecializations'].value;
+      jsonData["basicInfoAvailOnEmerCall"]    = formData['basicInfoAvailOnEmerCall'].value;
       jsonData["basicInfoCommute"]          = formData['basicInfoCommute'].value;
       jsonData["basicInfoMedicalExperience"]  = formData['basicInfoMedicalExperience'].value;
       jsonData["basicInfoMedicalCertificate"] = formData['basicInfoMedicalCertificate'].value;
@@ -188,7 +201,7 @@ function BasicInformationDoctor(){
       jsonData["basicInfoLandmark"]         = formData['basicInfoLandmark'].value;
       jsonData["basicInfoCity"]             = formData['basicInfoTown'].value;
       jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
-      jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
+      jsonData["basicInfoServiceArea"]      = serviceArea;
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
       
       
@@ -337,15 +350,24 @@ function BasicInformationDoctor(){
             </div>
             <div className='form-group'>
               <label>Educational Degree</label>
-              <input type="text" className="form-control" name="educationalDegree" id="educationalDegree"  value="Doctorate" onChange={handleChange} />
+              <input type="text" className="form-control" name="basicInfoEducationalDegree" id="basicInfoEducationalDegree"  value={formData["basicInfoEducationalDegree"].value ? formData["basicInfoEducationalDegree"].value : ''} onChange={handleChange} />
             </div>
             <div className='form-group'>
               <label>Specialization</label>
-              <input type="text" className="form-control" name="specialization" id="specialization"  value="Heart" onChange={handleChange} />
+              <input type="text" className="form-control" name="basicInfoSpecializations" id="basicInfoSpecializations"  value={formData["basicInfoSpecializations"].value ? formData["basicInfoSpecializations"].value : ''} onChange={handleChange} />
             </div>
             <div className='form-group'>
-              <label>Is Available on Emergency Call?</label>
-              <input type="text" className="form-control" name="specialization" id="specialization"  value="Yes" onChange={handleChange} />
+              <label className="pos-relative no-style">Is Available on Emergency Call? </label>
+              <div className="d-flex">
+                <div className="custom-control custom-radio custom-control-inline mt-2">
+                  <input type="radio" id="avail_on_emerg_t" name="basicInfoAvailOnEmerCall" className="custom-control-input" onChange={handleChange} value="t" checked={(formData["basicInfoAvailOnEmerCall"].value === 't') ? true : false}/>
+                  <label className="custom-control-label no-style" htmlFor="avail_on_emerg_t">Yes</label>
+                </div>
+                <div className="custom-control custom-radio custom-control-inline mt-2">
+                  <input type="radio" id="avail_on_emerg_f" name="basicInfoAvailOnEmerCall" className="custom-control-input" onChange={handleChange} value="f" checked={(formData["basicInfoAvailOnEmerCall"].value === 'f') ? true : false}/>
+                  <label className="custom-control-label no-style" htmlFor="avail_on_emerg_f">No</label>
+                </div>
+              </div>
             </div>
             <div className={`form-group ${formData["basicInfoAddress1"].errorClass}`}>
               <label>Address 1   <span className="text-danger">*</span> : </label>
