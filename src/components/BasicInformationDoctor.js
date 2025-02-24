@@ -182,8 +182,6 @@ function BasicInformationDoctor(){
       jsonData["user_lat"]          = localStorage.getItem('latitude');
       jsonData["user_long"]         = localStorage.getItem('longitude');
 
-      var serviceArea                       = '{'+formData['basicInfoServiceArea'].value+'}';
-
       jsonData["basicInfoName"]             = formData['basicInfoName'].value;
       jsonData["basicInfoMobileNo"]         = formData['basicInfoMobileNo'].value;
       jsonData["basicInfoWhatsapp"]         = formData['basicInfoWhatsapp'].value;
@@ -201,7 +199,7 @@ function BasicInformationDoctor(){
       jsonData["basicInfoLandmark"]         = formData['basicInfoLandmark'].value;
       jsonData["basicInfoCity"]             = formData['basicInfoTown'].value;
       jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
-      jsonData["basicInfoServiceArea"]      = serviceArea;
+      jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
       
       

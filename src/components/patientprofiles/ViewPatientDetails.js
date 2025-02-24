@@ -99,7 +99,7 @@ function ViewPatientDetails(){
             <input type="text" className="form-control" name="" id="" placeholder="Age" />
           </div>
           <div className="form-group">
-            <label className="no-style"><span className="d-block">Is your personal mobile number? <span className="text-danger">*</span></span> </label>
+            <label className="no-style"><span className="d-block">Is patient's personal mobile number? <span className="text-danger">*</span></span> </label>
             <select className="form-control">
               <option value="1" selected="">Yes</option>
               <option value="2">No</option>

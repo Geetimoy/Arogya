@@ -63,7 +63,14 @@ function DoctorAppointmentsVolunteer(){
   const [filterPendingAppointmentChecked, setFilterPendingAppointmentChecked] = useState(false);
 
   useEffect(() => {
-    listAppointment("");
+    if(filterPendingAppointmentChecked){
+      listAppointment("");
+    }
+    else{
+      if(systemContext.systemDetails.system_id){
+        listAppointment("");
+      }
+    }
     // eslint-disable-next-line
   }, [filterPendingAppointmentChecked]);
 
