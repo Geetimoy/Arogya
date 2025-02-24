@@ -296,7 +296,7 @@ function Patientprofiles(){
               {/* <p className='mb-0'><strong>Age</strong> - 32</p> */}
               {/* <p className='mb-0'><strong>Phone</strong> - 9876543213</p> */}
               <p className='mb-0'><strong>Address</strong> - {patientDetailsModalData['patientAddress']}</p>
-              {/* <p className='mb-0'><strong>City</strong> - Kolkata</p> */}
+              
               {/* <p className='mb-0'><strong>Disease</strong> - Dental Problem</p> */}
               <p className='mb-0'><strong>Doctor Name </strong> -  {patientDetailsModalData['doctorName']}</p>
               <p className='mb-0'><strong>Specialization </strong> -  {patientDetailsModalData['doctorSpecialization']}</p>
