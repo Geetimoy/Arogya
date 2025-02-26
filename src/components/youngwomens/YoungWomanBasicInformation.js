@@ -44,7 +44,7 @@ function YoungWomanBasicInformation(){
     whatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_age: {required: true, value:"", errorClass:"", errorMessage:""},
     is_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
-    woman_email_id: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_email_id: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_address: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_address_2: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_landmark: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -375,10 +375,10 @@ function YoungWomanBasicInformation(){
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["woman_email_id"].errorClass}`}>
-            <label htmlFor="woman_email_id">Email <span className="text-danger">*</span></label>
+          <div className="form-group">
+            <label htmlFor="woman_email_id">Email </label>
             <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} onChange={handleChange}/>
-            <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small> */}
           </div>
           <div className={`form-group ${formData["woman_age"].errorClass}`}>
             <label htmlFor="woman_age">Age <span className="text-danger">*</span></label>

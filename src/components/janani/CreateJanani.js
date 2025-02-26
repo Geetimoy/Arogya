@@ -49,7 +49,7 @@ function CreateJanani(){
     is_personal_mobile_number: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_contact_number: {required: true, value:"", errorClass:"", errorMessage:""},
     whatsapp: {required: false, value:"", errorClass:"", errorMessage:""},
-    janani_email_id: {required: true, value:"", errorClass:"", errorMessage:""},
+    janani_email_id: {required: false, value:"", errorClass:"", errorMessage:""},
     janani_address: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_address_2: {required: false, value:"", errorClass:"", errorMessage:""},
     janani_state: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -333,10 +333,10 @@ function CreateJanani(){
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" onChange={handleChange}  placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} maxLength={10}/>
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["janani_email_id"].errorClass}`}>
-            <label htmlFor="janani_email_id">Email <span className="text-danger">*</span></label>
+          <div className="form-group">
+            <label htmlFor="janani_email_id">Email </label>
             <input type="text" className="form-control" name="janani_email_id" id="janani_email_id" onChange={handleChange} placeholder="Email" value={formData["janani_email_id"].value ? formData["janani_email_id"].value : ''} />
-            <small className="error-mesg">{formData["janani_email_id"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["janani_email_id"].errorMessage}</small> */}
           </div>
           <div className={`form-group ${formData["janani_address"].errorClass}`}>
             <label htmlFor="janani_address">Address <span className="text-danger">*</span></label>

@@ -307,10 +307,10 @@ function CraeteYoungWomen(){
             <input type="tel" className="form-control" onChange={handleChange} value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} name="whatsapp" id="whatsapp" placeholder="WhatsApp No" />
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["woman_email_id"].errorClass}`}>
+          <div className="form-group">
             <label htmlFor="woman_email_id">Email </label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} name="woman_email_id" id="woman_email_id" placeholder="Email" />
-            <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small> */}
           </div>
           <div className={`form-group ${formData["woman_address"].errorClass}`}>
             <label htmlFor="woman_address">Address <span className="text-danger">*</span></label>

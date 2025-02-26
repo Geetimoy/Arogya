@@ -286,10 +286,10 @@ function CreateElderPerson(){
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
 
-          <div className={`form-group ${formData["elder_email_id"].errorClass}`}>
+          <div className="form-group">
             <label htmlFor="elder_email_id">Email </label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["elder_email_id"].value ? formData["elder_email_id"].value : ''} name="elder_email_id" id="elder_email_id" placeholder="Email" />
-            <small className="error-mesg">{formData["elder_email_id"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["elder_email_id"].errorMessage}</small> */}
           </div>
 
           <div className={`form-group ${formData["elder_address"].errorClass}`}>

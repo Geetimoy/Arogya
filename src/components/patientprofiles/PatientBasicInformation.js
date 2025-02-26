@@ -346,10 +346,10 @@ function PatientBasicInformation(){
             <input type="text" className="form-control" name="patient_whatsapp_no" id="patient_whatsapp_no" placeholder="WhatsApp No" onChange={handleChange} value={formData["patient_whatsapp_no"].value ? formData["patient_whatsapp_no"].value : ''}/>
             <small className="error-mesg">{formData["patient_whatsapp_no"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["patient_email"].errorClass}`}>
+          <div className="form-group">
             <label htmlFor="name">Email </label>
             <input type="text" className="form-control" name="patient_email" id="patient_email" placeholder="Email" onChange={handleChange} value={formData["patient_email"].value ? formData["patient_email"].value : ''}/>
-            <small className="error-mesg">{formData["patient_email"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["patient_email"].errorMessage}</small> */}
           </div>
           <div className={`form-group ${formData["patient_address"].errorClass}`}>
             <label htmlFor="name">Address <span className="text-danger">*</span></label>

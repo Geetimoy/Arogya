@@ -323,10 +323,10 @@ function CreateChildMalnutrition(){
             <input type="tel" className="form-control" name="child_whatsapp_no" id="child_whatsapp_no" placeholder="WhatsApp No" onChange={handleChange} value={formData["child_whatsapp_no"].value ? formData["child_whatsapp_no"].value : ''}/>
             <small className="error-mesg">{formData["child_whatsapp_no"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["child_email"].errorClass}`}>
+          <div className="form-group">
             <label htmlFor="child_email">Email </label>
             <input type="text" className="form-control" name="child_email" id="child_email" placeholder="Email" onChange={handleChange} value={formData["child_email"].value ? formData["child_email"].value : ''}/>
-            <small className="error-mesg">{formData["child_email"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["child_email"].errorMessage}</small> */}
           </div>
           <div className={`form-group ${formData["child_address"].errorClass}`}>
             <label htmlFor="child_address">Address <span className="text-danger">*</span></label>

@@ -370,10 +370,10 @@ function ElderBasicInformation(){
             <input type="tel" className="form-control" onChange={handleChange} value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} name="whatsapp" id="whatsapp" placeholder="WhatsApp No" />
             <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["elder_email_id"].errorClass}`}>
-            <label htmlFor="elder_email_id">Email <span className="text-danger">*</span></label>
+          <div className="form-group">
+            <label htmlFor="elder_email_id">Email </label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["elder_email_id"].value ? formData["elder_email_id"].value : ''} name="elder_email_id" id="elder_email_id" placeholder="Email" />
-            <small className="error-mesg">{formData["elder_email_id"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["elder_email_id"].errorMessage}</small> */}
           </div>
           <div className={`form-group ${formData["elder_address"].errorClass}`}>
             <label htmlFor="elder_address">Address <span className="text-danger">*</span></label>
