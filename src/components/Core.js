@@ -27,6 +27,8 @@ import PatientMedicalHistory from './patientprofiles/PatientMedicalHistory';
 import PatientBooking from './patientprofiles/PatientBooking';
 import PatientPeriodicData from './patientprofiles/PatientPeriodicData';
 import PatientBookedAppointment from './patientprofiles/PatientBookedAppointment';
+import PatientViewBasicInformation from './patientprofiles/PatientViewBasicInformation';
+import PatientViewMedicalHistory from './patientprofiles/PatientViewMedicalHistory';
 
 
 import Janani from './janani/Janani';
@@ -128,6 +130,7 @@ import PatientUploadInitialPrescriptions from './patientprofiles/PatientUploadIn
 import PatientUploadTestReports from './patientprofiles/PatientUploadTestReports';
 import DoctorAppointmentsVolunteer from './DoctorAppointmentsVolunteer';
 import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoctorPrescriptions';
+
 
 
 
@@ -351,6 +354,8 @@ export default function Core() {
             <Route path="/patientprofiles/patient-booking/:accountKey" exact element={<PatientBooking />} />
             <Route path="/patientprofiles/patient-periodic-data/:accountKey" exact element={<PatientPeriodicData />} />
             <Route path="/patientprofiles/patient-booked-appointment/:patientKey" exact element={<PatientBookedAppointment />} />
+            <Route path="/patientprofiles/patient-view-basicinfo/:accountKey" exact element={<PatientViewBasicInformation />} />
+            <Route path="/patientprofiles/patient-view-medical-history/:accountKey" exact element={<PatientViewMedicalHistory />} />
 
             
             <Route path="/Janani" exact element={<Janani />} />

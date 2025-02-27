@@ -433,7 +433,7 @@ function Patientprofiles(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/patientprofiles/patient-view-basicinfo/${patient.account_key}`}>View Basic Information</Link>
                         }
                       </li>
                       <li>
@@ -442,7 +442,7 @@ function Patientprofiles(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/patientprofiles/patient-view-medical-history/${patient.account_key}`}>View Medical History</Link>
                         }
                       </li>
                       <li>
@@ -452,7 +452,7 @@ function Patientprofiles(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/patientprofiles/patient-periodic-data/${patient.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/patientprofiles/patient-view-periodic-data/${patient.account_key}`}>View Periodic Data</Link>
                         }
                       </li>
                       <li><Link to={`/patientprofiles/patient-booked-appointment/${patient.account_key}`}>Booked Appointment</Link></li>
