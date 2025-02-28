@@ -62,6 +62,8 @@ import ChildUploadTestReports from './childmalnutrition/ChildUploadTestReports';
 import ChildBooking from './childmalnutrition/ChildBooking';
 import ChildBookedAppointment from './childmalnutrition/ChildBookedAppointment';
 import ChildViewBasicInfo from './childmalnutrition/ChildViewBasicInfo';
+import ChildViewMedicalHistory from './childmalnutrition/ChildViewMedicalHistory';
+import ChildViewPeriodicData from './childmalnutrition/ChildViewPeriodicData';
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -395,7 +397,8 @@ export default function Core() {
             <Route path="/childmalnutrition/child-booking/:accountKey" exact element={<ChildBooking />} />
             <Route path="/childmalnutrition/child-booked-appointment/:patientKey" exact element={<ChildBookedAppointment />} />
             <Route path="/childmalnutrition/child-view-basic-info/:accountKey" exact element={<ChildViewBasicInfo/>} />
-            
+            <Route path="/childmalnutrition/child-view-medical-history/:accountKey" exact element={<ChildViewMedicalHistory/>} />
+            <Route path="/childmalnutrition/child-view-periodic-data/:accountKey" exact element={<ChildViewPeriodicData />} />
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />

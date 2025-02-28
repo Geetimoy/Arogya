@@ -1,35 +1,33 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext, useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
-
 import Appfooter from "../AppFooter";
-
-import { Link, useNavigate, useParams } from "react-router-dom";
 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
-import Category from "./Category";
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
-
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { faEllipsisV, faBell, faLongArrowAltLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
-function PatientViewPeriodicData(){
+import { Link, useNavigate, useParams } from "react-router-dom";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+function ChildViewPeriodicData(){
 
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+  const [isMActive, setIsMActive] = useState(false);
+
   const [periodicList, setPeriodicList] = useState([]); 
   const [urlParam, setUrlParam] = useState(useParams());
   const editAccountKey = urlParam.accountKey;
 
-  const [isMActive, setIsMActive] = useState(false);
+
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
@@ -42,13 +40,13 @@ function PatientViewPeriodicData(){
   }, [systemContext.systemDetails.system_id]);
 
   const listPeriodicData = async () => {
-  
+
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["patient_account_type"]      = 3;
-    jsonData["patient_account_key"]       = editAccountKey;
+    jsonData["child_account_type"]        = 3;
+    jsonData["child_account_key"]         = editAccountKey;
     jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
     jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
@@ -58,13 +56,13 @@ function PatientViewPeriodicData(){
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["search_param"]              = {
                                               "by_keywords": "",
-                                              "limit": "0",
+                                              "limit": "10",
                                               "offset": "0",
                                               "order_by_field": "data_processed_on",
                                               "order_by_value": "desc"
                                             }
 
-    const response = await fetch(`${API_URL}/patientPeriodicDataListFromDoctorLogin`, {
+    const response = await fetch(`${API_URL}/childPeriodicDataList`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,12 +87,11 @@ function PatientViewPeriodicData(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/patientprofiles" className=''>
+              <Link to="/child-malnutrition" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'> View Patient Periodic Data </h5>
-            
+            <h5 className='mx-2 mb-0'>View Child Periodic Data</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -103,7 +100,7 @@ function PatientViewPeriodicData(){
               <span className='top-header-notification primary-bg-color'>3</span>
               </Link>
             </div> 
-            <div className={`my-element2 ${isMActive ? 'active' : ''}`}><FontAwesomeIcon icon={faEllipsisV} /></div>
+            <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
             <div className='drop-menu'>
                 <ul>
                   <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
@@ -120,17 +117,18 @@ function PatientViewPeriodicData(){
         </div>
       </div>
       <div className='app-body form-all upadte-periodic-data'>
-        {/* <p><small>View Patient Periodic Data</small></p> */}
+        <p><small>View Child Periodic Data</small></p>
+        
         <div className="saved-periodic-data">
           <div className="row mt-4">
 
-            {periodicList.length > 0 && periodicList.map((patient, index) => (
+            {periodicList.map((child, index) => (
               <div className="col-6" key={index}>
                 <div className="jumbotron rounded p-2">
                   <div className="periodic-data position-relative">
-                    <p className="primary-color"><strong>Date -  {patient.data_processed_on}</strong></p>
+                    <p className="primary-color"><strong>Date -  {child.data_processed_on}</strong></p>
                     {
-                      patient.sub_periodic_data.map((category, categoryindex) => {
+                      child.sub_periodic_data.map((category, categoryindex) => {
                         return <p key={`${index}${categoryindex}`}>{category.category_name} - {category.value}</p>
                       })
                     }
@@ -149,4 +147,4 @@ function PatientViewPeriodicData(){
   );
 }
 
-export default PatientViewPeriodicData;
+export default ChildViewPeriodicData;
