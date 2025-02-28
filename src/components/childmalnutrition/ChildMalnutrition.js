@@ -403,7 +403,7 @@ function ChildMalnutrion(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/childmalnutrition/child-view-basic-info/${child.account_key}`}>View Basic Information</Link>
                         }
                       </li>
                       <li>
@@ -412,7 +412,7 @@ function ChildMalnutrion(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-view-medical-history/${child.account_key}`}>View Medical History</Link>
                         }
                       </li>
                       <li>
@@ -422,7 +422,7 @@ function ChildMalnutrion(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-periodic-data/${child.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-view-periodic-data/${child.account_key}`}>View Periodic Data</Link>
                         }
                       </li>
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Survey Report/Prescription</Link></li> */}

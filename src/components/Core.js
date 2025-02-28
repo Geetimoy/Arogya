@@ -29,6 +29,7 @@ import PatientPeriodicData from './patientprofiles/PatientPeriodicData';
 import PatientBookedAppointment from './patientprofiles/PatientBookedAppointment';
 import PatientViewBasicInformation from './patientprofiles/PatientViewBasicInformation';
 import PatientViewMedicalHistory from './patientprofiles/PatientViewMedicalHistory';
+import PatientViewPeriodicData from './patientprofiles/PatientViewPeriodicData';
 
 
 import Janani from './janani/Janani';
@@ -60,6 +61,7 @@ import ChildUploadDoctorPrescriptions from './childmalnutrition/ChildUploadDocto
 import ChildUploadTestReports from './childmalnutrition/ChildUploadTestReports';
 import ChildBooking from './childmalnutrition/ChildBooking';
 import ChildBookedAppointment from './childmalnutrition/ChildBookedAppointment';
+import ChildViewBasicInfo from './childmalnutrition/ChildViewBasicInfo';
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -356,6 +358,7 @@ export default function Core() {
             <Route path="/patientprofiles/patient-booked-appointment/:patientKey" exact element={<PatientBookedAppointment />} />
             <Route path="/patientprofiles/patient-view-basicinfo/:accountKey" exact element={<PatientViewBasicInformation />} />
             <Route path="/patientprofiles/patient-view-medical-history/:accountKey" exact element={<PatientViewMedicalHistory />} />
+            <Route path="/patientprofiles/patient-view-periodic-data/:accountKey" exact element={<PatientViewPeriodicData />} />
 
             
             <Route path="/Janani" exact element={<Janani />} />
@@ -391,6 +394,7 @@ export default function Core() {
             <Route path="/childmalnutrition/child-awareness-survey/:accountKey" exact element={<ChildAwarenessSurvey />} />
             <Route path="/childmalnutrition/child-booking/:accountKey" exact element={<ChildBooking />} />
             <Route path="/childmalnutrition/child-booked-appointment/:patientKey" exact element={<ChildBookedAppointment />} />
+            <Route path="/childmalnutrition/child-view-basic-info/:accountKey" exact element={<ChildViewBasicInfo/>} />
             
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
