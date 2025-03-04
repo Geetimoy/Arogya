@@ -414,7 +414,7 @@ function ElderPersons(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/elderpersons/elder-view-basic-info/${elder.account_key}`}>View Basic Information</Link>
                         }
 
                         </li>
@@ -434,7 +434,7 @@ function ElderPersons(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-periodic-data/${elder.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-periodic-data/${elder.account_key}`}>View Periodic Data</Link>
                         }
                         </li>
                         {/* <li><Link to={"/elderpersons/patient-prescription"}>Upload Prescription</Link></li> */}
