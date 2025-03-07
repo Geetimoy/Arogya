@@ -448,9 +448,14 @@ function ElderPersons(){
                           (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>View Awareness Survey</Link>
                         }
                         </li>
-
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&
                         <li><Link to={`/elderpersons/elder-booked-appointment/${elder.account_key}`}>Booked Appointment</Link></li>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&
                         <li><Link to={`/elderpersons/elder-booking/${elder.account_key}`}>Book New Doctor Appointment</Link></li>
+                        }
                         <li><Link onClick={() => { modalPrescriptionShow(elder.account_key); }} to="#">Upload Prescription</Link></li>
                         <li><Link onClick={() => { modalTestReportsShow(elder.account_key); }} to="#">Upload Test Reports</Link></li>
                         {/* <li><Link to="#">Book Now</Link></li> */}

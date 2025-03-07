@@ -430,8 +430,14 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>View Awareness Survey</Link>
                         }
                         </li>
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&
                         <li><Link to={`/youngwomens/youngwomen-booked-appointment/${women.account_key}`}>Booked Appointment</Link></li>
+                        }
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&
                         <li><Link to={`/youngwomens/youngwomen-booking/${women.account_key}`}>Book New Doctor Appointment</Link></li>
+                        }
                         <li><Link onClick={() => { modalPrescriptionShow(women.account_key); }} to="#">Upload Prescription</Link></li>
                         {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
                         <li><Link onClick={() => { modalTestReportsShow(women.account_key); }} to="#">Upload Test Reports</Link></li>

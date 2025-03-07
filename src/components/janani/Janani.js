@@ -430,8 +430,14 @@ function Janani(){
                         }
                       </li>
                       {/* <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li> */}
+                      {
+                          (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`/janani/janani-booked-appointment/${janani.account_key}`}>Booked Appointment</Link></li>
+                      }
+                      {
+                          (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`/janani/janani-booking/${janani.account_key}`}>Book New Doctor Appointment</Link></li>
+                      }
                       <li><Link onClick={() => { modalPrescriptionShow(janani.account_key); }} to="#">Upload Prescription</Link></li>
                       <li><Link onClick={() => { modalTestReportsShow(janani.account_key); }} to="#">Upload Test Reports</Link></li>
                       {/* <li><Link to={`/janani/janani-patient-booking/`}>Book Now</Link></li> */}

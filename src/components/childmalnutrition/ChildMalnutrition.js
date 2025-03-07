@@ -428,8 +428,14 @@ function ChildMalnutrion(){
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-test-reports/${child.account_key}`}>Upload Test Reports</Link></li> */}
+                      {
+                          (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`/childmalnutrition/child-booked-appointment/${child.account_key}`}>Booked Appointment</Link></li>
+                      }
+                      {
+                          (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`/childmalnutrition/child-booking/${child.account_key}`}>Book New Doctor Appointment</Link></li>
+                      }
                       
                       {/* <li><Link to={`/childmalnutrition/child-patient-booking/`}>Book Now</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link></li>
