@@ -146,6 +146,7 @@ import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoc
 export default function Core() {
 
   //const domainName = window.location.hostname;
+  //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
   const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
@@ -200,6 +201,11 @@ export default function Core() {
       setSystemId("ukhraapp.serviceplace.org.in");
       var faviconFolder   = '/ukhra-favicon/';
       var manifestFolder  = '/ukhra-manifest/'
+    }
+    else if(domainName === "sevaapurulia.serviceplace.org.in"){
+      setSystemId("sevaapurulia.serviceplace.org.in");
+      var faviconFolder   = '/sevaapurulia-favicon/';
+      var manifestFolder  = '/sevaapurulia-manifest/'
     }
     else{
       setSystemId("telehealth.serviceplace.org.in");
@@ -286,6 +292,10 @@ export default function Core() {
         setPrimaryColor('#f79645');
         setPrimaryBgColor('#f79645');
         break;
+      case 'sevaapurulia.serviceplace.org.in':
+        setPrimaryColor('#f79645');
+        setPrimaryBgColor('#f79645');
+        break;
       case 'rgvnapp.serviceplace.org.in':
         setPrimaryColor('#2aa142');
         setPrimaryBgColor('#2aa142');
@@ -321,6 +331,9 @@ export default function Core() {
   } 
   else if (domainName === "ukhraapp.serviceplace.org.in"){
     containerClass = 'ukhra-container-class';
+  }
+  else if (domainName === "sevaapurulia.serviceplace.org.in"){
+    containerClass = 'sevaapurulia-container-class';
   } 
   
   const isLoggedIn = loginContext.loginState.is_logged_in;

@@ -183,7 +183,7 @@ function PatientViewBasicInformation(){
       <div className='app-body create-patient-profiles'>
        
         <p><small>View Patient's profile information</small></p>
-        <form className="mt-3" name="patient_form" id="patient_form">
+        <form className="mt-3 select-box" name="patient_form" id="patient_form">
           <div className={`form-group`}>
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="patient_name" id="patient_name" placeholder="Full Name" value={formData["patient_name"].value ? formData["patient_name"].value : ''}/>
