@@ -230,6 +230,8 @@ export default function Core() {
     document.querySelector("link[rel='icon'][sizes='96x96']").setAttribute("href", faviconFolder+'favicon-96x96.png');
     document.querySelector("link[rel='icon'][sizes='16x16']").setAttribute("href", faviconFolder+'favicon-16x16.png');
 
+    document.querySelector("meta[name='msapplication-TileImage']").setAttribute("href", faviconFolder+'ms-icon-144x144.png');
+
     //REPLACE MAFIFEST PATH
     document.querySelector("link[rel='manifest']").setAttribute("href", manifestFolder+'manifest.json');
 
