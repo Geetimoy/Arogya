@@ -304,17 +304,17 @@ function BasicInformation(){
           <form className="basic-information select-box" name="basic_information" id="basic_information" onSubmit={handleFormSubmit}>
             <div className={`form-group ${formData["basicInfoName"].errorClass}`}>
               <label htmlFor="name">Name <span className="text-danger">*</span></label>
-              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer H" onChange={handleChange} value={formData["basicInfoName"].value ? formData["basicInfoName"].value : ''}/>
+              <input type="text" className="form-control" name="basicInfoName" id="basicInfoName" placeholder="Volunteer Name" onChange={handleChange} value={formData["basicInfoName"].value ? formData["basicInfoName"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoName"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoMobileNo"].errorClass}`}> 
               <label> Mobile Number <span className="text-danger">*</span></label>
-              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoMobileNo"].value ? formData["basicInfoMobileNo"].value : ''}/>
+              <input type="tel" className="form-control" name="basicInfoMobileNo" id="basicInfoMobileNo" placeholder="9999999999" onChange={handleChange} maxLength={12} value={formData["basicInfoMobileNo"].value ? formData["basicInfoMobileNo"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoMobileNo"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoWhatsapp"].errorClass}`}>
               <label>WhatsApp :</label>
-              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9038888991" onChange={handleChange} maxLength={12} value={formData["basicInfoWhatsapp"].value ? formData["basicInfoWhatsapp"].value : ''}/>
+              <input type="text" className="form-control" name="basicInfoWhatsapp" id="basicInfoWhatsapp" placeholder="9999999999" onChange={handleChange} maxLength={12} value={formData["basicInfoWhatsapp"].value ? formData["basicInfoWhatsapp"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoWhatsapp"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoEmail"].errorClass}`}>
