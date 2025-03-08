@@ -410,7 +410,7 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/update-medical-history/${women.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-medical-history/${women.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/young-woman-view-medical-history/${women.account_key}`}>View Medical History</Link>
                         }
                         </li>
                         <li>
