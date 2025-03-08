@@ -401,7 +401,7 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/young-woman-basicinfo/${women.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/youngwomens/young-woman-basicinfo/${women.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/youngwomens/young-woman-view-basicinfo/${women.account_key}`}>View Basic Information</Link>
                         }
                         </li>
 

@@ -81,6 +81,7 @@ import YoungWomanTestReports from './youngwomens/YoungWomanTestReports';
 import YoungWomanUploadTestReports from './youngwomens/YoungWomanUploadTestReports';
 import YoungWomanBooking from './youngwomens/YoungWomanBooking';
 import YoungWomanBookedAppointment from './youngwomens/YoungWomanBookedAppointment';
+import YoungWomanViewBasicInformation from './youngwomens/YoungWomanViewBasicInformation';
 
 import ElderPersons from './elderpersons/ElderPersons';
 import CreateElderPerson from './elderpersons/CreateElderPerson';
@@ -98,6 +99,7 @@ import ElderBookedAppointment from './elderpersons/ElderBookedAppointment';
 import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation';
 import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
 import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory`';
+import ElderViewAwarenessSuevey from './elderpersons/ElderViewAwarenessSurvey';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -435,6 +437,7 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-patient-booking" exact element={<YoungWomanPatientBooking />} />
             <Route path="/youngwomens/youngwomen-booking/:accountKey" exact element={<YoungWomanBooking />} />
             <Route path="/youngwomens/youngwomen-booked-appointment/:patientKey" exact element={<YoungWomanBookedAppointment />} />
+            <Route path="/youngwomens/young-woman-view-basicinfo/:accountKey" exact element={<YoungWomanViewBasicInformation />} />
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
@@ -455,6 +458,7 @@ export default function Core() {
             <Route path="/elderpersons/Elder-View-Basic-Info/:accountKey" exact element={<ElderViewBasicInformation />} />
             <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} />
             <Route path="/elderpersons/Elder-view-medical-history/:accountKey" exact element={<ElderViewMedicalHistory />} />
+            <Route path="/elderpersons/Elder-View-Awareness-Survey/:accountKey" exact element={<ElderViewAwarenessSuevey />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

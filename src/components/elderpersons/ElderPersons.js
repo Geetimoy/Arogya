@@ -445,7 +445,7 @@ function ElderPersons(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>View Awareness Survey</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-awareness-survey/${elder.account_key}`}>View Awareness Survey</Link>
                         }
                         </li>
                         {
