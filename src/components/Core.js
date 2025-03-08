@@ -97,6 +97,7 @@ import ElderBooking from './elderpersons/ElderBooking';
 import ElderBookedAppointment from './elderpersons/ElderBookedAppointment';
 import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation';
 import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
+import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory`';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -453,6 +454,7 @@ export default function Core() {
             <Route path="/elderpersons/elder-booked-appointment/:patientKey" exact element={<ElderBookedAppointment />} />
             <Route path="/elderpersons/Elder-View-Basic-Info/:accountKey" exact element={<ElderViewBasicInformation />} />
             <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} />
+            <Route path="/elderpersons/Elder-view-medical-history/:accountKey" exact element={<ElderViewMedicalHistory />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
