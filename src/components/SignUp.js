@@ -329,7 +329,7 @@ function SignUp(){
                 <button type="submit" className='btn primary-bg-color text-light w-100 border-0'>Register</button>
               </div>
               <div>
-                <p>By registering you read & agreed to the RGVN & ServicePlace <Link to ="/termsofuse" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>
+                <p>By registering you read & agreed to the {systemContext.systemDetails.thp_system_name.split(" - ")[0]} <Link to ="/termsofuse" className='primary-color'>Terms of Use</Link> & <Link to="/disclaimer" className='primary-color'>Disclaimer</Link></p>
               </div>
               <p className="text-center link-red mb-3">
                 Already have an account ?
