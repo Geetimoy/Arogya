@@ -419,7 +419,7 @@ function YoungWomens(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-periodic-data/${women.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/young-woman-view-periodic-data/${women.account_key}`}>View Periodic Data</Link>
                         }
                         </li>
                         <li>

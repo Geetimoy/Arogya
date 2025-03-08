@@ -43,11 +43,15 @@ function YoungWomanViewMedicalHistory(){
 
   const getMedicalHistory = async () => {
 
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
     let jsonData = {};
 
     jsonData['system_id']           = systemContext.systemDetails.system_id;
     jsonData["woman_account_key"]   = editAccountKey;
     jsonData["woman_account_type"]  = 3;
+    jsonData["doctor_account_key"]  = decryptedLoginDetails.account_key;
+    jsonData["doctor_account_type"] = decryptedLoginDetails.account_type;
     jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]        = DEVICE_TOKEN;
     jsonData["user_lat"]            = localStorage.getItem('latitude');
@@ -60,7 +64,7 @@ function YoungWomanViewMedicalHistory(){
                                         "order_by_value": "desc"
                                       }
     
-    const response1 = await fetch(`${API_URL}/womanMedicalHistoryList`, {
+    const response1 = await fetch(`${API_URL}/womanMedicalHistoryListFromDoctorLogin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
