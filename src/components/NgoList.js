@@ -10,6 +10,7 @@ import globallogo from '../assets/images/global-icon.png';
 import rgvnlogo from '../assets/images/rgvn-icon.png';
 import b2hlogo from '../assets/images/b2h-icon.png';
 import ukhralogo from '../assets/images/ukhra-icon.png';
+import sevaapurulialogo from '../assets/images/sevaapurulia-icon.png';
 
 function NgoList(){
   return(
@@ -52,7 +53,15 @@ function NgoList(){
             <div className="button-box">
               <Link to="https://ukhraapp.serviceplace.org.in/" target="_blank">
                 <img src={ukhralogo} alt='' />
-                <h6>Ukhra, Near Durgapur, WestBengal</h6>
+                <h6>Ukhra, Near Durgapur, West Bengal</h6>
+              </Link>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="button-box">
+              <Link to="https://sevaapurulia.serviceplace.org.in/" target="_blank">
+                <img src={sevaapurulialogo} alt='' />
+                <h6>Sevaa Purulia, West Bengal</h6>
               </Link>
             </div>
           </div>

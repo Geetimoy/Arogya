@@ -213,62 +213,79 @@ body:has(.telehealth-container-class) .modal .rating-symbol .star{
 
 
 /* UKHRA */
-.ukhra-container-class .primary-color{
+.ukhra-container-class .primary-color,
+.sevaapurulia-container-class .primary-color{
     color: #af1e25; 
 }
 
-.ukhra-container-class .primary-bg-color {
+.ukhra-container-class .primary-bg-color,
+.sevaapurulia-container-class .primary-bg-color{
     background-color: #af1e25;
 }
 
-.ukhra-container-class input[type="file"]::-webkit-file-upload-button{
+.ukhra-container-class input[type="file"]::-webkit-file-upload-button,
+.sevaapurulia-container-class input[type="file"]::-webkit-file-upload-button{
     background: #af1e25;
 }
 
 .ukhra-container-class .primary-bg-color:hover,
+.sevaapurulia-container-class .primary-bg-color:hover,
 .ukhra-container-class .primary-bg-color:active,
-.ukhra-container-class input[type="file"]::-webkit-file-upload-button:hover {
+.sevaapurulia-container-class .primary-bg-color:active
+.ukhra-container-class input[type="file"]::-webkit-file-upload-button:hover,
+.sevaapurulia-container-class input[type="file"]::-webkit-file-upload-button:hover{
     background-color: #952025;
 }
 
-.ukhra-container-class .btn-outline-info{
+.ukhra-container-class .btn-outline-info,
+.sevaapurulia-container-class .btn-outline-info{
     color: #952025;
     border-color: #952025;
 }
 
-.ukhra-container-class .btn-outline-info:hover{
+.ukhra-container-class .btn-outline-info:hover,
+.sevaapurulia-container-class .btn-outline-info:hover{
     background-color: #952025;
     border: 1px solid #952025;
 }
 
 .ukhra-container-class .btn:first-child:active,
-.ukhra-container-class :not(.btn-check)+.btn:active{
+.ukhra-container-class :not(.btn-check)+.btn:active,
+.sevaapurulia-container-class .btn:first-child:active,
+.sevaapurulia-container-class :not(.btn-check)+.btn:active{
     background-color: #952025;
     border: 1px solid #952025;
 }
 
-.ukhra-container-class .feedback-form .normal-box .use-app .btn.active{
+.ukhra-container-class .feedback-form .normal-box .use-app .btn.active,
+.sevaapurulia-container-class .feedback-form .normal-box .use-app .btn.active{
     background-color: #952025;
     color: #fff;
 }
 
-.ukhra-container-class .rating-symbol .star {
+.ukhra-container-class .rating-symbol .star,
+.sevaapurulia-container-class .rating-symbol .star{
     color: #af1e25;
 }
 
-.ukhra-container-class .bookings .button-box span{
+.ukhra-container-class .bookings .button-box span,
+.sevaapurulia-container-class .bookings .button-box span{
     color: #af1e25;
 }
 
-body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color{
+body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color,
+body:has(.sevaapurulia-container-class) .modal .modal-footer .primary-bg-color
+{
     background-color: #952025;
 }
 
-body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color:hover{
+body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color:hover,
+body:has(.sevaapurulia-container-class) .modal .modal-footer .primary-bg-color:hover{
     background-color: #952025;
 }
 
-body:has(.ukhra-container-class) .modal .rating-symbol .star{
+body:has(.ukhra-container-class) .modal .rating-symbol .star,
+body:has(.sevaapurulia-container-class) .modal .rating-symbol .star{
     color: #af1e25;
 }
 
