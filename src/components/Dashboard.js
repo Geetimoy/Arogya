@@ -26,6 +26,7 @@ import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
 
 import BannerUkhra from "./BannerUkhra";
+import BannerSevaaPurulia from "./BannerSevaaPurulia"
 import BannerB2h from "./BannerB2h";
 import BannerRgvn from "./BannerRgvn";
 import BannerServiceplace from "./BannerServiceplace";
@@ -182,6 +183,7 @@ function Dashboard() {
       {/* <BannerUkhra></BannerUkhra> */}
 
       {systemContext.systemDetails.system_id === 'ukhraapp.serviceplace.org.in' && <BannerUkhra />}
+      {systemContext.systemDetails.system_id === 'sevaapurulia.serviceplace.org.in' && <BannerSevaaPurulia />}
       {systemContext.systemDetails.system_id === 'b2happ.serviceplace.org.in' && <BannerB2h />}
       {systemContext.systemDetails.system_id === 'rgvnapp.serviceplace.org.in' && <BannerRgvn />}
       {systemContext.systemDetails.system_id === 'telehealth.serviceplace.org.in' && <BannerServiceplace />}

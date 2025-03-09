@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import './AppTop.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt, faSignOutAlt, faVenusDouble, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faEllipsisV, faUser, faBars, faLongArrowAltLeft, faUsers, faFemale, faChild, faCalendarAlt, faSignOutAlt, faVenusDouble, faClipboard, faPersonCane } from '@fortawesome/free-solid-svg-icons';
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
@@ -131,10 +131,12 @@ function AppTop(){
               <li><FontAwesomeIcon icon={faChild} /> <Link to={"/child-malnutrition"}>Child Malnutrition</Link></li>
               <li><FontAwesomeIcon icon={faVenusDouble} /> <Link to={"/youngwomens"}>Young Womens</Link></li>
               <li><FontAwesomeIcon icon={faFemale} /> <Link to={"/janani"}>Janani</Link></li>
+              <li><FontAwesomeIcon icon={faPersonCane} /> <Link to={"/elder-persons"}>Elder Persons</Link></li>
               
               {/* For Volunteer/Patient */}
               {(decryptedLoginDetails.account_type != 5) &&
-              (<><li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/bookings"}>Appointments</Link></li></>)
+              (<><li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/appointment-scheduling-volunteer"}>Book New Doctor Appointment</Link></li>
+              <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/bookings"}>Appointments</Link></li></>)
               
               }
               {/* For Doctors */}
