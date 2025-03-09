@@ -102,6 +102,21 @@ function BasicInformation(){
 
     setAccountDetails(userDetails);
 
+    var serviceAreaArray = [];
+    if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+      serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+      var array1 = new Array();
+      serviceAreaArray.forEach((item)=>{
+        options.forEach((opt)=>{
+          if(opt.value == item){
+            array1.push(opt);
+          }
+        })
+      })
+      setSelectedOptions(array1);
+
+    }
+
     formData['basicInfoName']         = {required:formData['basicInfoName'].required, value:userDetails.display_name, errorClass:"", errorMessage:""};
     formData['basicInfoMobileNo']     = {required:formData['basicInfoMobileNo'].required, value:userDetails.contact_no, errorClass:"", errorMessage:""};
     formData['basicInfoWhatsapp']     = {required:formData['basicInfoWhatsapp'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
@@ -116,23 +131,12 @@ function BasicInformation(){
     formData['basicInfoLandmark']     = {required:formData['basicInfoLandmark'].required, value:userDetails.addr_landmark, errorClass:"", errorMessage:""};
     formData['basicInfoTown']         = {required:formData['basicInfoTown'].required, value:userDetails.city, errorClass:"", errorMessage:""};
     formData['basicInfoPostalCode']   = {required:formData['basicInfoPostalCode'].required, value:userDetails.postal_code, errorClass:"", errorMessage:""};
-    formData['basicInfoServiceArea']  = {required:formData['basicInfoServiceArea'].required, value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
-    formData['basicInfoServiceArea'] = {required:formData['basicInfoServiceArea'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
+    formData['basicInfoServiceArea']  = {required:formData['basicInfoServiceArea'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+    formData['basicInfoSpecialNotes'] = {required:formData['basicInfoSpecialNotes'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
     setFormData({...formData, ...formData});
     
-    if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-      var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
-      var array1 = new Array();
-      serviceAreaArray.forEach((item)=>{
-        options.forEach((opt)=>{
-          if(opt.value == item){
-            array1.push(opt);
-          }
-        })
-      })
-      setSelectedOptions(array1);
-    }
+    
   }
 
   const handleChange1 = (values) => {
