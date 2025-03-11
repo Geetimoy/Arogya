@@ -81,6 +81,9 @@ import YoungWomanTestReports from './youngwomens/YoungWomanTestReports';
 import YoungWomanUploadTestReports from './youngwomens/YoungWomanUploadTestReports';
 import YoungWomanBooking from './youngwomens/YoungWomanBooking';
 import YoungWomanBookedAppointment from './youngwomens/YoungWomanBookedAppointment';
+import YoungWomanViewBasicInformation from './youngwomens/YoungWomanViewBasicInformation';
+import YoungWomanViewMedicalHistory from './youngwomens/YoungWomanViewMedicalHistory';
+import YoungWomanViewPeriodicData from './youngwomens/YoungWomanViewPeriodicData';
 
 import ElderPersons from './elderpersons/ElderPersons';
 import CreateElderPerson from './elderpersons/CreateElderPerson';
@@ -95,8 +98,15 @@ import ElderTestReports from './elderpersons/ElderTestReports';
 import ElderUploadTestReports from './elderpersons/ElderUploadTestReports';
 import ElderBooking from './elderpersons/ElderBooking';
 import ElderBookedAppointment from './elderpersons/ElderBookedAppointment';
+<<<<<<< HEAD
 // import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation';
 // import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
+=======
+import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation';
+import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
+import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory`';
+import ElderViewAwarenessSuevey from './elderpersons/ElderViewAwarenessSurvey';
+>>>>>>> 8de8561591e1499132c6bb0dd6106ea8f5f05d76
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -434,6 +444,9 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-patient-booking" exact element={<YoungWomanPatientBooking />} />
             <Route path="/youngwomens/youngwomen-booking/:accountKey" exact element={<YoungWomanBooking />} />
             <Route path="/youngwomens/youngwomen-booked-appointment/:patientKey" exact element={<YoungWomanBookedAppointment />} />
+            <Route path="/youngwomens/young-woman-view-basicinfo/:accountKey" exact element={<YoungWomanViewBasicInformation />} />
+            <Route path="/youngwomens/young-woman-view-medical-history/:accountKey" exact element={<YoungWomanViewMedicalHistory />} />
+            <Route path="/youngwomens/young-woman-view-periodic-data/:accountKey" exact element={<YoungWomanViewPeriodicData />} />
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
@@ -451,8 +464,15 @@ export default function Core() {
             <Route path="/elderpersons/elder-upload-test-reports/:patientKey/:appointmentId" exact element={<ElderUploadTestReports/>} />
             <Route path="/elderpersons/elder-booking/:accountKey" exact element={<ElderBooking />} />
             <Route path="/elderpersons/elder-booked-appointment/:patientKey" exact element={<ElderBookedAppointment />} />
+<<<<<<< HEAD
             {/* <Route path="/elderpersons/Elder-View-Basic-Info/:accountKey" exact element={<ElderViewBasicInformation />} />
             <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} /> */}
+=======
+            <Route path="/elderpersons/Elder-View-Basic-Info/:accountKey" exact element={<ElderViewBasicInformation />} />
+            <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} />
+            <Route path="/elderpersons/Elder-view-medical-history/:accountKey" exact element={<ElderViewMedicalHistory />} />
+            <Route path="/elderpersons/Elder-View-Awareness-Survey/:accountKey" exact element={<ElderViewAwarenessSuevey />} />
+>>>>>>> 8de8561591e1499132c6bb0dd6106ea8f5f05d76
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

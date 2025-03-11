@@ -14,7 +14,7 @@ import AlertContext from '../../context/alert/AlertContext';
 
 import SliderRating from '../SliderRating';
 
-function ElderAwarenessSuevey(){
+function ElderViewAwarenessSuevey(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -40,61 +40,7 @@ function ElderAwarenessSuevey(){
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
-  const handleRatingChange = (value, name) => {
-    setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
-    console.log('Rating changed:', value);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
-  }
-
-  const handleFormSubmit = async (e) => {
-      e.preventDefault(); 
-  
-      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-  
-      let jsonData = {};
-  
-      jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-      jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["user_lat"]                  = localStorage.getItem('latitude');
-      jsonData["user_long"]                 = localStorage.getItem('longitude');
-      jsonData["elder_account_key"]         = editAccountKey;
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["sub_volunteer_id"]          = "";
-  
-      jsonData["question_1_value"]                = formData['question_1_value'].value;
-      jsonData["question_2_value"]                = formData['question_2_value'].value;
-      jsonData["question_3_value"]                = formData['question_3_value'].value;
-      jsonData["question_4_value"]                = formData['question_4_value'].value;
-      jsonData["question_5_value"]                = formData['question_5_value'].value;
-      jsonData["question_6_value"]                = formData['question_6_value'].value;
-      jsonData["question_7_value"]                = formData['question_7_value'].value;
-      jsonData["remarks"]                         = formData['remarks'].value;
-      
-      
-      const response = await fetch(`${API_URL}/addUpdateElderHealthAwarenessSurvey`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
-      console.log(response)
-      let result = await response.json();
-  
-      if(result.success){
-        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-      }
-      else{
-        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-      }
-    }
-
-    const getUserDetails = async () => {
+  const getUserDetails = async () => {
     
         var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
     
@@ -162,7 +108,7 @@ function ElderAwarenessSuevey(){
               <FontAwesomeIcon icon={faLongArrowAltLeft} />
             </Link>
           </div>
-          <h5 className='mx-2 mb-0'>Update Awareness Survey</h5>
+          <h5 className='mx-2 mb-0'>View Elder's Awareness Survey</h5>
         </div>
         <div className='app-top-right d-flex'> 
           <div className='position-relative'>
@@ -188,44 +134,42 @@ function ElderAwarenessSuevey(){
       </div>
     </div>
     <div className='app-body form-all update-awareness-survey'>
-      <p><strong>Health Awareness Survey</strong></p>
+      <p><strong>Elder's Health Awareness Survey</strong></p>
       <p>How knowledgeable do you feel about the following areas of elder person's health</p>
-      <form name="awareness_survey_form" id="awareness_survey_form" onSubmit={handleFormSubmit}>
+      <form name="awareness_survey_form" id="awareness_survey_form">
           <div className='form-group'>
             <label>1. Menstruation Cycle - why and how it happens? </label>
-            <SliderRating initialRating={formData['question_1_value'].value} onChange={(value)=>handleRatingChange(value, 'question_1_value')}  />
+            <SliderRating initialRating={formData['question_1_value'].value} />
           </div>
           <div className='form-group'>
             <label>2. Menstruation Hygiene - methods available including, pads, cups, etc. </label>
-            <SliderRating initialRating={formData['question_2_value'].value} onChange={(value)=>handleRatingChange(value, 'question_2_value')} />
+            <SliderRating initialRating={formData['question_2_value'].value} />
           </div>
           <div className='form-group'>
             <label>3. General cleanliness and regular washing </label>
-            <SliderRating initialRating={formData['question_3_value'].value} onChange={(value)=>handleRatingChange(value, 'question_3_value')} />
+            <SliderRating initialRating={formData['question_3_value'].value} />
           </div>
           <div className='form-group'>
             <label>4. Iron and blood loss due to menstruation,  Anemia and treatments </label>
-            <SliderRating initialRating={formData['question_4_value'].value} onChange={(value)=>handleRatingChange(value, 'question_4_value')} />
+            <SliderRating initialRating={formData['question_4_value'].value} />
           </div>
           <div className='form-group'>
             <label>5. Nutrition choices for young women's health </label>
-            <SliderRating initialRating={formData['question_5_value'].value} onChange={(value)=>handleRatingChange(value, 'question_5_value')} />
+            <SliderRating initialRating={formData['question_5_value'].value} />
           </div>
           <div className='form-group'>
             <label>6. Pregnancy prevention </label>
-            <SliderRating initialRating={formData['question_6_value'].value} onChange={(value)=>handleRatingChange(value, 'question_6_value')} />
+            <SliderRating initialRating={formData['question_6_value'].value} />
           </div>
           <div className='form-group'>
             <label>7. Resources available from ASHA workers, community </label>
-            <SliderRating initialRating={formData['question_7_value'].value} onChange={(value)=>handleRatingChange(value, 'question_7_value')} />
+            <SliderRating initialRating={formData['question_7_value'].value} />
           </div>
           <div className='form-group'>
             <label>8. Any other areas you would like further education and support (write)</label>
-            <textarea name="remarks" rows="3" className="form-control pt-5" placeholder="" onChange={handleChange} defaultValue={formData['remarks'].value}></textarea>
+            <textarea name="remarks" rows="3" className="form-control pt-5" placeholder="" defaultValue={formData['remarks'].value}></textarea>
           </div>
-          <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Submit</button>
-          </div>
+
         </form>
     </div>
     <Appfooter></Appfooter>
@@ -233,4 +177,4 @@ function ElderAwarenessSuevey(){
   );
 }
 
-export default ElderAwarenessSuevey;
+export default ElderViewAwarenessSuevey;

@@ -101,6 +101,7 @@ function BasicInformationPharmacy(){
 
     setAccountDetails(userDetails);
 
+<<<<<<< HEAD
     formData['basicInfoName']         = {required:formData['basicInfoName'].required, value:userDetails.display_name, errorClass:"", errorMessage:""};
     formData['basicInfoMobileNo']     = {required:formData['basicInfoMobileNo'].required, value:userDetails.contact_no, errorClass:"", errorMessage:""};
     formData['basicInfoWhatsapp']     = {required:formData['basicInfoWhatsapp'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
@@ -120,8 +121,12 @@ function BasicInformationPharmacy(){
 
     setFormData({...formData, ...formData});
     
+=======
+    var serviceAreaArray = [];
+>>>>>>> 8de8561591e1499132c6bb0dd6106ea8f5f05d76
     if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-      var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+      serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+      console.log(serviceAreaArray);
       var array1 = new Array();
       serviceAreaArray.forEach((item)=>{
         options.forEach((opt)=>{
@@ -131,7 +136,28 @@ function BasicInformationPharmacy(){
         })
       })
       setSelectedOptions(array1);
+
     }
+
+    formData['basicInfoName']         = {required:formData['basicInfoName'].required, value:userDetails.display_name, errorClass:"", errorMessage:""};
+    formData['basicInfoMobileNo']     = {required:formData['basicInfoMobileNo'].required, value:userDetails.contact_no, errorClass:"", errorMessage:""};
+    formData['basicInfoWhatsapp']     = {required:formData['basicInfoWhatsapp'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+    formData['basicInfoEmail']        = {required:formData['basicInfoEmail'].required, value:userDetails.email_id, errorClass:"", errorMessage:""};
+    formData['basicInfoGender']       = {required:formData['basicInfoGender'].required, value:userDetails.gender, errorClass:"", errorMessage:""};
+    formData['basicInfoAge']          = {required:formData['basicInfoAge'].required, value:userDetails.age, errorClass:"", errorMessage:""};
+    formData['basicInfoCommute']      = {required:formData['basicInfoCommute'].required, value:userDetails.how_commute, errorClass:"", errorMessage:""};
+    formData['basicInfoMedicalExperience']  = {required:formData['basicInfoMedicalExperience'].required, value:userDetails.medical_experiences, errorClass:"", errorMessage:""};
+    formData['basicInfoMedicalCertificate'] = {required:formData['basicInfoMedicalCertificate'].required, value:userDetails.medical_certificates, errorClass:"", errorMessage:""};
+    formData['basicInfoAddress1']     = {required:formData['basicInfoAddress1'].required, value:userDetails.addr_1, errorClass:"", errorMessage:""};
+    formData['basicInfoAddress2']     = {required:formData['basicInfoAddress2'].required, value:userDetails.addr_2, errorClass:"", errorMessage:""};
+    formData['basicInfoLandmark']     = {required:formData['basicInfoLandmark'].required, value:userDetails.addr_landmark, errorClass:"", errorMessage:""};
+    formData['basicInfoTown']         = {required:formData['basicInfoTown'].required, value:userDetails.city, errorClass:"", errorMessage:""};
+    formData['basicInfoPostalCode']   = {required:formData['basicInfoPostalCode'].required, value:userDetails.postal_code, errorClass:"", errorMessage:""};
+    formData['basicInfoServiceArea']  = {required:formData['basicInfoServiceArea'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+    formData['basicInfoSpecialNotes'] = {required:formData['basicInfoSpecialNotes'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
+
+    setFormData({...formData, ...formData});
+
   }
 
   const handleChange1 = (values) => {

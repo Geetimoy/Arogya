@@ -108,7 +108,7 @@ function JananiAwarenesssurvey(){
     jsonData["user_lat"]            = localStorage.getItem('latitude');
     jsonData["user_long"]           = localStorage.getItem('longitude');
     jsonData["search_param"]        = {
-                                        "by_keywords": "test",
+                                        "by_keywords": "",
                                         "limit": "2",
                                         "offset": "0",
                                         "order_by_field": "account_id",

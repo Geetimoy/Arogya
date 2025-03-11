@@ -424,7 +424,7 @@ function ElderPersons(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-medical-history/${elder.account_key}`}>View Medical History</Link>
                         }
                         </li>
                         <li>
@@ -445,7 +445,7 @@ function ElderPersons(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>View Awareness Survey</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-awareness-survey/${elder.account_key}`}>View Awareness Survey</Link>
                         }
                         </li>
                         {
