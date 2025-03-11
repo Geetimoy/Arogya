@@ -27,9 +27,9 @@ import PatientMedicalHistory from './patientprofiles/PatientMedicalHistory';
 import PatientBooking from './patientprofiles/PatientBooking';
 import PatientPeriodicData from './patientprofiles/PatientPeriodicData';
 import PatientBookedAppointment from './patientprofiles/PatientBookedAppointment';
-// import PatientViewBasicInformation from './patientprofiles/PatientViewBasicInformation';
-// import PatientViewMedicalHistory from './patientprofiles/PatientViewMedicalHistory';
-// import PatientViewPeriodicData from './patientprofiles/PatientViewPeriodicData';
+import PatientViewBasicInformation from './patientprofiles/PatientViewBasicInformation';
+import PatientViewMedicalHistory from './patientprofiles/PatientViewMedicalHistory';
+import PatientViewPeriodicData from './patientprofiles/PatientViewPeriodicData';
 
 
 import Janani from './janani/Janani';
@@ -61,9 +61,9 @@ import ChildUploadDoctorPrescriptions from './childmalnutrition/ChildUploadDocto
 import ChildUploadTestReports from './childmalnutrition/ChildUploadTestReports';
 import ChildBooking from './childmalnutrition/ChildBooking';
 import ChildBookedAppointment from './childmalnutrition/ChildBookedAppointment';
-// import ChildViewBasicInfo from './childmalnutrition/ChildViewBasicInfo';
-// import ChildViewMedicalHistory from './childmalnutrition/ChildViewMedicalHistory';
-// import ChildViewPeriodicData from './childmalnutrition/ChildViewPeriodicData';
+import ChildViewBasicInfo from './childmalnutrition/ChildViewBasicInfo';
+import ChildViewMedicalHistory from './childmalnutrition/ChildViewMedicalHistory';
+import ChildViewPeriodicData from './childmalnutrition/ChildViewPeriodicData';
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -98,15 +98,10 @@ import ElderTestReports from './elderpersons/ElderTestReports';
 import ElderUploadTestReports from './elderpersons/ElderUploadTestReports';
 import ElderBooking from './elderpersons/ElderBooking';
 import ElderBookedAppointment from './elderpersons/ElderBookedAppointment';
-<<<<<<< HEAD
-// import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation';
-// import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
-=======
 import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation';
 import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
 import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory`';
 import ElderViewAwarenessSuevey from './elderpersons/ElderViewAwarenessSurvey';
->>>>>>> 8de8561591e1499132c6bb0dd6106ea8f5f05d76
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -156,8 +151,8 @@ import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoc
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
-  //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
+  //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
+  const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
@@ -385,9 +380,9 @@ export default function Core() {
             <Route path="/patientprofiles/patient-booking/:accountKey" exact element={<PatientBooking />} />
             <Route path="/patientprofiles/patient-periodic-data/:accountKey" exact element={<PatientPeriodicData />} />
             <Route path="/patientprofiles/patient-booked-appointment/:patientKey" exact element={<PatientBookedAppointment />} />
-            {/* <Route path="/patientprofiles/patient-view-basicinfo/:accountKey" exact element={<PatientViewBasicInformation />} />
+            <Route path="/patientprofiles/patient-view-basicinfo/:accountKey" exact element={<PatientViewBasicInformation />} />
             <Route path="/patientprofiles/patient-view-medical-history/:accountKey" exact element={<PatientViewMedicalHistory />} />
-            <Route path="/patientprofiles/patient-view-periodic-data/:accountKey" exact element={<PatientViewPeriodicData />} /> */}
+            <Route path="/patientprofiles/patient-view-periodic-data/:accountKey" exact element={<PatientViewPeriodicData />} />
 
             
             <Route path="/Janani" exact element={<Janani />} />
@@ -413,7 +408,7 @@ export default function Core() {
             <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
             <Route path="/childmalnutrition/child-prescription/:accountKey/:prescriptionType" exact element={<ChildPrescription />} />
             <Route path="/childmalnutrition/child-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ChildPrescription />} />
-            {/* <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />}/> */}
+            <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />}/>
             <Route path="/childmalnutrition/child-upload-prescription/:accountKey/:prescriptionType" exact element={<ChildUploadInitialPrescriptions />} />
             <Route path="/childmalnutrition/child-upload-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ChildUploadDoctorPrescriptions /> } />
             <Route path="/childmalnutrition/child-test-reports/:patientKey/:appointmentId" exact element={<ChildTestReports />} />
@@ -423,9 +418,9 @@ export default function Core() {
             <Route path="/childmalnutrition/child-awareness-survey/:accountKey" exact element={<ChildAwarenessSurvey />} />
             <Route path="/childmalnutrition/child-booking/:accountKey" exact element={<ChildBooking />} />
             <Route path="/childmalnutrition/child-booked-appointment/:patientKey" exact element={<ChildBookedAppointment />} />
-            {/* <Route path="/childmalnutrition/child-view-basic-info/:accountKey" exact element={<ChildViewBasicInfo/>} />
+            <Route path="/childmalnutrition/child-view-basic-info/:accountKey" exact element={<ChildViewBasicInfo/>} />
             <Route path="/childmalnutrition/child-view-medical-history/:accountKey" exact element={<ChildViewMedicalHistory/>} />
-            <Route path="/childmalnutrition/child-view-periodic-data/:accountKey" exact element={<ChildViewPeriodicData />} /> */}
+            <Route path="/childmalnutrition/child-view-periodic-data/:accountKey" exact element={<ChildViewPeriodicData />} />
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
@@ -464,15 +459,10 @@ export default function Core() {
             <Route path="/elderpersons/elder-upload-test-reports/:patientKey/:appointmentId" exact element={<ElderUploadTestReports/>} />
             <Route path="/elderpersons/elder-booking/:accountKey" exact element={<ElderBooking />} />
             <Route path="/elderpersons/elder-booked-appointment/:patientKey" exact element={<ElderBookedAppointment />} />
-<<<<<<< HEAD
-            {/* <Route path="/elderpersons/Elder-View-Basic-Info/:accountKey" exact element={<ElderViewBasicInformation />} />
-            <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} /> */}
-=======
             <Route path="/elderpersons/Elder-View-Basic-Info/:accountKey" exact element={<ElderViewBasicInformation />} />
             <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} />
             <Route path="/elderpersons/Elder-view-medical-history/:accountKey" exact element={<ElderViewMedicalHistory />} />
             <Route path="/elderpersons/Elder-View-Awareness-Survey/:accountKey" exact element={<ElderViewAwarenessSuevey />} />
->>>>>>> 8de8561591e1499132c6bb0dd6106ea8f5f05d76
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />

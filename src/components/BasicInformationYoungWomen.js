@@ -101,25 +101,7 @@ function BasicInformationYoungWomen(){
 
     setAccountDetails(userDetails);
 
-    formData['basicInfoName']         = {value:userDetails.display_name, errorClass:"", errorMessage:""};
-    formData['basicInfoMobileNo']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-    formData['basicInfoWhatsapp']     = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-    formData['basicInfoEmail']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-    formData['basicInfoGender']       = {value:userDetails.gender, errorClass:"", errorMessage:""};
-    formData['basicInfoAge']          = {value:userDetails.age, errorClass:"", errorMessage:""};
-    formData['basicInfoCommute']      = {value:userDetails.how_commute, errorClass:"", errorMessage:""};
-    formData['basicInfoMedicalExperience']  = {value:userDetails.medical_experiences, errorClass:"", errorMessage:""};
-    formData['basicInfoMedicalCertificate'] = {value:userDetails.medical_certificates, errorClass:"", errorMessage:""};
-    formData['basicInfoAddress1']     = {value:userDetails.addr_1, errorClass:"", errorMessage:""};
-    formData['basicInfoAddress2']     = {value:userDetails.addr_2, errorClass:"", errorMessage:""};
-    formData['basicInfoLandmark']     = {value:userDetails.addr_landmark, errorClass:"", errorMessage:""};
-    formData['basicInfoTown']         = {value:userDetails.city, errorClass:"", errorMessage:""};
-    formData['basicInfoPostalCode']   = {value:userDetails.postal_code, errorClass:"", errorMessage:""};
-    formData['basicInfoServiceArea']  = {value:userDetails.service_area_ids, errorClass:"", errorMessage:""};
-    formData['basicInfoSpecialNotes'] = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
-
-    setFormData({...formData, ...formData});
-    
+    var serviceAreaArray = [];
     if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
       serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
       var array1 = new Array();
