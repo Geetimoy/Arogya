@@ -45,9 +45,7 @@ function BasicInformationDoctor(){
     basicInfoEducationalDegree: {required: false, value:"", errorClass:"", errorMessage:""},
     basicInfoSpecializations: {required: false, value:"", errorClass:"", errorMessage:""},
     basicInfoAvailOnEmerCall: {required: false, value:"", errorClass:"", errorMessage:""},
-    basicInfoCommute: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoMedicalExperience: {required: true, value:"", errorClass:"", errorMessage:""},
-    basicInfoMedicalCertificate: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoAddress1: {required: true, value:"", errorClass:"", errorMessage:""},
     basicInfoAddress2: {required: false, value:"", errorClass:"", errorMessage:""},
     basicInfoLandmark: {required: false, value:"", errorClass:"", errorMessage:""},
@@ -127,9 +125,7 @@ function BasicInformationDoctor(){
     formData['basicInfoEducationalDegree']       = {required:formData['basicInfoEducationalDegree'].required, value:userDetails.educational_degree, errorClass:"", errorMessage:""};
     formData['basicInfoSpecializations']          = {required:formData['basicInfoSpecializations'].required, value:userDetails.specializations, errorClass:"", errorMessage:""};
     formData['basicInfoAvailOnEmerCall']    = {required:formData['basicInfoAvailOnEmerCall'].required, value:userDetails.avail_on_emer_call, errorClass:"", errorMessage:""};
-    formData['basicInfoCommute']      = {required:formData['basicInfoCommute'].required, value:userDetails.how_commute, errorClass:"", errorMessage:""};
     formData['basicInfoMedicalExperience']  = {required:formData['basicInfoMedicalExperience'].required, value:userDetails.medical_experiences, errorClass:"", errorMessage:""};
-    formData['basicInfoMedicalCertificate'] = {required:formData['basicInfoMedicalCertificate'].required, value:userDetails.medical_certificates, errorClass:"", errorMessage:""};
     formData['basicInfoAddress1']     = {required:formData['basicInfoAddress1'].required, value:userDetails.addr_1, errorClass:"", errorMessage:""};
     formData['basicInfoAddress2']     = {required:formData['basicInfoAddress2'].required, value:userDetails.addr_2, errorClass:"", errorMessage:""};
     formData['basicInfoLandmark']     = {required:formData['basicInfoLandmark'].required, value:userDetails.addr_landmark, errorClass:"", errorMessage:""};
@@ -172,6 +168,8 @@ function BasicInformationDoctor(){
   const handleFormSubmit = async (e) => {
     e.preventDefault(); console.log(formData['basicInfoName'].value);
     let errorCounter = validateForm();
+    
+    //console.log(errorCounter);
     if(errorCounter == 0){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -196,9 +194,7 @@ function BasicInformationDoctor(){
       jsonData["basicInfoEducationalDegree"]  = formData['basicInfoEducationalDegree'].value;
       jsonData["basicInfoSpecializations"]    = formData['basicInfoSpecializations'].value;
       jsonData["basicInfoAvailOnEmerCall"]    = formData['basicInfoAvailOnEmerCall'].value;
-      jsonData["basicInfoCommute"]          = formData['basicInfoCommute'].value;
       jsonData["basicInfoMedicalExperience"]  = formData['basicInfoMedicalExperience'].value;
-      jsonData["basicInfoMedicalCertificate"] = formData['basicInfoMedicalCertificate'].value;
       jsonData["basicInfoAddress1"]         = formData['basicInfoAddress1'].value;
       jsonData["basicInfoAddress2"]         = formData['basicInfoAddress2'].value;
       jsonData["basicInfoLandmark"]         = formData['basicInfoLandmark'].value;
@@ -250,6 +246,7 @@ function BasicInformationDoctor(){
       }
     })
     setFormData({...formData, ...formData});
+    console.log(formData);
     return errorCounter;
   }
 
