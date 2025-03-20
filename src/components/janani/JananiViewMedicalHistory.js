@@ -135,7 +135,7 @@ function JananiViewMedicalHistory(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Medical History </h5>
+            <h5 className='mx-2 mb-0'>View Janani Medical History </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>

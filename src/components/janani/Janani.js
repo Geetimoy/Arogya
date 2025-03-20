@@ -398,7 +398,7 @@ function Janani(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/janani/janani-basic-information/${janani.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/janani/janani-basic-information/${janani.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/janani/janani-view-basic-information/${janani.account_key}`}>View Basic Information</Link>
                         }
                       </li>
                       <li>
@@ -407,7 +407,7 @@ function Janani(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/janani/janani-medical-history/${janani.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-medical-history/${janani.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-view-medical-history/${janani.account_key}`}>View Medical History</Link>
                         }
                       </li>
                       <li>
@@ -417,7 +417,7 @@ function Janani(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-periodic-data/${janani.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-view-periodic-data/${janani.account_key}`}>View Periodic Data</Link>
                         }
                       </li>
                       <li>

@@ -46,6 +46,9 @@ import JananiUploadInitialPrescriptions from './janani/JananiUploadInitialPrescr
 import JananiUploadDoctorPrescriptions from './janani/JananiUploadDoctorPrescriptions';
 import JananiBooking from './janani/JananiBooking';
 import JananiBookedAppointment from './janani/JananiBookedAppointment';
+import JananiViewBasicInformation from './janani/JananiViewBasicInformation';
+import JananiViewMedicalHistory from './janani/JananiViewMedicalHistory';
+import JananiViewPeriodicData from './janani/JananiViewPeriodicData';
 
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
@@ -400,6 +403,9 @@ export default function Core() {
             <Route path="/janani/janani-upload-test-reports/:patientKey/:appointmentId" exact element={<JananiUploadTestReports/>} />
             <Route path="/janani/janani-booking/:accountKey" exact element={<JananiBooking />} />
             <Route path="/janani/janani-booked-appointment/:patientKey" exact element={<JananiBookedAppointment />} />
+            <Route path="/janani/janani-view-basic-information/:accountKey" exact element={<JananiViewBasicInformation />} />
+            <Route path="/janani/janani-view-medical-history/:accountKey" exact element={<JananiViewMedicalHistory />} />
+            <Route path="/janani/janani-view-periodic-data/:accountKey" exact element={<JananiViewPeriodicData />} />
 
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
