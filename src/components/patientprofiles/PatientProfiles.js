@@ -397,7 +397,11 @@ function Patientprofiles(){
       <div className="app-body patient-profiles profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
         <span>Total - {patientList.length}</span>
-          <Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link></div>
+          
+           {
+                      (decryptedLoginDetails.account_type !== '5') && <Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link>
+                    }
+        </div>
         {/* <div className="d-flex justify-content-between mb-3 mt-3">
         <Link onClick={() => { modalShowSearch(); }} to="#">
           <div className='d-flex advaced-search btn btn-sm btn-primary primary-bg-color border-0'>
@@ -468,7 +472,14 @@ function Patientprofiles(){
                       {/* <li><Link to={`/patientprofiles/patient-test-reports/${patient.account_key}`}>Upload Test Reports</Link></li> */}
                       <li><Link to={"#"} onClick={()=> modalTestReportsShow(`${patient.account_key}`)}>Upload Test Reports</Link></li>
                      
-                      <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
+                      {
+                      (decryptedLoginDetails.account_type !== '5') &&<li>
+                        
+                         <Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link>
+                    
+                      </li>
+                      }
+
                       {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
                     </ul>
                   </div>

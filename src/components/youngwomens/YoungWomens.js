@@ -442,7 +442,10 @@ function YoungWomens(){
                         {/* <li><Link to={`/youngwomens/testreports/${women.account_key}`}>Upload Test Reports</Link></li> */}
                         <li><Link onClick={() => { modalTestReportsShow(women.account_key); }} to="#">Upload Test Reports</Link></li>
                         {/* <li><Link to={`/youngwomens/young-woman-patient-booking/`}>Book Now</Link></li> */}
+                        {
+                      (decryptedLoginDetails.account_type !== '5') &&
                         <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${women.account_key}`) }}>Close Profile </Link></li>
+                        }
                         {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
                       </ul>
                     </div>
