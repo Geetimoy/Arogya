@@ -418,6 +418,9 @@ function ElderPersons(){
                         }
 
                         </li>
+                        {
+                          (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/elderpersons/elder-profile-photo/${elder.account_key}`}>Upload Profile Photo</Link></li>
+                        }
                         <li>
                           
                           {

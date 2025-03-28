@@ -401,6 +401,9 @@ function Janani(){
                           (decryptedLoginDetails.account_type == '5') && <Link to={`/janani/janani-view-basic-information/${janani.account_key}`}>View Basic Information</Link>
                         }
                       </li>
+                      {
+                        (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/janani/janani-profile-photo/${janani.account_key}`}>Upload Profile Photo</Link></li>
+                      }
                       <li>
                         
                         {
