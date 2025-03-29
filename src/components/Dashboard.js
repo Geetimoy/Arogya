@@ -114,8 +114,10 @@ function Dashboard() {
 
     let userDetails = result1.data;console.log(userDetails);
     
-    if(userDetails && userDetails.shared_image && userDetails.shared_image !== ""){
-      setProfileImage(userDetails.shared_image+'?timestamp='+Math.random());
+    if (userDetails !== undefined && userDetails) {
+      if (userDetails.shared_image && userDetails.shared_image !== "") {
+        setProfileImage(userDetails.shared_image + '?timestamp=' + Math.random());
+      }
     }
 
   }
