@@ -487,7 +487,9 @@ function Patientprofiles(){
                   </div>
                 }
                 <Link to="#">
-                  <img src={patientprofile} alt='' />
+                  {
+                    (patient.shared_image && patient.shared_image !== "") ? <img src={patient.shared_image} alt='' /> : <img src={patientprofile} alt='' />
+                  }
                   <h6>{patient.patient_name}</h6>
                 </Link>
               </div>
