@@ -147,6 +147,7 @@ function CreateJanani(){
     { label: 'Navagraha Temple, Guwahati', value: '2' },
     { label: 'Umananda Temple, Guwahati', value: '3' },
     { label: 'Morigaon', value: '4' },
+		{ label: 'Saparam Bera', value: '5' }
   ];
   const handleChange1 = (values) => {
     var selectedArea = [];

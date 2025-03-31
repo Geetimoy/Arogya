@@ -128,6 +128,7 @@ function SignUp(){
     { label: 'Navagraha Temple, Guwahati', value: '2' },
     { label: 'Umananda Temple, Guwahati', value: '3' },
     { label: 'Morigaon', value: '4' },
+		{ label: 'Saparam Bera', value: '5' }
   ]);
 
   // Define the selectedOptions state and the corresponding setter function

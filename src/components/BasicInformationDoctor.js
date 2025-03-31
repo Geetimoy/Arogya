@@ -32,6 +32,7 @@ function BasicInformationDoctor(){
     { label: 'Navagraha Temple, Guwahati', value: '2' },
     { label: 'Umananda Temple, Guwahati', value: '3' },
     { label: 'Morigaon', value: '4' },
+    { label: 'Saparam Bera', value: '5' }
   ];
 
 

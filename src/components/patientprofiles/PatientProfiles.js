@@ -435,11 +435,17 @@ function Patientprofiles(){
                         {/* <Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link> */}
                         {
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/patientprofiles/patient-basicinfo/${patient.account_key}`}>Edit Basic Information</Link>
+                          
                         }
                         {
                           (decryptedLoginDetails.account_type == '5') && <Link to={`/patientprofiles/patient-view-basicinfo/${patient.account_key}`}>View Basic Information</Link>
                         }
                       </li>
+                      
+                      {
+                        (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/patientprofiles/patient-profile-photo/${patient.account_key}`}>Upload Profile Photo</Link></li>
+                      }
+                      
                       <li>
                         {/* <Link to={`/patientprofiles/patient-medical-history/${patient.account_key}`}>Update Medical History</Link> */}
                         {
@@ -473,11 +479,7 @@ function Patientprofiles(){
                       <li><Link to={"#"} onClick={()=> modalTestReportsShow(`${patient.account_key}`)}>Upload Test Reports</Link></li>
                      
                       {
-                      (decryptedLoginDetails.account_type !== '5') &&<li>
-                        
-                         <Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link>
-                    
-                      </li>
+                      (decryptedLoginDetails.account_type !== '5') && <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
                       }
 
                       {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}

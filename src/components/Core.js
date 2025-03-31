@@ -30,6 +30,7 @@ import PatientBookedAppointment from './patientprofiles/PatientBookedAppointment
 import PatientViewBasicInformation from './patientprofiles/PatientViewBasicInformation';
 import PatientViewMedicalHistory from './patientprofiles/PatientViewMedicalHistory';
 import PatientViewPeriodicData from './patientprofiles/PatientViewPeriodicData';
+import PatientProfilePhoto from './patientprofiles/PatientProfilePhoto';
 
 
 import Janani from './janani/Janani';
@@ -49,6 +50,7 @@ import JananiBookedAppointment from './janani/JananiBookedAppointment';
 import JananiViewBasicInformation from './janani/JananiViewBasicInformation';
 import JananiViewMedicalHistory from './janani/JananiViewMedicalHistory';
 import JananiViewPeriodicData from './janani/JananiViewPeriodicData';
+import JananiProfilePhoto from './janani/JananiProfilePhoto';
 
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
@@ -67,6 +69,7 @@ import ChildBookedAppointment from './childmalnutrition/ChildBookedAppointment';
 import ChildViewBasicInfo from './childmalnutrition/ChildViewBasicInfo';
 import ChildViewMedicalHistory from './childmalnutrition/ChildViewMedicalHistory';
 import ChildViewPeriodicData from './childmalnutrition/ChildViewPeriodicData';
+import ChildProfilePhoto from './childmalnutrition/ChildProfilePhoto';
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -87,6 +90,7 @@ import YoungWomanBookedAppointment from './youngwomens/YoungWomanBookedAppointme
 import YoungWomanViewBasicInformation from './youngwomens/YoungWomanViewBasicInformation';
 import YoungWomanViewMedicalHistory from './youngwomens/YoungWomanViewMedicalHistory';
 import YoungWomanViewPeriodicData from './youngwomens/YoungWomanViewPeriodicData';
+import YoungWomanProfilePhoto from './youngwomens/YoungWomanProfilePhoto';
 
 import ElderPersons from './elderpersons/ElderPersons';
 import CreateElderPerson from './elderpersons/CreateElderPerson';
@@ -105,6 +109,7 @@ import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation'
 import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
 import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory`';
 import ElderViewAwarenessSuevey from './elderpersons/ElderViewAwarenessSurvey';
+import ElderProfilePhoto from './elderpersons/ElderProfilePhoto';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -386,6 +391,7 @@ export default function Core() {
             <Route path="/patientprofiles/patient-view-basicinfo/:accountKey" exact element={<PatientViewBasicInformation />} />
             <Route path="/patientprofiles/patient-view-medical-history/:accountKey" exact element={<PatientViewMedicalHistory />} />
             <Route path="/patientprofiles/patient-view-periodic-data/:accountKey" exact element={<PatientViewPeriodicData />} />
+            <Route path="/patientprofiles/patient-profile-photo/:accountKey" exact element={<PatientProfilePhoto />} />
 
             
             <Route path="/Janani" exact element={<Janani />} />
@@ -406,6 +412,7 @@ export default function Core() {
             <Route path="/janani/janani-view-basic-information/:accountKey" exact element={<JananiViewBasicInformation />} />
             <Route path="/janani/janani-view-medical-history/:accountKey" exact element={<JananiViewMedicalHistory />} />
             <Route path="/janani/janani-view-periodic-data/:accountKey" exact element={<JananiViewPeriodicData />} />
+            <Route path="/janani/janani-profile-photo/:accountKey" exact element={<JananiProfilePhoto />} />
 
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
@@ -427,6 +434,7 @@ export default function Core() {
             <Route path="/childmalnutrition/child-view-basic-info/:accountKey" exact element={<ChildViewBasicInfo/>} />
             <Route path="/childmalnutrition/child-view-medical-history/:accountKey" exact element={<ChildViewMedicalHistory/>} />
             <Route path="/childmalnutrition/child-view-periodic-data/:accountKey" exact element={<ChildViewPeriodicData />} />
+            <Route path="/childmalnutrition/child-profile-photo/:accountKey" exact element={<ChildProfilePhoto />} />
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />
@@ -448,6 +456,7 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-view-basicinfo/:accountKey" exact element={<YoungWomanViewBasicInformation />} />
             <Route path="/youngwomens/young-woman-view-medical-history/:accountKey" exact element={<YoungWomanViewMedicalHistory />} />
             <Route path="/youngwomens/young-woman-view-periodic-data/:accountKey" exact element={<YoungWomanViewPeriodicData />} />
+            <Route path="/youngwomens/young-woman-profile-photo/:accountKey" exact element={<YoungWomanProfilePhoto />} />
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
@@ -469,6 +478,7 @@ export default function Core() {
             <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} />
             <Route path="/elderpersons/Elder-view-medical-history/:accountKey" exact element={<ElderViewMedicalHistory />} />
             <Route path="/elderpersons/Elder-View-Awareness-Survey/:accountKey" exact element={<ElderViewAwarenessSuevey />} />
+            <Route path="/elderpersons/Elder-profile-photo/:accountKey" exact element={<ElderProfilePhoto />} />
             
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
