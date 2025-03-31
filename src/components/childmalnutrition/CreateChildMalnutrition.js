@@ -403,6 +403,17 @@ function CreateChildMalnutrition(){
             </select>
             <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
           </div>
+          
+          {/* <div className={`form-group ${formData["toilet_type"].errorClass}`}>
+            <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
+            <select className="form-control" value={formData["toilet_type"].value} name="toilet_type" id="toilet_type" onChange={handleChange}>
+              <option value="1">Open-field</option>
+              <option value="2">Country-latrine</option>
+              <option value="3">Flush-toilet</option>
+            </select>
+            <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
+          </div> */}
+
           <div className="form-group "><label htmlFor="sub_volunteer_name">Sub Volunteer Name</label><select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
           <div className={`form-group ${formData["special_notes"].errorClass}`}>
             <label htmlFor="special_notes">Special Notes </label>

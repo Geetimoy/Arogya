@@ -55,7 +55,7 @@ function Dashboard() {
       jsonData['device_token']          = DEVICE_TYPE;
       jsonData['user_lat']              = localStorage.getItem('latitude');
       jsonData['user_long']             = localStorage.getItem('longitude');
-      jsonData["system_id"] = "ukhra.serviceplace.org.in";
+      jsonData["system_id"] = "ukhraapp.serviceplace.org.in";
 
   useEffect(() => {
     const fetchImageData = async () => {
