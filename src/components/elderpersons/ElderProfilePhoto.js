@@ -92,6 +92,7 @@ function ElderProfilePhoto(){
       jsonData['image_info']       = JSON.stringify(imageConfig);
       jsonData['source_image']     = image;
       jsonData['cropped_image']    = currentCroppedImage;
+      jsonData['uploading_from']   = 'volunteer_app';
       
       const response = await fetch(`${API_URL}/profilePhotoSave`, {
         method: "POST",
