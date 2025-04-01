@@ -64,7 +64,7 @@ function CreateChildMalnutrition(){
     const fieldName = Object.keys(formData);
     setSelectedOptions([]);
     fieldName.forEach((element) => {
-      if(element === "child_bpl_apl" || element === "child_gender" || element === "house_type" || element === "drinking_water_type"){
+      if(element === "child_bpl_apl" || element === "child_gender" || element === "toilet_type" || element === "house_type" || element === "drinking_water_type"){
         formData[element].value         = "1";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
@@ -108,6 +108,7 @@ function CreateChildMalnutrition(){
     child_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
@@ -156,6 +157,7 @@ function CreateChildMalnutrition(){
       jsonData["child_school_section"]      = formData['child_school_section'].value;
       jsonData["house_type"]                = formData['house_type'].value;
       jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
+      jsonData["toilet_type"]               = formData['toilet_type'].value;
       jsonData["special_note"]              = formData['special_notes'].value;
 
       const response = await fetch(`${API_URL}/addUpdateChildProfile`, {
@@ -276,8 +278,8 @@ function CreateChildMalnutrition(){
                 <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_n" name="is_premature_birth" value="f" className="custom-control-input" onChange={handleChange} checked={(formData["is_premature_birth"].value === 'f') ? true : false}/>
-                <label className="custom-control-label no-style" htmlFor="premature_birth_n">N/A</label>
+                <input type="radio" id="premature_birth_na" name="is_premature_birth" value="na" className="custom-control-input" onChange={handleChange} checked={(formData["is_premature_birth"].value === 'na') ? true : false}/>
+                <label className="custom-control-label no-style" htmlFor="premature_birth_na">N/A</label>
               </div>
             </div>
             <small className="error-mesg">{formData["is_premature_birth"].errorMessage}</small>
@@ -387,7 +389,7 @@ function CreateChildMalnutrition(){
           </div>
 
           <div className={`form-group ${formData["house_type"].errorClass}`}>
-            <label htmlFor="house_type">House<span className="text-danger">*</span></label>
+            <label htmlFor="house_type">House <span className="text-danger">*</span></label>
             <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value} onChange={handleChange}>
               <option value="1">Mud House</option>
               <option value="2">Paved House</option>
@@ -396,7 +398,7 @@ function CreateChildMalnutrition(){
           </div>
 
           <div className={`form-group ${formData["drinking_water_type"].errorClass}`}>
-            <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
+            <label htmlFor="drinking_water_type">Drinking Water <span className="text-danger">*</span></label>
             <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value} onChange={handleChange}>
               <option value="1">Tap</option>
               <option value="2">Well</option>
@@ -405,7 +407,7 @@ function CreateChildMalnutrition(){
             <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
           </div>
           
-          {/* <div className={`form-group ${formData["toilet_type"].errorClass}`}>
+          <div className={`form-group ${formData["toilet_type"].errorClass}`}>
             <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
             <select className="form-control" value={formData["toilet_type"].value} name="toilet_type" id="toilet_type" onChange={handleChange}>
               <option value="1">Open-field</option>
@@ -413,7 +415,7 @@ function CreateChildMalnutrition(){
               <option value="3">Flush-toilet</option>
             </select>
             <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
-          </div> */}
+          </div>
 
           <div className="form-group "><label htmlFor="sub_volunteer_name">Sub Volunteer Name</label><select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
           <div className={`form-group ${formData["special_notes"].errorClass}`}>

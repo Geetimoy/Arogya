@@ -88,6 +88,7 @@ export default function ChildBasicInfo() {
       child_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
       house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
       drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+      toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
       special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
     });
   
@@ -148,25 +149,26 @@ export default function ChildBasicInfo() {
             formData['is_premature_birth'] = {value:userDetails.child_is_premature_birth, errorClass:"", errorMessage:""};
             formData['child_guardian_occupation'] = {value:userDetails.child_father_occupation, errorClass:"", errorMessage:""};
             formData['child_bpl_apl']      = {value:userDetails.child_is_under_previledged, errorClass:"", errorMessage:""};
-            formData['child_gender']    = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
-            formData['child_age']    = {value:userDetails.child_age, errorClass:"", errorMessage:""};
+            formData['child_gender']       = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
+            formData['child_age']          = {value:userDetails.child_age, errorClass:"", errorMessage:""};
             formData['is_your_personal_mobile_number']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-            formData['child_phone_no']               = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-            formData['child_whatsapp_no']          = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-            formData['child_email']           = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-            formData['child_address']         = {value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
-            formData['child_address_2']          = {value:userDetails.child_addr_2, errorClass:"", errorMessage:""};
-            formData['child_landmark']              = {value:userDetails.child_addr_landmark, errorClass:"", errorMessage:""};
-            formData['child_city']             = {value:userDetails.child_city, errorClass:"", errorMessage:""};
-            formData['child_state']       = {value:userDetails.child_state, errorClass:"", errorMessage:""};
+            formData['child_phone_no']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+            formData['child_whatsapp_no']  = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+            formData['child_email']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
+            formData['child_address']      = {value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
+            formData['child_address_2']    = {value:userDetails.child_addr_2, errorClass:"", errorMessage:""};
+            formData['child_landmark']     = {value:userDetails.child_addr_landmark, errorClass:"", errorMessage:""};
+            formData['child_city']         = {value:userDetails.child_city, errorClass:"", errorMessage:""};
+            formData['child_state']        = {value:userDetails.child_state, errorClass:"", errorMessage:""};
             formData['child_pincode']      = {value:userDetails.child_postal_code, errorClass:"", errorMessage:""};
-            formData['child_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-            formData['child_school_name']       = {value:userDetails.child_school_name, errorClass:"", errorMessage:""};
-            formData['child_school_class']      = {value:userDetails.child_school_class, errorClass:"", errorMessage:""};
-            formData['child_school_section']    = {value:userDetails.child_school_section, errorClass:"", errorMessage:""};
-            formData['house_type']             = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
-            formData['drinking_water_type']    = {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
-            formData['special_notes']          = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+            formData['child_service_area'] = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+            formData['child_school_name']  = {value:userDetails.child_school_name, errorClass:"", errorMessage:""};
+            formData['child_school_class'] = {value:userDetails.child_school_class, errorClass:"", errorMessage:""};
+            formData['child_school_section']  = {value:userDetails.child_school_section, errorClass:"", errorMessage:""};
+            formData['house_type']         = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
+            formData['drinking_water_type']= {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
+            formData['toilet_type']        = {value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
+            formData['special_notes']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
             setFormData({...formData, ...formData});
 
@@ -222,6 +224,7 @@ export default function ChildBasicInfo() {
         jsonData["child_school_section"]      = formData['child_school_section'].value;
         jsonData["house_type"]                = formData['house_type'].value;
         jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
+        jsonData["toilet_type"]               = formData['toilet_type'].value;
         jsonData["special_note"]              = formData['special_notes'].value;
   
         const response = await fetch(`${API_URL}/addUpdateChildBasicInformation`, {
@@ -350,6 +353,10 @@ export default function ChildBasicInfo() {
                   <input type="radio" id="premature_birth_n" name="is_premature_birth" value="f" className="custom-control-input" onChange={handleChange} checked={(formData["is_premature_birth"].value === 'f') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
                 </div>
+                <div className="custom-control custom-radio custom-control-inline mt-2">
+                  <input type="radio" id="premature_birth_na" name="is_premature_birth" value="na" className="custom-control-input" onChange={handleChange} checked={(formData["is_premature_birth"].value === 'na') ? true : false}/>
+                  <label className="custom-control-label no-style" htmlFor="premature_birth_na">N/A</label>
+                </div>
               </div>
               <small className="error-mesg">{formData["is_premature_birth"].errorMessage}</small>
             </div>
@@ -475,6 +482,16 @@ export default function ChildBasicInfo() {
               </select>
               <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
             </div>
+
+            <div className={`form-group ${formData["toilet_type"].errorClass}`}>
+            <label htmlFor="toilet_type">Toilet<span className="text-danger">*</span></label>
+            <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'} onChange={handleChange}>
+              <option value="1">Open-field</option>
+              <option value="2">Country-latrine</option>
+              <option value="3">Flush-toilet</option>
+            </select>
+            <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
+          </div>
   
             <div className={`form-group ${formData["special_notes"].errorClass}`}>
               <label htmlFor="special_notes">Special Notes </label>
