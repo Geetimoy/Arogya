@@ -354,7 +354,7 @@ export default function ChildBasicInfo() {
                   <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
                 </div>
                 <div className="custom-control custom-radio custom-control-inline mt-2">
-                  <input type="radio" id="premature_birth_na" name="is_premature_birth" value="n" className="custom-control-input" onChange={handleChange} checked={(formData["is_premature_birth"].value === 'na') ? true : false}/>
+                  <input type="radio" id="premature_birth_na" name="is_premature_birth" value="n" className="custom-control-input" onChange={handleChange} checked={(formData["is_premature_birth"].value === 'n') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="premature_birth_na">N/A</label>
                 </div>
               </div>
