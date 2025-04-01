@@ -90,8 +90,10 @@ function AppTop(){
 
     let userDetails = result1.data;
     
-    if(userDetails.shared_image !== ""){
-      setProfileImage(userDetails.shared_image+'?timestamp='+Math.random());
+    if (userDetails !== undefined && userDetails) {
+      if (userDetails.shared_image && userDetails.shared_image !== "") {
+        setProfileImage(userDetails.shared_image + '?timestamp=' + Math.random());
+      }
     }
 
   }
