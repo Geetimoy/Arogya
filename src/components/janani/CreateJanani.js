@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
@@ -142,13 +142,13 @@ function CreateJanani(){
   }
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const serviceAreaOption = [
+  const [serviceAreaOption, setServiceAreaOption] = useState([
     { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
     { label: 'Navagraha Temple, Guwahati', value: '2' },
     { label: 'Umananda Temple, Guwahati', value: '3' },
     { label: 'Morigaon', value: '4' },
-		{ label: 'Saparam Bera', value: '5' }
-  ];
+    { label: 'Saparam Bera', value: '5' }
+  ]);
   const handleChange1 = (values) => {
     var selectedArea = [];
     if(values.length > 0){
@@ -230,6 +230,49 @@ function CreateJanani(){
       }
       
     }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      getMasterServicesArea();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  useEffect(() => {
+
+  }, [serviceAreaOption])
+
+  const getMasterServicesArea = async (e) => {
+
+    let jsonData = {};
+
+    jsonData['system_id']        = systemContext.systemDetails.system_id;
+    jsonData["device_type"]      = DEVICE_TYPE;
+    jsonData["device_token"]     = DEVICE_TOKEN;
+    jsonData["user_lat"]         = localStorage.getItem('latitude');
+    jsonData["user_long"]        = localStorage.getItem('longitude');
+    jsonData["center_id"]        = 1;
+
+    const response = await fetch(`${API_URL}/masterServiceAreas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.data.rows > 0){
+      var areas         = result.data.results;
+      var optionsArray  = [];
+      for(var i=0; i<areas.length; i++){
+        optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
+      }
+      setServiceAreaOption(optionsArray);
+    }
+
   }
 
   return(
