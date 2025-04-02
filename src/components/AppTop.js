@@ -145,7 +145,8 @@ function AppTop(){
               {(decryptedLoginDetails.account_type == 5) &&
               (<><li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/appointment-scheduling"}>My Schedules</Link></li>
                 <li><FontAwesomeIcon icon={faCalendarAlt} /> <Link to={"/doctor-appointments"}>My Appointments</Link></li>
-                <li><FontAwesomeIcon icon={faClipboard} /> <Link to={"/"}>Patient Prescriptions</Link></li></>)
+                {/* <li><FontAwesomeIcon icon={faClipboard} /> <Link to={"/"}>Patient Prescriptions</Link></li> */}
+                </>)
               
               }
               
