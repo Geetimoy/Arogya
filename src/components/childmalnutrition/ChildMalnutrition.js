@@ -246,7 +246,7 @@ function ChildMalnutrion(){
       if(result.data.length > 0){
         setChildList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
         setOffset(childList.length + result.data.length); // Update offset for next load
-        if(childList.length + result.data.length >= 22){
+        if(childList.length + result.data.length >= result.total_count){
           setLoadMore(false); // Disable load more if all data is loaded
         }
         else{
