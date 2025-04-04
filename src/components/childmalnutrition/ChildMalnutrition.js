@@ -13,7 +13,7 @@ import childprofile from '../../assets/images/profile-child.png';
 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } from "../util/Constants";
 
 import {Modal, Button} from 'react-bootstrap'; 
 
@@ -37,6 +37,8 @@ function ChildMalnutrion(){
   const loginAccountType  = loginDetails.account_type;
 
   const [childList, setChildList] = useState([]);
+  const [loadMore, setLoadMore] = useState(false);
+  const [offset, setOffset] = useState(0);
   const [openMenuId, setOpenMenuId] = useState(0);
 
   const handleMenuClick = (accountId) => {
@@ -224,8 +226,8 @@ function ChildMalnutrion(){
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["search_param"]              = {
                                               "by_keywords": searchKey,
-                                              "limit": "10",
-                                              "offset": "0",
+                                              "limit": PAGINATION_LIMIT,
+                                              "offset": offset,
                                               "order_by_field": "account_id",
                                               "order_by_value": "desc"
                                             }
@@ -242,9 +244,18 @@ function ChildMalnutrion(){
 
     if(result.success){
       if(result.data.length > 0){
-
+        setChildList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
+        setOffset(childList.length + result.data.length); // Update offset for next load
+        if(childList.length + result.data.length >= result.total_count){
+          setLoadMore(false); // Disable load more if all data is loaded
+        }
+        else{
+          setLoadMore(true); // Enable load more if more data is available
+        }
       }
-      setChildList(result.data);
+      else{
+        setChildList([]); // Reset list if no data found
+      }
     }
     else{
       setChildList([]); 
@@ -466,6 +477,10 @@ function ChildMalnutrion(){
           ))}
 
           {childList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
+
+          {loadMore && <div className='col-12 text-center'>
+            <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={() => { listChild(""); }}>Load More</Link> 
+          </div>}
 
         </div>
 
