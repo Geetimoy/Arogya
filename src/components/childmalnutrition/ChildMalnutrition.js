@@ -37,6 +37,7 @@ function ChildMalnutrion(){
   const loginAccountType  = loginDetails.account_type;
 
   const [childList, setChildList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [loadMore, setLoadMore] = useState(false);
   const [offset, setOffset] = useState(0);
   const [openMenuId, setOpenMenuId] = useState(0);
@@ -246,6 +247,7 @@ function ChildMalnutrion(){
       if(result.data.length > 0){
         setChildList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
         setOffset(childList.length + result.data.length); // Update offset for next load
+        setTotalCount(result.total_count); // Update total count
         if(childList.length + result.data.length >= result.total_count){
           setLoadMore(false); // Disable load more if all data is loaded
         }
@@ -387,8 +389,7 @@ function ChildMalnutrion(){
       </div>
       <div className="app-body young-womens profile-listing">
         <div className='add-patient align-items-center d-flex justify-content-between'>
-          <span>Total - {childList.length}</span>
-          
+          <span>Total - {totalCount}</span>
           {
             (decryptedLoginDetails.account_type !== '5') && <Link to="/create-child-malnutrition" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Health</Link>
           }
