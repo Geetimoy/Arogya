@@ -12,6 +12,7 @@ import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
+import Select from 'react-select';
 
 function ChildMedicalHistory(){
 
@@ -23,6 +24,33 @@ function ChildMedicalHistory(){
   const editAccountKey = urlParam.accountKey;
 
   const [isMActive, setIsMActive] = useState(false);
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [eyeOption, setEyeOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Dimness of Vision', value: '1' },
+    { label: 'Eye Pain', value: '2' },
+    { label: 'Eye Redness', value: '3' },
+    { label: 'Watery Eyes', value: '4' }
+  ]);
+
+
+  const handleChange1 = (values) => {
+    var selectedArea = [];
+    if(values.length > 0){
+      values.forEach((item, index) => {
+        selectedArea.push(item.value);
+      })
+    }
+    if(selectedArea.length > 0){
+      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+    setSelectedOptions(values);
+  };
+
 
   const [formData, setFormData] = useState({
     eye_type: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -203,20 +231,21 @@ function ChildMedicalHistory(){
           </div>
         </div>
       </div>
-      <div className='app-body form-all create-young-woman'>
+      <div className='app-body create-patient-profiles form-all create-young-woman'>
         <p><small>Update Child Medical History</small></p>
         <p><strong>Do you have these problems?</strong></p>
-        <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
+        <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["eye_type"].errorClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["eye_type"].value ? formData["eye_type"].value : ''} name="eye_type" id="eye_type" onChange={handleChange}>
+            {/* <select className="form-control" value={formData["eye_type"].value ? formData["eye_type"].value : ''} name="eye_type" id="eye_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Dimness of Vision</option>
               <option value="2">Eye Pain</option>
               <option value="3">Eye Redness</option>
               <option value="4">Watery Eyes</option>
-            </select>
+            </select> */}
+            <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={eyeOption} />
             <small className="error-mesg">{formData["eye_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["ears_type"].errorClass}`}>

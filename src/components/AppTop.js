@@ -130,7 +130,7 @@ function AppTop(){
               <li className='mm-active'><FontAwesomeIcon icon={faUser} /> <Link to={"/account"}>My Profile</Link></li>
               <li><FontAwesomeIcon icon={faUsers} /> <Link to={"/patientprofiles"}>Patient Profiles</Link></li>
               
-              <li><FontAwesomeIcon icon={faChild} /> <Link to={"/child-malnutrition"}>Child Malnutrition</Link></li>
+              <li><FontAwesomeIcon icon={faChild} /> <Link to={"/child-malnutrition"}>Child Health</Link></li>
               <li><FontAwesomeIcon icon={faVenusDouble} /> <Link to={"/youngwomens"}>Young Womens</Link></li>
               <li><FontAwesomeIcon icon={faFemale} /> <Link to={"/janani"}>Janani</Link></li>
               <li><FontAwesomeIcon icon={faPersonCane} /> <Link to={"/elder-persons"}>Elder Persons</Link></li>
