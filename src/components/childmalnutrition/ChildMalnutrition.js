@@ -110,14 +110,14 @@ function ChildMalnutrion(){
       })
   
       let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
+      if(result.success && result.data && result.data.appointments.length > 0){
         setAppointmentListForDoctorPresc(result.data.appointments);
+        setShowPrescriptionModalP2(true);
       }
       else{
+        alertContext.setAlertMessage({show:true, type: "error", message: `No appointment found!`});
         setAppointmentListForDoctorPresc([]);
       }
-
-      setShowPrescriptionModalP2(true);
     }
   }
   const redirectToUploadDoctorPrescription = () => {
@@ -162,15 +162,15 @@ function ChildMalnutrion(){
       })
   
       let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
+      if(result.success && result.data && result.data.appointments.length > 0){
         setTestReportAppointmentList(result.data.appointments);
+        setShowTestReportsModal(true);
+        setTestReportChildKey(childAccountKey);
       }
       else{
         setTestReportAppointmentList([]);
+        alertContext.setAlertMessage({show:true, type: "error", message: `No appointment found!`});
       }
-
-    setShowTestReportsModal(true);
-    setTestReportChildKey(childAccountKey);
   }
   const selectTestReportAppointment = (event) => {
     setTestReportAppointmentId(event.target.value);
