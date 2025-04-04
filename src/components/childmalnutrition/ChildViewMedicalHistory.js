@@ -211,7 +211,7 @@ function ChildViewMedicalHistory(){
             </select>
           </div>
           <div className={`form-group`}>
-            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" value={formData["remarks"].value}></textarea>
           </div>
         </form>

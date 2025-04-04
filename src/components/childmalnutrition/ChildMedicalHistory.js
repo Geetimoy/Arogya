@@ -276,10 +276,34 @@ function ChildMedicalHistory(){
             </select>
             <small className="error-mesg">{formData["general_type"].errorMessage}</small>
           </div>
+          {/* <div className={`form-group ${formData["urinary_type"].errorClass}`}>
+            <label><span className="d-block">Urinary Problems <span className="text-danger">*</span></span></label>
+            <select className="form-control" value={formData["urinary_type"].value ? formData["urinary_type"].value : ''} name="urinary_type" id="urinary_type" onChange={handleChange}>
+              <option value="">Select</option>
+              <option value="0">None</option>
+              <option value="1">Frequent Urination</option>
+              <option value="2">Burning during urination</option>
+              <option value="3">Itching</option>
+              <option value="4">White discharge</option>
+            </select>
+            <small className="error-mesg">{formData["urinary_type"].errorMessage}</small>
+          </div> */}
+          {/* <div className={`form-group ${formData["periods_type"].errorClass}`}>
+            <label><span className="d-block">Periods (woman) <span className="text-danger">*</span></span></label>
+            <select className="form-control" value={formData["periods_type"].value ? formData["periods_type"].value : ''} name="periods_type" id="periods_type" onChange={handleChange}>
+              <option value="">Select</option>
+              <option value="0">None</option>
+              <option value="1">Irregular Periods</option>
+              <option value="2">Itching</option>
+              <option value="3">Color of discharge(dark, red, pink...)</option>
+              <option value="4">Age of Menarchy(menstruation)</option>
+            </select>
+            <small className="error-mesg">{formData["periods_type"].errorMessage}</small>
+          </div> */}
           <div className={`form-group ${formData["remarks"].errorClass}`}>
-            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChange} value={formData["remarks"].value}></textarea>
-            <small className="error-mesg">{formData["remarks"].errorMessage}</small>
+            {/* <small className="error-mesg">{formData["remarks"].errorMessage}</small> */}
           </div>
           <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
