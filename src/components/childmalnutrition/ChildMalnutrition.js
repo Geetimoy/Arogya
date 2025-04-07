@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
@@ -18,6 +18,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } f
 import {Modal, Button} from 'react-bootstrap'; 
 
 function ChildMalnutrion(){
+
+  const searchRef = useRef(null);
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -196,9 +198,12 @@ function ChildMalnutrion(){
   };
 
   const searchChild = (e) => {
-    const { name, value } = e.target;
     setTimeout(()=>{
-      listChild(value);
+      setOffset(0);
+      setChildList([]); // Reset child list when searching
+      setLoadMore(false); // Reset load more state
+      setTotalCount(0); // Reset total count
+      listChild(searchRef.current.value); // Call listChild with search key
     }, 1000)
   }
 
@@ -257,10 +262,14 @@ function ChildMalnutrion(){
       }
       else{
         setChildList([]); // Reset list if no data found
+        setLoadMore(false);
+        setTotalCount(0);
       }
     }
     else{
       setChildList([]); 
+      setLoadMore(false);
+      setTotalCount(0);
     }
 
   }
@@ -349,6 +358,9 @@ function ChildMalnutrion(){
     setSavedRating(rating); // Update the saved rating state
   };
 
+  const loadMoreChild = () => {
+    listChild(searchRef.current.value); // Load more data
+  }
  
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -396,8 +408,8 @@ function ChildMalnutrion(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Child' onChange={searchChild}/>
-            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <input type="text" className='form-control' placeholder='Search Child' ref={searchRef}/>
+            <span className="input-group-text" onClick={searchChild}><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
@@ -480,7 +492,7 @@ function ChildMalnutrion(){
           {childList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
 
           {loadMore && <div className='col-12 text-center'>
-            <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={() => { listChild(""); }}>Load More</Link> 
+            <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={loadMoreChild}>Load More</Link> 
           </div>}
 
         </div>
