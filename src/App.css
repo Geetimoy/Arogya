@@ -90,6 +90,14 @@ body {
     border: 1px solid #ff0000;
 }
 
+.css-t3ipsp-control,
+.css-1nmdiq5-menu{
+    z-index: 99999999;
+}
+.select-box .select-multi div:last-child{
+    z-index: 9;
+}
+
 /* SERVICEPLACE */
 .serviceplace-container-class .primary-color{
     color: #01aef0!important; 
