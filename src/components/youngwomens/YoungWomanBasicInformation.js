@@ -70,6 +70,50 @@ function YoungWomanBasicInformation(){
 		{ label: 'Saparam Bera', value: '5' }
   ]);
 
+  const getMasterServicesArea = async (e) => {
+
+    let jsonData = {};
+
+    jsonData['system_id']        = systemContext.systemDetails.system_id;
+    jsonData["device_type"]      = DEVICE_TYPE;
+    jsonData["device_token"]     = DEVICE_TOKEN;
+    jsonData["user_lat"]         = localStorage.getItem('latitude');
+    jsonData["user_long"]        = localStorage.getItem('longitude');
+    jsonData["center_id"]        = 1;
+
+    const response = await fetch(`${API_URL}/masterServiceAreas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.data.rows > 0){
+      var areas         = result.data.results;
+      var optionsArray  = [];
+      for(var i=0; i<areas.length; i++){
+        optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
+      }
+      setOptions(optionsArray);
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      getMasterServicesArea();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  useEffect(() => {
+
+  }, [options])
+
+ 
   // Define the selectedOptions state and the corresponding setter function
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -129,7 +173,7 @@ function YoungWomanBasicInformation(){
         var array1 = new Array();
         serviceAreaArray.forEach((item)=>{
           options.forEach((opt)=>{
-            if(opt.value == item){
+            if(opt.value === item){
               array1.push(opt);
             }
           })
@@ -282,49 +326,6 @@ function YoungWomanBasicInformation(){
     // eslint-disable-next-line
     
   }, [systemContext.systemDetails.system_id]);
-
-  useEffect(() => {
-    if(systemContext.systemDetails.system_id){
-      getMasterServicesArea();
-    }
-    // eslint-disable-next-line
-  }, [systemContext.systemDetails.system_id]);
-
-  useEffect(() => {
-
-  }, [options])
-
-  const getMasterServicesArea = async (e) => {
-
-    let jsonData = {};
-
-    jsonData['system_id']        = systemContext.systemDetails.system_id;
-    jsonData["device_type"]      = DEVICE_TYPE;
-    jsonData["device_token"]     = DEVICE_TOKEN;
-    jsonData["user_lat"]         = localStorage.getItem('latitude');
-    jsonData["user_long"]        = localStorage.getItem('longitude');
-    jsonData["center_id"]        = 1;
-
-    const response = await fetch(`${API_URL}/masterServiceAreas`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
-
-    let result = await response.json();
-
-    if(result.data.rows > 0){
-      var areas         = result.data.results;
-      var optionsArray  = [];
-      for(var i=0; i<areas.length; i++){
-        optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
-      }
-      setOptions(optionsArray);
-    }
-
-  }
 
   return(
     <>

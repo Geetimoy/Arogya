@@ -38,6 +38,49 @@ function ElderViewBasicInformation(){
     { label: 'Saparam Bera', value: '5' }
   ]);
 
+  
+  const getMasterServicesArea = async (e) => {
+
+    let jsonData = {};
+
+    jsonData['system_id']        = systemContext.systemDetails.system_id;
+    jsonData["device_type"]      = DEVICE_TYPE;
+    jsonData["device_token"]     = DEVICE_TOKEN;
+    jsonData["user_lat"]         = localStorage.getItem('latitude');
+    jsonData["user_long"]        = localStorage.getItem('longitude');
+    jsonData["center_id"]        = 1;
+
+    const response = await fetch(`${API_URL}/masterServiceAreas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.data.rows > 0){
+      var areas         = result.data.results;
+      var optionsArray  = [];
+      for(var i=0; i<areas.length; i++){
+        optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
+      }
+      setServiceAreaOption(optionsArray);
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      getMasterServicesArea();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  useEffect(() => {
+
+  }, [serviceAreaOption])
 
   const [formData, setFormData] = useState({
     elder_name: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -105,7 +148,7 @@ function ElderViewBasicInformation(){
           var array1 = new Array();
           serviceAreaArray.forEach((item)=>{
             serviceAreaOption.forEach((opt)=>{
-              if(opt.value == item){
+              if(opt.value === item){
                 array1.push(opt);
               }
             })
@@ -151,49 +194,6 @@ function ElderViewBasicInformation(){
     // eslint-disable-next-line
     
   }, [systemContext.systemDetails.system_id]);
-
-  useEffect(() => {
-    if(systemContext.systemDetails.system_id){
-      getMasterServicesArea();
-    }
-    // eslint-disable-next-line
-  }, [systemContext.systemDetails.system_id]);
-
-  useEffect(() => {
-
-  }, [serviceAreaOption])
-
-  const getMasterServicesArea = async (e) => {
-
-    let jsonData = {};
-
-    jsonData['system_id']        = systemContext.systemDetails.system_id;
-    jsonData["device_type"]      = DEVICE_TYPE;
-    jsonData["device_token"]     = DEVICE_TOKEN;
-    jsonData["user_lat"]         = localStorage.getItem('latitude');
-    jsonData["user_long"]        = localStorage.getItem('longitude');
-    jsonData["center_id"]        = 1;
-
-    const response = await fetch(`${API_URL}/masterServiceAreas`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
-
-    let result = await response.json();
-
-    if(result.data.rows > 0){
-      var areas         = result.data.results;
-      var optionsArray  = [];
-      for(var i=0; i<areas.length; i++){
-        optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
-      }
-      setServiceAreaOption(optionsArray);
-    }
-
-  }
 
   return(
     <>

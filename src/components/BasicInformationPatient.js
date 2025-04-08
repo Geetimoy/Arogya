@@ -109,7 +109,7 @@ function BasicInformationPatient(){
       var array1 = new Array();
       serviceAreaArray.forEach((item)=>{
         options.forEach((opt)=>{
-          if(opt.value == item){
+          if(opt.value === item){
             array1.push(opt);
           }
         })
