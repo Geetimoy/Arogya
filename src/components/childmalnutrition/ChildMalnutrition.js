@@ -198,17 +198,16 @@ function ChildMalnutrion(){
   };
 
   const searchChild = (e) => {
+    setChildList([]); // Reset child list when searching
+    setLoadMore(false); // Reset load more state
+    setTotalCount(0); // Reset total count
     setTimeout(()=>{
-      setOffset(0);
-      setChildList([]); // Reset child list when searching
-      setLoadMore(false); // Reset load more state
-      setTotalCount(0); // Reset total count
-      listChild(searchRef.current.value); // Call listChild with search key
-    }, 1000)
+      listChild(searchRef.current.value, 0); // Call listChild with search key
+    }, 500)
   }
 
-  const listChild = async (searchKey) => {
-
+  const listChild = async (searchKey, customOffset) => {
+    console.log(offset);
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
@@ -233,7 +232,7 @@ function ChildMalnutrion(){
     jsonData["search_param"]              = {
                                               "by_keywords": searchKey,
                                               "limit": PAGINATION_LIMIT,
-                                              "offset": offset,
+                                              "offset": customOffset,
                                               "order_by_field": "account_id",
                                               "order_by_value": "desc"
                                             }
@@ -251,7 +250,7 @@ function ChildMalnutrion(){
     if(result.success){
       if(result.data.length > 0){
         setChildList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
-        setOffset(childList.length + result.data.length); // Update offset for next load
+        setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
         setTotalCount(result.total_count); // Update total count
         if(childList.length + result.data.length >= result.total_count){
           setLoadMore(false); // Disable load more if all data is loaded
@@ -274,10 +273,13 @@ function ChildMalnutrion(){
 
   }
   
+  useEffect(() => {
+
+  }, [offset]);
 
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
-      listChild("");
+      listChild("", 0);
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
@@ -325,7 +327,7 @@ function ChildMalnutrion(){
       setOpenMenuId(0);
       setTimeout(()=>{
         modalCloseProfile();
-        listChild("");
+        listChild("", 0);
       }, 1000);
     } 
     else {
@@ -359,7 +361,7 @@ function ChildMalnutrion(){
   };
 
   const loadMoreChild = () => {
-    listChild(searchRef.current.value); // Load more data
+    listChild(searchRef.current.value, offset); // Load more data
   }
  
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
