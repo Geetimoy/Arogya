@@ -336,7 +336,7 @@ function PatientBasicInformation(){
       <div className='app-body create-patient-profiles'>
        
         <p><small>To update your profile information</small></p>
-        <form className="mt-3" name="patient_form" id="patient_form" onSubmit={handleFormSubmit}>
+        <form className="mt-3 select-box" name="patient_form" id="patient_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["patient_name"].errorClass}`}>
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="patient_name" id="patient_name" placeholder="Full Name" onChange={handleChange} value={formData["patient_name"].value ? formData["patient_name"].value : ''}/>

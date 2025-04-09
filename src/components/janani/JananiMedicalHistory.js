@@ -317,7 +317,7 @@ function JananiMedicalHistory(){
             <small className="error-mesg">{formData["is_smoking"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["smoking_duration"].errorClass}`}>
-            <label htmlFor="smoking_duration"><span className="d-block">Smoking Duration in Months<span className="text-danger">*</span></span></label>
+            <label htmlFor="smoking_duration"><span className="d-block">Smoking Duration in Months <span className="text-danger">*</span></span></label>
             <input type="text" className="form-control" name="smoking_duration" placeholder="Smoking Duration in Months"   onChange={handleChange} value={formData["smoking_duration"].value ? formData["smoking_duration"].value : ''} />
             <small className="error-mesg">{formData["smoking_duration"].errorMessage}</small>
           </div>

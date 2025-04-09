@@ -277,7 +277,7 @@ function CreateElderPerson(){
           </div>
 
           <div className={`form-group ${formData["elder_father_name"].errorClass}`}>
-            <label htmlFor="elder_father_name">Name of Guardian<span className="text-danger">*</span></label>
+            <label htmlFor="elder_father_name">Name of Guardian <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange}  name="elder_father_name" id="elder_father_name" value={formData["elder_father_name"].value ? formData["elder_father_name"].value : ''} placeholder="Name of Guardian" />
             <small className="error-mesg">{formData["elder_father_name"].errorMessage}</small>
           </div>

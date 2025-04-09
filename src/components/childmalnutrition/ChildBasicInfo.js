@@ -509,7 +509,7 @@ export default function ChildBasicInfo() {
             </div>
   
             <div className={`form-group ${formData["house_type"].errorClass}`}>
-              <label htmlFor="house_type">House<span className="text-danger">*</span></label>
+              <label htmlFor="house_type">House <span className="text-danger">*</span></label>
               <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value} onChange={handleChange}>
                 <option value="1">Mud House</option>
                 <option value="2">Paved House</option>
@@ -518,7 +518,7 @@ export default function ChildBasicInfo() {
             </div>
   
             <div className={`form-group ${formData["drinking_water_type"].errorClass}`}>
-              <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
+              <label htmlFor="drinking_water_type">Drinking Water <span className="text-danger">*</span></label>
               <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value} onChange={handleChange}>
                 <option value="1">Tap</option>
                 <option value="2">Well</option>
@@ -528,7 +528,7 @@ export default function ChildBasicInfo() {
             </div>
 
             <div className={`form-group ${formData["toilet_type"].errorClass}`}>
-            <label htmlFor="toilet_type">Toilet<span className="text-danger">*</span></label>
+            <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
             <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'} onChange={handleChange}>
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>

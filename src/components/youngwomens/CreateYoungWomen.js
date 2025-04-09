@@ -293,7 +293,7 @@ function CraeteYoungWomen(){
             <small className="error-mesg">{formData["woman_name"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["woman_father_name"].errorClass}`}>
-            <label htmlFor="woman_father_name">Name of Parent/Guardian<span className="text-danger">*</span></label>
+            <label htmlFor="woman_father_name">Name of Parent/Guardian <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} name="woman_father_name" id="woman_father_name" value={formData["woman_father_name"].value ? formData["woman_father_name"].value : ''} placeholder="Name of Parent/Guardian" />
             <small className="error-mesg">{formData["woman_father_name"].errorMessage}</small>
           </div>
