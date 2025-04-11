@@ -94,6 +94,9 @@ body {
 .css-1nmdiq5-menu{
     z-index: 99999999;
 }
+.css-13cymwt-control{
+    z-index: 1;
+}
 .select-box .select-multi div:last-child{
     z-index: 9;
 }

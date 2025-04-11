@@ -41,6 +41,45 @@ function ChildMedicalHistory(){
     { label: 'Water or pus from the ear', value: '2' }
   ]);
 
+  const [selectedNoseOptions, setSelectedNoseOptions] = useState([]);
+  const [noseOption, setNoseOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Stuffy Nose', value: '1' },
+    { label: 'Runny or watery nose', value: '2' },
+    { label: 'Bleeding from the nose', value: '3' }
+  ]);
+
+
+  const [selectedMouthOptions, setSelectedMouthOptions] = useState([]);
+  const [mouthOption, setMouthOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Difficulty in Swallowing', value: '1' },
+    { label: 'Carries Tooth (cavity etc.)', value: '2' },
+    { label: 'Sores on gums', value: '3' }
+  ]);
+
+  const [selectedDigestiveOptions, setSelectedDigestiveOptions] = useState([]);
+  const [digestiveOption, setDigestiveOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Loss of Appetite', value: '1' },
+    { label: 'Nausia/vomiting', value: '2' },
+    { label: 'Diarrhea', value: '3' },
+    { label: 'Constipation', value: '4' },
+    { label: 'Abdominal (stomach) pain', value: '5' },
+    { label: 'Blood with stool.', value: '6' }
+  ]);
+
+
+  const [selectedGeneralOptions, setSelectedGeneralOptions] = useState([]);
+  const [generalOption, setGeneralOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Frequent Urination', value: '1' },
+    { label: 'Burning during urination', value: '2' },
+    { label: 'Itching', value: '3' },
+    { label: 'White discharge', value: '4' }
+  ]);
+
+
 
   const handleChange1 = (values, element) => {
     var selectedArea = [];
@@ -62,16 +101,16 @@ function ChildMedicalHistory(){
       setSelectedEarOptions(values);
     }
     else if(element === 'nose_type'){ 
-
+      setSelectedNoseOptions(values);
     }
     else if(element === 'mouth_type'){ 
-
+      setSelectedMouthOptions(values);
     }
     else if(element === 'digestive_system_type'){ 
-
+      setSelectedDigestiveOptions(values);
     }
     else if(element === 'general_type'){ 
-
+      setSelectedGeneralOptions(values);
     }
   };
 
@@ -285,29 +324,31 @@ function ChildMedicalHistory(){
           </div>
           <div className={`form-group ${formData["nose_type"].errorClass}`}>
             <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["nose_type"].value ? formData["nose_type"].value : ''} name="nose_type" id="nose_type" onChange={handleChange}>
+            {/* <select className="form-control" value={formData["nose_type"].value ? formData["nose_type"].value : ''} name="nose_type" id="nose_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Stuffy Nose</option>
               <option value="2">Runny or watery nose</option>
               <option value="3">Bleeding from the nose</option>
-            </select>
+            </select> */}
+            <Select className='form-control select-multi' isMulti value={selectedNoseOptions} onChange={(values) =>  handleChange1(values, 'nose_type')} options={noseOption} />
             <small className="error-mesg">{formData["nose_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["mouth_type"].errorClass}`}>
             <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["mouth_type"].value ? formData["mouth_type"].value : ''} name="mouth_type" id="mouth_type" onChange={handleChange}>
+            {/* <select className="form-control" value={formData["mouth_type"].value ? formData["mouth_type"].value : ''} name="mouth_type" id="mouth_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Difficulty in Swallowing</option>
               <option value="2">Carries Tooth (cavity etc.)</option>
               <option value="3">Sores on gums</option>
-            </select>
+            </select> */}
+            <Select className='form-control select-multi' isMulti value={selectedMouthOptions} onChange={(values) =>  handleChange1(values, 'mouth_type')} options={mouthOption} />
             <small className="error-mesg">{formData["mouth_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["digestive_system_type"].errorClass}`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["digestive_system_type"].value ? formData["digestive_system_type"].value : ''} name="digestive_system_type" id="digestive_system_type" onChange={handleChange}>
+            {/* <select className="form-control" value={formData["digestive_system_type"].value ? formData["digestive_system_type"].value : ''} name="digestive_system_type" id="digestive_system_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Loss of Appetite</option>
@@ -316,18 +357,20 @@ function ChildMedicalHistory(){
               <option value="4">Constipation</option>
               <option value="5">Abdominal (stomach) pain</option>
               <option value="6">Blood with stool.</option>
-            </select>
+            </select> */}
+            <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} onChange={(values) =>  handleChange1(values, 'digestive_type')} options={digestiveOption} />
             <small className="error-mesg">{formData["digestive_system_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["general_type"].errorClass}`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["general_type"].value ? formData["general_type"].value : ''} name="general_type" id="general_type" onChange={handleChange}>
+            {/* <select className="form-control" value={formData["general_type"].value ? formData["general_type"].value : ''} name="general_type" id="general_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Cough - dry/productive?</option>
               <option value="2">Shortness of breath</option>
               <option value="3">Sound while breathing(whezzing)</option>
-            </select>
+            </select> */}
+            <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} onChange={(values) =>  handleChange1(values, 'general_type')} options={generalOption} />
             <small className="error-mesg">{formData["general_type"].errorMessage}</small>
           </div>
           {/* <div className={`form-group ${formData["urinary_type"].errorClass}`}>
