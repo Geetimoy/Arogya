@@ -25,7 +25,7 @@ function ChildMedicalHistory(){
 
   const [isMActive, setIsMActive] = useState(false);
 
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedEyeOptions, setSelectedEyeOptions] = useState([]);
   const [eyeOption, setEyeOption] = useState([
     { label: 'None', value: '0' },
     { label: 'Dimness of Vision', value: '1' },
@@ -34,8 +34,15 @@ function ChildMedicalHistory(){
     { label: 'Watery Eyes', value: '4' }
   ]);
 
+  const [selectedEarOptions, setSelectedEarOptions] = useState([]);
+  const [earOption, setEarOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Hearing Loss', value: '1' },
+    { label: 'Water or pus from the ear', value: '2' }
+  ]);
 
-  const handleChange1 = (values) => {
+
+  const handleChange1 = (values, element) => {
     var selectedArea = [];
     if(values.length > 0){
       values.forEach((item, index) => {
@@ -43,12 +50,29 @@ function ChildMedicalHistory(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, [element]: {...formData[element], value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, [element]: {...formData[element], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
-    setSelectedOptions(values);
+    if(element === 'eye_type'){
+      setSelectedEyeOptions(values);
+    }
+    else if(element === 'ears_type'){ 
+      setSelectedEarOptions(values);
+    }
+    else if(element === 'nose_type'){ 
+
+    }
+    else if(element === 'mouth_type'){ 
+
+    }
+    else if(element === 'digestive_system_type'){ 
+
+    }
+    else if(element === 'general_type'){ 
+
+    }
   };
 
 
@@ -245,17 +269,18 @@ function ChildMedicalHistory(){
               <option value="3">Eye Redness</option>
               <option value="4">Watery Eyes</option>
             </select> */}
-            <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={eyeOption} />
+            <Select className='form-control select-multi' isMulti value={selectedEyeOptions} onChange={(values) =>  handleChange1(values, 'eye_type')} options={eyeOption} />
             <small className="error-mesg">{formData["eye_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["ears_type"].errorClass}`}>
             <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["ears_type"].value ? formData["ears_type"].value : ''} name="ears_type" id="ears_type" onChange={handleChange}>
+            {/* <select className="form-control" value={formData["ears_type"].value ? formData["ears_type"].value : ''} name="ears_type" id="ears_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Hearing Loss</option>
               <option value="2">Water or pus from the ear</option>
-            </select>
+            </select> */}
+            <Select className='form-control select-multi' isMulti value={selectedEarOptions} onChange={(values) =>  handleChange1(values, 'ears_type')} options={earOption} />
             <small className="error-mesg">{formData["ears_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["nose_type"].errorClass}`}>
