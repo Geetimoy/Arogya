@@ -79,6 +79,24 @@ function ChildMedicalHistory(){
     { label: 'White discharge', value: '4' }
   ]);
 
+  const [selectedUrinaryOptions, setSelectedUrinaryOptions] = useState([]);
+  const [urinaryOption, setUrinaryOption] = useState([
+    { label: 'None', value: '0' },  
+    { label: 'Frequent Urination', value: '1' },
+    { label: 'Burning during urination', value: '2' },
+    { label: 'Itching', value: '3' },
+    { label: 'White discharge', value: '4' }  
+  ]);
+
+  const [selectedPeriodsOptions, setSelectedPeriodsOptions] = useState([]); 
+  const [periodsOption, setPeriodsOption] = useState([
+    { label: 'None', value: '0' },  
+    { label: 'Irregular Periods', value: '1' },
+    { label: 'Itching', value: '2' },
+    { label: 'Color of discharge(dark, red, pink...)', value: '3' },
+    { label: 'Age of Menarchy(menstruation)', value: '4' }
+  ]);
+
 
 
   const handleChange1 = (values, element) => {
@@ -112,6 +130,12 @@ function ChildMedicalHistory(){
     else if(element === 'general_type'){ 
       setSelectedGeneralOptions(values);
     }
+    else if(element === 'urinary_type'){ 
+      setSelectedUrinaryOptions(values);
+    }
+    else if(element === 'periods_type'){ 
+      setSelectedPeriodsOptions(values);
+    }
   };
 
 
@@ -122,6 +146,8 @@ function ChildMedicalHistory(){
     mouth_type: {required: true, value:"", errorClass:"", errorMessage:""},
     digestive_system_type: {required: true, value:"", errorClass:"", errorMessage:""},
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
@@ -238,6 +264,8 @@ function ChildMedicalHistory(){
       jsonData["mouth_type"]                = formData['mouth_type'].value;
       jsonData["digestive_system_type"]     = formData['digestive_system_type'].value;
       jsonData["general_type"]              = formData['general_type'].value;
+      jsonData["urinary_type"]              = formData['urinary_type'].value;
+      jsonData["periods_type"]              = formData['periods_type'].value;
       jsonData["remarks"]                   = formData['remarks'].value;
 
       const response = await fetch(`${API_URL}/addUpdateChildMedicalHistory`, {
@@ -298,7 +326,7 @@ function ChildMedicalHistory(){
         <p><small>Update Child Medical History</small></p>
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
-          <div className={`form-group ${formData["eye_type"].errorClass}`}>
+          <div className={`form-group ${formData["eye_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
             {/* <select className="form-control" value={formData["eye_type"].value ? formData["eye_type"].value : ''} name="eye_type" id="eye_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -311,7 +339,7 @@ function ChildMedicalHistory(){
             <Select className='form-control select-multi' isMulti value={selectedEyeOptions} onChange={(values) =>  handleChange1(values, 'eye_type')} options={eyeOption} />
             <small className="error-mesg">{formData["eye_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["ears_type"].errorClass}`}>
+          <div className={`form-group ${formData["ears_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
             {/* <select className="form-control" value={formData["ears_type"].value ? formData["ears_type"].value : ''} name="ears_type" id="ears_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -322,7 +350,7 @@ function ChildMedicalHistory(){
             <Select className='form-control select-multi' isMulti value={selectedEarOptions} onChange={(values) =>  handleChange1(values, 'ears_type')} options={earOption} />
             <small className="error-mesg">{formData["ears_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["nose_type"].errorClass}`}>
+          <div className={`form-group ${formData["nose_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
             {/* <select className="form-control" value={formData["nose_type"].value ? formData["nose_type"].value : ''} name="nose_type" id="nose_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -334,7 +362,7 @@ function ChildMedicalHistory(){
             <Select className='form-control select-multi' isMulti value={selectedNoseOptions} onChange={(values) =>  handleChange1(values, 'nose_type')} options={noseOption} />
             <small className="error-mesg">{formData["nose_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["mouth_type"].errorClass}`}>
+          <div className={`form-group ${formData["mouth_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
             {/* <select className="form-control" value={formData["mouth_type"].value ? formData["mouth_type"].value : ''} name="mouth_type" id="mouth_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -346,7 +374,7 @@ function ChildMedicalHistory(){
             <Select className='form-control select-multi' isMulti value={selectedMouthOptions} onChange={(values) =>  handleChange1(values, 'mouth_type')} options={mouthOption} />
             <small className="error-mesg">{formData["mouth_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["digestive_system_type"].errorClass}`}>
+          <div className={`form-group ${formData["digestive_system_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
             {/* <select className="form-control" value={formData["digestive_system_type"].value ? formData["digestive_system_type"].value : ''} name="digestive_system_type" id="digestive_system_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -361,7 +389,7 @@ function ChildMedicalHistory(){
             <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} onChange={(values) =>  handleChange1(values, 'digestive_type')} options={digestiveOption} />
             <small className="error-mesg">{formData["digestive_system_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["general_type"].errorClass}`}>
+          <div className={`form-group ${formData["general_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
             {/* <select className="form-control" value={formData["general_type"].value ? formData["general_type"].value : ''} name="general_type" id="general_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -373,30 +401,16 @@ function ChildMedicalHistory(){
             <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} onChange={(values) =>  handleChange1(values, 'general_type')} options={generalOption} />
             <small className="error-mesg">{formData["general_type"].errorMessage}</small>
           </div>
-          {/* <div className={`form-group ${formData["urinary_type"].errorClass}`}>
-            <label><span className="d-block">Urinary Problems <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["urinary_type"].value ? formData["urinary_type"].value : ''} name="urinary_type" id="urinary_type" onChange={handleChange}>
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Frequent Urination</option>
-              <option value="2">Burning during urination</option>
-              <option value="3">Itching</option>
-              <option value="4">White discharge</option>
-            </select>
+          <div className={`form-group ${formData["urinary_type"].errorClass} select-dropdown`}>
+            <label><span className="d-block">Urine <span className="text-danger">*</span></span></label>
+            <Select className='form-control select-multi' isMulti value={selectedUrinaryOptions} onChange={(values) =>  handleChange1(values, 'urinary_type')} options={urinaryOption} />
             <small className="error-mesg">{formData["urinary_type"].errorMessage}</small>
-          </div> */}
-          {/* <div className={`form-group ${formData["periods_type"].errorClass}`}>
-            <label><span className="d-block">Periods (woman) <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["periods_type"].value ? formData["periods_type"].value : ''} name="periods_type" id="periods_type" onChange={handleChange}>
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Irregular Periods</option>
-              <option value="2">Itching</option>
-              <option value="3">Color of discharge(dark, red, pink...)</option>
-              <option value="4">Age of Menarchy(menstruation)</option>
-            </select>
+          </div>
+          <div className={`form-group ${formData["periods_type"].errorClass} select-dropdown`}>
+            <label><span className="d-block">Period <span className="text-danger">*</span></span></label>
+            <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} onChange={(values) =>  handleChange1(values, 'periods_type')} options={periodsOption} />
             <small className="error-mesg">{formData["periods_type"].errorMessage}</small>
-          </div> */}
+          </div>
           <div className={`form-group ${formData["remarks"].errorClass}`}>
             <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChange} value={formData["remarks"].value}></textarea>
