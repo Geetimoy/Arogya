@@ -28,6 +28,8 @@ export default function ChildBasicInfo() {
     const handle2Click = () => {
       setIsMActive(!isMActive); // Toggle the state
     };
+
+    const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
   
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [serviceAreaOption, setServiceAreaOption] = useState([
@@ -99,6 +101,17 @@ export default function ChildBasicInfo() {
   
     const handleChange = (e) => {
       const { name, value } = e.target; console.log(value);
+
+      console.log(name, value);
+      if(name === "is_your_personal_mobile_number"){
+        if(value === "t"){
+          setIsMobileNumberVisible(true);
+        }
+        else if(value === "f"){
+          setIsMobileNumberVisible(false);
+        }
+      }
+
       if(value.trim() !== ""){
         setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
       }
@@ -196,7 +209,16 @@ export default function ChildBasicInfo() {
             formData['child_gender']       = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
             formData['child_age']          = {value:userDetails.child_age, errorClass:"", errorMessage:""};
             formData['is_your_personal_mobile_number']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-            formData['child_phone_no']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+
+            if(userDetails.is_your_personal_number === "t"){
+              setIsMobileNumberVisible(true);
+              formData['child_phone_no']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+            }
+            else if(userDetails.is_your_personal_number === "f"){
+              setIsMobileNumberVisible(false);
+              formData['child_phone_no']     = {value:"", errorClass:"", errorMessage:""};
+            }
+
             formData['child_whatsapp_no']  = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
             formData['child_email']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
             formData['child_address']      = {value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
@@ -253,7 +275,12 @@ export default function ChildBasicInfo() {
         jsonData["child_age"]                 = formData['child_age'].value;
         jsonData["child_gender"]              = formData['child_gender'].value;
         jsonData["is_your_personal_number"]   = formData['is_your_personal_mobile_number'].value;
-        jsonData["child_contact_number"]      = formData['child_phone_no'].value;
+        if(isMobileNumberVisible){
+          jsonData["child_contact_number"]      = formData['child_phone_no'].value;
+        }
+        else{
+          jsonData["child_contact_number"]      = "";
+        }
         jsonData["child_whatsup_number"]      = formData['child_whatsapp_no'].value;
         jsonData["child_email_id"]            = formData['child_email'].value;
         jsonData["child_address"]             = formData['child_address'].value;
@@ -440,11 +467,11 @@ export default function ChildBasicInfo() {
               </select>
               <small className="error-mesg">{formData["is_your_personal_mobile_number"].errorMessage}</small>
             </div>
-            <div className={`form-group ${formData["child_phone_no"].errorClass}`}>
+            {isMobileNumberVisible && <div className={`form-group ${formData["child_phone_no"].errorClass}`}>
               <label htmlFor="child_phone_no">Phone No <span className="text-danger">*</span></label>
               <input type="tel" className="form-control" name="child_phone_no" id="child_phone_no" placeholder="Phone No" onChange={handleChange} value={formData["child_phone_no"].value ? formData["child_phone_no"].value : ''}/>
               <small className="error-mesg">{formData["child_phone_no"].errorMessage}</small>
-            </div>
+            </div>}
             <div className={`form-group ${formData["child_whatsapp_no"].errorClass}`}>
               <label htmlFor="child_whatsapp_no">WhatsApp No </label>
               <input type="tel" className="form-control" name="child_whatsapp_no" id="child_whatsapp_no" placeholder="WhatsApp No" onChange={handleChange} value={formData["child_whatsapp_no"].value ? formData["child_whatsapp_no"].value : ''}/>
