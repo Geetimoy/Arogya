@@ -32,13 +32,11 @@ export default function ChildBasicInfo() {
     const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
   
     const [selectedOptions, setSelectedOptions] = useState([]);
-    const [serviceAreaOption, setServiceAreaOption] = useState([
-      { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
-      { label: 'Navagraha Temple, Guwahati', value: '2' },
-      { label: 'Umananda Temple, Guwahati', value: '3' },
-      { label: 'Morigaon', value: '4' },
-      { label: 'Saparam Bera', value: '5' }
-    ]);
+    const [serviceAreaOption, setServiceAreaOption] = useState([]);
+
+    useEffect(() => {
+  
+    }, [serviceAreaOption])
 
     const getMasterServicesArea = async (e) => {
   
@@ -68,6 +66,8 @@ export default function ChildBasicInfo() {
           optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
         }
         setServiceAreaOption(optionsArray);
+
+
       }
   
     }
@@ -79,9 +79,7 @@ export default function ChildBasicInfo() {
       // eslint-disable-next-line
     }, [systemContext.systemDetails.system_id]);
   
-    useEffect(() => {
-  
-    }, [serviceAreaOption])
+    
 
     const handleChange1 = (values) => {
       var selectedArea = [];
@@ -189,6 +187,7 @@ export default function ChildBasicInfo() {
               serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
               console.log(serviceAreaArray);
               var array1 = new Array();
+              console.log(serviceAreaOption);
               serviceAreaArray.forEach((item)=>{
                 serviceAreaOption.forEach((opt)=>{
                   if(opt.value === item){
@@ -346,12 +345,14 @@ export default function ChildBasicInfo() {
     useEffect(() => {
 
       if(systemContext.systemDetails.system_id){
-        getUserDetails();
+        if(serviceAreaOption.length > 0){
+          getUserDetails();
+        }
       }
   
       // eslint-disable-next-line
       
-    }, [systemContext.systemDetails.system_id]);
+    }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
     return(
       <>
