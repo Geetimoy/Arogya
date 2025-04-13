@@ -124,7 +124,7 @@ function ChildMedicalHistory(){
     else if(element === 'mouth_type'){ 
       setSelectedMouthOptions(values);
     }
-    else if(element === 'digestive_system_type'){ 
+    else if(element === 'digestive_type'){ 
       setSelectedDigestiveOptions(values);
     }
     else if(element === 'general_type'){ 
@@ -144,7 +144,7 @@ function ChildMedicalHistory(){
     ears_type: {required: true, value:"", errorClass:"", errorMessage:""},
     nose_type: {required: true, value:"", errorClass:"", errorMessage:""},
     mouth_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    digestive_system_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    digestive_type: {required: true, value:"", errorClass:"", errorMessage:""},
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
     urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
     periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -219,7 +219,7 @@ function ChildMedicalHistory(){
       formData['ears_type']     = {value:medicalHistory.ears_type, required: true, errorClass:"", errorMessage:""};
       formData['nose_type']     = {value:medicalHistory.nose_type, required: true, errorClass:"", errorMessage:""};
       formData['mouth_type']    = {value:medicalHistory.mouth_type, required: true, errorClass:"", errorMessage:""};
-      formData['digestive_system_type'] = {value:medicalHistory.digestive_system_type, required: true, errorClass:"", errorMessage:""};
+      formData['digestive_type'] = {value:medicalHistory.digestive_type, required: true, errorClass:"", errorMessage:""};
       formData['general_type']  = {value:medicalHistory.general_type, required: true, errorClass:"", errorMessage:""};
       formData['remarks']   = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
 
@@ -262,7 +262,7 @@ function ChildMedicalHistory(){
       jsonData["ears_type"]                 = formData['ears_type'].value;
       jsonData["nose_type"]                 = formData['nose_type'].value;
       jsonData["mouth_type"]                = formData['mouth_type'].value;
-      jsonData["digestive_system_type"]     = formData['digestive_system_type'].value;
+      jsonData["digestive_type"]            = formData['digestive_type'].value;
       jsonData["general_type"]              = formData['general_type'].value;
       jsonData["urinary_type"]              = formData['urinary_type'].value;
       jsonData["periods_type"]              = formData['periods_type'].value;
@@ -374,9 +374,9 @@ function ChildMedicalHistory(){
             <Select className='form-control select-multi' isMulti value={selectedMouthOptions} onChange={(values) =>  handleChange1(values, 'mouth_type')} options={mouthOption} />
             <small className="error-mesg">{formData["mouth_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["digestive_system_type"].errorClass} select-dropdown`}>
+          <div className={`form-group ${formData["digestive_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
-            {/* <select className="form-control" value={formData["digestive_system_type"].value ? formData["digestive_system_type"].value : ''} name="digestive_system_type" id="digestive_system_type" onChange={handleChange}>
+            {/* <select className="form-control" value={formData["digestive_type"].value ? formData["digestive_type"].value : ''} name="digestive_type" id="digestive_type" onChange={handleChange}>
               <option value="">Select</option>
               <option value="0">None</option>
               <option value="1">Loss of Appetite</option>
@@ -387,7 +387,7 @@ function ChildMedicalHistory(){
               <option value="6">Blood with stool.</option>
             </select> */}
             <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} onChange={(values) =>  handleChange1(values, 'digestive_type')} options={digestiveOption} />
-            <small className="error-mesg">{formData["digestive_system_type"].errorMessage}</small>
+            <small className="error-mesg">{formData["digestive_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["general_type"].errorClass} select-dropdown`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
