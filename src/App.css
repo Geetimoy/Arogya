@@ -97,7 +97,7 @@ body {
 .css-13cymwt-control{
     z-index: 1;
 }
-.select-box .select-multi div:last-child{
+.select-box .selected .select-multi div:last-child{
     z-index: 9;
 }
 
