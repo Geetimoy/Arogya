@@ -12,10 +12,9 @@ import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
+import Select from 'react-select';
 
 function ChildViewMedicalHistory(){
-
-  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -26,31 +25,97 @@ function ChildViewMedicalHistory(){
 
   const [isMActive, setIsMActive] = useState(false);
 
+  const [selectedEyeOptions, setSelectedEyeOptions] = useState([]);
+  const [eyeOption, setEyeOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Dimness of Vision', value: '1' },
+    { label: 'Eye Pain', value: '2' },
+    { label: 'Eye Redness', value: '3' },
+    { label: 'Watery Eyes', value: '4' }
+  ]);
+
+  const [selectedEarOptions, setSelectedEarOptions] = useState([]);
+  const [earOption, setEarOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Hearing Loss', value: '1' },
+    { label: 'Water or pus from the ear', value: '2' }
+  ]);
+
+  const [selectedNoseOptions, setSelectedNoseOptions] = useState([]);
+  const [noseOption, setNoseOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Stuffy Nose', value: '1' },
+    { label: 'Runny or watery nose', value: '2' },
+    { label: 'Bleeding from the nose', value: '3' }
+  ]);
+
+
+  const [selectedMouthOptions, setSelectedMouthOptions] = useState([]);
+  const [mouthOption, setMouthOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Difficulty in Swallowing', value: '1' },
+    { label: 'Carries Tooth (cavity etc.)', value: '2' },
+    { label: 'Sores on gums', value: '3' }
+  ]);
+
+  const [selectedDigestiveOptions, setSelectedDigestiveOptions] = useState([]);
+  const [digestiveOption, setDigestiveOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Loss of Appetite', value: '1' },
+    { label: 'Nausia/vomiting', value: '2' },
+    { label: 'Diarrhea', value: '3' },
+    { label: 'Constipation', value: '4' },
+    { label: 'Abdominal (stomach) pain', value: '5' },
+    { label: 'Blood with stool.', value: '6' }
+  ]);
+
+
+  const [selectedGeneralOptions, setSelectedGeneralOptions] = useState([]);
+  const [generalOption, setGeneralOption] = useState([
+    { label: 'None', value: '0' },
+    { label: 'Frequent Urination', value: '1' },
+    { label: 'Burning during urination', value: '2' },
+    { label: 'Itching', value: '3' },
+    { label: 'White discharge', value: '4' }
+  ]);
+
+  /*const [selectedUrinaryOptions, setSelectedUrinaryOptions] = useState([]);
+  const [urinaryOption, setUrinaryOption] = useState([
+    { label: 'None', value: '0' },  
+    { label: 'Frequent Urination', value: '1' },
+    { label: 'Burning during urination', value: '2' },
+    { label: 'Itching', value: '3' },
+    { label: 'White discharge', value: '4' }  
+  ]);*/
+
+  const [selectedPeriodsOptions, setSelectedPeriodsOptions] = useState([]); 
+  const [periodsOption, setPeriodsOption] = useState([
+    { label: 'None', value: '0' },  
+    { label: 'Irregular Periods', value: '1' },
+    { label: 'Itching', value: '2' },
+    { label: 'Color of discharge(dark, red, pink...)', value: '3' },
+    { label: 'Age of Menarchy(menstruation)', value: '4' }
+  ]);
+
   const [formData, setFormData] = useState({
     eye_type: {required: true, value:"", errorClass:"", errorMessage:""},
     ears_type: {required: true, value:"", errorClass:"", errorMessage:""},
     nose_type: {required: true, value:"", errorClass:"", errorMessage:""},
     mouth_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    digestive_system_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    digestive_type: {required: true, value:"", errorClass:"", errorMessage:""},
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    //urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
-    }
-    else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
-    }
-  }
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
 
   const getMedicalHistory = async () => {
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
 
@@ -84,13 +149,128 @@ function ChildViewMedicalHistory(){
       let medicalHistory = result1.data[0];
       console.log(medicalHistory);
 
-      formData['eye_type']      = {value:medicalHistory.eye_type, required: true, errorClass:"", errorMessage:""};
-      formData['ears_type']     = {value:medicalHistory.ears_type, required: true, errorClass:"", errorMessage:""};
-      formData['nose_type']     = {value:medicalHistory.nose_type, required: true, errorClass:"", errorMessage:""};
-      formData['mouth_type']    = {value:medicalHistory.mouth_type, required: true, errorClass:"", errorMessage:""};
-      formData['digestive_system_type'] = {value:medicalHistory.digestive_system_type, required: true, errorClass:"", errorMessage:""};
-      formData['general_type']  = {value:medicalHistory.general_type, required: true, errorClass:"", errorMessage:""};
-      formData['remarks']   = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
+      var eyeTypeArray = [];
+      if(medicalHistory.eye_type && medicalHistory.eye_type !== ''){
+        eyeTypeArray = medicalHistory.eye_type.replace(/^\{|\}$/g,'').split(',');
+        var array1 = new Array();
+        eyeTypeArray.forEach((item)=>{
+          eyeOption.forEach((opt)=>{
+            if(opt.value === item){
+              array1.push(opt);
+            }
+          })
+        })
+        setSelectedEyeOptions(array1);
+      }
+
+      var earTypeArray = [];
+      if(medicalHistory.ears_type && medicalHistory.ears_type !== ''){
+        earTypeArray = medicalHistory.ears_type.replace(/^\{|\}$/g,'').split(',');  
+        var array2 = new Array();
+        earTypeArray.forEach((item)=>{
+          earOption.forEach((opt)=>{
+            if(opt.value === item){
+              array2.push(opt); 
+            }
+          })
+        })
+        setSelectedEarOptions(array2);
+      }
+
+      var noseTypeArray = [];
+      if(medicalHistory.nose_type && medicalHistory.nose_type !== ''){
+        noseTypeArray = medicalHistory.nose_type.replace(/^\{|\}$/g,'').split(',');
+        var array3 = new Array();
+        noseTypeArray.forEach((item)=>{
+          noseOption.forEach((opt)=>{
+            if(opt.value === item){
+              array3.push(opt);
+            }
+          })
+        })
+        setSelectedNoseOptions(array3);
+      }
+
+      var mouthTypeArray = [];
+      if(medicalHistory.mouth_type && medicalHistory.mouth_type !== ''){
+        mouthTypeArray = medicalHistory.mouth_type.replace(/^\{|\}$/g,'').split(',');
+        var array4 = new Array();
+        mouthTypeArray.forEach((item)=>{
+          mouthOption.forEach((opt)=>{
+            if(opt.value === item){
+              array4.push(opt);
+            }
+          })
+        })
+        setSelectedMouthOptions(array4);
+      }
+
+      var digestiveTypeArray = [];
+      if(medicalHistory.digestive_system_type && medicalHistory.digestive_system_type !== ''){
+        digestiveTypeArray = medicalHistory.digestive_system_type.replace(/^\{|\}$/g,'').split(',');
+        var array5 = new Array();
+        digestiveTypeArray.forEach((item)=>{
+          digestiveOption.forEach((opt)=>{
+            if(opt.value === item){
+              array5.push(opt);
+            }
+          })
+        })
+        setSelectedDigestiveOptions(array5);
+      } 
+
+      var generalTypeArray = [];
+      if(medicalHistory.general_type && medicalHistory.general_type !== ''){
+        generalTypeArray = medicalHistory.general_type.replace(/^\{|\}$/g,'').split(',');
+        var array6 = new Array();
+        generalTypeArray.forEach((item)=>{
+          generalOption.forEach((opt)=>{
+            if(opt.value === item){
+              array6.push(opt);
+            }
+          })
+        })
+        setSelectedGeneralOptions(array6);
+      }
+
+      /*var urinaryTypeArray = [];
+      if(medicalHistory.urinary_type && medicalHistory.urinary_type !== ''){
+        urinaryTypeArray = medicalHistory.urinary_type.replace(/^\{|\}$/g,'').split(',');
+        var array7 = new Array();
+        urinaryTypeArray.forEach((item)=>{
+          urinaryOption.forEach((opt)=>{
+            if(opt.value === item){
+              array7.push(opt);
+            }
+          })
+        })
+        setSelectedUrinaryOptions(array7);
+      }*/
+
+      var periodsTypeArray = [];
+      if(medicalHistory.periods_type && medicalHistory.periods_type !== ''){
+        periodsTypeArray = medicalHistory.periods_type.replace(/^\{|\}$/g,'').split(',');
+        var array8 = new Array();
+        periodsTypeArray.forEach((item)=>{
+          periodsOption.forEach((opt)=>{
+            if(opt.value === item){
+              array8.push(opt);
+            }
+          })
+        })
+        setSelectedPeriodsOptions(array8);
+      }
+
+
+
+      formData['eye_type']      = {value:eyeTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['ears_type']     = {value:earTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['nose_type']     = {value:noseTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['mouth_type']    = {value:mouthTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['digestive_type'] = {value:digestiveTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['general_type']  = {value:generalTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['periods_type']  = {value:periodsTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['remarks']       = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
 
@@ -108,6 +288,51 @@ function ChildViewMedicalHistory(){
     
   }, [systemContext.systemDetails.system_id]);
 
+
+  const [eyeTypeClass, setEyeTypeClass] = useState('');
+  const [earTypeClass, setEarTypeClass] = useState('');
+  const [noseTypeClass, setNoseTypeClass] = useState('');
+  const [mouthTypeClass, setMouthTypeClass] = useState('');
+  const [digestiveTypeClass, setDigestiveTypeClass] = useState('');
+  const [generalTypeClass, setGeneralTypeClass] = useState('');
+  const [periodsTypeClass, setPeriodsTypeClass] = useState('');
+
+  useEffect(() => {
+  }, [earTypeClass, eyeTypeClass, noseTypeClass, mouthTypeClass, digestiveTypeClass, generalTypeClass, periodsTypeClass]);
+
+  const setActiveClass = (element) => {
+
+    setEyeTypeClass('');
+    setEarTypeClass('');
+    setNoseTypeClass('');
+    setMouthTypeClass('');
+    setDigestiveTypeClass('');
+    setGeneralTypeClass('');
+    setPeriodsTypeClass('');
+
+    if(element === 'eye_type'){
+      setEyeTypeClass('selected');
+    }
+    else if(element === 'ears_type'){ 
+      setEarTypeClass('selected');
+    }
+    else if(element === 'nose_type'){ 
+      setNoseTypeClass('selected');
+    }
+    else if(element === 'mouth_type'){ 
+      setMouthTypeClass('selected');
+    }
+    else if(element === 'digestive_type'){ 
+      setDigestiveTypeClass('selected');
+    }
+    else if(element === 'general_type'){ 
+      setGeneralTypeClass('selected');
+    }
+    else if(element === 'periods_type'){ 
+      setPeriodsTypeClass('selected');
+    }
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -118,7 +343,7 @@ function ChildViewMedicalHistory(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Child Medical History </h5>
+            <h5 className='mx-2 mb-0'>Update Medical History </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -143,76 +368,45 @@ function ChildViewMedicalHistory(){
           </div>
         </div>
       </div>
-      <div className='app-body form-all create-young-woman'>
-        <p><small>View Child Medical History</small></p>
+      <div className='app-body create-patient-profiles form-all create-young-woman'>
+        <p><small>Update Child Medical History</small></p>
         <p><strong>Do you have these problems?</strong></p>
-        <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm">
-          <div className={`form-group`}>
+        <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm">
+          <div className={`form-group ${eyeTypeClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["eye_type"].value ? formData["eye_type"].value : ''} name="eye_type" id="eye_type">
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Dimness of Vision</option>
-              <option value="2">Eye Pain</option>
-              <option value="3">Eye Redness</option>
-              <option value="4">Watery Eyes</option>
-            </select>
+            <Select className='form-control select-multi' isMulti value={selectedEyeOptions} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')}/>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${earTypeClass}`}>
             <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["ears_type"].value ? formData["ears_type"].value : ''} name="ears_type" id="ears_type">
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Hearing Loss</option>
-              <option value="2">Water or pus from the ear</option>
-            </select>
+            <Select className='form-control select-multi' isMulti value={selectedEarOptions} options={earOption} onFocus={() =>  setActiveClass('ears_type')}/>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${noseTypeClass}`}>
             <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["nose_type"].value ? formData["nose_type"].value : ''} name="nose_type" id="nose_type">
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Stuffy Nose</option>
-              <option value="2">Runny or watery nose</option>
-              <option value="3">Bleeding from the nose</option>
-            </select>
+            <Select className='form-control select-multi' isMulti value={selectedNoseOptions} options={noseOption} onFocus={() =>  setActiveClass('nose_type')}/>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${mouthTypeClass}`}>
             <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["mouth_type"].value ? formData["mouth_type"].value : ''} name="mouth_type" id="mouth_type">
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Difficulty in Swallowing</option>
-              <option value="2">Carries Tooth (cavity etc.)</option>
-              <option value="3">Sores on gums</option>
-            </select>
+            <Select className='form-control select-multi' isMulti value={selectedMouthOptions} options={mouthOption} onFocus={() =>  setActiveClass('mouth_type')}/>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${digestiveTypeClass}`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["digestive_system_type"].value ? formData["digestive_system_type"].value : ''} name="digestive_system_type" id="digestive_system_type">
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Loss of Appetite</option>
-              <option value="2">Nausia/vomiting</option>
-              <option value="3">Diarrhea</option>
-              <option value="4">Constipation</option>
-              <option value="5">Abdominal (stomach) pain</option>
-              <option value="6">Blood with stool.</option>
-            </select>
+            <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} options={digestiveOption} onFocus={() =>  setActiveClass('digestive_type')}/>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${generalTypeClass}`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
-            <select className="form-control" value={formData["general_type"].value ? formData["general_type"].value : ''} name="general_type" id="general_type">
-              <option value="">Select</option>
-              <option value="0">None</option>
-              <option value="1">Cough - dry/productive?</option>
-              <option value="2">Shortness of breath</option>
-              <option value="3">Sound while breathing(whezzing)</option>
-            </select>
+            <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} options={generalOption} onFocus={() =>  setActiveClass('general_type')}/>
+            <small className="error-mesg">{formData["general_type"].errorMessage}</small>
+          </div>
+          <div className={`form-group ${periodsTypeClass}`}>
+            <label><span className="d-block">Period <span className="text-danger">*</span></span></label>
+            <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} options={periodsOption} onFocus={() =>  setActiveClass('periods_type')}/>
           </div>
           <div className={`form-group`}>
             <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" value={formData["remarks"].value}></textarea>
+          </div>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
           </div>
         </form>
       </div>
