@@ -107,6 +107,7 @@ function ChildViewBasicInfo(){
     child_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
@@ -187,6 +188,7 @@ function ChildViewBasicInfo(){
           formData['child_school_section']    = {value:userDetails.child_school_section, errorClass:"", errorMessage:""};
           formData['house_type']             = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
           formData['drinking_water_type']    = {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
+          formData['toilet_type']            = {value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
           formData['special_notes']          = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
           setFormData({...formData, ...formData});
@@ -267,6 +269,10 @@ function ChildViewBasicInfo(){
                 <div className="custom-control custom-radio custom-control-inline mt-2">
                   <input type="radio" id="premature_birth_n" name="is_premature_birth" value="f" className="custom-control-input" checked={(formData["is_premature_birth"].value === 'f') ? true : false}/>
                   <label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
+                </div>
+                <div className="custom-control custom-radio custom-control-inline mt-2">
+                  <input type="radio" id="premature_birth_na" name="is_premature_birth" value="n" className="custom-control-input" checked={(formData["is_premature_birth"].value === 'n') ? true : false}/>
+                  <label className="custom-control-label no-style" htmlFor="premature_birth_na">N/A</label>
                 </div>
               </div>
             </div>
@@ -371,6 +377,15 @@ function ChildViewBasicInfo(){
                 <option value="1">Tap</option>
                 <option value="2">Well</option>
                 <option value="3">Pond</option>
+              </select>
+            </div>
+
+            <div className={`form-group`}>
+              <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
+              <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'}>
+                <option value="1">Open-field</option>
+                <option value="2">Country-latrine</option>
+                <option value="3">Flush-toilet</option>
               </select>
             </div>
   
