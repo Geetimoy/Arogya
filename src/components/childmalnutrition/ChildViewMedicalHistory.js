@@ -374,40 +374,39 @@ function ChildViewMedicalHistory(){
         <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm">
           <div className={`form-group ${eyeTypeClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedEyeOptions} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')}/>
+            <Select className='form-control select-multi' isMulti value={selectedEyeOptions} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')} isDisabled={true}/>
           </div>
           <div className={`form-group ${earTypeClass}`}>
             <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedEarOptions} options={earOption} onFocus={() =>  setActiveClass('ears_type')}/>
+            <Select className='form-control select-multi' isMulti value={selectedEarOptions} options={earOption} onFocus={() =>  setActiveClass('ears_type')} isDisabled={true}/>
           </div>
           <div className={`form-group ${noseTypeClass}`}>
             <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedNoseOptions} options={noseOption} onFocus={() =>  setActiveClass('nose_type')}/>
+            <Select className='form-control select-multi' isMulti value={selectedNoseOptions} options={noseOption} onFocus={() =>  setActiveClass('nose_type')} isDisabled={true}/>
           </div>
           <div className={`form-group ${mouthTypeClass}`}>
             <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedMouthOptions} options={mouthOption} onFocus={() =>  setActiveClass('mouth_type')}/>
+            <Select className='form-control select-multi' isMulti value={selectedMouthOptions} options={mouthOption} onFocus={() =>  setActiveClass('mouth_type')} isDisabled={true}/>
           </div>
           <div className={`form-group ${digestiveTypeClass}`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} options={digestiveOption} onFocus={() =>  setActiveClass('digestive_type')}/>
+            <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} options={digestiveOption} onFocus={() =>  setActiveClass('digestive_type')} isDisabled={true}/>
           </div>
           <div className={`form-group ${generalTypeClass}`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} options={generalOption} onFocus={() =>  setActiveClass('general_type')}/>
-            <small className="error-mesg">{formData["general_type"].errorMessage}</small>
+            <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} options={generalOption} onFocus={() =>  setActiveClass('general_type')} isDisabled={true}/>
           </div>
           <div className={`form-group ${periodsTypeClass}`}>
             <label><span className="d-block">Period <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} options={periodsOption} onFocus={() =>  setActiveClass('periods_type')}/>
+            <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} options={periodsOption} onFocus={() =>  setActiveClass('periods_type')} isDisabled={true}/>
           </div>
           <div className={`form-group`}>
             <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" value={formData["remarks"].value}></textarea>
           </div>
-          {/* <div className='mb-3 mt-3 text-center'>
+          <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
-          </div> */}
+          </div>
         </form>
       </div>
       <Appfooter></Appfooter>
