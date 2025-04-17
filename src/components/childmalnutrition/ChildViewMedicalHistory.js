@@ -343,7 +343,7 @@ function ChildViewMedicalHistory(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Update Medical History </h5>
+            <h5 className='mx-2 mb-0'>View Child Medical History </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <div className='position-relative'>
@@ -369,7 +369,7 @@ function ChildViewMedicalHistory(){
         </div>
       </div>
       <div className='app-body create-patient-profiles form-all create-young-woman'>
-        <p><small>Update Child Medical History</small></p>
+        <p><small>View Child Medical History</small></p>
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm">
           <div className={`form-group ${eyeTypeClass}`}>
@@ -405,9 +405,9 @@ function ChildViewMedicalHistory(){
             <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" value={formData["remarks"].value}></textarea>
           </div>
-          <div className='mb-3 mt-3 text-center'>
+          {/* <div className='mb-3 mt-3 text-center'>
             <button type="submit" className='btn primary-bg-color text-light'>Update</button>
-          </div>
+          </div> */}
         </form>
       </div>
       <Appfooter></Appfooter>

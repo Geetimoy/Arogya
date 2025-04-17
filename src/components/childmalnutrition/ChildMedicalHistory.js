@@ -516,7 +516,7 @@ function ChildMedicalHistory(){
             <small className="error-mesg">{formData["general_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["periods_type"].errorClass} ${periodsTypeClass}`}>
-            <label><span className="d-block">Period <span className="text-danger">*</span></span></label>
+            <label><span className="d-block">Period (woman)<span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} onChange={(values) =>  handleChange1(values, 'periods_type')} options={periodsOption} onFocus={() =>  setActiveClass('periods_type')}/>
             <small className="error-mesg">{formData["periods_type"].errorMessage}</small>
           </div>
