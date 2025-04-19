@@ -404,12 +404,8 @@ function ChildViewMedicalHistory(){
             <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" value={formData["remarks"].value}></textarea>
           </div>
-          {/* <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
-          </div> */}
         </form>
       </div>
-
       <Appfooter></Appfooter>
     </>
   );
