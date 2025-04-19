@@ -73,20 +73,19 @@ function ChildViewMedicalHistory(){
   const [selectedGeneralOptions, setSelectedGeneralOptions] = useState([]);
   const [generalOption, setGeneralOption] = useState([
     { label: 'None', value: '0' },
+    { label: 'Cough - dry/productive ?', value: '1' },
+    { label: 'Shortness of breath', value: '2' },
+    { label: 'Sound while breathing (Wheezing)', value: '3' }
+  ]);
+
+  const [selectedUrinaryOptions, setSelectedUrinaryOptions] = useState([]);
+  const [urinaryOption, setUrinaryOption] = useState([
+    { label: 'None', value: '0' },
     { label: 'Frequent Urination', value: '1' },
     { label: 'Burning during urination', value: '2' },
     { label: 'Itching', value: '3' },
     { label: 'White discharge', value: '4' }
   ]);
-
-  /*const [selectedUrinaryOptions, setSelectedUrinaryOptions] = useState([]);
-  const [urinaryOption, setUrinaryOption] = useState([
-    { label: 'None', value: '0' },  
-    { label: 'Frequent Urination', value: '1' },
-    { label: 'Burning during urination', value: '2' },
-    { label: 'Itching', value: '3' },
-    { label: 'White discharge', value: '4' }  
-  ]);*/
 
   const [selectedPeriodsOptions, setSelectedPeriodsOptions] = useState([]); 
   const [periodsOption, setPeriodsOption] = useState([
@@ -104,7 +103,7 @@ function ChildViewMedicalHistory(){
     mouth_type: {required: true, value:"", errorClass:"", errorMessage:""},
     digestive_type: {required: true, value:"", errorClass:"", errorMessage:""},
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    //urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
     periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
@@ -233,7 +232,7 @@ function ChildViewMedicalHistory(){
         setSelectedGeneralOptions(array6);
       }
 
-      /*var urinaryTypeArray = [];
+      var urinaryTypeArray = [];
       if(medicalHistory.urinary_type && medicalHistory.urinary_type !== ''){
         urinaryTypeArray = medicalHistory.urinary_type.replace(/^\{|\}$/g,'').split(',');
         var array7 = new Array();
@@ -245,7 +244,7 @@ function ChildViewMedicalHistory(){
           })
         })
         setSelectedUrinaryOptions(array7);
-      }*/
+      }
 
       var periodsTypeArray = [];
       if(medicalHistory.periods_type && medicalHistory.periods_type !== ''){
@@ -269,6 +268,7 @@ function ChildViewMedicalHistory(){
       formData['mouth_type']    = {value:mouthTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['digestive_type'] = {value:digestiveTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['general_type']  = {value:generalTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['urinary_type']  = {value:urinaryTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['periods_type']  = {value:periodsTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['remarks']       = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
 
@@ -295,10 +295,11 @@ function ChildViewMedicalHistory(){
   const [mouthTypeClass, setMouthTypeClass] = useState('');
   const [digestiveTypeClass, setDigestiveTypeClass] = useState('');
   const [generalTypeClass, setGeneralTypeClass] = useState('');
+  const [urinaryTypeClass, setUrinaryTypeClass] = useState('');
   const [periodsTypeClass, setPeriodsTypeClass] = useState('');
 
   useEffect(() => {
-  }, [earTypeClass, eyeTypeClass, noseTypeClass, mouthTypeClass, digestiveTypeClass, generalTypeClass, periodsTypeClass]);
+  }, [earTypeClass, eyeTypeClass, noseTypeClass, mouthTypeClass, digestiveTypeClass, generalTypeClass, urinaryTypeClass, periodsTypeClass]);
 
   const setActiveClass = (element) => {
 
@@ -327,6 +328,9 @@ function ChildViewMedicalHistory(){
     }
     else if(element === 'general_type'){ 
       setGeneralTypeClass('selected');
+    }
+    else if(element === 'urinary_type'){ 
+      setUrinaryTypeClass('selected');
     }
     else if(element === 'periods_type'){ 
       setPeriodsTypeClass('selected');
@@ -396,6 +400,10 @@ function ChildViewMedicalHistory(){
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} options={generalOption} onFocus={() =>  setActiveClass('general_type')} isDisabled={true}/>
           </div>
+          <div className={`form-group ${urinaryTypeClass}`}>
+            <label><span className="d-block">Urinary <span className="text-danger">*</span></span></label>
+            <Select className='form-control select-multi' isMulti value={selectedUrinaryOptions} options={generalOption} onFocus={() =>  setActiveClass('urinary_type')} isDisabled={true}/>
+          </div>
           <div className={`form-group ${periodsTypeClass}`}>
             <label><span className="d-block">Period <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} options={periodsOption} onFocus={() =>  setActiveClass('periods_type')} isDisabled={true}/>
@@ -404,12 +412,8 @@ function ChildViewMedicalHistory(){
             <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" value={formData["remarks"].value}></textarea>
           </div>
-          {/* <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
-          </div> */}
         </form>
       </div>
-
       <Appfooter></Appfooter>
     </>
   );

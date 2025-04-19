@@ -73,20 +73,19 @@ function ChildMedicalHistory(){
   const [selectedGeneralOptions, setSelectedGeneralOptions] = useState([]);
   const [generalOption, setGeneralOption] = useState([
     { label: 'None', value: '0' },
-    { label: 'Frequent Urination', value: '1' },
-    { label: 'Burning during urination', value: '2' },
-    { label: 'Itching', value: '3' },
-    { label: 'White discharge', value: '4' }
+    { label: 'Cough - dry/productive ?', value: '1' },
+    { label: 'Shortness of breath', value: '2' },
+    { label: 'Sound while breathing (Wheezing)', value: '3' }
   ]);
 
-  /*const [selectedUrinaryOptions, setSelectedUrinaryOptions] = useState([]);
+  const [selectedUrinaryOptions, setSelectedUrinaryOptions] = useState([]);
   const [urinaryOption, setUrinaryOption] = useState([
     { label: 'None', value: '0' },  
     { label: 'Frequent Urination', value: '1' },
     { label: 'Burning during urination', value: '2' },
     { label: 'Itching', value: '3' },
     { label: 'White discharge', value: '4' }  
-  ]);*/
+  ]);
 
   const [selectedPeriodsOptions, setSelectedPeriodsOptions] = useState([]); 
   const [periodsOption, setPeriodsOption] = useState([
@@ -130,9 +129,9 @@ function ChildMedicalHistory(){
     else if(element === 'general_type'){ 
       setSelectedGeneralOptions(values);
     }
-    /*else if(element === 'urinary_type'){ 
+    else if(element === 'urinary_type'){ 
       setSelectedUrinaryOptions(values);
-    }*/
+    }
     else if(element === 'periods_type'){ 
       setSelectedPeriodsOptions(values);
     }
@@ -146,7 +145,7 @@ function ChildMedicalHistory(){
     mouth_type: {required: true, value:"", errorClass:"", errorMessage:""},
     digestive_type: {required: true, value:"", errorClass:"", errorMessage:""},
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    //urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
     periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
@@ -299,7 +298,7 @@ function ChildMedicalHistory(){
         setSelectedGeneralOptions(array6);
       }
 
-      /*var urinaryTypeArray = [];
+      var urinaryTypeArray = [];
       if(medicalHistory.urinary_type && medicalHistory.urinary_type !== ''){
         urinaryTypeArray = medicalHistory.urinary_type.replace(/^\{|\}$/g,'').split(',');
         var array7 = new Array();
@@ -311,7 +310,7 @@ function ChildMedicalHistory(){
           })
         })
         setSelectedUrinaryOptions(array7);
-      }*/
+      }
 
       var periodsTypeArray = [];
       if(medicalHistory.periods_type && medicalHistory.periods_type !== ''){
@@ -335,6 +334,7 @@ function ChildMedicalHistory(){
       formData['mouth_type']    = {value:mouthTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['digestive_type'] = {value:digestiveTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['general_type']  = {value:generalTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['urinary_type']  = {value:urinaryTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['periods_type']  = {value:periodsTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['remarks']       = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
 
@@ -379,7 +379,7 @@ function ChildMedicalHistory(){
       jsonData["mouth_type"]                = '{'+formData['mouth_type'].value+'}';
       jsonData["digestive_system_type"]     = '{'+formData['digestive_type'].value+'}';
       jsonData["general_type"]              = '{'+formData['general_type'].value+'}';
-      //jsonData["urinary_type"]              = '{'+selectedUrinaryOptions+'}';
+      jsonData["urinary_type"]              = '{'+formData['urinary_type'].value+'}';
       jsonData["periods_type"]              = '{'+formData['periods_type'].value+'}';
       jsonData["remarks"]                   = formData['remarks'].value;
 
@@ -408,10 +408,11 @@ function ChildMedicalHistory(){
   const [mouthTypeClass, setMouthTypeClass] = useState('');
   const [digestiveTypeClass, setDigestiveTypeClass] = useState('');
   const [generalTypeClass, setGeneralTypeClass] = useState('');
+  const [urinaryTypeClass, setUrinaryTypeClass] = useState('');
   const [periodsTypeClass, setPeriodsTypeClass] = useState('');
 
   useEffect(() => {
-  }, [earTypeClass, eyeTypeClass, noseTypeClass, mouthTypeClass, digestiveTypeClass, generalTypeClass, periodsTypeClass]);
+  }, [earTypeClass, eyeTypeClass, noseTypeClass, mouthTypeClass, digestiveTypeClass, generalTypeClass, urinaryTypeClass, periodsTypeClass]);
 
   const setActiveClass = (element) => {
 
@@ -421,6 +422,7 @@ function ChildMedicalHistory(){
     setMouthTypeClass('');
     setDigestiveTypeClass('');
     setGeneralTypeClass('');
+    setUrinaryTypeClass('');
     setPeriodsTypeClass('');
 
     if(element === 'eye_type'){
@@ -440,6 +442,9 @@ function ChildMedicalHistory(){
     }
     else if(element === 'general_type'){ 
       setGeneralTypeClass('selected');
+    }
+    else if(element === 'urinary_type'){ 
+      setUrinaryTypeClass('selected');
     }
     else if(element === 'periods_type'){ 
       setPeriodsTypeClass('selected');
@@ -514,6 +519,11 @@ function ChildMedicalHistory(){
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} onChange={(values) =>  handleChange1(values, 'general_type')} options={generalOption} onFocus={() =>  setActiveClass('general_type')}/>
             <small className="error-mesg">{formData["general_type"].errorMessage}</small>
+          </div>
+          <div className={`form-group ${formData["urinary_type"].errorClass} ${urinaryTypeClass}`}>
+            <label><span className="d-block">Urinary <span className="text-danger">*</span></span></label>
+            <Select className='form-control select-multi' isMulti value={selectedUrinaryOptions} onChange={(values) =>  handleChange1(values, 'urinary_type')} options={urinaryOption} onFocus={() =>  setActiveClass('urinary_type')}/>
+            <small className="error-mesg">{formData["urinary_type"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["periods_type"].errorClass} ${periodsTypeClass}`}>
             <label><span className="d-block">Period (woman)<span className="text-danger">*</span></span></label>
