@@ -103,7 +103,7 @@ function ChildViewMedicalHistory(){
     mouth_type: {required: true, value:"", errorClass:"", errorMessage:""},
     digestive_type: {required: true, value:"", errorClass:"", errorMessage:""},
     general_type: {required: true, value:"", errorClass:"", errorMessage:""},
-    urinary_type: {required: true, value:"", errorClass:"", errorMessage:""},
+    urinary_problems_type: {required: true, value:"", errorClass:"", errorMessage:""},
     periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
@@ -233,8 +233,8 @@ function ChildViewMedicalHistory(){
       }
 
       var urinaryTypeArray = [];
-      if(medicalHistory.urinary_type && medicalHistory.urinary_type !== ''){
-        urinaryTypeArray = medicalHistory.urinary_type.replace(/^\{|\}$/g,'').split(',');
+      if(medicalHistory.urinary_problems_type && medicalHistory.urinary_problems_type !== ''){
+        urinaryTypeArray = medicalHistory.urinary_problems_type.replace(/^\{|\}$/g,'').split(',');
         var array7 = new Array();
         urinaryTypeArray.forEach((item)=>{
           urinaryOption.forEach((opt)=>{
@@ -268,7 +268,7 @@ function ChildViewMedicalHistory(){
       formData['mouth_type']    = {value:mouthTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['digestive_type'] = {value:digestiveTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['general_type']  = {value:generalTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
-      formData['urinary_type']  = {value:urinaryTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
+      formData['urinary_problems_type']  = {value:urinaryTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['periods_type']  = {value:periodsTypeArray.join(","), required: true, errorClass:"", errorMessage:""};
       formData['remarks']       = {value:medicalHistory.remarks, required: false, errorClass:"", errorMessage:""};
 
@@ -329,7 +329,7 @@ function ChildViewMedicalHistory(){
     else if(element === 'general_type'){ 
       setGeneralTypeClass('selected');
     }
-    else if(element === 'urinary_type'){ 
+    else if(element === 'urinary_problems_type'){ 
       setUrinaryTypeClass('selected');
     }
     else if(element === 'periods_type'){ 
@@ -402,7 +402,7 @@ function ChildViewMedicalHistory(){
           </div>
           <div className={`form-group ${urinaryTypeClass}`}>
             <label><span className="d-block">Urinary <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedUrinaryOptions} options={generalOption} onFocus={() =>  setActiveClass('urinary_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedUrinaryOptions} options={generalOption} onFocus={() =>  setActiveClass('urinary_problems_type')} isDisabled={true}/>
           </div>
           <div className={`form-group ${periodsTypeClass}`}>
             <label><span className="d-block">Period <span className="text-danger">*</span></span></label>
