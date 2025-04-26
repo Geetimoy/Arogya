@@ -458,7 +458,7 @@ function ChildMalnutrion(){
                       {/* <li><Link onClick={() => { modalPrescriptionShow(child.account_key); }} to="#">Upload Survey Report/Prescription</Link></li> */}
                       {/* <li><Link to={`/childmalnutrition/child-test-reports/${child.account_key}`}>Upload Test Reports</Link></li> */}
                       {
-                          (decryptedLoginDetails.account_type !== '5') &&
+                          (decryptedLoginDetails.account_type == '5') &&
                       <li><Link to={`/childmalnutrition/child-booked-appointment/${child.account_key}`}>Booked Appointment</Link></li>
                       }
                       {
