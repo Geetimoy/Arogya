@@ -258,20 +258,20 @@ export default function ChildViewBasicInfo() {
           <p><small>To view profile information</small></p>
           <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form">
             <div className={`form-group`}>
-              <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
+              <label htmlFor="name">Full Name </label>
               <input type="text" className="form-control" name="child_full_name" id="child_full_name" placeholder="Full Name" value={formData["child_full_name"].value ? formData["child_full_name"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_father_name">Name of Father <span className="text-danger">*</span></label>
+              <label htmlFor="child_father_name">Name of Father </label>
               <input type="text" className="form-control" name="child_father_name" id="child_father_name" placeholder="Name of Father" value={formData["child_father_name"].value ? formData["child_father_name"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_mother_name">Name of Mother <span className="text-danger">*</span></label>
+              <label htmlFor="child_mother_name">Name of Mother </label>
               <input type="text" className="form-control" name="child_mother_name" id="child_mother_name" placeholder="Name of Mother" value={formData["child_mother_name"].value ? formData["child_mother_name"].value : ''}/>
             </div>
   
             <div className={`form-group`}>
-              <label htmlFor="premature_birth" className='no-style'>Premature Birth? <span className="text-danger">*</span></label>
+              <label htmlFor="premature_birth" className='no-style'>Premature Birth? </label>
               <div className="d-flex">
                 <div className="custom-control custom-radio custom-control-inline mt-2">
                   <input type="radio" id="premature_birth_y" name="is_premature_birth" value="t" className="custom-control-input" checked={(formData["is_premature_birth"].value === 't') ? true : false}/>
@@ -289,37 +289,37 @@ export default function ChildViewBasicInfo() {
             </div>
   
             <div className={`form-group`}>
-              <label htmlFor="child_guardian_occupation">Occupation of Guardian <span className="text-danger">*</span></label>
+              <label htmlFor="child_guardian_occupation">Occupation of Guardian </label>
               <input type="text" className="form-control" name="child_guardian_occupation" id="child_guardian_occupation" placeholder="Occupation of Guardian" value={formData["child_guardian_occupation"].value ? formData["child_guardian_occupation"].value : ''}/>
             </div>
   
             <div className={`form-group`}>
-              <label className=""><span className="d-block">BPL/APL? <span className="text-danger">*</span></span> </label>
+              <label className=""><span className="d-block">BPL/APL? </span> </label>
               <select className="form-control" id="child_bpl_apl" name="child_bpl_apl" value={formData["child_bpl_apl"].value}>
                 <option value="t">BPL</option>
                 <option value="f">APL</option>
               </select>
             </div>
             <div className={`form-group`}>
-              <label className=""><span className="d-block">Gender  <span className="text-danger">*</span></span></label>
+              <label className=""><span className="d-block">Gender  </span></label>
               <select className="form-control" id="child_gender" name="child_gender" value={formData["child_gender"].value}>
                 <option value="1">Male</option>
                 <option value="2">Female</option>
               </select>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_age">Age <span className="text-danger">*</span></label>
+              <label htmlFor="child_age">Age </label>
               <input type="text" className="form-control" name="child_age" id="child_age" placeholder="Age"  value={formData["child_age"].value ? formData["child_age"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label className=""><span className="d-block">Is guardian's personal mobile number? <span className="text-danger">*</span></span> </label>
+              <label className=""><span className="d-block">Is guardian's personal mobile number? </span> </label>
               <select className="form-control" id="is_your_personal_mobile_number" name="is_your_personal_mobile_number" value={formData["is_your_personal_mobile_number"].value}>
                 <option value="t">Yes</option>
                 <option value="f">No</option>
               </select>
             </div>
             {isMobileNumberVisible && <div className={`form-group`}>
-              <label htmlFor="child_phone_no">Phone No <span className="text-danger">*</span></label>
+              <label htmlFor="child_phone_no">Phone No </label>
               <input type="tel" className="form-control" name="child_phone_no" id="child_phone_no" placeholder="Phone No" value={formData["child_phone_no"].value ? formData["child_phone_no"].value : ''}/>
             </div>}
             <div className={`form-group`}>
@@ -331,11 +331,11 @@ export default function ChildViewBasicInfo() {
               <input type="text" className="form-control" name="child_email" id="child_email" placeholder="Email" value={formData["child_email"].value ? formData["child_email"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_address">Address <span className="text-danger">*</span></label>
+              <label htmlFor="child_address">Address </label>
               <input type="text" className="form-control" name="child_address" id="child_address" placeholder="Address" value={formData["child_address"].value ? formData["child_address"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_address_2">Address 2 <span className="text-danger">*</span></label>
+              <label htmlFor="child_address_2">Address 2 </label>
               <input type="text" className="form-control" name="child_address_2" id="child_address_2" placeholder="Address 2" value={formData["child_address_2"].value ? formData["child_address_2"].value : ''}/>
             </div>
             <div className={`form-group`}>
@@ -343,16 +343,16 @@ export default function ChildViewBasicInfo() {
               <input type="text" className="form-control" name="child_landmark" id="child_landmark" placeholder="Landmark" value={formData["child_landmark"].value ? formData["child_landmark"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_city">Village/Town/City <span className="text-danger">*</span></label>
+              <label htmlFor="child_city">Village/Town/City </label>
               <input type="text" className="form-control" name="child_city" id="child_city" placeholder="Village/Town/City" value={formData["child_city"].value ? formData["child_city"].value : ''}/>
             </div>
   
             <div className={`form-group`}>
-              <label htmlFor="child_state">State <span className="text-danger">*</span></label>
+              <label htmlFor="child_state">State </label>
               <input type="text" className="form-control" name="child_state" id="child_state" placeholder="State" value={formData["child_state"].value ? formData["child_state"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_pincode">Pincode <span className="text-danger">*</span></label>
+              <label htmlFor="child_pincode">Pincode </label>
               <input type="text" className="form-control" name="child_pincode" id="child_pincode" placeholder="Pincode" value={formData["child_pincode"].value ? formData["child_pincode"].value : ''}/>
             </div>
             <div className={`form-group`}>
@@ -361,20 +361,20 @@ export default function ChildViewBasicInfo() {
             </div>
   
             <div className={`sp-notes form-group`}>
-              <label htmlFor="child_school_name">School Name <span className="text-danger">*</span></label>
+              <label htmlFor="child_school_name">School Name </label>
               <input type="text" className="form-control" name="child_school_name" id="child_school_name" placeholder="School Name" value={formData["child_school_name"].value ? formData["child_school_name"].value : ''}/>
             </div>
             <div className={`sp-notes form-group`}>
-              <label htmlFor="child_school_class">Class <span className="text-danger">*</span></label>
+              <label htmlFor="child_school_class">Class </label>
               <input type="text" className="form-control" name="child_school_class" id="child_school_class" placeholder="Class" value={formData["child_school_class"].value ? formData["child_school_class"].value : ''}/>
             </div>
             <div className={`form-group`}>
-              <label htmlFor="child_school_section">Section <span className="text-danger">*</span></label>
+              <label htmlFor="child_school_section">Section </label>
               <input type="text" className="form-control" name="child_school_section" id="child_school_section" placeholder="Section" value={formData["child_school_section"].value ? formData["child_school_section"].value : ''}/>
             </div>
   
             <div className={`form-group`}>
-              <label htmlFor="house_type">House <span className="text-danger">*</span></label>
+              <label htmlFor="house_type">House </label>
               <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value}>
                 <option value="1">Mud House</option>
                 <option value="2">Paved House</option>
@@ -382,7 +382,7 @@ export default function ChildViewBasicInfo() {
             </div>
   
             <div className={`form-group`}>
-              <label htmlFor="drinking_water_type">Drinking Water <span className="text-danger">*</span></label>
+              <label htmlFor="drinking_water_type">Drinking Water </label>
               <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value}>
                 <option value="1">Tap</option>
                 <option value="2">Well</option>
@@ -391,7 +391,7 @@ export default function ChildViewBasicInfo() {
             </div>
 
             <div className={`form-group`}>
-            <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
+            <label htmlFor="toilet_type">Toilet </label>
             <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'}>
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>
