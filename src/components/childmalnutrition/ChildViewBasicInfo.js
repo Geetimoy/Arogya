@@ -16,103 +16,101 @@ import './ChildMalnutrition.css';
 import Select from 'react-select';
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
-function ChildViewBasicInfo(){
-
-  const systemContext = useContext(SystemContext);
-  const alertContext  = useContext(AlertContext);
-
-  const [urlParam, setUrlParam] = useState(useParams());
-  const editAccountKey = urlParam.accountKey;
-
-  const [isMActive, setIsMActive] = useState(false);
-
-  const handle2Click = () => {
-    setIsMActive(!isMActive); // Toggle the state
-  };
-
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [serviceAreaOption, setServiceAreaOption] = useState([
-    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
-    { label: 'Navagraha Temple, Guwahati', value: '2' },
-    { label: 'Umananda Temple, Guwahati', value: '3' },
-    { label: 'Morigaon', value: '4' },
-    { label: 'Saparam Bera', value: '5' }
-  ]);
-
-  const getMasterServicesArea = async (e) => {
-
-    let jsonData = {};
-
-    jsonData['system_id']        = systemContext.systemDetails.system_id;
-    jsonData["device_type"]      = DEVICE_TYPE;
-    jsonData["device_token"]     = DEVICE_TOKEN;
-    jsonData["user_lat"]         = localStorage.getItem('latitude');
-    jsonData["user_long"]        = localStorage.getItem('longitude');
-    jsonData["center_id"]        = 1;
-
-    const response = await fetch(`${API_URL}/masterServiceAreas`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
-
-    let result = await response.json();
-
-    if(result.data.rows > 0){
-      var areas         = result.data.results;
-      var optionsArray  = [];
-      for(var i=0; i<areas.length; i++){
-        optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
-      }
-      setServiceAreaOption(optionsArray);
-    }
-
-  }
-
-  useEffect(() => {
-    if(systemContext.systemDetails.system_id){
-      getMasterServicesArea();
-    }
-    // eslint-disable-next-line
-  }, [systemContext.systemDetails.system_id]);
-
-  useEffect(() => {
-
-  }, [serviceAreaOption])
-
-  const [formData, setFormData] = useState({
-    child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
-    is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_guardian_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_bpl_apl: {required: true, value:"t", errorClass:"", errorMessage:""},
-    child_gender: {required: true, value:"1", errorClass:"", errorMessage:""},
-    child_age: {required: true, value:"", errorClass:"", errorMessage:""},
-    is_your_personal_mobile_number: {required: true, value:"t", errorClass:"", errorMessage:""},
-    child_phone_no: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_whatsapp_no: {required: false, value:"", errorClass:"", errorMessage:""},
-    child_email: {required: false, value:"", errorClass:"", errorMessage:""},
-    child_address: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_address_2: {required: false, value:"", errorClass:"", errorMessage:""},
-    child_landmark: {required: false, value:"", errorClass:"", errorMessage:""},
-    child_city: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_state: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_pincode: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_school_name: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_school_class: {required: true, value:"", errorClass:"", errorMessage:""},
-    child_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
-    house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
-  });
-
-  const getUserDetails = async () => {
+export default function ChildViewBasicInfo() {
+    const systemContext = useContext(SystemContext);
+    const alertContext  = useContext(AlertContext);
   
+    const [urlParam, setUrlParam] = useState(useParams());
+    const editAccountKey = urlParam.accountKey;
+
+    const [isMActive, setIsMActive] = useState(false);
+  
+    const handle2Click = () => {
+      setIsMActive(!isMActive); // Toggle the state
+    };
+
+    const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+  
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [serviceAreaOption, setServiceAreaOption] = useState([]);
+
+    useEffect(() => {
+  
+    }, [serviceAreaOption])
+
+    const getMasterServicesArea = async (e) => {
+  
+      let jsonData = {};
+  
+      jsonData['system_id']        = systemContext.systemDetails.system_id;
+      jsonData["device_type"]      = DEVICE_TYPE;
+      jsonData["device_token"]     = DEVICE_TOKEN;
+      jsonData["user_lat"]         = localStorage.getItem('latitude');
+      jsonData["user_long"]        = localStorage.getItem('longitude');
+      jsonData["center_id"]        = 1;
+  
+      const response = await fetch(`${API_URL}/masterServiceAreas`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+  
+      let result = await response.json();
+  
+      if(result.data.rows > 0){
+        var areas         = result.data.results;
+        var optionsArray  = [];
+        for(var i=0; i<areas.length; i++){
+          optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
+        }
+        setServiceAreaOption(optionsArray);
+
+
+      }
+  
+    }
+
+    useEffect(() => {
+      if(systemContext.systemDetails.system_id){
+        getMasterServicesArea();
+      }
+      // eslint-disable-next-line
+    }, [systemContext.systemDetails.system_id]);
+  
+
+    const [formData, setFormData] = useState({
+      child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
+      is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_guardian_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_bpl_apl: {required: true, value:"t", errorClass:"", errorMessage:""},
+      child_gender: {required: true, value:"1", errorClass:"", errorMessage:""},
+      child_age: {required: true, value:"", errorClass:"", errorMessage:""},
+      is_your_personal_mobile_number: {required: true, value:"t", errorClass:"", errorMessage:""},
+      child_phone_no: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_whatsapp_no: {required: false, value:"", errorClass:"", errorMessage:""},
+      child_email: {required: false, value:"", errorClass:"", errorMessage:""},
+      child_address: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_address_2: {required: false, value:"", errorClass:"", errorMessage:""},
+      child_landmark: {required: false, value:"", errorClass:"", errorMessage:""},
+      child_city: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_state: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_pincode: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_school_name: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_school_class: {required: true, value:"", errorClass:"", errorMessage:""},
+      child_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
+      house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+      drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+      toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+      special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
+    });
+  
+    const getUserDetails = async () => {
+
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
       let jsonData = {};
@@ -136,116 +134,129 @@ function ChildViewBasicInfo(){
                                           }
       
       const response1 = await fetch(`${API_URL}/childBasicInformationListFromDoctorLogin`, {
-          method: "POST",
-          headers: {
-          "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-      });
-      let result1 = await response1.json();
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+        });
+        let result1 = await response1.json();
 
-      if(result1.data.length > 0){
-          let userDetails = result1.data[0];
-          console.log(userDetails);
+        if(result1.data.length > 0){
+            let userDetails = result1.data[0];
+            console.log(userDetails);
 
-          var serviceAreaArray = [];
-          if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-            serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
-            console.log(serviceAreaArray);
-            var array1 = new Array();
-            serviceAreaArray.forEach((item)=>{
-              serviceAreaOption.forEach((opt)=>{
-                if(opt.value === item){
-                  array1.push(opt);
-                }
+            var serviceAreaArray = [];
+            if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
+              serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+              console.log(serviceAreaArray);
+              var array1 = new Array();
+              console.log(serviceAreaOption);
+              serviceAreaArray.forEach((item)=>{
+                serviceAreaOption.forEach((opt)=>{
+                  if(opt.value === item){
+                    array1.push(opt);
+                  }
+                })
               })
-            })
-            setSelectedOptions(array1);
+              setSelectedOptions(array1);
 
-          }
-          console.log(serviceAreaArray.join(","));
-          formData['child_full_name']    = {value:userDetails.child_name, errorClass:"", errorMessage:""};
-          formData['child_father_name']  = {value:userDetails.child_father_name, errorClass:"", errorMessage:""};
-          formData['child_mother_name']  = {value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
-          formData['is_premature_birth'] = {value:userDetails.child_is_premature_birth, errorClass:"", errorMessage:""};
-          formData['child_guardian_occupation'] = {value:userDetails.child_father_occupation, errorClass:"", errorMessage:""};
-          formData['child_bpl_apl']      = {value:userDetails.child_is_under_previledged, errorClass:"", errorMessage:""};
-          formData['child_gender']    = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
-          formData['child_age']    = {value:userDetails.child_age, errorClass:"", errorMessage:""};
-          formData['is_your_personal_mobile_number']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-          formData['child_phone_no']               = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-          formData['child_whatsapp_no']          = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-          formData['child_email']           = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-          formData['child_address']         = {value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
-          formData['child_address_2']          = {value:userDetails.child_addr_2, errorClass:"", errorMessage:""};
-          formData['child_landmark']              = {value:userDetails.child_addr_landmark, errorClass:"", errorMessage:""};
-          formData['child_city']             = {value:userDetails.child_city, errorClass:"", errorMessage:""};
-          formData['child_state']       = {value:userDetails.child_state, errorClass:"", errorMessage:""};
-          formData['child_pincode']      = {value:userDetails.child_postal_code, errorClass:"", errorMessage:""};
-          formData['child_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-          formData['child_school_name']       = {value:userDetails.child_school_name, errorClass:"", errorMessage:""};
-          formData['child_school_class']      = {value:userDetails.child_school_class, errorClass:"", errorMessage:""};
-          formData['child_school_section']    = {value:userDetails.child_school_section, errorClass:"", errorMessage:""};
-          formData['house_type']             = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
-          formData['drinking_water_type']    = {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
-          formData['toilet_type']            = {value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
-          formData['special_notes']          = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+            }
+            console.log(serviceAreaArray.join(","));
+            formData['child_full_name']    = {value:userDetails.child_name, errorClass:"", errorMessage:""};
+            formData['child_father_name']  = {value:userDetails.child_father_name, errorClass:"", errorMessage:""};
+            formData['child_mother_name']  = {value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
+            formData['is_premature_birth'] = {value:userDetails.child_is_premature_birth, errorClass:"", errorMessage:""};
+            formData['child_guardian_occupation'] = {value:userDetails.child_father_occupation, errorClass:"", errorMessage:""};
+            formData['child_bpl_apl']      = {value:userDetails.child_is_under_previledged, errorClass:"", errorMessage:""};
+            formData['child_gender']       = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
+            formData['child_age']          = {value:userDetails.child_age, errorClass:"", errorMessage:""};
+            formData['is_your_personal_mobile_number']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
 
-          setFormData({...formData, ...formData});
+            if(userDetails.is_your_personal_number === "t"){
+              setIsMobileNumberVisible(true);
+              formData['child_phone_no']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+            }
+            else if(userDetails.is_your_personal_number === "f"){
+              setIsMobileNumberVisible(false);
+              formData['child_phone_no']     = {value:"", errorClass:"", errorMessage:""};
+            }
 
-          
-      }
+            formData['child_whatsapp_no']  = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+            formData['child_email']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
+            formData['child_address']      = {value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
+            formData['child_address_2']    = {value:userDetails.child_addr_2, errorClass:"", errorMessage:""};
+            formData['child_landmark']     = {value:userDetails.child_addr_landmark, errorClass:"", errorMessage:""};
+            formData['child_city']         = {value:userDetails.child_city, errorClass:"", errorMessage:""};
+            formData['child_state']        = {value:userDetails.child_state, errorClass:"", errorMessage:""};
+            formData['child_pincode']      = {value:userDetails.child_postal_code, errorClass:"", errorMessage:""};
+            formData['child_service_area'] = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+            formData['child_school_name']  = {value:userDetails.child_school_name, errorClass:"", errorMessage:""};
+            formData['child_school_class'] = {value:userDetails.child_school_class, errorClass:"", errorMessage:""};
+            formData['child_school_section']  = {value:userDetails.child_school_section, errorClass:"", errorMessage:""};
+            formData['house_type']         = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
+            formData['drinking_water_type']= {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
+            formData['toilet_type']        = {value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
+            formData['special_notes']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
-  }
+            setFormData({...formData, ...formData});
 
-  useEffect(() => {
+            
+        }
 
-    if(systemContext.systemDetails.system_id){
-      getUserDetails();
     }
 
-    // eslint-disable-next-line
-    
-  }, [systemContext.systemDetails.system_id]);
+    useEffect(() => {
 
-  return(
-    <>
-      <div className='app-top inner-app-top services-app-top'>
-        <div className='app-top-box d-flex align-items-center justify-content-between'>
-          <div className='app-top-left d-flex align-items-center'>
-            <div className='scroll-back'>
-              <Link to="/child-malnutrition" className=''>
-                <FontAwesomeIcon icon={faLongArrowAltLeft} />
-              </Link>
+      if(systemContext.systemDetails.system_id){
+        if(serviceAreaOption.length > 0){
+          getUserDetails();
+        }
+      }
+  
+      // eslint-disable-next-line
+      
+    }, [serviceAreaOption, systemContext.systemDetails.system_id]);
+
+    return(
+      <>
+        <div className='app-top inner-app-top services-app-top'>
+          <div className='app-top-box d-flex align-items-center justify-content-between'>
+            <div className='app-top-left d-flex align-items-center'>
+              <div className='scroll-back'>
+                <Link to="/child-malnutrition" className=''>
+                  <FontAwesomeIcon icon={faLongArrowAltLeft} />
+                </Link>
+              </div>
+              <h5 className='mx-2 mb-0'>View Child Basic Info </h5>
             </div>
-            <h5 className='mx-2 mb-0'>View Child Basic Info </h5>
-          </div>
-          <div className='app-top-right d-flex'> 
-            <div className='position-relative'>
-              <Link to="/notifications">
-              <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-              <span className='top-header-notification primary-bg-color'>3</span>
-              </Link>
-            </div> 
-            <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
-            <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
-                  {
-                    (systemContext.systemDetails.thp_system_id !== 0) && <li><Link to={"/about-ngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
-                  }
-                  <li><Link to={"/contactus"}>Contact Us</Link></li>
-                  <li><Link to={"/feedback"}>Feedback</Link></li>
-                  <li><Link to={"/help"}>Help</Link></li>
-                  <li><Link to={"/logout"}>Logout</Link></li>
-                </ul>
+            <div className='app-top-right d-flex'> 
+              <div className='position-relative'>
+                <Link to="/notifications">
+                <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
+                <span className='top-header-notification primary-bg-color'>3</span>
+                </Link>
+              </div> 
+              <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
+              <div className='drop-menu'>
+                  <ul>
+                    <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
+                    {
+                      (systemContext.systemDetails.thp_system_id !== 0) && <li><Link to={"/about-ngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
+                    }
+                    <li><Link to={"/contactus"}>Contact Us</Link></li>
+                    <li><Link to={"/feedback"}>Feedback</Link></li>
+                    <li><Link to={"/help"}>Help</Link></li>
+                    <li><Link to={"/logout"}>Logout</Link></li>
+                  </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='app-body create-patient-profiles create-child-malnutrition'>
-        <p><small>To view profile information</small></p>
-        <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form">
+        <div className='app-body create-patient-profiles create-child-malnutrition'>
+         
+          <p><small>To view profile information</small></p>
+          <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form">
             <div className={`form-group`}>
               <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="child_full_name" id="child_full_name" placeholder="Full Name" value={formData["child_full_name"].value ? formData["child_full_name"].value : ''}/>
@@ -299,7 +310,6 @@ function ChildViewBasicInfo(){
             <div className={`form-group`}>
               <label htmlFor="child_age">Age <span className="text-danger">*</span></label>
               <input type="text" className="form-control" name="child_age" id="child_age" placeholder="Age"  value={formData["child_age"].value ? formData["child_age"].value : ''}/>
-              <small className="error-mesg">{formData["child_age"].errorMessage}</small>
             </div>
             <div className={`form-group`}>
               <label className=""><span className="d-block">Is guardian's personal mobile number? <span className="text-danger">*</span></span> </label>
@@ -308,10 +318,10 @@ function ChildViewBasicInfo(){
                 <option value="f">No</option>
               </select>
             </div>
-            <div className={`form-group`}>
+            {isMobileNumberVisible && <div className={`form-group`}>
               <label htmlFor="child_phone_no">Phone No <span className="text-danger">*</span></label>
               <input type="tel" className="form-control" name="child_phone_no" id="child_phone_no" placeholder="Phone No" value={formData["child_phone_no"].value ? formData["child_phone_no"].value : ''}/>
-            </div>
+            </div>}
             <div className={`form-group`}>
               <label htmlFor="child_whatsapp_no">WhatsApp No </label>
               <input type="tel" className="form-control" name="child_whatsapp_no" id="child_whatsapp_no" placeholder="WhatsApp No" value={formData["child_whatsapp_no"].value ? formData["child_whatsapp_no"].value : ''}/>
@@ -364,7 +374,7 @@ function ChildViewBasicInfo(){
             </div>
   
             <div className={`form-group`}>
-              <label htmlFor="house_type">House<span className="text-danger">*</span></label>
+              <label htmlFor="house_type">House <span className="text-danger">*</span></label>
               <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value}>
                 <option value="1">Mud House</option>
                 <option value="2">Paved House</option>
@@ -372,7 +382,7 @@ function ChildViewBasicInfo(){
             </div>
   
             <div className={`form-group`}>
-              <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
+              <label htmlFor="drinking_water_type">Drinking Water <span className="text-danger">*</span></label>
               <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value}>
                 <option value="1">Tap</option>
                 <option value="2">Well</option>
@@ -381,24 +391,21 @@ function ChildViewBasicInfo(){
             </div>
 
             <div className={`form-group`}>
-              <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
-              <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'}>
-                <option value="1">Open-field</option>
-                <option value="2">Country-latrine</option>
-                <option value="3">Flush-toilet</option>
-              </select>
-            </div>
+            <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
+            <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'}>
+              <option value="1">Open-field</option>
+              <option value="2">Country-latrine</option>
+              <option value="3">Flush-toilet</option>
+            </select>
+          </div>
   
             <div className={`form-group`}>
               <label htmlFor="special_notes">Special Notes </label>
               <input type="text" className="form-control" name="special_notes" id="special_notes" placeholder="Special Notes" value={formData["special_notes"].value ? formData["special_notes"].value : ''}/>
             </div>
           </form>
-      </div>
-      <Appfooter></Appfooter>
-    </>
-  )
+        </div>
+        <Appfooter></Appfooter>
+      </>
+    );
 }
-
-
-export default ChildViewBasicInfo;
