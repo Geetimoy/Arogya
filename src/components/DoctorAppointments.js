@@ -19,6 +19,7 @@ import {Modal, Button} from 'react-bootstrap';
 import './patientprofiles/PatientProfiles.css';
 
 import RecentBookings from './RecentBookings';
+import PreviousBookings from './PreviousBookings';
 
 function DoctorAppointments(){
 
@@ -404,7 +405,7 @@ function DoctorAppointments(){
     }
   }
 
-  const [activeTab, setActiveTab] = useState('tab1');
+  const [activeTab, setActiveTab] = useState('tab2');
 
   return(
     <>
@@ -459,7 +460,7 @@ function DoctorAppointments(){
               }`} > Recent Bookings </button>
           </div>
           <div className="tab-content">
-            {activeTab === 'tab1' && <p>Previous Bookings</p>}
+            {activeTab === 'tab1' && <PreviousBookings />}
             {activeTab === 'tab2' && <RecentBookings />}
           </div>
         </div>

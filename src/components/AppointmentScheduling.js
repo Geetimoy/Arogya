@@ -16,6 +16,8 @@ import SystemContext from "../context/system/SystemContext";
 import AlertContext from '../context/alert/AlertContext';
 
 import {Modal, Button} from 'react-bootstrap'; 
+import PreviousSchedules from './PreviousSchedules';
+import RecentSchedules from './RecentSchedules';
 
 function AppointmentScheduling(){
 
@@ -230,6 +232,9 @@ function AppointmentScheduling(){
     setClosingReason(value);
   }
 
+
+  const [activeTab, setActiveTab] = useState('tab2');
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -266,146 +271,18 @@ function AppointmentScheduling(){
         </div>
       </div>
       <div className="app-body bookings">
-        <div className="add-booking mb-3">
-          <Link className="btn btn-sm btn-primary primary-bg-color border-0" onClick={() => { modalShow(); }} to="#">Create/Update Schedule</Link>
-        </div>
-        <div className="row">
-          <div className="col-12">
-
-            {scheduleList.map((schedule) => {
-
-              var scheduleTypeDescr = '';
-              if(schedule.schedule_type === '1') {
-                scheduleTypeDescr = 'single';
-              }
-              else if(schedule.schedule_type === '2') {
-                scheduleTypeDescr = 'repeat';
-              }
-              else if(schedule.schedule_type === '3') {
-                scheduleTypeDescr = 'multiple';
-              }
-              else if(schedule.schedule_type === '4') {
-                scheduleTypeDescr = 'multipletime';
-              }
-              
-              return <div className="button-box pos-relative mb-3" key={schedule.doctor_avail_schedule_id}>
-                {/* <span className="float-end"> <FontAwesomeIcon icon={faEllipsisV} /> </span> */}
-                <div className={`three-dot my-element2 ${openMenuId === schedule.doctor_avail_schedule_id ? 'active' : ''}`} onClick={() => handleMenuClick(schedule.doctor_avail_schedule_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
-                {openMenuId === schedule.doctor_avail_schedule_id && <div className='drop-menu'>
-                    <ul>
-                      <li><Link onClick={() => { modalShow2(schedule.doctor_avail_schedule_id, '2'); }} to="#">Cancel Schedule</Link></li>
-                      <li><Link onClick={() => { modalShow3(schedule.doctor_avail_schedule_id, '2'); }} to="#">Close Booking</Link></li>
-                      <li><Link to={`/create-schedule/${scheduleTypeDescr}/${schedule.doctor_avail_schedule_id}`}>Edit Schedule</Link></li>
-                    </ul>
-                  </div>
-                }
-                {/* <p><span className="d-block">Doctor Name:</span> Dr. {schedule.display_name}</p> */}
-                {/* <p><span className="d-block">Specialization:</span> {(schedule.specializations) ? schedule.specializations : 'N/A'}</p> */}
-                <div className='scheduleactive position-absolute'>
-                  {
-                    (schedule.schedule_status === 'Active') && <div className='actives'>A</div>
-                  }
-                  {
-                    (schedule.schedule_status !== 'Active') && <div className='not-active'>N-A</div>
-                  }
-                </div>
-                {/* <p><span className="d-block">Schedule Status :</span> {schedule.schedule_status}</p> */}
-                {/* <p><span className="d-block">Schedule Type :</span> {schedule.schedule_type_descr}</p> */}
-                <p>
-                  <span className="d-block">Appointment Date & Time:</span>
-                  {
-                    schedule.schedule_dates && schedule.schedule_dates.map((dateTime, index) => {
-                      return <label key={index}>{dateTime.date} @ {dateTime.time_from} - {dateTime.time_to} - {schedule.schedule_type_descr}</label>
-                    })
-                  } 
-                </p>
-                <p><span className="d-block">Place:</span> {schedule.clinic_details} - {schedule.consultation_mode_descr}</p>
-                {/* <p><span className="d-block">Consultation Mode:</span> {schedule.consultation_mode_descr}</p> */}
-
-                <p><span className="d-block">Total Appointment Allowed/Booked:</span> {schedule.total_appointments}/2</p>
-
-                <div className="mb-3 mt-3 text-center d-flex justify-content-around">
-                  <Link to={`/bookings/${schedule.doctor_avail_schedule_id}`} className="btn primary-bg-color text-light">Bookings</Link>
-                  {/* <a href='/patientprofiles' className="btn primary-bg-color text-light">Book Now</a> */}
-                </div>
-              </div>
-
-            })}
-
-            {scheduleList.length === 0 && <div className='text-center'>No Records Found</div>}
-
+        <div className='tab-container'>
+          <div className="d-flex justify-content-center">
+            <button onClick={() => setActiveTab('tab1')} className={`${ activeTab === 'tab1' ? 'active' : ''
+              }`} > Previous Schedules </button>
+            <button onClick={() => setActiveTab('tab2')} className={`${ activeTab === 'tab2' ? 'active' : ''
+              }`} > Recent Schedules </button>
+          </div>
+          <div className="tab-content">
+            {activeTab === 'tab1' && <PreviousSchedules />}
+            {activeTab === 'tab2' && <RecentSchedules />}
           </div>
         </div>
-        <Modal show={showModal} onHide={modalClose}>
-          <Modal.Header>  
-            <h3>Schedule Type</h3>
-          </Modal.Header>  
-          <Modal.Body>  
-            <div className='form-group'>
-              {selectedOption === '' && <p class="text-danger">Please select an option</p>}
-              <div className="custom-control custom-radio mt-2">
-                <input type="radio" id="schedule_single" name="schedule" value="single" className="custom-control-input" checked={selectedOption === 'single'}
-                onChange={handleRadioChange}/>
-                <label className="custom-control-label no-style" htmlFor="schedule_single">Single Day</label>
-              </div>
-            
-              <div className="custom-control custom-radio mt-2">
-                <input type="radio" id="schedule_repeat" name="schedule" value="repeat" className="custom-control-input" checked={selectedOption === 'repeat'}
-                onChange={handleRadioChange} />
-                <label className="custom-control-label no-style" htmlFor="schedule_repeat">Repeat <small>(Fixed Time)</small></label>
-              </div>
-
-              {/* <div className="custom-control custom-radio mt-2">
-                <input type="radio" id="schedule_multiple" name="schedule" value="multiple" className="custom-control-input" checked={selectedOption === 'multiple'}
-                onChange={handleRadioChange} />
-                <label className="custom-control-label no-style" htmlFor="schedule_multiple">Multiple Dates <small>(Fixed Time)</small></label>
-              </div> */}
-
-              {/* <div className="custom-control custom-radio mt-2">
-                <input type="radio" id="schedule_multiple_t" name="schedule" value="multipletime" className="custom-control-input" checked={selectedOption === 'multipletime'}
-                onChange={handleRadioChange} />
-                <label className="custom-control-label no-style" htmlFor="schedule_multiple_t">Multiple Dates <small>(Multiple Time)</small></label>
-              </div> */}
-            </div>
-          </Modal.Body>  
-          <Modal.Footer className='justify-content-center'>  
-            <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={redirectToCreateSchedule}>Proceed</Button>  
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose}>Close</Button>  
-          </Modal.Footer>  
-        </Modal>
-
-        <Modal show={showModal2} onHide={modalClose2}>
-          <Modal.Header>  
-            <h3>Cancel Schedule</h3>
-          </Modal.Header>  
-          <Modal.Body>
-            <p>Already {confirmedBookingCounter} bookings confirmed. Are you sure?</p>
-            <label><span className="d-block">Reason:</span></label>
-            <textarea className='form-control' value={cancellationReason} onChange={changeCancellationReason}></textarea>
-            {cancellationReasonErrorMessage && <small className="text-danger">This field is required!</small>}
-          </Modal.Body>  
-          <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn bg-success text-light min-width-100 border-0' onClick={cancelSchedule}>Confirm</Button> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>No</Button>  
-          </Modal.Footer>  
-        </Modal>
-
-        <Modal show={showModal3} onHide={modalClose3}>
-          <Modal.Header>  
-            <h3>Close Booking</h3>
-          </Modal.Header>  
-          <Modal.Body>
-            <p>Already {confirmedBookingCounter} bookings confirmed. Are you sure?</p>
-            <label><span className="d-block">Reason:</span></label>
-            <textarea className='form-control' value={closingReason} onChange={changeClosingReason}></textarea>
-            {closingReasonErrorMessage && <small className="text-danger">This field is required!</small>}
-          </Modal.Body>  
-          <Modal.Footer className='justify-content-center'> 
-            <Button variant="secondary" className='btn bg-success text-light min-width-100 border-0' onClick={closeBooking}>Confirm</Button> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose3}>No</Button>  
-          </Modal.Footer>  
-        </Modal>
-        
       </div>
       <Appfooter></Appfooter>
     </>
