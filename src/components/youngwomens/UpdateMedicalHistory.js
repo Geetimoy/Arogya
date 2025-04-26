@@ -133,7 +133,7 @@ function UpadteMedicalHistory(){
     else if(element === 'general_type'){ 
       setSelectedGeneralOptions(values);
     }
-    else if(element === 'urinary_type'){ 
+    else if(element === 'urinary_problems_type'){ 
       setSelectedUrinaryOptions(values);
     }
     else if(element === 'periods_type'){ 
@@ -212,6 +212,118 @@ function UpadteMedicalHistory(){
     if(result1.data.length > 0){
       let medicalHistory = result1.data[0];
       console.log(medicalHistory);
+
+      var eyeTypeArray = [];
+      if(medicalHistory.eye_type && medicalHistory.eye_type !== ''){
+        eyeTypeArray = medicalHistory.eye_type.replace(/^\{|\}$/g,'').split(',');
+        var array1 = new Array();
+        eyeTypeArray.forEach((item)=>{
+          eyeOption.forEach((opt)=>{
+            if(opt.value === item){
+              array1.push(opt);
+            }
+          })
+        })
+        setSelectedEyeOptions(array1);
+      }
+
+      var earTypeArray = [];
+      if(medicalHistory.ears_type && medicalHistory.ears_type !== ''){
+        earTypeArray = medicalHistory.ears_type.replace(/^\{|\}$/g,'').split(',');  
+        var array2 = new Array();
+        earTypeArray.forEach((item)=>{
+          earOption.forEach((opt)=>{
+            if(opt.value === item){
+              array2.push(opt); 
+            }
+          })
+        })
+        setSelectedEarOptions(array2);
+      }
+
+      var noseTypeArray = [];
+      if(medicalHistory.nose_type && medicalHistory.nose_type !== ''){
+        noseTypeArray = medicalHistory.nose_type.replace(/^\{|\}$/g,'').split(',');
+        var array3 = new Array();
+        noseTypeArray.forEach((item)=>{
+          noseOption.forEach((opt)=>{
+            if(opt.value === item){
+              array3.push(opt);
+            }
+          })
+        })
+        setSelectedNoseOptions(array3);
+      }
+
+      var mouthTypeArray = [];
+      if(medicalHistory.mouth_type && medicalHistory.mouth_type !== ''){
+        mouthTypeArray = medicalHistory.mouth_type.replace(/^\{|\}$/g,'').split(',');
+        var array4 = new Array();
+        mouthTypeArray.forEach((item)=>{
+          mouthOption.forEach((opt)=>{
+            if(opt.value === item){
+              array4.push(opt);
+            }
+          })
+        })
+        setSelectedMouthOptions(array4);
+      }
+
+      var digestiveTypeArray = [];
+      if(medicalHistory.digestive_system_type && medicalHistory.digestive_system_type !== ''){
+        digestiveTypeArray = medicalHistory.digestive_system_type.replace(/^\{|\}$/g,'').split(',');
+        var array5 = new Array();
+        digestiveTypeArray.forEach((item)=>{
+          digestiveOption.forEach((opt)=>{
+            if(opt.value === item){
+              array5.push(opt);
+            }
+          })
+        })
+        setSelectedDigestiveOptions(array5);
+      } 
+
+      var generalTypeArray = [];
+      if(medicalHistory.general_type && medicalHistory.general_type !== ''){
+        generalTypeArray = medicalHistory.general_type.replace(/^\{|\}$/g,'').split(',');
+        var array6 = new Array();
+        generalTypeArray.forEach((item)=>{
+          generalOption.forEach((opt)=>{
+            if(opt.value === item){
+              array6.push(opt);
+            }
+          })
+        })
+        setSelectedGeneralOptions(array6);
+      }
+
+      var urinaryTypeArray = [];
+      if(medicalHistory.urinary_problems_type && medicalHistory.urinary_problems_type !== ''){
+        urinaryTypeArray = medicalHistory.urinary_problems_type.replace(/^\{|\}$/g,'').split(',');
+        var array7 = new Array();
+        urinaryTypeArray.forEach((item)=>{
+          urinaryOption.forEach((opt)=>{
+            if(opt.value === item){
+              array7.push(opt);
+            }
+          })
+        })
+        setSelectedUrinaryOptions(array7);
+      }
+
+      var periodsTypeArray = [];
+      if(medicalHistory.periods_type && medicalHistory.periods_type !== ''){
+        periodsTypeArray = medicalHistory.periods_type.replace(/^\{|\}$/g,'').split(',');
+        var array8 = new Array();
+        periodsTypeArray.forEach((item)=>{
+          periodsOption.forEach((opt)=>{
+            if(opt.value === item){
+              array8.push(opt);
+            }
+          })
+        })
+        setSelectedPeriodsOptions(array8);
+      }
 
       formData['eye_type']      = {value:medicalHistory.eye_type, required: true, errorClass:"", errorMessage:""};
       formData['ears_type']     = {value:medicalHistory.ears_type, required: true, errorClass:"", errorMessage:""};

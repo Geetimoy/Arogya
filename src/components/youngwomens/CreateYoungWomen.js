@@ -28,6 +28,8 @@ function CraeteYoungWomen(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [serviceAreaOption, setServiceAreaOption] = useState([
     { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
@@ -127,6 +129,15 @@ function CraeteYoungWomen(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+      }
+    }
+
     if(value.trim() !== ""){
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     }
@@ -196,6 +207,14 @@ function CraeteYoungWomen(){
       jsonData["is_bpl"]                    = 'f';
       jsonData["woman_father_occupation"]   = formData['woman_father_occupation'].value;
       jsonData["is_your_personal_number"]   = formData['is_personal_mobile_number'].value;
+
+      if(isMobileNumberVisible){
+        jsonData["woman_contact_number"]      = formData['woman_contact_number'].value;
+      }
+      else{
+        jsonData["woman_contact_number"]      = "";
+      }
+
       jsonData["special_note"]              = formData['special_note'].value;
       jsonData["woman_whatsup_number"]      = formData['whatsapp'].value;
       jsonData["service_area"]              = serviceArea;
@@ -346,11 +365,11 @@ function CraeteYoungWomen(){
             </div>
             <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["woman_contact_number"].errorClass}`}>
+          {isMobileNumberVisible &&<div className={`form-group ${formData["woman_contact_number"].errorClass}`}>
             <label htmlFor="woman_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" onChange={handleChange} value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" />
             <small className="error-mesg">{formData["woman_contact_number"].errorMessage}</small>
-          </div>
+          </div>}
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" onChange={handleChange} value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} name="whatsapp" id="whatsapp" placeholder="WhatsApp No" />

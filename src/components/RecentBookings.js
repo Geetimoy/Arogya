@@ -16,9 +16,7 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 
 import {Modal, Button} from 'react-bootstrap'; 
 
-import './patientprofiles/PatientProfiles.css';
-
-import RecentBookings from './RecentBookings';
+import './patientprofiles/PatientProfiles.css'
 
 function DoctorAppointments(){
 
@@ -404,70 +402,157 @@ function DoctorAppointments(){
     }
   }
 
-  const [activeTab, setActiveTab] = useState('tab1');
 
   return(
     <>
-      <div className='app-top inner-app-top services-app-top'>
-        <div className='app-top-box d-flex align-items-center justify-content-between'>
-          <div className='app-top-left d-flex align-items-center'>
-            <div className='scroll-back'>
-              <Link to="/services" className=''>
-                <FontAwesomeIcon icon={faLongArrowAltLeft} />
-              </Link>
-            </div>
-              {
-                (decryptedLoginDetails.account_type === '3' || decryptedLoginDetails.account_type === '31' || decryptedLoginDetails.account_type === '32' || decryptedLoginDetails.account_type === '33') && <h5 className='mx-2 mb-0'>My Doctor Appointments </h5>
-              }
-              {
-                (decryptedLoginDetails.account_type === '4') && <h5 className='mx-2 mb-0'> Appointments </h5>
-              }
-              {
-                (decryptedLoginDetails.account_type === '5') && <h5 className='mx-2 mb-0'>My Bookings </h5>
-              }
+        <div className='d-flex justify-content-between align-items-center'>
+          <div className='status d-flex mb-2'>
+            <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>
+            <p className='me-1 mb-0'><small>Pending: <strong>{pendingCounter}</strong></small>,</p>
+            <p className='me-0 mb-0'><small>Rejected: <strong>{rejectedCounter}</strong></small></p>
           </div>
-          <div className='app-top-right d-flex'> 
-            <div className='position-relative'>
-              <Link to="/notifications">
-              <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-              <span className='top-header-notification primary-bg-color'>3</span>
-              </Link>
-            </div> 
-            <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
-            <div className='drop-menu'>
-                <ul>
-                  <li><Link to={"/aboutserviceplace"}>About Service Place</Link></li>
-                  {
-                    (systemContext.systemDetails.thp_system_id !== 0) && <li><Link to={"/about-ngo"}>About {systemContext.systemDetails.thp_system_name}</Link></li>
-                  }
-                  <li><Link to={"/contactus"}>Contact Us</Link></li>
-                  <li><Link to={"/feedback"}>Feedback</Link></li>
-                  <li><Link to={"/help"}>Help</Link></li>
-                  <li><Link to={"/logout"}>Logout</Link></li>
-                </ul>
+          <div className='filter'>
+            <div className="form-check mb-2">
+              <label className="form-check-label">
+                <input className="form-check-input" type="checkbox" name="filter_appointment" value="pending" onChange={()=>setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked)} checked={filterPendingAppointmentChecked}/> <small>Pending</small>
+              </label>
             </div>
           </div>
         </div>
-      </div>
-      <div className="app-body bookings">
+        <div className="row">
+          
+          {/* <div className="col-4 mb-3">Approved: {approvedCounter}</div>
+          <div className="col-4 mb-3">Pending: {pendingCounter}</div>
+          <div className="col-4 mb-3">Rejected: {rejectedCounter}</div> */}
 
-        <div className='tab-container'>
-          <div className="d-flex justify-content-center">
-            <button onClick={() => setActiveTab('tab1')} className={`${ activeTab === 'tab1' ? 'active' : ''
-              }`} > Previous Bookings </button>
-            <button onClick={() => setActiveTab('tab2')} className={`${ activeTab === 'tab2' ? 'active' : ''
-              }`} > Recent Bookings </button>
-          </div>
-          <div className="tab-content">
-            {activeTab === 'tab1' && <p>Previous Bookings</p>}
-            {activeTab === 'tab2' && <RecentBookings />}
+          
+
+          <div className="col-12">
+
+            {appointmentList.map((appointment, index) => (
+              <div className='button-box mb-3 position-relative' key={appointment.appointment_id}>
+                <div className={`three-dot my-element2 ${openMenuId === appointment.appointment_id ? 'active' : ''}`} onClick={() => handleMenuClick(appointment.appointment_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
+                {openMenuId === appointment.appointment_id && 
+                  <div className='drop-menu'>
+                    <ul>
+                      {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Pending') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('approve', appointment.appointment_key)}>Confirm Booking</Link></li>
+                      }
+                      {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Pending') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('cancel', appointment.appointment_key)}>Cancel Booking</Link></li>
+                      }
+                      {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject', appointment.appointment_key)}>Reject Booking</Link></li>
+                      }
+                      {/* <li><Link to={"/"}>Send Notifications</Link></li>
+                      {
+                        (decryptedLoginDetails.account_type === '4') &&<li> <Link to={"/"}>Doctor Details</Link></li>
+                      } */}
+                      {/* <li><Link to={"/"}>Patient Details</Link></li>
+                      <li><Link to={"#"}>Upload Prescriptions</Link></li>
+                      <li><Link to={"#"}>Download Prescriptions</Link></li>
+                      <li><Link to={"#"}>Upload Test Reports</Link></li>
+                      <li><Link to={"#"}>Download Test Reports</Link></li> */}
+                      <li><Link onClick={() => { modalReviewShow(appointment.appointment_key, appointment.patient_display_name, appointment.volunteer_display_name, appointment.patient_key, appointment.volunteer_key, appointment.appt_status); }} to="#">Write/View Review</Link></li>
+                    </ul>
+                  </div>
+                }
+                {
+                  (decryptedLoginDetails.account_type === '4') &&<p><span className="d-block">Doctor Name:</span> {appointment.doctor_display_name}</p>
+                }
+                <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
+                <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
+                <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
+                <p><span className="d-block">Place:</span> {appointment.location}</p>
+                <p><span className="d-block">Consultation Mode:</span> {(appointment.consultation_mode === '1') ? `Offline (Clinic)` : ((appointment.consultation_mode === '2') ? `Online` : `Call on Emergency`)}</p>
+                <p><span className="d-block">Status:</span> {appointment.appt_status}</p>
+              </div>
+            ))}
+
+
           </div>
         </div>
-
-
         
+        <Modal show={showConfirmationModal} onHide={modalConfirmationClose}>
+          <Modal.Header>  
+            <h4>{confirmationModalHeaderText}</h4> 
+          </Modal.Header>
+          <Modal.Body className='form-all'>  
+            <p>{confirmationModalBodyText}</p> 
+            {(statusToBeChanged === 'cancel') && <div className="form-group">
+              <label htmlFor="describe">Reason <span className="text-danger">*</span></label>
+              <textarea name="reason" id="reason" rows="3" value={confirmationReason} className="form-control" placeholder="Please write reason to cancel it." onChange={inputCancelRejectReason}></textarea>
+            </div>}
 
-      </div>
+            {(statusToBeChanged === 'reject') && <div className="form-group">
+              <label htmlFor="describe">Reason <span className="text-danger">*</span></label>
+              <textarea name="reason" id="reason" rows="3" value={confirmationReason} className="form-control" placeholder="Please write your reason to reject it." onChange={inputCancelRejectReason}></textarea>
+              <small>Note: If you reject it...</small>
+            </div>}
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'> 
+            <Link to="#" variant="primary" className='btn bg-success text-light min-width-100 border-0' onClick={confirmBookedAppointment}>{confirmationModalButtonText}</Link> 
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalConfirmationClose}>Close</Button>  
+          </Modal.Footer>  
+        </Modal>
+
+        <Modal show={showReviewModal} onHide={modalReviewClose}>
+          <Modal.Header>  
+            <h3>Write Review</h3>
+          </Modal.Header>  
+          <Modal.Body className='feedback-form'>
+            <h5>Servicewise Experience</h5>
+            <h6 className='mb-1'>Review & Rating for Patient :</h6>
+            <p className='mb-0'>Name : {reviewModalDetails.patient_display_name}</p>
+            <div className="rating-star mb-3">
+              <span>
+                <div className="rating-symbol">
+                  <Rating sendDataToParent={handleStarClickForPatient} value={ratingForPatient}></Rating>
+                </div>
+              </span>
+            </div>
+            <div className="form-group">
+              <label htmlFor="comments_for_patient">Would you like to share any other comments: </label>
+              <textarea id="comments_for_patient" rows="3"  className="form-control" placeholder="Write a review for patient" name='comments_for_patient' value={commentsForPatient} onChange={commentsChangeHandlerForPatient}></textarea>
+            </div>
+          </Modal.Body>  
+          {
+            (reviewForPatientEnabled) && <Modal.Footer className='justify-content-center'> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('patient')}>Submit</Button> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
+            </Modal.Footer> 
+          } 
+          <Modal.Body className='feedback-form'>
+            <h6 className='mb-1'>Review & Rating for Volunteer :</h6>
+            <p className='mb-0'>Name : {reviewModalDetails.volunteer_display_name}</p>
+            <div className="rating-star mb-3">
+              <span>
+                <div className="rating-symbol">
+                  <Rating sendDataToParent={handleStarClickForVolunteer} value={ratingForVolunteer}></Rating>
+                </div>
+              </span>
+            </div>
+            <div className="form-group">
+              <label htmlFor="comments_for_volunteer">Would you like to share any other comments: </label>
+              <textarea id="comments_for_volunteer" rows="3"  className="form-control" placeholder="Write a review for volunteer" name='comments_for_volunteer' value={commentsForVolunteer} onChange={commentsChangeHandlerForVolunteer}></textarea>
+            </div>
+          </Modal.Body>
+          {
+            (reviewForVolunteerEnabled) && <Modal.Footer className='justify-content-center'> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={ () => postReview('volunteer')}>Submit</Button> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
+            </Modal.Footer> 
+          }
+
+          {
+            (!reviewForVolunteerEnabled && !reviewForPatientEnabled) && <Modal.Footer className='justify-content-center'> 
+              <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Close</Button>  
+            </Modal.Footer> 
+          }
+
+          
+        </Modal>
+        
       <Appfooter></Appfooter>
     </>
   );

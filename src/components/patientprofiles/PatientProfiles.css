@@ -63,3 +63,20 @@ p.disease{
   height: 60px;
   margin-top: 10px;
 }
+.tab-container button{
+  width: 100px;
+  padding: 10px;
+  border: 1px solid #c7c7c7;
+  border-radius: 12px;
+  margin: 0 5px;
+  text-align: center;
+  line-height: 20px;
+  background: #fff;
+}
+.tab-container button.active{
+  background: #af1e25;
+  color: #fff;
+}
+.tab-container .tab-content{
+  padding: 20px 0;
+}
