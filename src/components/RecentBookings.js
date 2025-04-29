@@ -192,6 +192,7 @@ function DoctorAppointments(){
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_type"]               = 'future';
     if(filterPendingAppointmentChecked)
     {
       jsonData['status_flag']             = 0;
