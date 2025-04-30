@@ -99,6 +99,7 @@ function AppointmentScheduling(){
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["search_type"]               = "future";
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["search_param"]              = {
