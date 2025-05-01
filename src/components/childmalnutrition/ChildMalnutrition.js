@@ -24,9 +24,19 @@ function ChildMalnutrion(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
-  const [showModal2, setShowModal2] = useState(false); 
-  const modalClose2  = () => setShowModal2(false);  
-  const modalShow2   = () => setShowModal2(true);
+  const [reviewModalDetails, setReviewModalDetails] = useState({
+    'child_account_key':'',
+    'child_name':''
+  });
+
+  const [showReviewModal, setShowReviewModal]       = useState(false); 
+  const modalReviewClose  = () => setShowReviewModal(false);  
+  const modalReviewShow   = async (child_account_key, child_name) => {
+    reviewModalDetails['child_account_key'] = child_account_key;
+    reviewModalDetails['child_name']        = child_name;
+    setReviewModalDetails({...reviewModalDetails, ...reviewModalDetails});
+    setShowReviewModal(true);
+  }
 
   const [rating, setRating] = useState(0);
 
@@ -477,7 +487,7 @@ function ChildMalnutrion(){
                       (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>
 }
-                      {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
+                      {/* {loginAccountType === '5' && <li><Link onClick={() => { modalReviewShow(child.account_key, child.child_name); }} to="#">Write/View Review </Link></li>} */}
                     </ul>
                   </div>
                 }
@@ -574,14 +584,14 @@ function ChildMalnutrion(){
           </Modal.Footer>  
         </Modal>
 
-        <Modal show={showModal2} onHide={modalClose2}>
+        <Modal show={showReviewModal} onHide={modalReviewClose}>
           <Modal.Header>  
             <h3>Write Review</h3>
           </Modal.Header>  
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : N Mondal</p>
+            <p className='mb-0'>Name : {reviewModalDetails.child_name}</p>
             <div className="rating-star mb-3">
               {/* <span className="">Not at all likely</span> */}
               <span>
@@ -598,7 +608,7 @@ function ChildMalnutrion(){
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
             <Button onClick={handleSaveRating} variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' >Submit</Button> 
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
           </Modal.Footer>  
           
         </Modal>
