@@ -104,7 +104,7 @@ function ChildProfilePhoto(){
       jsonData['user_lat']         = localStorage.getItem('latitude');
       jsonData['user_long']        = localStorage.getItem('longitude');
       jsonData['account_key']      = editAccountKey;
-      jsonData['account_type']     = 3;
+      jsonData['account_type']     = 31;
       jsonData['user_login_id']    = decryptedLoginDetails.login_id;
       jsonData['image_info']       = JSON.stringify(imageConfig);
       jsonData['source_image']     = image;
