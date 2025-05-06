@@ -46,9 +46,20 @@ function ChildProfilePhoto(){
     inputFileRef.current.click();
   }
 
-  const cancelPhotoUpload = () => {
-
-  }
+  async function convertImageToBase64(imageUrl) {
+    try {
+        const response = await fetch(imageUrl, { mode: 'cors' }); // Ensure CORS is enabled on the server
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(blob);
+        });
+    } catch (error) {
+        console.error("Error converting image to Base64:", error);
+    }
+}
   
   const handleImageUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -127,7 +138,7 @@ function ChildProfilePhoto(){
 
     jsonData['system_id']         = systemContext.systemDetails.system_id;
     jsonData["account_key"]       = editAccountKey;
-    jsonData["account_type"]      = 3;
+    jsonData["account_type"]      = 31; // 31 for child account type
     jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
     jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]      = DEVICE_TOKEN;
@@ -150,6 +161,8 @@ function ChildProfilePhoto(){
     if(userDetails.source_image !== ""){
       if(userDetails.profile_photo){
         var imageConfig = JSON.parse(userDetails.profile_photo);
+        //var base64Image = await convertImageToBase64(userDetails.source_image+'?timestamp='+Math.random());
+        //setImage(base64Image);
         setImage(userDetails.source_image+'?timestamp='+Math.random());
         setCrop(imageConfig.crop);
         setZoom(imageConfig.zoom);
