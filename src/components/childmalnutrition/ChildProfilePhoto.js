@@ -197,22 +197,24 @@ function ChildProfilePhoto(){
 
   const startCamera = () => {
     const constraints = {
-      video: {
-        facingMode: useFrontCamera ? "user" : "environment", // Use "user" for front camera and "environment" for rear camera
-      },
+        video: {
+            facingMode: useFrontCamera ? "user" : "environment", // Use "user" for front camera and "environment" for rear camera
+            width: { ideal: 250 }, // Set the ideal width
+            height: { ideal: 250 }, // Set the ideal height
+        },
     };
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia(constraints)
-        .then(function (stream) {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-            videoRef.current.play();
-          }
-        })
-        .catch(function (error) {
-          console.error("Error accessing camera: ", error);
-        });
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (stream) {
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
+                    videoRef.current.play();
+                }
+            })
+            .catch(function (error) {
+                console.error("Error accessing camera: ", error);
+            });
     }
   };
 
