@@ -15,6 +15,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
 import {Modal, Button} from 'react-bootstrap'; 
+import ChildRecentAppointment from './ChildRecentAppointment';
+import ChildPreviousAppointment from './ChildPreviousAppointment';
 
 function ChildBookedAppointment(){
 
@@ -107,7 +109,8 @@ function ChildBookedAppointment(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
-  
+  const [activeTab, setActiveTab] = useState('tab2');
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -144,41 +147,21 @@ function ChildBookedAppointment(){
         </div>
       </div>
       <div className="app-body bookings">
-        <div className='d-flex justify-content-between align-items-center'>
-          <div className='status d-flex mb-2'>
-            <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>
-            <p className='me-1 mb-0'><small>Pending: <strong>{pendingCounter}</strong></small>,</p>
-            <p className='me-0 mb-0'><small>Rejected: <strong>{rejectedCounter}</strong></small></p>
-          </div>
-          <div className='filter'>
-            <div class="form-check mb-2">
-              <label class="form-check-label">
-              <input className="form-check-input" type="checkbox" name="filter_appointment" value="pending" onChange={()=>setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked)} checked={filterPendingAppointmentChecked}/> <small>Pending</small>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          {appointmentList.map((appointment, index) => (
-            <div className="col-12">
-              <div className='button-box mb-3 position-relative' key={appointment.appointment_id}>
-                <div className='scheduleactive position-absolute'>
-                  {
-                    (appointment.appt_status === 'Active') && <div className='actives'>A</div>
-                  }
-                  {
-                    (appointment.appt_status !== 'Active') && <div className='not-active'>N-A</div>
-                  }
-                </div>
-                <p><span className="d-block">Doctor Name:</span> Dr. {appointment.doctor_display_name}</p>
-                <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
-                <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
-                <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
-                <p><span className="d-block">Place:</span> {appointment.location} - {(appointment.appointment_mode === '1') ? `Offline (Clinic)` : ((appointment.appointment_mode === '2') ? `Online` : `Call on Emergency`)}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+
+                  <div className='tab-container'>
+                    <div className="d-flex justify-content-center">
+                      <button onClick={() => setActiveTab('tab1')} className={`large ${ activeTab === 'tab1' ? 'active' : ''
+                        }`} > Previous Appointment </button>
+                      <button onClick={() => setActiveTab('tab2')} className={`large ${ activeTab === 'tab2' ? 'active' : ''
+                        }`} > Recent Appointment </button>
+                    </div>
+                    <div className="tab-content">
+                      {activeTab === 'tab1' && <ChildPreviousAppointment />}
+                      {activeTab === 'tab2' && <ChildRecentAppointment />}
+                    </div>
+                  </div>
+
+       
       </div>
       <Appfooter></Appfooter>
     </>

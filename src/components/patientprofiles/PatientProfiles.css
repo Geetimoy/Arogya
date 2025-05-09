@@ -80,3 +80,7 @@ p.disease{
 .tab-container .tab-content{
   padding: 20px 0;
 }
+
+.tab-container button.large{
+  width: 120px;
+}
