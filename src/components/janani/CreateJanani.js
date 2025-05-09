@@ -37,6 +37,8 @@ function CreateJanani(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const [formData, setFormData] = useState({
     janani_name: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_age: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -62,6 +64,15 @@ function CreateJanani(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+      }
+    }
+
     if(value.trim() !== ""){
       if(name === 'janani_contact_number'){
         var regex = /[0-9]|\./;
@@ -245,6 +256,14 @@ function CreateJanani(){
       jsonData["janani_city"]                   = formData['janani_city'].value;
       jsonData["is_bpl"]                        = "t";
       jsonData["is_your_personal_number"]       = formData['is_personal_mobile_number'].value;
+
+      if(isMobileNumberVisible){
+        jsonData["janani_contact_number"]      = formData['janani_contact_number'].value;
+      }
+      else{
+        jsonData["janani_contact_number"]      = "";
+      }
+
       jsonData["janani_education"]              = formData['janani_education'].value;
       jsonData["involved_doctor_name"]          = formData['doctor_name'].value;
       jsonData["involved_hospital_name"]        = formData['hospital_name'].value;
@@ -368,11 +387,11 @@ function CreateJanani(){
             </div>
             <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["janani_contact_number"].errorClass}`}>
+          {isMobileNumberVisible &&<div className={`form-group ${formData["janani_contact_number"].errorClass}`}>
             <label htmlFor="janani_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" name="janani_contact_number" id="janani_contact_number" onChange={handleChange} placeholder="Phone No" value={formData["janani_contact_number"].value ? formData["janani_contact_number"].value : ''} maxLength={10}/>
             <small className="error-mesg">{formData["janani_contact_number"].errorMessage}</small>
-          </div>
+          </div>}
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" onChange={handleChange}  placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} maxLength={10}/>
