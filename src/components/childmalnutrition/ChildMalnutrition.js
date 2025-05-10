@@ -493,7 +493,7 @@ function ChildMalnutrion(){
                 }
                 <Link to="#">
                   {
-                    (child.shared_image && child.shared_image !== "") ? <img src={child.shared_image} alt='' /> : <img src={childprofile} alt='' />
+                    (child.shared_image && child.shared_image !== "") ? <img src={child.shared_image+`?`+Math.random()} alt='' /> : <img src={childprofile} alt='' />
                   }
                   <h6>{child.child_name}</h6>
                 </Link>
