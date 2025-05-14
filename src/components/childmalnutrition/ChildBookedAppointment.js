@@ -57,8 +57,12 @@ function ChildBookedAppointment(){
 
     let jsonData = {};
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    // jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    // jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+    jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+    jsonData["doctor_account_type"]       = 5;
+    
     jsonData["patient_key"]               = editPatientKey;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
@@ -77,7 +81,7 @@ function ChildBookedAppointment(){
                                               "order_by_value": "desc"
                                             }
 
-    const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+    const response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
