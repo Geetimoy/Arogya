@@ -62,15 +62,6 @@ function YoungWomanBasicInformation(){
     special_note: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
-  const [options, setOptions] = useState([
-    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
-    { label: 'Navagraha Temple, Guwahati', value: '2' },
-    { label: 'Umananda Temple, Guwahati', value: '3' },
-    { label: 'Morigaon', value: '4' },
-		{ label: 'Saparam Bera', value: '5' }
-  ]);
-
-  // Define the selectedOptions state and the corresponding setter function
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [serviceAreaOption, setServiceAreaOption] = useState([]);
 
@@ -79,7 +70,7 @@ function YoungWomanBasicInformation(){
   }, [serviceAreaOption])
 
   const getMasterServicesArea = async (e) => {
-
+  
     let jsonData = {};
 
     jsonData['system_id']        = systemContext.systemDetails.system_id;
@@ -106,6 +97,8 @@ function YoungWomanBasicInformation(){
         optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
       }
       setServiceAreaOption(optionsArray);
+
+
     }
 
   }
@@ -323,12 +316,14 @@ function YoungWomanBasicInformation(){
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
-      getUserDetails();
+      if(serviceAreaOption.length > 0){
+        getUserDetails();
+      }
     }
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id]);
+  }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
   return(
     <>
