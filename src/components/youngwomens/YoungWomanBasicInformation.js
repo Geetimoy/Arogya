@@ -70,6 +70,14 @@ function YoungWomanBasicInformation(){
 		{ label: 'Saparam Bera', value: '5' }
   ]);
 
+  // Define the selectedOptions state and the corresponding setter function
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [serviceAreaOption, setServiceAreaOption] = useState([]);
+
+  useEffect(() => {
+  
+  }, [serviceAreaOption])
+
   const getMasterServicesArea = async (e) => {
 
     let jsonData = {};
@@ -97,7 +105,7 @@ function YoungWomanBasicInformation(){
       for(var i=0; i<areas.length; i++){
         optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
       }
-      setOptions(optionsArray);
+      setServiceAreaOption(optionsArray);
     }
 
   }
@@ -108,15 +116,6 @@ function YoungWomanBasicInformation(){
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
-
-  useEffect(() => {
-
-  }, [options])
-
- 
-  // Define the selectedOptions state and the corresponding setter function
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
 
   const handleChange1 = (values) => {
     //console.log(values);
@@ -169,17 +168,21 @@ function YoungWomanBasicInformation(){
       console.log(userDetails.service_area_ids);
       var serviceAreaArray = [];
       if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        console.log(serviceAreaArray);
         var array1 = new Array();
+        console.log(serviceAreaOption);
         serviceAreaArray.forEach((item)=>{
-          options.forEach((opt)=>{
+          serviceAreaOption.forEach((opt)=>{
             if(opt.value === item){
               array1.push(opt);
             }
           })
         })
         setSelectedOptions(array1);
+
       }
+      console.log(serviceAreaArray.join(","));
 
       formData['woman_name']              = {value:userDetails.women_name, errorClass:"", errorMessage:""};
       formData['woman_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
@@ -469,9 +472,7 @@ function YoungWomanBasicInformation(){
 
           <div className={`form-group ${formData["woman_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            {/* <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} /> */}
-            <Select className='form-control select-multi' isMulti value={selectedOptions}
-        onChange={handleChange1} options={options} />
+            <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={serviceAreaOption} />
             <small className="error-mesg">{formData["woman_service_area"].errorMessage}</small>
           </div>
           
