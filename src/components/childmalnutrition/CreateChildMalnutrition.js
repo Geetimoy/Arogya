@@ -103,17 +103,24 @@ function CreateChildMalnutrition(){
     if(name === "is_your_personal_mobile_number"){
       if(value === "t"){
         setIsMobileNumberVisible(true);
+        formData['child_phone_no'].required = true;
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
+        formData['child_phone_no'].required = false;
       }
     }
 
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -136,6 +143,7 @@ function CreateChildMalnutrition(){
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
       }
+      formData[element].required        = formData[element].required;
     })
     setFormData({...formData, ...formData});
   }
@@ -250,6 +258,7 @@ function CreateChildMalnutrition(){
       if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
         formData[element].errorMessage = "This field is required!";
         formData[element].errorClass = "form-error";
+        formData[element].required = formData[element].required;
         errorCounter++;
       }
       else{
@@ -257,10 +266,12 @@ function CreateChildMalnutrition(){
         if((element === "child_email") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
           formData[element].errorMessage = "Please enter a valid email!";
           formData[element].errorClass = "form-error";
+          formData[element].required = formData[element].required;
         }
         else{
           formData[element].errorMessage = "";
           formData[element].errorClass = "";
+          formData[element].required = formData[element].required;
         }
       }
     })
