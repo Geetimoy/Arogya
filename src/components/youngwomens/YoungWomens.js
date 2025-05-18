@@ -116,14 +116,16 @@ function YoungWomens(){
       })
   
       let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
+      if(result.data && result.data.appointments && result.data.appointments.length > 0){
         setAppointmentListForDoctorPresc(result.data.appointments);
+        setShowPrescriptionModalP2(true);
       }
       else{
-        setAppointmentListForDoctorPresc([]);
+        //setAppointmentListForDoctorPresc([]);
+        alertContext.setAlertMessage({show:true, type: "error", message: `No appointments found!`});
       }
 
-      setShowPrescriptionModalP2(true);
+      
     }
   }
   const redirectToUploadDoctorPrescription = () => {
@@ -168,15 +170,17 @@ function YoungWomens(){
       })
   
       let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
+      if(result.data && result.data.appointments && result.data.appointments.length > 0){
         setTestReportAppointmentList(result.data.appointments);
+        setShowTestReportsModal(true);
+        setTestReportWomanKey(womanAccountKey);
       }
       else{
-        setTestReportAppointmentList([]);
+        //setTestReportAppointmentList([]);
+        alertContext.setAlertMessage({show:true, type: "error", message: `No appointments found!`});
       }
 
-    setShowTestReportsModal(true);
-    setTestReportWomanKey(womanAccountKey);
+    
   }
   const selectTestReportAppointment = (event) => {
     setTestReportAppointmentId(event.target.value);
