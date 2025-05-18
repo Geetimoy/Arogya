@@ -128,7 +128,7 @@ function YoungWomanProfilePhoto(){
 
     jsonData['system_id']         = systemContext.systemDetails.system_id;
     jsonData["account_key"]       = editAccountKey;
-    jsonData["account_type"]      = 3;
+    jsonData["account_type"]      = 32;
     jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
     jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]      = DEVICE_TOKEN;
@@ -149,8 +149,8 @@ function YoungWomanProfilePhoto(){
     setUserDetails(result1.data.results);
 
     if(userDetails.source_image !== ""){
-      if(userDetails.profile_photo){
-        var imageConfig = JSON.parse(userDetails.profile_photo);
+      if(userDetails.women_profile_photo){
+        var imageConfig = JSON.parse(userDetails.women_profile_photo);
         setImage(userDetails.source_image+'?timestamp='+Math.random());
         setCrop(imageConfig.crop);
         setZoom(imageConfig.zoom);
