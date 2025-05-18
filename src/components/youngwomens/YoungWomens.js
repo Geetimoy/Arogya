@@ -433,7 +433,7 @@ function YoungWomens(){
                         }
                         </li>
                         {
-                          (decryptedLoginDetails.account_type !== '5') &&
+                          (decryptedLoginDetails.account_type == '5') &&
                         <li><Link to={`/youngwomens/youngwomen-booked-appointment/${women.account_key}`}>Booked Appointment</Link></li>
                         }
                         {
