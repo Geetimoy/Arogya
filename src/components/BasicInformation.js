@@ -148,7 +148,9 @@ function BasicInformation(){
     var serviceAreaArray = [];
     if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
       serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+      console.log(serviceAreaArray);
       var array1 = new Array();
+      console.log(serviceAreaOption);
       serviceAreaArray.forEach((item)=>{
         serviceAreaOption.forEach((opt)=>{
           if(opt.value === item){
@@ -159,6 +161,7 @@ function BasicInformation(){
       setSelectedOptions(array1);
 
     }
+    console.log(serviceAreaArray.join(","));
 
     formData['basicInfoName']         = {required:formData['basicInfoName'].required, value:userDetails.display_name, errorClass:"", errorMessage:""};
     formData['basicInfoMobileNo']     = {required:formData['basicInfoMobileNo'].required, value:userDetails.contact_no, errorClass:"", errorMessage:""};
@@ -191,10 +194,10 @@ function BasicInformation(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:selectedArea.join(), required: formData['basicInfoServiceArea'].required, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['basicInfoServiceArea']: {...formData['basicInfoServiceArea'], value:"", errorClass:"form-error", required: formData['basicInfoServiceArea'].required, errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -206,16 +209,18 @@ function BasicInformation(){
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
-      getUserDetails();
+      if(serviceAreaOption.length > 0){
+        getUserDetails();
+      }
     }
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id]);
+  }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault(); console.log(formData['basicInfoName'].value);
-    let errorCounter = validateForm();
+    let errorCounter = validateForm();console.log(errorCounter);
     if(errorCounter == 0){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -231,6 +236,8 @@ function BasicInformation(){
       jsonData["user_lat"]          = localStorage.getItem('latitude');
       jsonData["user_long"]         = localStorage.getItem('longitude');
 
+      var serviceArea                       = formData['basicInfoServiceArea'].value;
+
       jsonData["basicInfoName"]             = formData['basicInfoName'].value;
       jsonData["basicInfoMobileNo"]         = formData['basicInfoMobileNo'].value;
       jsonData["basicInfoWhatsapp"]         = formData['basicInfoWhatsapp'].value;
@@ -245,7 +252,7 @@ function BasicInformation(){
       jsonData["basicInfoLandmark"]         = formData['basicInfoLandmark'].value;
       jsonData["basicInfoTown"]             = formData['basicInfoTown'].value;
       jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
-      jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
+      jsonData["basicInfoServiceArea"]      = serviceArea;
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
       
       
@@ -272,21 +279,25 @@ function BasicInformation(){
   const validateForm = () => {
     const fieldName = Object.keys(formData);
     let errorCounter = 0;
+    console.log(formData);
     fieldName.forEach((element) => {
-      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null || formData[element].value === undefined)){
         formData[element].errorMessage = "This field is required!";
         formData[element].errorClass = "form-error";
+        formData[element].required = formData[element].required;
         errorCounter++;
       }
       else{
         var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if((element === "basicInfoEmail") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
+        if((element === "basicInfoEmail") && (formData[element].value && formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
           formData[element].errorMessage = "Please enter a valid email!";
           formData[element].errorClass = "form-error";
+          formData[element].required = formData[element].required;
         }
         else{
           formData[element].errorMessage = "";
           formData[element].errorClass = "";
+          formData[element].required = formData[element].required;
         }
       }
     })
