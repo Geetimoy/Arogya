@@ -236,6 +236,8 @@ function ChildProfilePhoto(){
   const captureImage = () => {
     if (videoRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
+			canvas.width = 250;
+      canvas.height = 250;
       const context = canvas.getContext('2d');
       context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
       const imageData = canvas.toDataURL('image/png');
