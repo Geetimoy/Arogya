@@ -30,13 +30,11 @@ function ElderBasicInformation(){
   };
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [serviceAreaOption, setServiceAreaOption] = useState([
-    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
-    { label: 'Navagraha Temple, Guwahati', value: '2' },
-    { label: 'Umananda Temple, Guwahati', value: '3' },
-    { label: 'Morigaon', value: '4' },
-    { label: 'Saparam Bera', value: '5' }
-  ]);
+  const [serviceAreaOption, setServiceAreaOption] = useState([]);
+
+  useEffect(() => {
+  
+  }, [serviceAreaOption])
 
   const getMasterServicesArea = async (e) => {
 
@@ -77,12 +75,8 @@ function ElderBasicInformation(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
-  useEffect(() => {
-
-  }, [serviceAreaOption])
-
-
   const handleChange1 = (values) => {
+    //console.log(values);
     var selectedArea = [];
     if(values.length > 0){
       values.forEach((item, index) => {
@@ -267,14 +261,14 @@ function ElderBasicInformation(){
 
     if(result1.data.length > 0){
       let userDetails = result1.data[0];
-      console.log(userDetails);
       if(result1.data.length > 0){
         let userDetails = result1.data[0];
-
         var serviceAreaArray = [];
         if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-          var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+          serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+          console.log(serviceAreaArray);
           var array1 = new Array();
+          console.log(serviceAreaOption);
           serviceAreaArray.forEach((item)=>{
             serviceAreaOption.forEach((opt)=>{
               if(opt.value === item){
@@ -283,7 +277,9 @@ function ElderBasicInformation(){
             })
           })
           setSelectedOptions(array1);
+
         }
+        console.log(serviceAreaArray.join(","));
 
         formData['elder_name']         = {value:userDetails.elder_name, errorClass:"", errorMessage:""};
         formData["elder_father_name"]  = {value:userDetails.elder_father_name, errorClass:"", errorMessage:""};
@@ -317,12 +313,14 @@ function ElderBasicInformation(){
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
-      getUserDetails();
+      if(serviceAreaOption.length > 0){
+        getUserDetails();
+      }
     }
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id]);
+  }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
   return(
     <>

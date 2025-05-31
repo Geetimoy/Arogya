@@ -17,12 +17,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { Link, useParams } from "react-router-dom";
+
+import {Modal, Button} from 'react-bootstrap'; 
  
 function JananiProfilePhoto(){
 
   const alertContext  = useContext(AlertContext);
   const systemContext = useContext(SystemContext);
 
+  const [showCamera, setShowCamera] = useState(false); // State to toggle camera popup
+  const [useFrontCamera, setUseFrontCamera] = useState(true);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const [isMActive, setIsMActive]     = useState(false);
   const [userDetails, setUserDetails] = useState([]);
@@ -40,8 +46,19 @@ function JananiProfilePhoto(){
     inputFileRef.current.click();
   }
 
-  const cancelPhotoUpload = () => {
-
+  async function convertImageToBase64(imageUrl) {
+    try {
+        const response = await fetch(imageUrl, { mode: 'cors' }); // Ensure CORS is enabled on the server
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(blob);
+        });
+    } catch (error) {
+        console.error("Error converting image to Base64:", error);
+    }
   }
   
   const handleImageUpload = async (e) => {
@@ -53,6 +70,7 @@ function JananiProfilePhoto(){
     };
     reader.readAsDataURL(selectedFile);
   };
+
   const aspectRatio = 1;
   const [cropWidth, cropHeight] = [250, 250];
   const [image, setImage] = useState('/assets/images/profileplaceholder.jpg');
@@ -87,7 +105,7 @@ function JananiProfilePhoto(){
       jsonData['user_lat']         = localStorage.getItem('latitude');
       jsonData['user_long']        = localStorage.getItem('longitude');
       jsonData['account_key']      = editAccountKey;
-      jsonData['account_type']     = 3;
+      jsonData['account_type']     = 33;
       jsonData['user_login_id']    = decryptedLoginDetails.login_id;
       jsonData['image_info']       = JSON.stringify(imageConfig);
       jsonData['source_image']     = image;
@@ -166,6 +184,66 @@ function JananiProfilePhoto(){
     
   }, [systemContext.systemDetails.system_id])
 
+  const openCameraPopup = () => {
+    setShowCamera(true);
+    startCamera();
+  };
+
+  const closeCameraPopup = () => {
+    setShowCamera(false);
+    stopCamera();
+  };
+
+  const startCamera = () => {
+    const constraints = {
+        video: {
+            facingMode: useFrontCamera ? "user" : "environment", // Use "user" for front camera and "environment" for rear camera
+            width: { ideal: 250 }, // Set the ideal width
+            height: { ideal: 250 }, // Set the ideal height
+        },
+    };
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (stream) {
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
+                    videoRef.current.play();
+                }
+            })
+            .catch(function (error) {
+                console.error("Error accessing camera: ", error);
+            });
+    }
+  };
+
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop()); // Stop all video tracks
+    }
+  };
+
+  const toggleCamera = () => {
+    setUseFrontCamera(!useFrontCamera); // Toggle between front and rear camera
+    stopCamera();
+    startCamera();
+  };
+
+  const captureImage = () => {
+    if (videoRef.current && canvasRef.current) {
+      const canvas = canvasRef.current;
+			canvas.width = 250;
+      canvas.height = 250;
+      const context = canvas.getContext('2d');
+      context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const imageData = canvas.toDataURL('image/png');
+      setImage(imageData); // Set the captured image
+      closeCameraPopup(); // Close the camera popup
+    }
+  };
+
   return (
     <>
       <div className='app-top inner-app-top'>
@@ -202,6 +280,9 @@ function JananiProfilePhoto(){
           </div>
       </div>
       <div className="app-body profile-photo">
+        <button type="button" className="btn btn-primary primary-bg-color border-0 mb-2" onClick={openCameraPopup}>
+          Use Camera
+        </button>
         <p>
           You can change your existing photo here. Same photo will reflect
           thorughout the Application.
@@ -287,6 +368,29 @@ function JananiProfilePhoto(){
             </div>
           </div>
         </form>
+
+        <Modal show={showCamera} onHide={closeCameraPopup} className="camera-popup-modal">
+          <Modal.Header closeButton>
+            <Modal.Title>Camera</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="camera-popup-content">
+              <video ref={videoRef} width="100%" height="auto" autoPlay></video>
+              <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={toggleCamera}>
+              Switch Camera
+            </Button>
+            <Button variant="primary" onClick={captureImage}>
+              Capture
+            </Button>
+            <Button variant="secondary" onClick={closeCameraPopup}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
       <Appfooter></Appfooter>
     </>

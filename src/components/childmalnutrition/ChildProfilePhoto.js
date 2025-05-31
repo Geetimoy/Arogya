@@ -59,7 +59,7 @@ function ChildProfilePhoto(){
     } catch (error) {
         console.error("Error converting image to Base64:", error);
     }
-}
+  }
   
   const handleImageUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -70,6 +70,7 @@ function ChildProfilePhoto(){
     };
     reader.readAsDataURL(selectedFile);
   };
+  
   const aspectRatio = 1;
   const [cropWidth, cropHeight] = [250, 250];
   const [image, setImage] = useState('/assets/images/profileplaceholder.jpg');
@@ -235,6 +236,8 @@ function ChildProfilePhoto(){
   const captureImage = () => {
     if (videoRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
+			canvas.width = 250;
+      canvas.height = 250;
       const context = canvas.getContext('2d');
       context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
       const imageData = canvas.toDataURL('image/png');
