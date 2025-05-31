@@ -159,7 +159,7 @@ import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoc
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
+  //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
   //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
