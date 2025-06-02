@@ -139,7 +139,7 @@ function JananiProfilePhoto(){
 
     jsonData['system_id']         = systemContext.systemDetails.system_id;
     jsonData["account_key"]       = editAccountKey;
-    jsonData["account_type"]      = 3;
+    jsonData["account_type"]      = 33;
     jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
     jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]      = DEVICE_TOKEN;
