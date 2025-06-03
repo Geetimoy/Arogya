@@ -139,7 +139,7 @@ function ElderProfilePhoto(){
 
     jsonData['system_id']         = systemContext.systemDetails.system_id;
     jsonData["account_key"]       = editAccountKey;
-    jsonData["account_type"]      = 3;
+    jsonData["account_type"]      = 34;
     jsonData["user_login_id"]     = decryptedLoginDetails.login_id;
     jsonData["device_type"]       = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]      = DEVICE_TOKEN;
@@ -160,8 +160,8 @@ function ElderProfilePhoto(){
     setUserDetails(result1.data.results);
 
     if(userDetails.source_image !== ""){
-      if(userDetails.profile_photo){
-        var imageConfig = JSON.parse(userDetails.profile_photo);
+      if(userDetails.elder_profile_photo){
+        var imageConfig = JSON.parse(userDetails.elder_profile_photo);
         setImage(userDetails.source_image+'?timestamp='+Math.random());
         setCrop(imageConfig.crop);
         setZoom(imageConfig.zoom);

@@ -33,13 +33,11 @@ function PatientBasicInformation(){
   };
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [serviceAreaOption, setServiceAreaOption] = useState([
-    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
-    { label: 'Navagraha Temple, Guwahati', value: '2' },
-    { label: 'Umananda Temple, Guwahati', value: '3' },
-    { label: 'Morigaon', value: '4' },
-    { label: 'Saparam Bera', value: '5' }
-  ]);
+  const [serviceAreaOption, setServiceAreaOption] = useState([]);
+
+  useEffect(() => {
+  
+  }, [serviceAreaOption])
 
   const getMasterServicesArea = async (e) => {
 
@@ -79,10 +77,6 @@ function PatientBasicInformation(){
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
-
-  useEffect(() => {
-
-  }, [serviceAreaOption])
 
   const handleChange1 = (values) => {
     var selectedArea = [];
@@ -130,12 +124,12 @@ function PatientBasicInformation(){
 
     if(result1.data.length > 0){
       let userDetails = result1.data[0];
-      console.log(userDetails);
-
       var serviceAreaArray = [];
       if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        console.log(serviceAreaArray);
         var array1 = new Array();
+        console.log(serviceAreaOption);
         serviceAreaArray.forEach((item)=>{
           serviceAreaOption.forEach((opt)=>{
             if(opt.value === item){
@@ -144,6 +138,7 @@ function PatientBasicInformation(){
           })
         })
         setSelectedOptions(array1);
+
       }
 
       formData['patient_name']              = {value:userDetails.patient_name, errorClass:"", errorMessage:""};
@@ -290,12 +285,14 @@ function PatientBasicInformation(){
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
-      getUserDetails();
+      if(serviceAreaOption.length > 0){
+        getUserDetails();
+      }
     }
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id]);
+  }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
   return(
     <>

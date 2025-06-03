@@ -454,7 +454,7 @@ function Janani(){
                 }
                 <Link to="#">
                   {
-                    (janani.shared_image && janani.shared_image !== "") ? <img src={janani.shared_image} alt='' /> : <img src={youngwomenprofile} alt='' />
+                    (janani.shared_image && janani.shared_image !== "") ? <img src={janani.shared_image+`?`+Math.random()} alt='' /> : <img src={youngwomenprofile} alt='' />
                   }
                   <h6>{janani.janani_name}</h6>
                 </Link>
