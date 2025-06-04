@@ -29,6 +29,8 @@ function ElderBasicInformation(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [serviceAreaOption, setServiceAreaOption] = useState([]);
 
@@ -117,6 +119,16 @@ function ElderBasicInformation(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if(name === "elder_is_mobile_phone"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+      }
+    }
+
     if(value.trim() !== ""){
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     }
@@ -165,7 +177,12 @@ function ElderBasicInformation(){
     
           jsonData["elder_name"]                = formData['elder_name'].value;
           // jsonData["elder_father_name"]         = formData['elder_father_name'].value;
-          jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
+          if(isMobileNumberVisible){
+            jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
+          }
+          else{
+            jsonData["elder_contact_number"]      = "";
+          }
           jsonData["elder_email_id"]            = formData['elder_email_id'].value;
           jsonData["elder_age"]                 = formData['elder_age'].value;
           jsonData["elder_address"]             = formData['elder_address'].value;
@@ -287,8 +304,17 @@ function ElderBasicInformation(){
 
         formData['elder_gender']       = {value:userDetails.elder_gender, errorClass:"", errorMessage:""};
         formData['elder_age']          = {value:userDetails.elder_age, errorClass:"", errorMessage:""};
+
         formData['elder_is_mobile_phone'] = {value:userDetails.elder_is_mobile_phone, errorClass:"", errorMessage:""};
-        formData['elder_contact_number'] = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+        if(userDetails.elder_is_mobile_phone === "t"){
+          setIsMobileNumberVisible(true);
+          formData['elder_contact_number'] = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+        }
+        else if(userDetails.elder_is_mobile_phone === "f"){
+          setIsMobileNumberVisible(false);
+          formData['elder_contact_number'] = {value:"", errorClass:"", errorMessage:""};
+        }
+        
         formData['whatsapp']           = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
         formData['elder_email_id']     = {value:userDetails.email_id, errorClass:"", errorMessage:""};
         formData['elder_address']      = {value:userDetails.elder_addr_1, errorClass:"", errorMessage:""};
@@ -404,11 +430,11 @@ function ElderBasicInformation(){
             </div>
             <small className="error-mesg">{formData["elder_is_mobile_phone"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["elder_contact_number"].errorClass}`}>
+          {isMobileNumberVisible && <div className={`form-group ${formData["elder_contact_number"].errorClass}`}>
             <label htmlFor="elder_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" onChange={handleChange} value={formData["elder_contact_number"].value ? formData["elder_contact_number"].value : ''} name="elder_contact_number" id="elder_contact_number" placeholder="Phone No" />
             <small className="error-mesg">{formData["elder_contact_number"].errorMessage}</small>
-          </div>
+          </div>}
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" onChange={handleChange} value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} name="whatsapp" id="whatsapp" placeholder="WhatsApp No" />

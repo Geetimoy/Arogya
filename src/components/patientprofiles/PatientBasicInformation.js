@@ -32,6 +32,8 @@ function PatientBasicInformation(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [serviceAreaOption, setServiceAreaOption] = useState([]);
 
@@ -148,7 +150,15 @@ function PatientBasicInformation(){
       formData['patient_age']               = {value:userDetails.patient_age, errorClass:"", errorMessage:""};
       formData['patient_education']         = {value:userDetails.patient_education, errorClass:"", errorMessage:""};
       formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-      formData['patient_phone_no']          = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+      if(userDetails.is_your_personal_number === "t"){
+        setIsMobileNumberVisible(true);
+        formData['patient_phone_no']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+      }
+      else if(userDetails.is_your_personal_number === "f"){
+        setIsMobileNumberVisible(false);
+        formData['patient_phone_no']     = {value:"", errorClass:"", errorMessage:""};
+      }
+      
       formData['patient_whatsapp_no']       = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
       formData['patient_email']             = {value:userDetails.email_id, errorClass:"", errorMessage:""};
       formData['patient_address']           = {value:userDetails.patient_addr_1, errorClass:"", errorMessage:""};
@@ -189,6 +199,16 @@ function PatientBasicInformation(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+      }
+    }
+
     if(value.trim() !== ""){
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     }
@@ -220,7 +240,12 @@ function PatientBasicInformation(){
 
       jsonData["patient_name"]              = formData['patient_name'].value;
       jsonData["patient_father_name"]       = formData['patient_father_name'].value;
-      jsonData["patient_contact_number"]    = formData['patient_phone_no'].value;
+      if(isMobileNumberVisible){
+        jsonData["patient_contact_number"]      = formData['patient_phone_no'].value;
+      }
+      else{
+        jsonData["patient_contact_number"]      = "";
+      }
       jsonData["patient_whatsup_number"]    = formData['patient_whatsapp_no'].value;
       jsonData["patient_email_id"]          = formData['patient_email'].value;
       jsonData["patient_age"]               = formData['patient_age'].value;
@@ -378,11 +403,11 @@ function PatientBasicInformation(){
             </select>
             <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["patient_phone_no"].errorClass}`}>
+          {isMobileNumberVisible && <div className={`form-group ${formData["patient_phone_no"].errorClass}`}>
             <label htmlFor="name">Phone No <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="patient_phone_no" id="patient_phone_no" placeholder="Phone No" onChange={handleChange} value={formData["patient_phone_no"].value ? formData["patient_phone_no"].value : ''}/>
             <small className="error-mesg">{formData["patient_phone_no"].errorMessage}</small>
-          </div>
+          </div>}
           <div className={`form-group ${formData["patient_whatsapp_no"].errorClass}`}>
             <label htmlFor="name">WhatsApp No </label>
             <input type="text" className="form-control" name="patient_whatsapp_no" id="patient_whatsapp_no" placeholder="WhatsApp No" onChange={handleChange} value={formData["patient_whatsapp_no"].value ? formData["patient_whatsapp_no"].value : ''}/>

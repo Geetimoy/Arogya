@@ -62,6 +62,8 @@ function YoungWomanBasicInformation(){
     special_note: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [serviceAreaOption, setServiceAreaOption] = useState([]);
 
@@ -183,8 +185,16 @@ function YoungWomanBasicInformation(){
       formData['woman_father_occupation'] = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
       formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
       formData['gender']                  = {value:1, errorClass:"", errorMessage:""};
-      formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-      formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+      if(userDetails.is_your_personal_number === "t"){
+        setIsMobileNumberVisible(true);
+        formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+      }
+      else if(userDetails.is_your_personal_number === "f"){
+        setIsMobileNumberVisible(false);
+        formData['woman_contact_number']    = {value:"", errorClass:"", errorMessage:""};
+      }
+      
+
       formData['whatsapp']                = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
       formData['woman_age']               = {value:userDetails.women_age, errorClass:"", errorMessage:""};
       formData['woman_email_id']          = {value:userDetails.women_email_id, errorClass:"", errorMessage:""};
@@ -212,6 +222,14 @@ function YoungWomanBasicInformation(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+      }
+    }
     if(value.trim() !== ""){
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     }
@@ -267,7 +285,12 @@ function YoungWomanBasicInformation(){
       var serviceArea                       = '{'+formData['woman_service_area'].value+'}';
 
       jsonData["woman_name"]                = formData['woman_name'].value;
-      jsonData["woman_contact_number"]      = formData['woman_contact_number'].value;
+      if(isMobileNumberVisible){
+        jsonData["woman_contact_number"]      = formData['woman_contact_number'].value;
+      }
+      else{
+        jsonData["woman_contact_number"]      = "";
+      }
       jsonData["woman_email_id"]            = formData['woman_email_id'].value;
       jsonData["woman_body_height"]         = '0';
       jsonData["woman_body_weight"]         = '0';
@@ -415,10 +438,10 @@ function YoungWomanBasicInformation(){
             </div>
             <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          {isMobileNumberVisible && <div className="form-group ">
             <label htmlFor="woman_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} onChange={handleChange}/>
-          </div>
+          </div>}
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} onChange={handleChange}/>

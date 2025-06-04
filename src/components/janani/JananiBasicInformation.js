@@ -31,6 +31,8 @@ function CreateJanani(){
   const [periodMissedDate, setPeriodMissedDate] = useState('');
   const [conceptionDate, setConceptionDate]     = useState('');
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
@@ -59,6 +61,14 @@ function CreateJanani(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+      }
+    }
     if(value.trim() !== ""){
       if(name === 'janani_contact_number'){
         let regex = /[0-9]|\./;
@@ -162,7 +172,14 @@ function CreateJanani(){
         formData['doctor_name']       = {value:userDetails.involved_doctor_name, errorClass:"", errorMessage:""};
         formData['hospital_name']     = {value:userDetails.involved_hospital_name, errorClass:"", errorMessage:""};
         formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-        formData['janani_contact_number']  = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+        if(userDetails.is_your_personal_number === "t"){
+          setIsMobileNumberVisible(true);
+          formData['janani_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+        }
+        else if(userDetails.is_your_personal_number === "f"){
+          setIsMobileNumberVisible(false);
+          formData['janani_contact_number']    = {value:"", errorClass:"", errorMessage:""};
+        }
         formData['whatsapp']          = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
         formData['janani_email_id']   = {value:userDetails.email_id, errorClass:"", errorMessage:""};
         formData['janani_address']    = {value:userDetails.janani_addr_1, errorClass:"", errorMessage:""};
@@ -223,7 +240,12 @@ function CreateJanani(){
       jsonData["janani_husband_name"]           = formData['janani_husband'].value;
       jsonData["date_missed_first_period"]      = formData['period_missed'].value;
       jsonData["estimate_conception_date"]      = formData['conception_date'].value;
-      jsonData["janani_contact_number"]         = formData['janani_contact_number'].value;
+      if(isMobileNumberVisible){
+        jsonData["janani_contact_number"]      = formData['janani_contact_number'].value;
+      }
+      else{
+        jsonData["janani_contact_number"]      = "";
+      }
       jsonData["janani_whatsup_number"]         = formData['whatsapp'].value;
       jsonData["janani_email_id"]               = formData['janani_email_id'].value;
       jsonData["janani_age"]                    = formData['janani_age'].value;
@@ -354,11 +376,11 @@ function CreateJanani(){
             </div>
             <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["janani_contact_number"].errorClass}`}>
+          {isMobileNumberVisible && <div className={`form-group ${formData["janani_contact_number"].errorClass}`}>
             <label htmlFor="janani_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" name="janani_contact_number" id="janani_contact_number" placeholder="Phone No" onChange={handleChange} value={formData["janani_contact_number"].value ? formData["janani_contact_number"].value : ''} />
             <small className="error-mesg">{formData["janani_contact_number"].errorMessage}</small>
-          </div>
+          </div>}
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" onChange={handleChange} value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} />
