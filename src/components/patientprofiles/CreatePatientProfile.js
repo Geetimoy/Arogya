@@ -28,6 +28,8 @@ function CreatePatientProfile(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [serviceAreaOption, setServiceAreaOption] = useState([
     { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
@@ -88,10 +90,10 @@ function CreatePatientProfile(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], required:formData['patient_service_area'].required, value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], required:formData['patient_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -119,11 +121,26 @@ function CreatePatientProfile(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+        formData['patient_phone_no'].required = true;
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+        formData['patient_phone_no'].required = false;
+      }
+    }
     if(value.trim() !== ""){
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -146,6 +163,7 @@ function CreatePatientProfile(){
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
       }
+      formData[element].required        = formData[element].required;
     })
     setFormData({...formData, ...formData});
   }
@@ -171,7 +189,12 @@ function CreatePatientProfile(){
 
       jsonData["patient_name"]              = formData['patient_name'].value;
       jsonData["patient_father_name"]       = formData['patient_father_name'].value;
-      jsonData["patient_contact_number"]    = formData['patient_phone_no'].value;
+      if(isMobileNumberVisible){
+        jsonData["patient_contact_number"]      = formData['patient_phone_no'].value;
+      }
+      else{
+        jsonData["patient_contact_number"]      = "";
+      }
       jsonData["patient_whatsup_number"]    = formData['patient_whatsapp_no'].value;
       jsonData["patient_email_id"]          = formData['patient_email'].value;
       jsonData["patient_age"]               = formData['patient_age'].value;
@@ -229,6 +252,7 @@ function CreatePatientProfile(){
           formData[element].errorClass = "";
         }
       }
+      formData[element].required        = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
@@ -317,11 +341,11 @@ function CreatePatientProfile(){
             </select>
             <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["patient_phone_no"].errorClass}`}>
+          {isMobileNumberVisible && <div className={`form-group ${formData["patient_phone_no"].errorClass}`}>
             <label htmlFor="name">Phone No <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="patient_phone_no" id="patient_phone_no" placeholder="Phone No" onChange={handleChange} value={formData["patient_phone_no"].value ? formData["patient_phone_no"].value : ''}/>
             <small className="error-mesg">{formData["patient_phone_no"].errorMessage}</small>
-          </div>
+          </div>}
           <div className={`form-group ${formData["patient_whatsapp_no"].errorClass}`}>
             <label htmlFor="name">WhatsApp No </label>
             <input type="text" className="form-control" name="patient_whatsapp_no" id="patient_whatsapp_no" placeholder="WhatsApp No" onChange={handleChange} value={formData["patient_whatsapp_no"].value ? formData["patient_whatsapp_no"].value : ''}/>

@@ -26,6 +26,8 @@ function CreateElderPerson(){
     setIsMActive(!isMActive); // Toggle the state
   };
 
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [serviceAreaOption, setServiceAreaOption] = useState([
     { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
@@ -86,10 +88,10 @@ function CreateElderPerson(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], value:selectedArea.join(), required:formData['elder_service_area'].required, errorClass:"", errorMessage:""}});
     }
-    else{
-      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+    else{ 
+      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], required:formData['elder_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -120,11 +122,28 @@ function CreateElderPerson(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true); 
+        formData['elder_contact_number'].required = true; // Make contact number required if personal mobile number is selected
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+        formData['elder_contact_number'].required = false; // Make contact number not required if personal mobile number is not selected
+      }
+    }
+
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -136,11 +155,13 @@ function CreateElderPerson(){
         formData[element].value         = "1";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
+        formData[element].required      = formData[element].required;
       }
       else{
         formData[element].value         = "";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
+        formData[element].required      = formData[element].required;
       }
     })
     setFormData({...formData, ...formData});
@@ -166,7 +187,12 @@ function CreateElderPerson(){
       var serviceArea                       = '{'+formData['elder_service_area'].value+'}';
 
       jsonData["elder_name"]                = formData['elder_name'].value;
-      jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
+      if(isMobileNumberVisible){
+        jsonData["elder_contact_number"]      = formData['elder_contact_number'].value;
+      }
+      else{
+        jsonData["elder_contact_number"]      = "";
+      }
       jsonData["elder_email_id"]            = formData['elder_email_id'].value;
       jsonData["elder_age"]                 = formData['elder_age'].value;
       jsonData["elder_address"]             = formData['elder_address'].value;
@@ -227,6 +253,7 @@ function CreateElderPerson(){
           formData[element].errorClass = "";
         }
       }
+      formData[element].required = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
@@ -319,11 +346,11 @@ function CreateElderPerson(){
             <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
 
-          <div className={`form-group ${formData["elder_contact_number"].errorClass}`}>
+          {isMobileNumberVisible && <div className={`form-group ${formData["elder_contact_number"].errorClass}`}>
             <label htmlFor="elder_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" onChange={handleChange} value={formData["elder_contact_number"].value ? formData["elder_contact_number"].value : ''} name="elder_contact_number" id="elder_contact_number" placeholder="Phone No" />
             <small className="error-mesg">{formData["elder_contact_number"].errorMessage}</small>
-          </div>
+          </div>}
 
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>

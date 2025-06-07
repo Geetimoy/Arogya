@@ -88,10 +88,10 @@ function PatientBasicInformation(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], required:formData['patient_service_area'].required, value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['patient_service_area']: {...formData['patient_service_area'], required:formData['patient_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -143,32 +143,32 @@ function PatientBasicInformation(){
 
       }
 
-      formData['patient_name']              = {value:userDetails.patient_name, errorClass:"", errorMessage:""};
-      formData['patient_father_name']       = {value:userDetails.patient_father_name, errorClass:"", errorMessage:""};
-      formData['patient_is_bpl']            = {value:userDetails.is_under_previledged, errorClass:"", errorMessage:""};
-      formData['patient_gender']            = {value:userDetails.patient_gender, errorClass:"", errorMessage:""};
-      formData['patient_age']               = {value:userDetails.patient_age, errorClass:"", errorMessage:""};
-      formData['patient_education']         = {value:userDetails.patient_education, errorClass:"", errorMessage:""};
-      formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+      formData['patient_name']              = {required:formData['patient_name'].required, value:userDetails.patient_name, errorClass:"", errorMessage:""};
+      formData['patient_father_name']       = {required:formData['patient_father_name'].required, value:userDetails.patient_father_name, errorClass:"", errorMessage:""};
+      formData['patient_is_bpl']            = {required:formData['patient_is_bpl'].required, value:userDetails.is_under_previledged, errorClass:"", errorMessage:""};
+      formData['patient_gender']            = {required:formData['patient_gender'].required, value:userDetails.patient_gender, errorClass:"", errorMessage:""};
+      formData['patient_age']               = {required:formData['patient_age'].required, value:userDetails.patient_age, errorClass:"", errorMessage:""};
+      formData['patient_education']         = {required:formData['patient_education'].required, value:userDetails.patient_education, errorClass:"", errorMessage:""};
+      formData['is_personal_mobile_number'] = {required:formData['is_personal_mobile_number'].required, value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
       if(userDetails.is_your_personal_number === "t"){
         setIsMobileNumberVisible(true);
-        formData['patient_phone_no']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+        formData['patient_phone_no']     = {required:true, value:userDetails.contact_no, errorClass:"", errorMessage:""};
       }
       else if(userDetails.is_your_personal_number === "f"){
         setIsMobileNumberVisible(false);
-        formData['patient_phone_no']     = {value:"", errorClass:"", errorMessage:""};
+        formData['patient_phone_no']     = {required:false, value:"", errorClass:"", errorMessage:""};
       }
       
-      formData['patient_whatsapp_no']       = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-      formData['patient_email']             = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-      formData['patient_address']           = {value:userDetails.patient_addr_1, errorClass:"", errorMessage:""};
-      formData['patient_address_2']         = {value:userDetails.patient_addr_2, errorClass:"", errorMessage:""};
-      formData['patient_landmark']          = {value:userDetails.patient_addr_landmark, errorClass:"", errorMessage:""};
-      formData['patient_city']              = {value:userDetails.patient_city, errorClass:"", errorMessage:""};
-      formData['patient_state']             = {value:userDetails.patient_state, errorClass:"", errorMessage:""};
-      formData['patient_pincode']           = {value:userDetails.patient_postal_code, errorClass:"", errorMessage:""};
-      formData['patient_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-      formData['patient_special_notes']     = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+      formData['patient_whatsapp_no']       = {required:formData['patient_whatsapp_no'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+      formData['patient_email']             = {required:formData['patient_email'].required, value:userDetails.email_id, errorClass:"", errorMessage:""};
+      formData['patient_address']           = {required:formData['patient_address'].required, value:userDetails.patient_addr_1, errorClass:"", errorMessage:""};
+      formData['patient_address_2']         = {required:formData['patient_address_2'].required, value:userDetails.patient_addr_2, errorClass:"", errorMessage:""};
+      formData['patient_landmark']          = {required:formData['patient_landmark'].required, value:userDetails.patient_addr_landmark, errorClass:"", errorMessage:""};
+      formData['patient_city']              = {required:formData['patient_city'].required, value:userDetails.patient_city, errorClass:"", errorMessage:""};
+      formData['patient_state']             = {required:formData['patient_state'].required, value:userDetails.patient_state, errorClass:"", errorMessage:""};
+      formData['patient_pincode']           = {required:formData['patient_pincode'].required, value:userDetails.patient_postal_code, errorClass:"", errorMessage:""};
+      formData['patient_service_area']      = {required:formData['patient_service_area'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+      formData['patient_special_notes']     = {required:formData['patient_special_notes'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
 
@@ -203,9 +203,11 @@ function PatientBasicInformation(){
     if(name === "is_personal_mobile_number"){
       if(value === "t"){
         setIsMobileNumberVisible(true);
+        formData['patient_phone_no'].required = true;
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
+        formData['patient_phone_no'].required = false;
       }
     }
 
@@ -213,7 +215,12 @@ function PatientBasicInformation(){
       setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -302,6 +309,7 @@ function PatientBasicInformation(){
           formData[element].errorClass = "";
         }
       }
+      formData[element].required = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
