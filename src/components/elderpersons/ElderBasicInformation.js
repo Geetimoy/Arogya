@@ -122,7 +122,7 @@ function ElderBasicInformation(){
 
     if(name === "elder_is_mobile_phone"){
       if(value === "t"){
-        setIsMobileNumberVisible(true);
+        setIsMobileNumberVisible(true); 
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
