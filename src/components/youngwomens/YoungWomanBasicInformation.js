@@ -58,7 +58,7 @@ function YoungWomanBasicInformation(){
     woman_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
     toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    drinking_water_type: {required: true, required:formData['patient_name'].required, value:"1", errorClass:"", errorMessage:""},
     special_note: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
@@ -121,10 +121,10 @@ function YoungWomanBasicInformation(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], required:formData['woman_service_area'].required, value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], required:formData['woman_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -179,40 +179,40 @@ function YoungWomanBasicInformation(){
       }
       console.log(serviceAreaArray.join(","));
 
-      formData['woman_name']              = {value:userDetails.women_name, errorClass:"", errorMessage:""};
-      formData['woman_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
-      formData['is_premature_birth']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
-      formData['woman_father_occupation'] = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
-      formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-      formData['gender']                  = {value:1, errorClass:"", errorMessage:""};
+      formData['woman_name']              = {required:formData['woman_name'].required, value:userDetails.women_name, errorClass:"", errorMessage:""};
+      formData['woman_father_name']       = {required:formData['woman_father_name'].required, value:userDetails.women_father_name, errorClass:"", errorMessage:""};
+      formData['is_premature_birth']      = {required:formData['is_premature_birth'].required, value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
+      formData['woman_father_occupation'] = {required:formData['woman_father_occupation'].required, value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
+      formData['is_personal_mobile_number'] = {required:formData['is_personal_mobile_number'].required, value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+      formData['gender']                  = {required:formData['gender'].required, value:1, errorClass:"", errorMessage:""};
       if(userDetails.is_your_personal_number === "t"){
         setIsMobileNumberVisible(true);
-        formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+        formData['woman_contact_number']    = {required:true, value:userDetails.contact_no, errorClass:"", errorMessage:""};
       }
       else if(userDetails.is_your_personal_number === "f"){
         setIsMobileNumberVisible(false);
-        formData['woman_contact_number']    = {value:"", errorClass:"", errorMessage:""};
+        formData['woman_contact_number']    = {required:false, value:"", errorClass:"", errorMessage:""};
       }
       
 
-      formData['whatsapp']                = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-      formData['woman_age']               = {value:userDetails.women_age, errorClass:"", errorMessage:""};
-      formData['woman_email_id']          = {value:userDetails.women_email_id, errorClass:"", errorMessage:""};
-      formData['woman_address']           = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
-      formData['woman_address_2']         = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
-      formData['woman_landmark']          = {value:userDetails.women_addr_landmark, errorClass:"", errorMessage:""};
-      formData['woman_city']              = {value:userDetails.women_city, errorClass:"", errorMessage:""};
-      formData['woman_state']             = {value:userDetails.women_state, errorClass:"", errorMessage:""};
-      formData['woman_postal_code']       = {value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
-      formData['woman_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-      formData['woman_education']         = {value:userDetails.women_education, errorClass:"", errorMessage:""};
-      formData['woman_school_name']       = {value:userDetails.women_school_name, errorClass:"", errorMessage:""};
-      formData['woman_school_class']      = {value:userDetails.women_school_class, errorClass:"", errorMessage:""};
-      formData['woman_school_section']    = {value:userDetails.women_school_section, errorClass:"", errorMessage:""};
-      formData['toilet_type']             = {value:userDetails.women_toilet_type, errorClass:"", errorMessage:""};
-      formData['house_type']              = {value:userDetails.women_house_type, errorClass:"", errorMessage:""};
-      formData['drinking_water_type']     = {value:userDetails.women_drinking_water_type, errorClass:"", errorMessage:""};
-      formData['special_note']            = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+      formData['whatsapp']                = {required:formData['whatsapp'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+      formData['woman_age']               = {required:formData['woman_age'].required, value:userDetails.women_age, errorClass:"", errorMessage:""};
+      formData['woman_email_id']          = {required:formData['woman_email_id'].required, value:userDetails.women_email_id, errorClass:"", errorMessage:""};
+      formData['woman_address']           = {required:formData['woman_address'].required, value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
+      formData['woman_address_2']         = {required:formData['woman_address_2'].required, value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
+      formData['woman_landmark']          = {required:formData['woman_landmark'].required, value:userDetails.women_addr_landmark, errorClass:"", errorMessage:""};
+      formData['woman_city']              = {required:formData['woman_city'].required, value:userDetails.women_city, errorClass:"", errorMessage:""};
+      formData['woman_state']             = {required:formData['woman_state'].required, value:userDetails.women_state, errorClass:"", errorMessage:""};
+      formData['woman_postal_code']       = {required:formData['woman_postal_code'].required, value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
+      formData['woman_service_area']      = {required:formData['woman_service_area'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+      formData['woman_education']         = {required:formData['woman_education'].required, value:userDetails.women_education, errorClass:"", errorMessage:""};
+      formData['woman_school_name']       = {required:formData['woman_school_name'].required, value:userDetails.women_school_name, errorClass:"", errorMessage:""};
+      formData['woman_school_class']      = {required:formData['woman_school_class'].required, value:userDetails.women_school_class, errorClass:"", errorMessage:""};
+      formData['woman_school_section']    = {required:formData['woman_school_section'].required, value:userDetails.women_school_section, errorClass:"", errorMessage:""};
+      formData['toilet_type']             = {required:formData['toilet_type'].required, value:userDetails.women_toilet_type, errorClass:"", errorMessage:""};
+      formData['house_type']              = {required:formData['house_type'].required, value:userDetails.women_house_type, errorClass:"", errorMessage:""};
+      formData['drinking_water_type']     = {required:formData['drinking_water_type'].required, value:userDetails.women_drinking_water_type, errorClass:"", errorMessage:""};
+      formData['special_note']            = {required:formData['special_note'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
 
@@ -225,16 +225,23 @@ function YoungWomanBasicInformation(){
     if(name === "is_personal_mobile_number"){
       if(value === "t"){
         setIsMobileNumberVisible(true);
+        formData['woman_contact_number'].required = true;
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
+        formData['woman_contact_number'].required = false;
       }
     }
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -258,6 +265,7 @@ function YoungWomanBasicInformation(){
           formData[element].errorClass = "";
         }
       }
+      formData[element].required = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;

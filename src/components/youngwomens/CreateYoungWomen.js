@@ -90,10 +90,10 @@ function CraeteYoungWomen(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], required:formData['woman_service_area'].required, value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], required:formData['woman_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -132,6 +132,16 @@ function CraeteYoungWomen(){
     if(name === "is_personal_mobile_number"){
       if(value === "t"){
         setIsMobileNumberVisible(true);
+        formData['patient_phone_no'].required = true;
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+        formData['patient_phone_no'].required = false;
+      }
+    }
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
@@ -139,10 +149,15 @@ function CraeteYoungWomen(){
     }
 
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -160,6 +175,7 @@ function CraeteYoungWomen(){
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
       }
+      formData[element].required        = formData[element].required;
     })
     setFormData({...formData, ...formData});
   }
@@ -262,6 +278,7 @@ function CraeteYoungWomen(){
           formData[element].errorClass = "";
         }
       }
+      formData[element].required        = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;

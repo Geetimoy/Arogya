@@ -64,36 +64,43 @@ function CreateJanani(){
     if(name === "is_personal_mobile_number"){
       if(value === "t"){
         setIsMobileNumberVisible(true);
+        formData['janani_contact_number'].required = true;
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
+        formData['janani_contact_number'].required = false;
       }
     }
     if(value.trim() !== ""){
       if(name === 'janani_contact_number'){
         let regex = /[0-9]|\./;
         if( !regex.test(value) ) {
-          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
         }
         else{
-          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
         }
       }
       else if(name === 'janani_email_id'){
         let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if( !regex.test(value)) {
-          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"Please enter a valid email!"}});
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"Please enter a valid email!"}});
         }
         else{
-          setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
         }
       }
       else{
-        setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
       }
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -122,6 +129,7 @@ function CreateJanani(){
           formData[element].errorClass    = "";
         }
       }
+      formData[element].required        = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
@@ -161,34 +169,34 @@ function CreateJanani(){
       if(result1.data.length > 0){
         let userDetails = result1.data[0];
 
-        formData['janani_name']       = {value:userDetails.janani_name, errorClass:"", errorMessage:""};
-        formData['janani_age']        = {value:userDetails.janani_age, errorClass:"", errorMessage:""};
-        formData['janani_husband']    = {value:userDetails.janani_husband_name, errorClass:"", errorMessage:""};
-        formData['period_missed']     = {value:userDetails.date_missed_first_period, errorClass:"", errorMessage:""};
+        formData['janani_name']       = {required:formData['janani_name'].required, value:userDetails.janani_name, errorClass:"", errorMessage:""};
+        formData['janani_age']        = {required:formData['janani_age'].required, value:userDetails.janani_age, errorClass:"", errorMessage:""};
+        formData['janani_husband']    = {required:formData['janani_husband'].required, value:userDetails.janani_husband_name, errorClass:"", errorMessage:""};
+        formData['period_missed']     = {required:formData['period_missed'].required, value:userDetails.date_missed_first_period, errorClass:"", errorMessage:""};
         setPeriodMissedDate(userDetails.date_missed_first_period);
-        formData['conception_date']   = {value:userDetails.estimate_conception_date, errorClass:"", errorMessage:""};
+        formData['conception_date']   = {required:formData['conception_date'].required, value:userDetails.estimate_conception_date, errorClass:"", errorMessage:""};
         setConceptionDate(userDetails.estimate_conception_date);
-        formData['janani_education']  = {value:userDetails.janani_education, errorClass:"", errorMessage:""};
-        formData['doctor_name']       = {value:userDetails.involved_doctor_name, errorClass:"", errorMessage:""};
-        formData['hospital_name']     = {value:userDetails.involved_hospital_name, errorClass:"", errorMessage:""};
-        formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+        formData['janani_education']  = {required:formData['janani_education'].required, value:userDetails.janani_education, errorClass:"", errorMessage:""};
+        formData['doctor_name']       = {required:formData['doctor_name'].required, value:userDetails.involved_doctor_name, errorClass:"", errorMessage:""};
+        formData['hospital_name']     = {required:formData['hospital_name'].required, value:userDetails.involved_hospital_name, errorClass:"", errorMessage:""};
+        formData['is_personal_mobile_number'] = {required:formData['is_personal_mobile_number'].required, value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
         if(userDetails.is_your_personal_number === "t"){
           setIsMobileNumberVisible(true);
-          formData['janani_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+          formData['janani_contact_number']    = {required:true, value:userDetails.contact_no, errorClass:"", errorMessage:""};
         }
         else if(userDetails.is_your_personal_number === "f"){
           setIsMobileNumberVisible(false);
-          formData['janani_contact_number']    = {value:"", errorClass:"", errorMessage:""};
+          formData['janani_contact_number']    = {required:false, value:"", errorClass:"", errorMessage:""};
         }
-        formData['whatsapp']          = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-        formData['janani_email_id']   = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-        formData['janani_address']    = {value:userDetails.janani_addr_1, errorClass:"", errorMessage:""};
-        formData['janani_address_2']  = {value:userDetails.janani_addr_2, errorClass:"", errorMessage:""};
-        formData['janani_state']      = {value:userDetails.janani_city, errorClass:"", errorMessage:""};
-        formData['janani_city']       = {value:userDetails.janani_state, errorClass:"", errorMessage:""};
-        formData['janani_landmark']   = {value:userDetails.janani_addr_landmark, errorClass:"", errorMessage:""};
-        formData['janani_postal_code']= {value:userDetails.janani_postal_code, errorClass:"", errorMessage:""};
-        formData['special_note']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+        formData['whatsapp']          = {required:formData['whatsapp'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+        formData['janani_email_id']   = {required:formData['janani_email_id'].required, value:userDetails.email_id, errorClass:"", errorMessage:""};
+        formData['janani_address']    = {required:formData['janani_address'].required, value:userDetails.janani_addr_1, errorClass:"", errorMessage:""};
+        formData['janani_address_2']  = {required:formData['janani_address_2'].required, value:userDetails.janani_addr_2, errorClass:"", errorMessage:""};
+        formData['janani_state']      = {required:formData['janani_state'].required, value:userDetails.janani_city, errorClass:"", errorMessage:""};
+        formData['janani_city']       = {required:formData['janani_city'].required, value:userDetails.janani_state, errorClass:"", errorMessage:""};
+        formData['janani_landmark']   = {required:formData['janani_landmark'].required, value:userDetails.janani_addr_landmark, errorClass:"", errorMessage:""};
+        formData['janani_postal_code']= {required:formData['janani_postal_code'].required, value:userDetails.janani_postal_code, errorClass:"", errorMessage:""};
+        formData['special_note']      = {required:formData['special_note'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
   
         setFormData({...formData, ...formData});
 
@@ -200,11 +208,11 @@ function CreateJanani(){
 
   const onChangePeriodMissedDate = (date) => {
     setPeriodMissedDate(date);
-    setFormData({...formData, ['period_missed']: {...formData['period_missed'], value:date, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['period_missed']: {...formData['period_missed'], required:formData['period_missed'].required, value:date, errorClass:"", errorMessage:""}});
   }
   const onChangeConceptionDate = (date) => {
     setConceptionDate(date);
-    setFormData({...formData, ['conception_date']: {...formData['conception_date'], value:date, errorClass:"", errorMessage:""}});
+    setFormData({...formData, ['conception_date']: {...formData['conception_date'], required:formData['conception_date'].required, value:date, errorClass:"", errorMessage:""}});
   }
 
   useEffect(() => {

@@ -212,7 +212,7 @@ function PatientBasicInformation(){
     }
 
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
       if(formData[name].required){
