@@ -104,18 +104,26 @@ export default function ChildBasicInfo() {
       if(name === "is_your_personal_mobile_number"){
         if(value === "t"){
           setIsMobileNumberVisible(true);
+          formData['child_phone_no'].required = true;
         }
         else if(value === "f"){
           setIsMobileNumberVisible(false);
+          formData['child_phone_no'].required = false;
         }
       }
 
       if(value.trim() !== ""){
-        setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
       }
       else{
-        setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
+      
     }
 
     const [formData, setFormData] = useState({
@@ -199,41 +207,41 @@ export default function ChildBasicInfo() {
 
             }
             console.log(serviceAreaArray.join(","));
-            formData['child_full_name']    = {value:userDetails.child_name, errorClass:"", errorMessage:""};
-            formData['child_father_name']  = {value:userDetails.child_father_name, errorClass:"", errorMessage:""};
-            formData['child_mother_name']  = {value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
-            formData['is_premature_birth'] = {value:userDetails.child_is_premature_birth, errorClass:"", errorMessage:""};
-            formData['child_guardian_occupation'] = {value:userDetails.child_father_occupation, errorClass:"", errorMessage:""};
-            formData['child_bpl_apl']      = {value:userDetails.child_is_under_previledged, errorClass:"", errorMessage:""};
-            formData['child_gender']       = {value:userDetails.child_gender, errorClass:"", errorMessage:""};
-            formData['child_age']          = {value:userDetails.child_age, errorClass:"", errorMessage:""};
-            formData['is_your_personal_mobile_number']   = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+            formData['child_full_name']    = {required:formData['child_full_name'].required, value:userDetails.child_name, errorClass:"", errorMessage:""};
+            formData['child_father_name']  = {required:formData['child_father_name'].required, value:userDetails.child_father_name, errorClass:"", errorMessage:""};
+            formData['child_mother_name']  = {required:formData['child_mother_name'].required, value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
+            formData['is_premature_birth'] = {required:formData['is_premature_birth'].required, value:userDetails.child_is_premature_birth, errorClass:"", errorMessage:""};
+            formData['child_guardian_occupation'] = {required:formData['child_guardian_occupation'].required, value:userDetails.child_father_occupation, errorClass:"", errorMessage:""};
+            formData['child_bpl_apl']      = {required:formData['child_bpl_apl'].required, value:userDetails.child_is_under_previledged, errorClass:"", errorMessage:""};
+            formData['child_gender']       = {required:formData['child_gender'].required, value:userDetails.child_gender, errorClass:"", errorMessage:""};
+            formData['child_age']          = {required:formData['child_age'].required, value:userDetails.child_age, errorClass:"", errorMessage:""};
+            formData['is_your_personal_mobile_number']   = {required:formData['is_your_personal_mobile_number'].required, value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
 
             if(userDetails.is_your_personal_number === "t"){
               setIsMobileNumberVisible(true);
-              formData['child_phone_no']     = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+              formData['child_phone_no']     = {required:true, value:userDetails.contact_no, errorClass:"", errorMessage:""};
             }
             else if(userDetails.is_your_personal_number === "f"){
               setIsMobileNumberVisible(false);
-              formData['child_phone_no']     = {value:"", errorClass:"", errorMessage:""};
+              formData['child_phone_no']     = {required:false, value:"", errorClass:"", errorMessage:""};
             }
 
-            formData['child_whatsapp_no']  = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-            formData['child_email']        = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-            formData['child_address']      = {value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
-            formData['child_address_2']    = {value:userDetails.child_addr_2, errorClass:"", errorMessage:""};
-            formData['child_landmark']     = {value:userDetails.child_addr_landmark, errorClass:"", errorMessage:""};
-            formData['child_city']         = {value:userDetails.child_city, errorClass:"", errorMessage:""};
-            formData['child_state']        = {value:userDetails.child_state, errorClass:"", errorMessage:""};
-            formData['child_pincode']      = {value:userDetails.child_postal_code, errorClass:"", errorMessage:""};
-            formData['child_service_area'] = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-            formData['child_school_name']  = {value:userDetails.child_school_name, errorClass:"", errorMessage:""};
-            formData['child_school_class'] = {value:userDetails.child_school_class, errorClass:"", errorMessage:""};
-            formData['child_school_section']  = {value:userDetails.child_school_section, errorClass:"", errorMessage:""};
-            formData['house_type']         = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
-            formData['drinking_water_type']= {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
-            formData['toilet_type']        = {value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
-            formData['special_notes']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+            formData['child_whatsapp_no']  = {required:formData['child_whatsapp_no'].required, required:formData['child_whatsapp_no'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+            formData['child_email']        = {required:formData['child_email'].required, required:formData['child_email'].required, value:userDetails.email_id, errorClass:"", errorMessage:""};
+            formData['child_address']      = {required:formData['child_address'].required, value:userDetails.child_addr_1, errorClass:"", errorMessage:""};
+            formData['child_address_2']    = {required:formData['child_address_2'].required, value:userDetails.child_addr_2, errorClass:"", errorMessage:""};
+            formData['child_landmark']     = {required:formData['child_landmark'].required, value:userDetails.child_addr_landmark, errorClass:"", errorMessage:""};
+            formData['child_city']         = {required:formData['child_city'].required, value:userDetails.child_city, errorClass:"", errorMessage:""};
+            formData['child_state']        = {required:formData['child_state'].required, value:userDetails.child_state, errorClass:"", errorMessage:""};
+            formData['child_pincode']      = {required:formData['child_pincode'].required, value:userDetails.child_postal_code, errorClass:"", errorMessage:""};
+            formData['child_service_area'] = {required:formData['child_service_area'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+            formData['child_school_name']  = {required:formData['child_school_name'].required, value:userDetails.child_school_name, errorClass:"", errorMessage:""};
+            formData['child_school_class'] = {required:formData['child_school_class'].required, value:userDetails.child_school_class, errorClass:"", errorMessage:""};
+            formData['child_school_section']  = {required:formData['child_school_section'].required, value:userDetails.child_school_section, errorClass:"", errorMessage:""};
+            formData['house_type']         = {required:formData['house_type'].required, value:userDetails.child_house_type, errorClass:"", errorMessage:""};
+            formData['drinking_water_type']= {required:formData['drinking_water_type'].required, value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
+            formData['toilet_type']        = {required:formData['toilet_type'].required, value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
+            formData['special_notes']      = {required:formData['special_notes'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
             setFormData({...formData, ...formData});
 
@@ -337,6 +345,7 @@ export default function ChildBasicInfo() {
             formData[element].errorClass = "";
           }
         }
+        formData[element].required = formData[element].required;
       })
       setFormData({...formData, ...formData});
       return errorCounter;

@@ -88,10 +88,10 @@ function CreateChildMalnutrition(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], required:formData['child_service_area'].required, value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['child_service_area']: {...formData['child_service_area'], required:formData['child_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -258,7 +258,6 @@ function CreateChildMalnutrition(){
       if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
         formData[element].errorMessage = "This field is required!";
         formData[element].errorClass = "form-error";
-        formData[element].required = formData[element].required;
         errorCounter++;
       }
       else{
@@ -266,14 +265,13 @@ function CreateChildMalnutrition(){
         if((element === "child_email") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
           formData[element].errorMessage = "Please enter a valid email!";
           formData[element].errorClass = "form-error";
-          formData[element].required = formData[element].required;
         }
         else{
           formData[element].errorMessage = "";
           formData[element].errorClass = "";
-          formData[element].required = formData[element].required;
         }
       }
+      formData[element].required = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;

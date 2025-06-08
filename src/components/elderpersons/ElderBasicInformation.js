@@ -86,10 +86,10 @@ function ElderBasicInformation(){
       })
     }
     if(selectedArea.length > 0){
-      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], required:formData['elder_service_area'].required, value:selectedArea.join(), errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, ['elder_service_area']: {...formData['elder_service_area'], required:formData['elder_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
     }
     setSelectedOptions(values);
   };
@@ -123,17 +123,24 @@ function ElderBasicInformation(){
     if(name === "elder_is_mobile_phone"){
       if(value === "t"){
         setIsMobileNumberVisible(true); 
+        formData['elder_contact_number'].required = true; // Make contact number required if personal mobile number is selected
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
+        formData['elder_contact_number'].required = false; // Make contact number not required if personal mobile number is not selected
       }
     }
 
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -145,11 +152,13 @@ function ElderBasicInformation(){
         formData[element].value         = "1";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
+        formData[element].required      = formData[element].required;
       }
       else{
         formData[element].value         = "";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
+        formData[element].required      = formData[element].required;
       }
     })
     setFormData({...formData, ...formData});
@@ -243,6 +252,7 @@ function ElderBasicInformation(){
           formData[element].errorClass = "";
         }
       }
+      formData[element].required = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
@@ -298,35 +308,35 @@ function ElderBasicInformation(){
         }
         console.log(serviceAreaArray.join(","));
 
-        formData['elder_name']         = {value:userDetails.elder_name, errorClass:"", errorMessage:""};
-        formData["elder_father_name"]  = {value:userDetails.elder_father_name, errorClass:"", errorMessage:""};
-        formData['elder_occupation']   = {value:userDetails.elder_occupation, errorClass:"", errorMessage:""};
+        formData['elder_name']         = {required:formData['elder_name'].required, value:userDetails.elder_name, errorClass:"", errorMessage:""};
+        formData["elder_father_name"]  = {required:formData['elder_father_name'].required, value:userDetails.elder_father_name, errorClass:"", errorMessage:""};
+        formData['elder_occupation']   = {required:formData['elder_occupation'].required, value:userDetails.elder_occupation, errorClass:"", errorMessage:""};
 
-        formData['elder_gender']       = {value:userDetails.elder_gender, errorClass:"", errorMessage:""};
-        formData['elder_age']          = {value:userDetails.elder_age, errorClass:"", errorMessage:""};
+        formData['elder_gender']       = {required:formData['elder_gender'].required, value:userDetails.elder_gender, errorClass:"", errorMessage:""};
+        formData['elder_age']          = {required:formData['elder_age'].required, value:userDetails.elder_age, errorClass:"", errorMessage:""};
 
-        formData['elder_is_mobile_phone'] = {value:userDetails.elder_is_mobile_phone, errorClass:"", errorMessage:""};
+        formData['elder_is_mobile_phone'] = {required:formData['elder_is_mobile_phone'].required, value:userDetails.elder_is_mobile_phone, errorClass:"", errorMessage:""};
         if(userDetails.elder_is_mobile_phone === "t"){
           setIsMobileNumberVisible(true);
-          formData['elder_contact_number'] = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
+          formData['elder_contact_number'] = {required:true, value:userDetails.contact_no, errorClass:"", errorMessage:""};
         }
         else if(userDetails.elder_is_mobile_phone === "f"){
           setIsMobileNumberVisible(false);
-          formData['elder_contact_number'] = {value:"", errorClass:"", errorMessage:""};
+          formData['elder_contact_number'] = {required:false, value:"", errorClass:"", errorMessage:""};
         }
         
-        formData['whatsapp']           = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-        formData['elder_email_id']     = {value:userDetails.email_id, errorClass:"", errorMessage:""};
-        formData['elder_address']      = {value:userDetails.elder_addr_1, errorClass:"", errorMessage:""};
-        formData['elder_address_2']    = {value:userDetails.elder_addr_2, errorClass:"", errorMessage:""};
-        formData['elder_landmark']     = {value:userDetails.elder_addr_landmark, errorClass:"", errorMessage:""};
-        formData['elder_city']         = {value:userDetails.elder_state, errorClass:"", errorMessage:""};
-        formData['elder_state']        = {value:userDetails.elder_city, errorClass:"", errorMessage:""};
-        formData['elder_postal_code']  = {value:userDetails.elder_postal_code, errorClass:"", errorMessage:""};
-        formData['elder_service_area'] = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-        formData['elder_education']  = {value:userDetails.elder_education, errorClass:"", errorMessage:""};
+        formData['whatsapp']           = {required:formData['whatsapp'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+        formData['elder_email_id']     = {required:formData['elder_email_id'].required, value:userDetails.email_id, errorClass:"", errorMessage:""};
+        formData['elder_address']      = {required:formData['elder_address'].required, value:userDetails.elder_addr_1, errorClass:"", errorMessage:""};
+        formData['elder_address_2']    = {required:formData['elder_address_2'].required, value:userDetails.elder_addr_2, errorClass:"", errorMessage:""};
+        formData['elder_landmark']     = {required:formData['elder_landmark'].required, value:userDetails.elder_addr_landmark, errorClass:"", errorMessage:""};
+        formData['elder_city']         = {required:formData['elder_city'].required, value:userDetails.elder_state, errorClass:"", errorMessage:""};
+        formData['elder_state']        = {required:formData['elder_state'].required, value:userDetails.elder_city, errorClass:"", errorMessage:""};
+        formData['elder_postal_code']  = {required:formData['elder_postal_code'].required, value:userDetails.elder_postal_code, errorClass:"", errorMessage:""};
+        formData['elder_service_area'] = {required:formData['elder_service_area'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+        formData['elder_education']    = {required:formData['elder_education'].required, value:userDetails.elder_education, errorClass:"", errorMessage:""};
         
-        formData['special_note']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+        formData['special_note']       = {required:formData['special_note'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
   
         setFormData({...formData, ...formData});
 
