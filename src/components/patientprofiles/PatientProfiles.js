@@ -466,7 +466,7 @@ function Patientprofiles(){
                         }
                       </li>
                       {
-                          (decryptedLoginDetails.account_type !== '5') &&
+                          (decryptedLoginDetails.account_type == '5') &&
                       <li><Link to={`/patientprofiles/patient-booked-appointment/${patient.account_key}`}>Booked Appointment</Link></li>
                       }
                       {

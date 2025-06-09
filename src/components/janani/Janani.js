@@ -434,7 +434,7 @@ function Janani(){
                       </li>
                       {/* <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li> */}
                       {
-                          (decryptedLoginDetails.account_type !== '5') &&
+                          (decryptedLoginDetails.account_type == '5') &&
                       <li><Link to={`/janani/janani-booked-appointment/${janani.account_key}`}>Booked Appointment</Link></li>
                       }
                       {

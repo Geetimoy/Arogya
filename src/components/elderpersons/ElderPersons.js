@@ -452,7 +452,7 @@ function ElderPersons(){
                         }
                         </li>
                         {
-                          (decryptedLoginDetails.account_type !== '5') &&
+                          (decryptedLoginDetails.account_type == '5') &&
                         <li><Link to={`/elderpersons/elder-booked-appointment/${elder.account_key}`}>Booked Appointment</Link></li>
                         }
                         {
