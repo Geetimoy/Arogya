@@ -43,6 +43,7 @@
 .profile-listing .button-box .drop-menu ul li a{
   padding: 0;
   font-size: 14px;
+  line-height: normal;
 }
 h6.patient-name{
   white-space: nowrap;

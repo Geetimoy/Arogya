@@ -148,7 +148,7 @@ function Notifications(){
             <div className={`rounded jumbotron p-3 mt-3 mb-3 ${(notification.read_status === '1') ? 'read' : 'unread'}`} key={notification.notification_id} onClick={() => readNotification(notification.notification_id)}>
               <div className='d-flex'> 
                 <div className='thumb me-3'>
-                  <img src={notification.push_icon_url}  alt={notification.push_title} />
+                  <img src={notification.push_icon_url}  alt={notification.push_title} className='w-100 rounded-circle' />
                 </div>
                 <div className='notification-content'>
                   <p className='mb-3 notification-title'>
