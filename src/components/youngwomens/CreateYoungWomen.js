@@ -132,11 +132,11 @@ function CraeteYoungWomen(){
     if(name === "is_personal_mobile_number"){
       if(value === "t"){
         setIsMobileNumberVisible(true);
-        formData['patient_phone_no'].required = true;
+        formData['woman_contact_number'].required = true;
       }
       else if(value === "f"){
         setIsMobileNumberVisible(false);
-        formData['patient_phone_no'].required = false;
+        formData['woman_contact_number'].required = false;
       }
     }
     if(name === "is_personal_mobile_number"){
