@@ -58,7 +58,7 @@ function YoungWomanBasicInformation(){
     woman_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
     toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    drinking_water_type: {required: true, required:formData['patient_name'].required, value:"1", errorClass:"", errorMessage:""},
+    drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     special_note: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
