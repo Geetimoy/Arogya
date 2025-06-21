@@ -11,6 +11,7 @@ import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faDownload 
 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
+import AppTopNotifications from '../AppTopNotifications';
 
 
 function PatientViewMedicalHistory(){
@@ -140,12 +141,7 @@ function PatientViewMedicalHistory(){
           
         </div>
         <div className='app-top-right d-flex'> 
-          <div className='position-relative'>
-            <Link to="/notifications">
-            <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-            <span className='top-header-notification primary-bg-color'>3</span>
-            </Link>
-          </div> 
+          <AppTopNotifications /> 
           <div className={`my-element2 ${isMActive ? 'active' : ''}`}><FontAwesomeIcon icon={faEllipsisV} /></div>
           <div className='drop-menu'>
               <ul>

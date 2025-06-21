@@ -20,6 +20,7 @@ import './patientprofiles/PatientProfiles.css';
 
 import RecentBookings from './RecentBookings';
 import PreviousBookings from './PreviousBookings';
+import AppTopNotifications from './AppTopNotifications';
 
 function DoctorAppointments(){
 
@@ -428,12 +429,7 @@ function DoctorAppointments(){
               }
           </div>
           <div className='app-top-right d-flex'> 
-            <div className='position-relative'>
-              <Link to="/notifications">
-              <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-              <span className='top-header-notification primary-bg-color'>3</span>
-              </Link>
-            </div> 
+            <AppTopNotifications /> 
             <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
             <div className='drop-menu'>
                 <ul>

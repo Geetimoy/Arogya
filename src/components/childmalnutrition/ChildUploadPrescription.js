@@ -12,6 +12,7 @@ import AlertContext from '../../context/alert/AlertContext';
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 
 import docIcon from '../../assets/images/doc-icon.jpg';
+import AppTopNotifications from '../AppTopNotifications';
 
 
 function ChildUploadPrescription(){
@@ -113,12 +114,7 @@ function ChildUploadPrescription(){
             <h5 className='mx-2 mb-0'>Upload Prescriptions </h5>
           </div>
           <div className='app-top-right d-flex'> 
-            <div className='position-relative'>
-              <Link to="/notifications">
-              <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-              <span className='top-header-notification primary-bg-color'>3</span>
-              </Link>
-            </div> 
+            <AppTopNotifications /> 
             <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
             <div className='drop-menu'>
                 <ul>
