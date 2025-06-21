@@ -444,7 +444,7 @@ function ElderMedicalHistory(){
       <div className='app-body form-all elder-persons'>
         <p><small>Update Elder Persons Medical History</small></p>
         <p><strong>Do you have these problems?</strong></p>
-        <form className="mt-3" name="elderMedicalHistoryForm" id="elderMedicalHistoryForm" onSubmit={handleFormSubmit}>
+        <form className="mt-3 select-box" name="elderMedicalHistoryForm" id="elderMedicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["eye_type"].errorClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedEyeOptions} onChange={(values) =>  handleChange1(values, 'eye_type')} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')}/>
