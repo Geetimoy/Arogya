@@ -16,6 +16,7 @@ import SystemContext from "../context/system/SystemContext";
 import AlertContext from '../context/alert/AlertContext';
 
 import Dropdown from 'react-dropdown-select';
+import AppTopNotifications from './AppTopNotifications';
 
 function BasicInformationPharmacy(){
 
@@ -303,12 +304,7 @@ function BasicInformationPharmacy(){
               <h5 className='mx-2 mb-0'>Update Basic Information </h5>
             </div>
             <div className='app-top-right d-flex'> 
-              <div className='position-relative'>
-                <Link to="/notifications">
-                <FontAwesomeIcon icon={faBell}  className='mx-3'/> 
-                <span className='top-header-notification primary-bg-color'>3</span>
-                </Link>
-              </div> 
+              <AppTopNotifications />
               <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
               <div className='drop-menu'>
                 <ul>
