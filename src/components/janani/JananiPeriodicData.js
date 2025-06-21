@@ -264,7 +264,7 @@ function JananiPeriodicData(){
             <label htmlFor="period_missed">Date <span className="text-danger">*</span></label>
             <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
           </div>
-          {inputList}
+          {[...inputList].reverse()}
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
             <textarea name="remarks" id="remarks" onChange={handleRemarks} rows="3"  className="form-control" placeholder="Describe / Explain Problems"></textarea>
