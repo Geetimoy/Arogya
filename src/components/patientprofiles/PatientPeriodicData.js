@@ -251,7 +251,7 @@ function PatientPeriodicData(){
             <DatePicker dateFormat="yyyy-MM-dd"  className='form-control' selected={periodicDate} onChange={(date) => changePeriodicDate(date)} placeholderText="YYYY-MM-DD" maxDate={new Date()}/>
           </div>
 
-          {inputList}
+          {[...inputList].reverse()}
 
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>

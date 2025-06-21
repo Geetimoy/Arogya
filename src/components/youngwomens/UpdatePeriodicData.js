@@ -267,7 +267,7 @@ function UpdatePeriodicData(){
             <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
           </div>
 
-          {inputList}
+          {[...inputList].reverse()}
           
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
