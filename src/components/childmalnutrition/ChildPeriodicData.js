@@ -284,6 +284,7 @@ function ChildPeriodicData(){
       <div className='app-body form-all upadte-periodic-data'>
         <p><small>Update Child Periodic Data</small></p>
         <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
+          <div className="position-absolute mt-1 child-details">Test Child, M, 12yrs</div>
           <div className='mb-3 mt-3 text-end'>
             <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
           </div>
