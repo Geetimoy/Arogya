@@ -18,6 +18,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AppTopNotifications from "../AppTopNotifications";
 
+import './ChildMalnutrition.css';
+
 function ChildPeriodicData(){
 
   const systemContext = useContext(SystemContext);
@@ -292,48 +294,7 @@ function ChildPeriodicData(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id, editAccountKey]);
 
-  const getProfileDetails = async () => {
-       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-  
-      let jsonData = {};
-      jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 31;
-      jsonData["account_key"]               = editAccountKey;
-      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-      jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["user_lat"]                  = localStorage.getItem('latitude');
-      jsonData["user_long"]                 = localStorage.getItem('longitude');
-      
-  
-      const response1 = await fetch(`${API_URL}/getProfileDetails`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-        
-      });
-  
-      let result = await response1.json();
-      if(result.success){
-        setUserDetails(result.data);
-      }
-      else{
-        setUserDetails([]); 
-      }
-    }
-
-    
-
-  useEffect(() => {
-      if(systemContext.systemDetails.system_id && editAccountKey){
-        getProfileDetails();
-      }
-      // eslint-disable-next-line
-    }, [systemContext.systemDetails.system_id, editAccountKey]);
-
+ 
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -367,7 +328,9 @@ function ChildPeriodicData(){
       <div className='app-body form-all upadte-periodic-data'>
         <p><small>Update Child Periodic Data</small></p>
         <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
-          <div className="position-absolute mt-1 child-details">Test Child, M, 12yrs</div>
+          <div className="position-absolute mt-1 patient-details">
+             {(userDetails.display_name) && <span className="text-muted d-flex"><span>{userDetails.display_name}</span>, {userDetails.gender}, {userDetails.age}yrs</span>}
+          </div>
           <div className='mb-3 mt-3 text-end'>
             <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
           </div>

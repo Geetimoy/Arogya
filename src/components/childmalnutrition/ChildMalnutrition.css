@@ -7,3 +7,13 @@
   display: inline-block;
   font-size: 0;
 }
+.patient-details span.text-muted{
+  text-transform: capitalize;
+}
+.patient-details span.text-muted span{
+  max-width: 115px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: auto;
+}
