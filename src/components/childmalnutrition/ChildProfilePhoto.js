@@ -34,6 +34,8 @@ function ChildProfilePhoto(){
 
   const [isMActive, setIsMActive]     = useState(false);
   const [userDetails, setUserDetails] = useState([]);
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
+
 
   const [urlParam, setUrlParam] = useState(useParams());
   const editAccountKey = urlParam.accountKey;
@@ -248,6 +250,46 @@ function ChildProfilePhoto(){
     }
   };
 
+  const getUserBasicDetails = async () => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 31;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
   return (
     <>
       <div className='app-top inner-app-top'>
@@ -279,9 +321,12 @@ function ChildProfilePhoto(){
           </div>
       </div>
       <div className="app-body profile-photo">
-        <button type="button" className="btn btn-primary primary-bg-color border-0 mb-2" onClick={openCameraPopup}>
-          Use Camera
-        </button>
+        <div className="position-absolute mt-1 patient-details">
+            {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </div>
+        <div className='mb-3 mt-3 text-end'>
+          <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={openCameraPopup}>Use Camera</button>
+        </div>
         <p>
           You can change your existing photo here. Same photo will reflect
           thorughout the Application.
