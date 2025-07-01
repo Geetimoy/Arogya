@@ -23,6 +23,7 @@ function JananiMedicalHistory(){
   const [urlParam, setUrlParam] = useState(useParams());
 
   const editAccountKey = urlParam.accountKey;
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -210,6 +211,46 @@ function JananiMedicalHistory(){
     }
   }
 
+  const getUserBasicDetails = async () => {
+          
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 33;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -241,6 +282,9 @@ function JananiMedicalHistory(){
         </div>
       </div>
       <div className='app-body form-all update-medical-history'>
+        <p>
+            {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </p>
         <p><small>Update Janani Medical History</small></p>
         <p><strong>Update Pregnancy Related Informations:</strong></p>
         <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
