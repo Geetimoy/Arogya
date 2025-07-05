@@ -27,6 +27,7 @@ function JananiPrescriptions(){
 
   const [urlParam, setUrlParam] = useState(useParams());
   const [prescriptionList, setPrescriptionList]   = useState([]);
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const editAccountKey    = urlParam.accountKey;
   const prescriptionType  = urlParam.prescriptionType;
@@ -150,6 +151,46 @@ function JananiPrescriptions(){
 
   }
 
+  const getUserBasicDetails = async () => {
+          
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 33;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -181,6 +222,9 @@ function JananiPrescriptions(){
         </div>
       </div>
       <div className="app-body young-womens upload-prescription">
+        <p>
+            {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </p>
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total- {prescriptionList.length}</span>
           <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={uploadUrl}>Upload</Link>
