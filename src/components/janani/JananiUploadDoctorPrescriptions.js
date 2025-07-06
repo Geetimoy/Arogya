@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch, faTrash, faLeaf } from '@fortawesome/free-solid-svg-icons';
@@ -30,6 +30,7 @@ function JananiUploadDoctorPrescriptions(){
   const editAccountKey    = urlParam.accountKey;
   const prescriptionType  = urlParam.prescriptionType;
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   if(prescriptionType == 'initial'){
     var appointmentInitialType = 0;
@@ -296,6 +297,46 @@ function JananiUploadDoctorPrescriptions(){
     setFileUpload({...fileUpload, ...fileUpload});
   }
 
+  const getUserBasicDetails = async () => {
+            
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 33;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
   return(
     <>  
       <div className='app-top inner-app-top services-app-top'>
@@ -327,6 +368,9 @@ function JananiUploadDoctorPrescriptions(){
         </div>
       </div>
       <div className="app-body young-womens upload-prescription upload-certifiate create-patient-profiles">
+        <p>
+            {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </p>
         <form className="mt-3 select-box" name="prescription_upload_form" id="prescription_upload_form" onSubmit={handleFormSubmit}>
           <div className='row'>
             <div className={`form-group ${formData["prescription_date"].errorClass}`}>
