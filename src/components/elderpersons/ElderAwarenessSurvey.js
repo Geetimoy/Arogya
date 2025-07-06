@@ -23,6 +23,7 @@ function ElderAwarenessSuevey(){
   const [isMActive, setIsMActive] = useState(false);
 
   const [urlParam, setUrlParam] = useState(useParams());
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const editAccountKey = urlParam.accountKey;
   
@@ -97,61 +98,101 @@ function ElderAwarenessSuevey(){
 
     const getUserDetails = async () => {
     
-        var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-    
-        let jsonData = {};
-    
-        jsonData['system_id']           = systemContext.systemDetails.system_id;
-        jsonData["elder_account_key"]   = editAccountKey;
-        jsonData["elder_account_type"]  = 3;
-        jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
-        jsonData["device_token"]        = DEVICE_TOKEN;
-        jsonData["user_lat"]            = localStorage.getItem('latitude');
-        jsonData["user_long"]           = localStorage.getItem('longitude');
-        jsonData["search_param"]        = {
-                                            "by_keywords": "",
-                                            "limit": "2",
-                                            "offset": "0",
-                                            "order_by_field": "account_id",
-                                            "order_by_value": "desc"
-                                          }
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  
+      let jsonData = {};
+  
+      jsonData['system_id']           = systemContext.systemDetails.system_id;
+      jsonData["elder_account_key"]   = editAccountKey;
+      jsonData["elder_account_type"]  = 3;
+      jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]        = DEVICE_TOKEN;
+      jsonData["user_lat"]            = localStorage.getItem('latitude');
+      jsonData["user_long"]           = localStorage.getItem('longitude');
+      jsonData["search_param"]        = {
+                                          "by_keywords": "",
+                                          "limit": "2",
+                                          "offset": "0",
+                                          "order_by_field": "account_id",
+                                          "order_by_value": "desc"
+                                        }
+      
+      const response1 = await fetch(`${API_URL}/elderHealthAwarenessSurveyList`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      let result1     = await response1.json();
+  
+      if(result1.data.length > 0){
+        let userDetails = result1.data[0];
         
-        const response1 = await fetch(`${API_URL}/elderHealthAwarenessSurveyList`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        });
-        let result1     = await response1.json();
-    
-        if(result1.data.length > 0){
-          let userDetails = result1.data[0];
-          
-          formData['question_1_value']      = {value:userDetails.question_1_value, errorClass:"", errorMessage:""};
-          formData['question_2_value']      = {value:userDetails.question_2_value, errorClass:"", errorMessage:""};
-          formData['question_3_value']      = {value:userDetails.question_3_value, errorClass:"", errorMessage:""};
-          formData['question_4_value']      = {value:userDetails.question_4_value, errorClass:"", errorMessage:""};
-          formData['question_5_value']      = {value:userDetails.question_5_value, errorClass:"", errorMessage:""};
-          formData['question_6_value']      = {value:userDetails.question_6_value, errorClass:"", errorMessage:""};
-          formData['question_7_value']      = {value:userDetails.question_7_value, errorClass:"", errorMessage:""};
-          formData['remarks']               = {value:userDetails.remarks, errorClass:"", errorMessage:""};
-          
-          setFormData({...formData, ...formData});
-    
-        }
-    
+        formData['question_1_value']      = {value:userDetails.question_1_value, errorClass:"", errorMessage:""};
+        formData['question_2_value']      = {value:userDetails.question_2_value, errorClass:"", errorMessage:""};
+        formData['question_3_value']      = {value:userDetails.question_3_value, errorClass:"", errorMessage:""};
+        formData['question_4_value']      = {value:userDetails.question_4_value, errorClass:"", errorMessage:""};
+        formData['question_5_value']      = {value:userDetails.question_5_value, errorClass:"", errorMessage:""};
+        formData['question_6_value']      = {value:userDetails.question_6_value, errorClass:"", errorMessage:""};
+        formData['question_7_value']      = {value:userDetails.question_7_value, errorClass:"", errorMessage:""};
+        formData['remarks']               = {value:userDetails.remarks, errorClass:"", errorMessage:""};
+        
+        setFormData({...formData, ...formData});
+  
       }
+  
+    }
+  
+    useEffect(() => {
+  
+      if(systemContext.systemDetails.system_id){
+        getUserDetails();
+      }
+  
+      // eslint-disable-next-line
+      
+    }, [systemContext.systemDetails.system_id]);
+
+  const getUserBasicDetails = async () => {
+            
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
     
-      useEffect(() => {
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 34;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
     
-        if(systemContext.systemDetails.system_id){
-          getUserDetails();
-        }
-    
-        // eslint-disable-next-line
-        
-      }, [systemContext.systemDetails.system_id]);
+    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
 
   return(
     <>
@@ -184,6 +225,9 @@ function ElderAwarenessSuevey(){
       </div>
     </div>
     <div className='app-body form-all update-awareness-survey'>
+      <p>
+          {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+      </p>
       <p><strong>Health Awareness Survey</strong></p>
       <p>How knowledgeable do you feel about the following areas of elder person's health</p>
       <form name="awareness_survey_form" id="awareness_survey_form" onSubmit={handleFormSubmit}>
