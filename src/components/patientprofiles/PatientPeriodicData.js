@@ -276,10 +276,10 @@ function PatientPeriodicData(){
         </div>
       </div>
       <div className='app-body form-all upadte-periodic-data'>
-        <p><small>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Periodic Data</small></p>
+        {/* <p><small>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Periodic Data</small></p> */}
         
-        {decryptedLoginDetails.account_type !== '5' && <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
-          <div className="position-absolute mt-1 patient-details">
+        {decryptedLoginDetails.account_type !== '5' && <form className="" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
+          <div className="patient-details">
              {(userDetails.display_name) && <span className="text-muted d-flex"><span>{userDetails.display_name}</span>, {userDetails.gender}, {userDetails.age}yrs</span>}
           </div>
           <div className='mb-3 mt-3 text-end'>

@@ -388,7 +388,7 @@ function YoungWomanBasicInformation(){
         </div>
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
-        <p><small>To update your profile information</small></p>
+        <p className='mt-3'><small>To update your profile information</small></p>
         <form className="mt-3 select-box" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>

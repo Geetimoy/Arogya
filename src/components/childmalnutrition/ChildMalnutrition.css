@@ -11,9 +11,10 @@
   text-transform: capitalize;
 }
 .patient-details span.text-muted span{
-  max-width: 115px;
+  /* max-width: 115px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: auto;
+    width: auto; */
+    font-weight: 600;
 }

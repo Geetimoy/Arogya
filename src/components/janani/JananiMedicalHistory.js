@@ -282,10 +282,10 @@ function JananiMedicalHistory(){
         </div>
       </div>
       <div className='app-body form-all update-medical-history'>
-        <p>
+        <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <p><small>Update Janani Medical History</small></p>
+        {/* <p><small>Update Janani Medical History</small></p> */}
         <p><strong>Update Pregnancy Related Informations:</strong></p>
         <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["previous_pregnancy_count"].errorClass}`}>

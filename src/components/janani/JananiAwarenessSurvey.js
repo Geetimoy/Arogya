@@ -225,10 +225,10 @@ function JananiAwarenesssurvey(){
           </div>
       </div>
       <div className='app-body form-all update-awareness-survey'>
-        <p>
+        <p className="patient-details">
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <p><strong>Health Awareness Survey</strong></p>
+        {/* <p><strong>Health Awareness Survey</strong></p> */}
         <p>How knowledgeable do you feel about the following areas of Janani health</p>
         <form name="awareness_survey_form" id="awareness_survey_form" onSubmit={handleFormSubmit}>
           <div className='form-group'>

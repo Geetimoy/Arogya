@@ -191,7 +191,7 @@ function ElderUploadInitialPrescriptions(){
       </div>
       <div className="app-body young-womens upload-prescription upload-certifiate">
         <div className='row'>
-          <p>
+          <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
           </p>
           <div className={`col-12`}>

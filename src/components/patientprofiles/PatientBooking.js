@@ -318,7 +318,7 @@ function PatientBooking(){
         </div>
       </div>
       <div className="app-body bookings appointment-scheduling">
-        <p>
+        <p className="patient-details">
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
         <div className="d-flex justify-content-between mb-3">

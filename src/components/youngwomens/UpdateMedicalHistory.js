@@ -522,10 +522,10 @@ function UpadteMedicalHistory(){
         </div>
       </div>
       <div className='app-body form-all create-young-woman'>
-        <p>
+        <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <p><small>Update Young Women Medical History</small></p>
+        {/* <p><small>Update Young Women Medical History</small></p> */}
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
           {/* <div className={`form-group ${formData["eye_type"].errorClass}`}>

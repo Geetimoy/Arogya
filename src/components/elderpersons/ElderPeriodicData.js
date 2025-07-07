@@ -305,10 +305,10 @@ function ElderPeriodicData(){
       </div>
     </div>
     <div className='app-body form-all upadte-periodic-data'>
-      <p><small>Update Elder Periodic Data</small></p>
+      {/* <p><small>Update Elder Periodic Data</small></p> */}
        
-      <form className="mt-3" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
-        <div className="position-absolute mt-1 patient-details">
+      <form className="" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
+        <div className="patient-details">
              {(userDetails.display_name) && <span className="text-muted d-flex"><span>{userDetails.display_name}</span>, {userDetails.gender}, {userDetails.age}yrs</span>}
           </div>
         <div className='mb-3 mt-3 text-end'>

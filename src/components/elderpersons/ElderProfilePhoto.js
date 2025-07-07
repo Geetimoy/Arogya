@@ -317,7 +317,7 @@ function ElderProfilePhoto(){
           </div>
       </div>
       <div className="app-body profile-photo">
-        <div className="position-absolute mt-1 patient-details">
+        <div className="patient-details">
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </div>
         <div className='mb-3 mt-3 text-end'>

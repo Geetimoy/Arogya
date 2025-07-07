@@ -290,10 +290,10 @@ function PatientMedicalHistory(){
         </div>
       </div>
       <div className='app-body form-all create-young-woman'>
-        <p>
+        <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <p><small>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Medical History</small></p>
+        {/* <p><small>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Medical History</small></p> */}
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["drug_allergy"].errorClass}`}>

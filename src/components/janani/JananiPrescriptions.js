@@ -222,7 +222,7 @@ function JananiPrescriptions(){
         </div>
       </div>
       <div className="app-body young-womens upload-prescription">
-        <p>
+        <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
         <div className='add-patient align-items-center d-flex justify-content-between'>
