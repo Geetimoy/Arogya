@@ -21,6 +21,7 @@ function ChildViewMedicalHistory(){
   const alertContext  = useContext(AlertContext);
 
   const [urlParam, setUrlParam] = useState(useParams());
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const editAccountKey = urlParam.accountKey;
 
@@ -338,6 +339,42 @@ function ChildViewMedicalHistory(){
     }
   }
 
+  const getUserBasicDetails = async () => {
+
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 31;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -370,6 +407,9 @@ function ChildViewMedicalHistory(){
       </div>
       <div className='app-body create-patient-profiles form-all create-young-woman'>
         <p><small>View Child Medical History</small></p>
+        <p className='patient-details'>
+          {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </p>
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm">
           <div className={`form-group ${eyeTypeClass}`}>

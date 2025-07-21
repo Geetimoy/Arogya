@@ -23,10 +23,11 @@ function ChildBookedAppointment(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const [urlParam, setUrlParam]       = useState(useParams());
 
-  const editPatientKey    = urlParam.patientKey;
+  const editAccountKey    = urlParam.patientKey;
 
   const [isMActive, setIsMActive] = useState(false);
   const handle2Click = () => {
@@ -64,7 +65,7 @@ function ChildBookedAppointment(){
     jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
     jsonData["doctor_account_type"]       = 5;
     
-    jsonData["patient_key"]               = editPatientKey;
+    jsonData["patient_key"]               = editAccountKey;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -116,6 +117,42 @@ function ChildBookedAppointment(){
 
   const [activeTab, setActiveTab] = useState('tab2');
 
+  const getUserBasicDetails = async () => {
+
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 31;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -147,21 +184,23 @@ function ChildBookedAppointment(){
         </div>
       </div>
       <div className="app-body bookings">
+        
+        <p className='patient-details'>
+          {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </p>
+        <div className='tab-container'>
+          <div className="d-flex justify-content-center">
+            <button onClick={() => setActiveTab('tab1')} className={`large ${ activeTab === 'tab1' ? 'active' : ''
+              }`} > Previous Appointment </button>
+            <button onClick={() => setActiveTab('tab2')} className={`large ${ activeTab === 'tab2' ? 'active' : ''
+              }`} > Recent Appointment </button>
+          </div>
+          <div className="tab-content">
+            {activeTab === 'tab1' && <ChildPreviousAppointment />}
+            {activeTab === 'tab2' && <ChildRecentAppointment />}
+          </div>
+        </div>
 
-                  <div className='tab-container'>
-                    <div className="d-flex justify-content-center">
-                      <button onClick={() => setActiveTab('tab1')} className={`large ${ activeTab === 'tab1' ? 'active' : ''
-                        }`} > Previous Appointment </button>
-                      <button onClick={() => setActiveTab('tab2')} className={`large ${ activeTab === 'tab2' ? 'active' : ''
-                        }`} > Recent Appointment </button>
-                    </div>
-                    <div className="tab-content">
-                      {activeTab === 'tab1' && <ChildPreviousAppointment />}
-                      {activeTab === 'tab2' && <ChildRecentAppointment />}
-                    </div>
-                  </div>
-
-       
       </div>
       <Appfooter></Appfooter>
     </>

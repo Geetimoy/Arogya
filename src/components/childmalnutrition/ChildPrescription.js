@@ -147,28 +147,48 @@ function ChildPrescription(){
   }
 
   const getUserBasicDetails = async () => {
-    
+
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
     
     let jsonData = {};
 
-    jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 31;
-    jsonData["account_key"]               = editAccountKey;
-    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]              = DEVICE_TOKEN;
-    jsonData["user_lat"]                  = localStorage.getItem('latitude');
-    jsonData["user_long"]                 = localStorage.getItem('longitude');
-    
-    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type == 5){
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 31;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 31;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetails`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+
     let result = await response1.json();
 
     if(result.success){
