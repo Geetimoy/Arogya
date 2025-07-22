@@ -374,10 +374,13 @@ function ElderMedicalHistory(){
   const [noseTypeClass, setNoseTypeClass] = useState('');
   const [mouthTypeClass, setMouthTypeClass] = useState('');
   const [digestiveTypeClass, setDigestiveTypeClass] = useState('');
+  const [lungsTypeClass, setLungsTypeClass] = useState('');
+  const [heartTypeClass, setHeartTypeClass] = useState('');
+  const [diabeticTypeClass, setDiabeticTypeClass] = useState('');
   const [generalTypeClass, setGeneralTypeClass] = useState('');
 
   useEffect(() => {
-  }, [earTypeClass, eyeTypeClass, noseTypeClass, mouthTypeClass, digestiveTypeClass, generalTypeClass]);
+  }, [earTypeClass, eyeTypeClass, noseTypeClass, mouthTypeClass, digestiveTypeClass, lungsTypeClass, heartTypeClass, diabeticTypeClass,  generalTypeClass]);
 
   const setActiveClass = (element) => {
 
@@ -386,6 +389,9 @@ function ElderMedicalHistory(){
     setNoseTypeClass('');
     setMouthTypeClass('');
     setDigestiveTypeClass('');
+    setLungsTypeClass('');
+    setHeartTypeClass('');
+    setDiabeticTypeClass('');
     setGeneralTypeClass('');
 
     if(element === 'eye_type'){
@@ -402,6 +408,15 @@ function ElderMedicalHistory(){
     }
     else if(element === 'digestive_type'){ 
       setDigestiveTypeClass('selected');
+    }
+    else if(element === 'lungs_type'){ 
+      setLungsTypeClass('selected');
+    }
+    else if(element === 'heart_type'){ 
+      setHeartTypeClass('selected');
+    }
+    else if(element === 'diabetic_type'){ 
+      setDiabeticTypeClass('selected');
     }
     else if(element === 'general_type'){ 
       setGeneralTypeClass('selected');
@@ -478,39 +493,39 @@ function ElderMedicalHistory(){
           </div>
         </div>
       </div>
-      <div className='app-body form-all elder-persons'>
+      <div className='app-body form-all elder-persons create-young-woman'>
         <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
         {/* <p><small>Update Elder Persons Medical History</small></p> */}
         <p><strong>Do you have these problems?</strong></p>
         <form className="mt-3 select-box" name="elderMedicalHistoryForm" id="elderMedicalHistoryForm" onSubmit={handleFormSubmit}>
-          <div className={`form-group ${formData["eye_type"].errorClass}`}>
+          <div className={`form-group ${formData["eye_type"].errorClass} ${eyeTypeClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedEyeOptions} onChange={(values) =>  handleChange1(values, 'eye_type')} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')}/>
             <small className="error-mesg">{formData["eye_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["ears_type"].errorClass}`}>
+          <div className={`form-group ${formData["ears_type"].errorClass} ${earTypeClass}`}>
             <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedEarOptions} onChange={(values) =>  handleChange1(values, 'ears_type')} options={earOption} onFocus={() =>  setActiveClass('ears_type')}/>
-            <small className="error-mesg">{formData["eye_type"].errorMessage}</small>
+            <small className="error-mesg">{formData["ears_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["nose_type"].errorClass}`}>
+          <div className={`form-group ${formData["nose_type"].errorClass} ${noseTypeClass}`}>
             <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedNoseOptions} onChange={(values) =>  handleChange1(values, 'nose_type')} options={noseOption} onFocus={() =>  setActiveClass('nose_type')}/>
             <small className="error-mesg">{formData["nose_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["mouth_type"].errorClass}`}>
+          <div className={`form-group ${formData["mouth_type"].errorClass} ${mouthTypeClass}`}>
             <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedMouthOptions} onChange={(values) =>  handleChange1(values, 'mouth_type')} options={mouthOption} onFocus={() =>  setActiveClass('mouth_type')}/>
             <small className="error-mesg">{formData["mouth_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["digestive_type"].errorClass}`}>
+          <div className={`form-group ${formData["digestive_type"].errorClass} ${digestiveTypeClass}`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} onChange={(values) =>  handleChange1(values, 'digestive_type')} options={digestiveOption} onFocus={() =>  setActiveClass('digestive_type')}/>
             <small className="error-mesg">{formData["digestive_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["lungs_pulmonery_type"].errorClass}`}>
+          <div className={`form-group ${formData["lungs_pulmonery_type"].errorClass} ${lungsTypeClass}`}>
             <label><span className="d-block">Lungs/Pulmonary <span className="text-danger">*</span></span></label>
             <select className="form-control" value={formData["lungs_pulmonery_type"].value ? formData["lungs_pulmonery_type"].value : ''} name="lungs_pulmonery_type" id="lungs_pulmonery_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -519,7 +534,7 @@ function ElderMedicalHistory(){
             </select>
             <small className="error-mesg">{formData["lungs_pulmonery_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["heart_bp_type"].errorClass}`}>
+          <div className={`form-group ${formData["heart_bp_type"].errorClass} ${heartTypeClass}`}>
             <label><span className="d-block">Heart/BP Issue <span className="text-danger">*</span></span></label>
             <select className="form-control" value={formData["heart_bp_type"].value ? formData["heart_bp_type"].value : ''} name="heart_bp_type" id="heart_bp_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -528,7 +543,7 @@ function ElderMedicalHistory(){
             </select>
             <small className="error-mesg">{formData["heart_bp_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["diabetic_type"].errorClass}`}>
+          <div className={`form-group ${formData["diabetic_type"].errorClass} ${diabeticTypeClass}`}>
             <label><span className="d-block">Diabetic <span className="text-danger">*</span></span></label>
             <select className="form-control" value={formData["diabetic_type"].value ? formData["diabetic_type"].value : ''} name="diabetic_type" id="diabetic_type" onChange={handleChange}>
               <option value="">Select</option>
@@ -537,7 +552,7 @@ function ElderMedicalHistory(){
             </select>
             <small className="error-mesg">{formData["diabetic_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${formData["general_type"].errorClass}`}>
+          <div className={`form-group ${formData["general_type"].errorClass} ${generalTypeClass}`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} onChange={(values) =>  handleChange1(values, 'general_type')} options={generalOption} onFocus={() =>  setActiveClass('general_type')}/>
             <small className="error-mesg">{formData["general_type"].errorMessage}</small>
