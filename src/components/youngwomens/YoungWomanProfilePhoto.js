@@ -26,10 +26,10 @@ function YoungWomanProfilePhoto(){
   const alertContext  = useContext(AlertContext);
   const systemContext = useContext(SystemContext);
 
-   const [showCamera, setShowCamera] = useState(false); // State to toggle camera popup
-    const [useFrontCamera, setUseFrontCamera] = useState(true);
-    const videoRef = useRef(null);
-    const canvasRef = useRef(null);
+  const [showCamera, setShowCamera] = useState(false); // State to toggle camera popup
+  const [useFrontCamera, setUseFrontCamera] = useState(true);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
 
   const [isMActive, setIsMActive]     = useState(false);

@@ -21,10 +21,11 @@ function YoungWomanBookedAppointment(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const [urlParam, setUrlParam]       = useState(useParams());
 
-  const editPatientKey    = urlParam.patientKey;
+  const editAccountKey    = urlParam.patientKey;
 
   const [isMActive, setIsMActive] = useState(false);
   const handle2Click = () => {
@@ -58,7 +59,7 @@ function YoungWomanBookedAppointment(){
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
     jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
     jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-    jsonData["patient_key"]               = editPatientKey;
+    jsonData["patient_key"]               = editAccountKey;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -108,6 +109,41 @@ function YoungWomanBookedAppointment(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
+  const getUserBasicDetails = async () => {
+        
+   let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 32;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
   
   return(
     <>
@@ -140,6 +176,9 @@ function YoungWomanBookedAppointment(){
         </div>
       </div>
       <div className="app-body bookings">
+        <p className='patient-details'>
+          {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </p>
         <div className='d-flex justify-content-between align-items-center'>
           <div className='status d-flex mb-2'>
             <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>

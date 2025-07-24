@@ -123,23 +123,43 @@ function YoungWomanUploadInitialPrescriptions(){
     
     let jsonData = {};
 
-    jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 32;
-    jsonData["account_key"]               = editAccountKey;
-    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]              = DEVICE_TOKEN;
-    jsonData["user_lat"]                  = localStorage.getItem('latitude');
-    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    if(decryptedLoginDetails.account_type == 5){
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 32;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 32;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetails`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
     
-    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-    });
     let result = await response1.json();
 
     if(result.success){
