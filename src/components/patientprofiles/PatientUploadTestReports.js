@@ -25,7 +25,7 @@ function PatientUploadTestReports(){
 
   const [urlParam, setUrlParam] = useState(useParams());
 
-  const editPatientKey    = urlParam.patientKey;
+  const editAccountKey    = urlParam.patientKey;
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
   const [userBasicDetails, setUserBasicDetails] = useState([]);
 
@@ -138,7 +138,7 @@ function PatientUploadTestReports(){
         }
   
         jsonData['system_id']                 = systemContext.systemDetails.system_id;
-        jsonData["user_account_key"]          = editPatientKey;
+        jsonData["user_account_key"]          = editAccountKey;
         jsonData["user_account_type"]         = 3;
         jsonData["appointment_key"]           = appointmentId;
         jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
@@ -186,23 +186,43 @@ function PatientUploadTestReports(){
     
     let jsonData = {};
 
-    jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 3;
-    jsonData["account_key"]               = editPatientKey;
-    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]              = DEVICE_TOKEN;
-    jsonData["user_lat"]                  = localStorage.getItem('latitude');
-    jsonData["user_long"]                 = localStorage.getItem('longitude');
-    
-    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type == 5){
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 3;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 3;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetails`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+
     let result = await response1.json();
 
     if(result.success){
@@ -214,11 +234,11 @@ function PatientUploadTestReports(){
   }
 
   useEffect(() => {
-    if(systemContext.systemDetails.system_id && editPatientKey){
+    if(systemContext.systemDetails.system_id && editAccountKey){
       getUserBasicDetails();
     }
     // eslint-disable-next-line
-  }, [systemContext.systemDetails.system_id, editPatientKey]);
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
 
   return(
     <>  
@@ -226,7 +246,7 @@ function PatientUploadTestReports(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to={`/patientprofiles/patient-test-reports/${editPatientKey}/${appointmentId}`} className=''>
+              <Link to={`/patientprofiles/patient-test-reports/${editAccountKey}/${appointmentId}`} className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>

@@ -20,6 +20,7 @@ function PatientViewMedicalHistory(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const [urlParam, setUrlParam] = useState(useParams());
 
@@ -127,6 +128,42 @@ function PatientViewMedicalHistory(){
     
   }, [systemContext.systemDetails.system_id]);
 
+  const getUserBasicDetails = async () => {
+        
+   let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 3;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
   return(
     <>
     <div className='app-top inner-app-top services-app-top'>
@@ -160,6 +197,9 @@ function PatientViewMedicalHistory(){
     </div>
     <div className='app-body form-all create-patient-profiles create-young-woman'>
       <p><small> Patient Medical History</small></p>
+      <p className='patient-details'>
+        {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+      </p>
       <p><strong>Do you have these problems?</strong></p>
       <form className="mt-3" name="medicalHistoryForm" id="medicalHistoryForm">
           <div className={`form-group`}>
