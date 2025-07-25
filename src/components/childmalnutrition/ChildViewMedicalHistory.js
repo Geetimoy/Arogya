@@ -406,7 +406,7 @@ function ChildViewMedicalHistory(){
         </div>
       </div>
       <div className='app-body create-patient-profiles form-all create-young-woman'>
-        <p><small>View Child Medical History</small></p>
+        {/* <p><small>View Child Medical History</small></p> */}
         <p className='patient-details'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>

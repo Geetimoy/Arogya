@@ -191,7 +191,7 @@ function ElderViewAwarenessSuevey(){
       </div>
     </div>
     <div className='app-body form-all update-awareness-survey'>
-      <p><strong>Elder's Health Awareness Survey</strong></p>
+      {/* <p><strong>Elder's Health Awareness Survey</strong></p> */}
       <p className='patient-details'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
       </p>

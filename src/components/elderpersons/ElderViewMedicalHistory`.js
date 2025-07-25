@@ -173,7 +173,7 @@ function ElderViewMedicalHistory(){
         </div>
       </div>
       <div className='app-body form-all elder-persons'>
-        <p><small>View Elder's Persons Medical History</small></p>
+        {/* <p><small>View Elder's Persons Medical History</small></p> */}
         <p className='patient-details'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>

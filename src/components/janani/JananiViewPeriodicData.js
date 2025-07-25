@@ -150,7 +150,7 @@ function JananiViewPeriodicData(){
       </div>
 
       <div className='app-body form-all upadte-periodic-data'>
-        <p><small>View Janani Periodic Data</small></p>
+        {/* <p><small>View Janani Periodic Data</small></p> */}
         <p className='patient-details'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>          
