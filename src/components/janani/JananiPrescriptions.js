@@ -34,8 +34,6 @@ function JananiPrescriptions(){
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isImageCaptured, setIsImageCaptured] = useState(false);
-  //const [screenshot, setScreenshot] = useState('');
-
   const [screenshot, setScreenshot] = useState({
     inputPrescription1 : '',
     inputPrescription2 : '',
@@ -348,15 +346,65 @@ function JananiPrescriptions(){
       startCamera();
     }
     else if(action == 'save'){
-      setIsImageCaptured(false);
-      setScreenshot({
-        inputPrescription1 : '',
-        inputPrescription2 : '',
-        inputPrescription3 : '',
-        inputPrescription4 : '',
-        inputPrescription5 : ''
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+      
+      var filledCountObject = Object.values(screenshot).filter(value => value !== '');
+
+      Object.entries(filledCountObject).map(async ([key, value], index) => {
+        
+        var uploadedFileBase64Array         = value.split(';base64,');
+
+        let jsonData = {};
+
+        jsonData['system_id']               = systemContext.systemDetails.system_id;
+        jsonData["device_type"]             = DEVICE_TYPE;
+        jsonData["device_token"]            = DEVICE_TOKEN;
+        jsonData["user_lat"]                = localStorage.getItem('latitude');
+        jsonData["user_long"]               = localStorage.getItem('longitude');
+        jsonData["appointment_initial_type"]= prescriptionType;
+        jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+        jsonData["user_account_key"]        = editAccountKey;
+        jsonData["user_account_type"]       = 3;
+        jsonData["file"]                     = uploadedFileBase64Array[1];
+
+        if(prescriptionType === 'initial'){
+          jsonData["file_seq"]              = 'initialpatient'+(index+1);
+        }
+        else{
+          return false;
+        }
+
+        jsonData["file_extension"]          = 'jpg';
+        jsonData["initial_summary"]         = '';
+
+        const response = await fetch(`${API_URL}/uploadInitialDocumentForJanani`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+
+        let result = await response.json();
+
+        if((index+1) === filledCountObject.length){
+
+          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+
+          setIsImageCaptured(false);
+          setScreenshot({
+            inputPrescription1 : '',
+            inputPrescription2 : '',
+            inputPrescription3 : '',
+            inputPrescription4 : '',
+            inputPrescription5 : ''
+          });
+          closeCameraPopup();
+
+          listPrescription("");
+
+        }
       });
-      closeCameraPopup();
     }
     else if(action == 'cancel'){
       let currentSeqNumber = screenshotSeq;
@@ -483,9 +531,11 @@ function JananiPrescriptions(){
             {isImageCaptured && 
               <>
                 <span className='screenshot-counter-badge'>{screenshotSeq}</span>
-                <Button variant="primary" onClick={ () => saveCancelCapturedImage('add_more')}>
-                  Add More +
-                </Button>
+                {
+                  (screenshotSeq < 5) && <Button variant="primary" onClick={ () => saveCancelCapturedImage('add_more')}>
+                    Add More +
+                  </Button>
+                }
                 <Button variant="primary" onClick={ () => saveCancelCapturedImage('save')}>
                   Save
                 </Button>
