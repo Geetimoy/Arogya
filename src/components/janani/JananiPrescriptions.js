@@ -34,7 +34,16 @@ function JananiPrescriptions(){
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isImageCaptured, setIsImageCaptured] = useState(false);
-  const [screenshot, setScreenshot] = useState('');
+  //const [screenshot, setScreenshot] = useState('');
+
+  const [screenshot, setScreenshot] = useState({
+    inputPrescription1 : '',
+    inputPrescription2 : '',
+    inputPrescription3 : '',
+    inputPrescription4 : '',
+    inputPrescription5 : ''
+  });
+  const [screenshotSeq, setScreenshotSeq] = useState(0);
 
   const editAccountKey    = urlParam.accountKey;
   const prescriptionType  = urlParam.prescriptionType;
@@ -226,6 +235,15 @@ function JananiPrescriptions(){
   };
 
   const closeCameraPopup = () => {
+    setScreenshot({
+      inputPrescription1 : '',
+      inputPrescription2 : '',
+      inputPrescription3 : '',
+      inputPrescription4 : '',
+      inputPrescription5 : ''
+    });
+    setScreenshotSeq(0);
+    setIsImageCaptured(false);
     setShowCamera(false);
     stopCamera();
   };
@@ -312,21 +330,43 @@ function JananiPrescriptions(){
 
       ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
 
-      const imageData = canvas.toDataURL('image/png');
-      setScreenshot(imageData);
+      let imageData = canvas.toDataURL('image/jpeg', 0.9);
+      let currentSeqNumber = screenshotSeq+1;
+      setScreenshotSeq(currentSeqNumber);
+      setScreenshot(prev => ({
+        ...prev,
+        [`inputPrescription${currentSeqNumber}`]: imageData
+      }));
       setIsImageCaptured(true);
       stopCamera();
     }
   };
 
-
   const saveCancelCapturedImage = (action) => {
-    if(action == 'save'){
-      
+    if(action == 'add_more'){
+      setIsImageCaptured(false);
+      startCamera();
+    }
+    else if(action == 'save'){
+      setIsImageCaptured(false);
+      setScreenshot({
+        inputPrescription1 : '',
+        inputPrescription2 : '',
+        inputPrescription3 : '',
+        inputPrescription4 : '',
+        inputPrescription5 : ''
+      });
+      closeCameraPopup();
     }
     else if(action == 'cancel'){
+      let currentSeqNumber = screenshotSeq;
+      setScreenshot(prev => ({
+        ...prev,
+        [`inputPrescription${currentSeqNumber}`]: ''
+      }));
+      let previousSeqNumber = screenshotSeq-1;
+      setScreenshotSeq(previousSeqNumber);
       setIsImageCaptured(false);
-      setScreenshot(''); // Set the captured image
       startCamera();
     }
   }
@@ -406,7 +446,7 @@ function JananiPrescriptions(){
         </Modal>    
         <Modal show={showCamera} onHide={closeCameraPopup} className="camera-popup-modal a4">
           <Modal.Header closeButton>
-            <Modal.Title>Camera</Modal.Title>
+            <Modal.Title><small className='fa-2xs red-text'>You can capture max. 5 screenshots at once</small></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="camera-popup-content">
@@ -420,12 +460,12 @@ function JananiPrescriptions(){
               }
               {isImageCaptured && 
                 <div className="screenshot-a4">
-                  <img src={screenshot} />
+                  <img src={screenshot[`inputPrescription${screenshotSeq}`]} />
                 </div>
               }
             </div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer style={{paddingLeft:'0px',paddingRight:'0px'}}>
             {!isImageCaptured && 
               <>
                 <Button variant="secondary" onClick={toggleCamera}>
@@ -442,6 +482,10 @@ function JananiPrescriptions(){
             
             {isImageCaptured && 
               <>
+                <span className='screenshot-counter-badge'>{screenshotSeq}</span>
+                <Button variant="primary" onClick={ () => saveCancelCapturedImage('add_more')}>
+                  Add More +
+                </Button>
                 <Button variant="primary" onClick={ () => saveCancelCapturedImage('save')}>
                   Save
                 </Button>

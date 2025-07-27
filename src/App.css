@@ -465,3 +465,16 @@ body:has(.b2h-container-clas) .modal .rating-symbol .star{
   justify-content: center;
   align-items: center;
 }
+
+.screenshot-counter-badge{
+    float: left;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    background: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    vertical-align: middle;
+    font-size: large;
+}
