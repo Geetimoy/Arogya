@@ -30,7 +30,7 @@ function JananiPrescriptions(){
   const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const [showCamera, setShowCamera] = useState(false); // State to toggle camera popup
-  const [useFrontCamera, setUseFrontCamera] = useState(true);
+  const [useFrontCamera, setUseFrontCamera] = useState(false);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isImageCaptured, setIsImageCaptured] = useState(false);
@@ -500,7 +500,7 @@ function JananiPrescriptions(){
             <div className="camera-popup-content">
               {!isImageCaptured &&
                 <>
-                  <div className="video-wrapper-a4">
+                  <div className={`video-wrapper-a4 ${(useFrontCamera) ? 'flip' : ''}`}>
                     <video ref={videoRef} width="100%" height="auto" autoPlay></video>
                   </div>
                   <canvas ref={canvasRef} style={{ display: "none" }}></canvas>

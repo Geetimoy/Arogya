@@ -429,13 +429,6 @@ body:has(.b2h-container-clas) .modal .rating-symbol .star{
   background: black;
 }
 
-.video-wrapper-a4 video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scaleX(-1); /* Optional: Flip front camera */
-}
-
 .screenshot-a4 {
   max-height: 80vh; /* Prevent overflow on small screens */
   margin: auto;
@@ -448,7 +441,7 @@ body:has(.b2h-container-clas) .modal .rating-symbol .star{
   height: 100%;
 }
 
-.video-wrapper-a4 video {
+.video-wrapper-a4.flip video {
   width: 100%;
   height: 100%;
   object-fit: cover;
