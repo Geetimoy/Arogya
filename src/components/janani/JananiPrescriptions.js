@@ -229,7 +229,7 @@ function JananiPrescriptions(){
 
   const openCameraPopup = () => {
     setShowCamera(true);
-    startCamera();
+    startCamera(useFrontCamera);
   };
 
   const closeCameraPopup = () => {
@@ -246,10 +246,10 @@ function JananiPrescriptions(){
     stopCamera();
   };
 
-  const startCamera = () => {
+  const startCamera = (useFrontCameraStatus) => {
     const constraints = {
         video: {
-            facingMode: useFrontCamera ? "user" : "environment", // Use "user" for front camera and "environment" for rear camera
+            facingMode: useFrontCameraStatus ? "user" : "environment", // Use "user" for front camera and "environment" for rear camera
             width: { ideal: 595 },     // Set ideal and cap it with max
             height: { ideal: 842 },    // Set ideal and cap it with max
         },
@@ -279,9 +279,10 @@ function JananiPrescriptions(){
 
   const toggleCamera = () => {
     setIsImageCaptured(false);
-    setUseFrontCamera(!useFrontCamera); // Toggle between front and rear camera
+    let useFrontCameraStatus = !useFrontCamera;
+    setUseFrontCamera(useFrontCameraStatus); // Toggle between front and rear camera
     stopCamera();
-    startCamera();
+    startCamera(useFrontCameraStatus);
   };
 
   const captureImage = () => {
@@ -343,7 +344,7 @@ function JananiPrescriptions(){
   const saveCancelCapturedImage = (action) => {
     if(action == 'add_more'){
       setIsImageCaptured(false);
-      startCamera();
+      startCamera(useFrontCamera);
     }
     else if(action == 'save'){
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -415,7 +416,7 @@ function JananiPrescriptions(){
       let previousSeqNumber = screenshotSeq-1;
       setScreenshotSeq(previousSeqNumber);
       setIsImageCaptured(false);
-      startCamera();
+      startCamera(useFrontCamera);
     }
   }
 
