@@ -112,7 +112,7 @@ function Janani(){
     }
   }
   const redirectToUploadDoctorPrescription = () => {
-    window.location.href = `/jnani/jnani-prescription/${accountKeyForJnaniPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
+    window.location.href = `/janani/janani-prescription/${accountKeyForJnaniPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
   }
 
   const [testReportAppointmentId, setTestReportAppointmentId]     = useState('');
