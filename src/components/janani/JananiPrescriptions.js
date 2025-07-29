@@ -21,6 +21,9 @@ import docIcon from '../../assets/images/doc-icon.jpg';
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 function JananiPrescriptions(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -42,6 +45,31 @@ function JananiPrescriptions(){
     inputPrescription5 : ''
   });
   const [screenshotSeq, setScreenshotSeq] = useState(0);
+  const [totalScreenshotCanBeCaptured, setTotalScreenshotCanBeCaptured] = useState(0);
+  const [formData, setFormData] = useState({
+    prescription_date: {required: true, value:"", errorClass:"", errorMessage:""},
+    previous_history: {required: true, value:"", errorClass:"", errorMessage:""},
+    prescription_summary: {required: true, value:"", errorClass:"", errorMessage:""},
+    advice: {required: true, value:"", errorClass:"", errorMessage:""},
+    recheck_date: {required: true, value:"", errorClass:"", errorMessage:""}
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if(value.trim() !== ""){
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+  }
+  const onChangePrescriptionDate = (date) => {
+    formData['prescription_date']  = {required: false, value:date, errorClass:"", errorMessage:""};
+    setFormData({...formData, ...formData});
+  }
+  const onChangeRecheckDate = (date) => {
+    formData['recheck_date']  = {required: false, value:date, errorClass:"", errorMessage:""};
+    setFormData({...formData, ...formData});
+  }
 
   const editAccountKey    = urlParam.accountKey;
   const prescriptionType  = urlParam.prescriptionType;
@@ -227,6 +255,15 @@ function JananiPrescriptions(){
 
   //CAMERA FUNCTIONALITY
 
+  useEffect(() => {
+    if(prescriptionType === "initial"){
+      setTotalScreenshotCanBeCaptured(5);
+    }
+    else if(prescriptionType === "doctor"){
+      setTotalScreenshotCanBeCaptured(2);
+    }
+  }, []);
+
   const openCameraPopup = () => {
     setShowCamera(true);
     startCamera(useFrontCamera);
@@ -341,7 +378,35 @@ function JananiPrescriptions(){
     }
   };
 
-  const saveCancelCapturedImage = (action) => {
+  const validateForm = () => {
+    const fieldName = Object.keys(formData);
+    let errorCounter = 0;
+    fieldName.forEach((element) => {
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
+        formData[element].errorMessage = "This field is required!";
+        formData[element].errorClass = "form-error";
+        errorCounter++;
+      }
+      else{
+        formData[element].errorMessage = "";
+        formData[element].errorClass = "";
+      }
+    })
+    setFormData({...formData, ...formData});
+    return errorCounter;
+  }
+
+  const resetForm = () => {
+    const fieldName = Object.keys(formData);
+    fieldName.forEach((element) => {
+      formData[element].value         = "";
+      formData[element].errorClass    = "";
+      formData[element].errorMessage  = "";
+    })
+    setFormData({...formData, ...formData});
+  }
+
+  const saveCancelCapturedImage = async (action) => {
     if(action == 'add_more'){
       setIsImageCaptured(false);
       startCamera(useFrontCamera);
@@ -351,61 +416,144 @@ function JananiPrescriptions(){
       
       var filledCountObject = Object.values(screenshot).filter(value => value !== '');
 
-      Object.entries(filledCountObject).map(async ([key, value], index) => {
+      if(prescriptionType === "initial"){
+
+        Object.entries(filledCountObject).map(async ([key, value], index) => {
         
-        var uploadedFileBase64Array         = value.split(';base64,');
+          var uploadedFileBase64Array         = value.split(';base64,');
 
-        let jsonData = {};
+          let jsonData = {};
 
-        jsonData['system_id']               = systemContext.systemDetails.system_id;
-        jsonData["device_type"]             = DEVICE_TYPE;
-        jsonData["device_token"]            = DEVICE_TOKEN;
-        jsonData["user_lat"]                = localStorage.getItem('latitude');
-        jsonData["user_long"]               = localStorage.getItem('longitude');
-        jsonData["appointment_initial_type"]= prescriptionType;
-        jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
-        jsonData["user_account_key"]        = editAccountKey;
-        jsonData["user_account_type"]       = 3;
-        jsonData["file"]                     = uploadedFileBase64Array[1];
+          jsonData['system_id']               = systemContext.systemDetails.system_id;
+          jsonData["device_type"]             = DEVICE_TYPE;
+          jsonData["device_token"]            = DEVICE_TOKEN;
+          jsonData["user_lat"]                = localStorage.getItem('latitude');
+          jsonData["user_long"]               = localStorage.getItem('longitude');
+          jsonData["appointment_initial_type"]= prescriptionType;
+          jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+          jsonData["user_account_key"]        = editAccountKey;
+          jsonData["user_account_type"]       = 3;
+          jsonData["file"]                     = uploadedFileBase64Array[1];
 
-        if(prescriptionType === 'initial'){
-          jsonData["file_seq"]              = 'initialpatient'+(index+1);
-        }
-        else{
-          return false;
-        }
+          if(prescriptionType === 'initial'){
+            jsonData["file_seq"]              = 'initialpatient'+(index+1);
+          }
+          else{
+            return false;
+          }
 
-        jsonData["file_extension"]          = 'jpg';
-        jsonData["initial_summary"]         = '';
+          jsonData["file_extension"]          = 'jpg';
+          jsonData["initial_summary"]         = '';
 
-        const response = await fetch(`${API_URL}/uploadInitialDocumentForJanani`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
+          const response = await fetch(`${API_URL}/uploadInitialDocumentForJanani`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+
+          let result = await response.json();
+
+          if((index+1) === filledCountObject.length){
+
+            alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+
+            setIsImageCaptured(false);
+            setScreenshot({
+              inputPrescription1 : '',
+              inputPrescription2 : '',
+              inputPrescription3 : '',
+              inputPrescription4 : '',
+              inputPrescription5 : ''
+            });
+            closeCameraPopup();
+
+            listPrescription("");
+
+          }
         });
 
-        let result = await response.json();
+      }
+      else if(prescriptionType === "doctor"){
 
-        if((index+1) === filledCountObject.length){
+        let errorCounter = validateForm();
+        if(errorCounter === 0){
 
-          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+          var prescriptionDate = '';
+          if(formData['prescription_date'].value != ''){
+            prescriptionDate = new Date(formData['prescription_date'].value);
+            var year  = prescriptionDate.getFullYear();
+            var month = String(prescriptionDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            var day   = String(prescriptionDate.getDate()).padStart(2, '0');
+            prescriptionDate  = `${year}-${month}-${day}`;
+          }
 
-          setIsImageCaptured(false);
-          setScreenshot({
-            inputPrescription1 : '',
-            inputPrescription2 : '',
-            inputPrescription3 : '',
-            inputPrescription4 : '',
-            inputPrescription5 : ''
+          var recheckDate = '';
+          if(formData['recheck_date'].value != ''){
+            recheckDate = new Date(formData['recheck_date'].value);
+            var year  = recheckDate.getFullYear();
+            var month = String(recheckDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            var day   = String(recheckDate.getDate()).padStart(2, '0');
+            recheckDate  = `${year}-${month}-${day}`;
+          }
+
+          let fileUploadArray = [];
+          Object.entries(filledCountObject).map(async ([key, value], index) => {
+            var uploadedFileBase64Array = value.split(';base64,');
+            var fileName = 'doctor'+(index+1);
+            fileUploadArray.push({'file':uploadedFileBase64Array[1], 'file_extension':'jpg', 'fileName':fileName})
           });
-          closeCameraPopup();
 
-          listPrescription("");
+          let jsonData = {};
+          
+          jsonData['system_id']                 = systemContext.systemDetails.system_id;
+          jsonData["device_type"]               = DEVICE_TYPE;
+          jsonData["device_token"]              = DEVICE_TOKEN;
+          jsonData["user_lat"]                  = localStorage.getItem('latitude');
+          jsonData["user_long"]                 = localStorage.getItem('longitude');
+          jsonData["appointment_initial_type"]  = 1;
+          jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+          jsonData["user_account_key"]          = editAccountKey;
+          jsonData["user_account_type"]         = 3;
+          jsonData["appointment_key"]           = appointmentId;
+          jsonData["prescription_date"]         = prescriptionDate;
+          jsonData["prescription_prev_history"] = formData['previous_history'].value;
+          jsonData["prescription_summary"]      = formData['prescription_summary'].value;
+          jsonData["prescription_advice"]       = formData['advice'].value;
+          jsonData["recheck_date"]              = recheckDate;
+          jsonData["files"]                     = fileUploadArray;
 
+          const response = await fetch(`${API_URL}/uploadAppointmentDocumentForJanani`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+    
+          let result = await response.json();
+    
+          if(result.success){
+            alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+
+            setIsImageCaptured(false);
+            setScreenshot({
+              inputPrescription1 : '',
+              inputPrescription2 : '',
+              inputPrescription3 : '',
+              inputPrescription4 : '',
+              inputPrescription5 : ''
+            });
+            closeCameraPopup();
+            resetForm();
+            listPrescription("");
+          }
+          else{
+            alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+          }
         }
-      });
+      }
     }
     else if(action == 'cancel'){
       let currentSeqNumber = screenshotSeq;
@@ -496,7 +644,7 @@ function JananiPrescriptions(){
         </Modal>    
         <Modal show={showCamera} onHide={closeCameraPopup} className="camera-popup-modal a4">
           <Modal.Header closeButton>
-            <Modal.Title><small className='fa-2xs red-text'>You can capture max. 5 screenshots at once</small></Modal.Title>
+            <Modal.Title><small className='fa-2xs red-text'>You can capture max. {totalScreenshotCanBeCaptured} screenshots at once</small></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="camera-popup-content">
@@ -532,9 +680,40 @@ function JananiPrescriptions(){
             
             {isImageCaptured && 
               <>
+                {
+                  (prescriptionType === "doctor") && <form className="mt-3 select-box" name="prescription_upload_form" id="prescription_upload_form">
+                    <div className='row'>
+                      <div className={`form-group ${formData["prescription_date"].errorClass}`}>
+                        <label htmlFor="prescription_date">Prescription Date <span className="text-danger">*</span></label>
+                        <DatePicker dateFormat="yyyy-MM-dd" selected={formData["prescription_date"].value ? formData["prescription_date"].value : ''} onChange={(date) => onChangePrescriptionDate(date)} className='form-control' placeholderText="Prescription Date"/>
+                        <small className="error-mesg">{formData["prescription_date"].errorMessage}</small>
+                      </div>
+                      <div className={`form-group ${formData["previous_history"].errorClass}`}>
+                        <label htmlFor="name">Previous History <span className="text-danger">*</span></label>
+                        <input type="text" className="form-control" name="previous_history" id="previous_history" placeholder="Previous History" onChange={handleChange} value={formData["previous_history"].value ? formData["previous_history"].value : ''}/>
+                        <small className="error-mesg">{formData["previous_history"].errorMessage}</small>
+                      </div>
+                      <div className={`form-group ${formData["prescription_summary"].errorClass}`}>
+                        <label htmlFor="name">Prescription Summary <span className="text-danger">*</span></label>
+                        <input type="text" className="form-control" name="prescription_summary" id="prescription_summary" placeholder="Prescription Summary" onChange={handleChange} value={formData["prescription_summary"].value ? formData["prescription_summary"].value : ''}/>
+                        <small className="error-mesg">{formData["prescription_summary"].errorMessage}</small>
+                      </div>
+                      <div className={`form-group ${formData["advice"].errorClass}`}>
+                        <label htmlFor="name">Advice <span className="text-danger">*</span></label>
+                        <input type="text" className="form-control" name="advice" id="advice" placeholder="Advice" onChange={handleChange} value={formData["advice"].value ? formData["advice"].value : ''}/>
+                        <small className="error-mesg">{formData["advice"].errorMessage}</small>
+                      </div>
+                      <div className={`form-group ${formData["recheck_date"].errorClass}`}>
+                        <label htmlFor="recheck_date">Recheck Date <span className="text-danger">*</span></label>
+                        <DatePicker dateFormat="yyyy-MM-dd" selected={formData["recheck_date"].value ? formData["recheck_date"].value : ''} onChange={(date) => onChangeRecheckDate(date)} className='form-control' placeholderText="Recheck Date"/>
+                        <small className="error-mesg">{formData["recheck_date"].errorMessage}</small>
+                      </div>
+                    </div>
+                  </form>
+                }
                 <span className='screenshot-counter-badge'>{screenshotSeq}</span>
                 {
-                  (screenshotSeq < 5) && <Button variant="primary" onClick={ () => saveCancelCapturedImage('add_more')}>
+                  (screenshotSeq < totalScreenshotCanBeCaptured) && <Button variant="primary" onClick={ () => saveCancelCapturedImage('add_more')}>
                     Add More +
                   </Button>
                 }
