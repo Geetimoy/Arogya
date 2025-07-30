@@ -663,16 +663,16 @@ function JananiPrescriptions(){
               }
             </div>
           </Modal.Body>
-          <Modal.Footer style={{paddingLeft:'0px',paddingRight:'0px'}}>
+          <Modal.Footer style={{paddingLeft:'0px',paddingRight:'0px'}} className='form-all'>
             {!isImageCaptured && 
               <>
-                <Button variant="secondary" onClick={toggleCamera}>
+                <Button className='primary-bg-color border-0' variant="secondary" onClick={toggleCamera}>
                   Switch Camera
                 </Button>
-                <Button variant="primary" onClick={captureImage}>
+                <Button className='primary-bg-color border-0' variant="primary" onClick={captureImage}>
                   Capture
                 </Button>
-                <Button variant="secondary" onClick={closeCameraPopup}>
+                <Button className='primary-bg-color border-0' variant="secondary" onClick={closeCameraPopup}>
                   Close
                 </Button>
               </>
@@ -713,14 +713,14 @@ function JananiPrescriptions(){
                 }
                 <span className='screenshot-counter-badge'>{screenshotSeq}</span>
                 {
-                  (screenshotSeq < totalScreenshotCanBeCaptured) && <Button variant="primary" onClick={ () => saveCancelCapturedImage('add_more')}>
+                  (screenshotSeq < totalScreenshotCanBeCaptured) && <Button className='primary-bg-color border-0' variant="primary" onClick={ () => saveCancelCapturedImage('add_more')}>
                     Add More +
                   </Button>
                 }
-                <Button variant="primary" onClick={ () => saveCancelCapturedImage('save')}>
+                <Button className='primary-bg-color border-0' variant="primary" onClick={ () => saveCancelCapturedImage('save')}>
                   Save
                 </Button>
-                <Button variant="secondary" onClick={ () => saveCancelCapturedImage('cancel')}>
+                <Button className='primary-bg-color border-0' variant="secondary" onClick={ () => saveCancelCapturedImage('cancel')}>
                   Cancel
                 </Button>
               </>
