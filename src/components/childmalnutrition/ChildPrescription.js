@@ -425,7 +425,7 @@ function ChildPrescription(){
           jsonData["device_token"]            = DEVICE_TOKEN;
           jsonData["user_lat"]                = localStorage.getItem('latitude');
           jsonData["user_long"]               = localStorage.getItem('longitude');
-          jsonData["appointment_initial_type"]= prescriptionType;
+          jsonData["appointment_initial_type"]= 0;
           jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
           jsonData["user_account_key"]        = editAccountKey;
           jsonData["user_account_type"]       = 3;
