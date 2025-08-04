@@ -596,10 +596,12 @@ function ElderPrescription(){
         <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <div className='d-flex justify-content-end mb-3'><button className='btn btn-sm btn-primary primary-bg-color border-0' onClick={openCameraPopup} >Use Camera</button></div>
+        
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {prescriptionList.length}</span>
-          <Link className='btn btn-sm btn-primary primary-bg-color border-0' to={uploadUrl}>Upload</Link>
+          <div className='d-flex justify-content-end'><button className='btn btn-sm btn-primary primary-bg-color border-0' onClick={openCameraPopup} >Use Camera</button>
+          <Link className='btn btn-sm btn-primary primary-bg-color border-0 ms-2' to={uploadUrl}>Upload</Link></div>
+          
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
