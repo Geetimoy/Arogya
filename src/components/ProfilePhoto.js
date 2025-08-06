@@ -17,6 +17,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
+
+import {Modal, Button} from 'react-bootstrap'; 
+
 import AppTopNotifications from "./AppTopNotifications";
  
 function ProfilePhoto(){
@@ -24,6 +27,11 @@ function ProfilePhoto(){
   const alertContext  = useContext(AlertContext);
   const systemContext = useContext(SystemContext);
 
+  const [showCamera, setShowCamera] = useState(false); // State to toggle camera popup
+  const [useFrontCamera, setUseFrontCamera] = useState(true);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  
 
   const [isMActive, setIsMActive]     = useState(false);
   const [userDetails, setUserDetails] = useState([]);
@@ -163,6 +171,66 @@ function ProfilePhoto(){
     
   }, [systemContext.systemDetails.system_id])
 
+  const openCameraPopup = () => {
+    setShowCamera(true);
+    startCamera();
+  };
+
+  const closeCameraPopup = () => {
+    setShowCamera(false);
+    stopCamera();
+  };
+
+  const startCamera = () => {
+    const constraints = {
+        video: {
+            facingMode: useFrontCamera ? "user" : "environment", // Use "user" for front camera and "environment" for rear camera
+            width: { ideal: 250 }, // Set the ideal width
+            height: { ideal: 250 }, // Set the ideal height
+        },
+    };
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (stream) {
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
+                    videoRef.current.play();
+                }
+            })
+            .catch(function (error) {
+                console.error("Error accessing camera: ", error);
+            });
+    }
+  };
+
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop()); // Stop all video tracks
+    }
+  };
+
+  const toggleCamera = () => {
+    setUseFrontCamera(!useFrontCamera); // Toggle between front and rear camera
+    stopCamera();
+    startCamera();
+  };
+
+  const captureImage = () => {
+    if (videoRef.current && canvasRef.current) {
+      const canvas = canvasRef.current;
+			canvas.width = 250;
+      canvas.height = 250;
+      const context = canvas.getContext('2d');
+      context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const imageData = canvas.toDataURL('image/png');
+      setImage(imageData); // Set the captured image
+      closeCameraPopup(); // Close the camera popup
+    }
+  };
+
   return (
     <>
       <div className='app-top inner-app-top'>
@@ -194,6 +262,9 @@ function ProfilePhoto(){
           </div>
       </div>
       <div className="app-body profile-photo">
+        <div className='mb-3 mt-3 text-end'>
+          <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={openCameraPopup}>Use Camera</button>
+        </div>
         <p>
           You can change your existing photo here. Same photo will reflect
           thorughout the Application.
@@ -279,6 +350,28 @@ function ProfilePhoto(){
             </div>
           </div>
         </form>
+        <Modal show={showCamera} onHide={closeCameraPopup} className="camera-popup-modal">
+          <Modal.Header closeButton>
+            <Modal.Title>Camera</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="camera-popup-content">
+              <video ref={videoRef} width="100%" height="auto" autoPlay></video>
+              <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={toggleCamera}>
+              Switch Camera
+            </Button>
+            <Button variant="primary" onClick={captureImage}>
+              Capture
+            </Button>
+            <Button variant="secondary" onClick={closeCameraPopup}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
       <Appfooter></Appfooter>
     </>
