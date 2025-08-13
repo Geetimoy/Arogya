@@ -458,7 +458,7 @@ function ElderBasicInformation(){
           </div>
           <div className={`form-group ${formData["elder_address_2"].errorClass}`}>
             <label htmlFor="elder_address_2">Address 2 </label>
-            <input type="text" className="form-control" onChange={handleChange} value={formData["elder_address"].value ? formData["elder_address"].value : ''} name="elder_address_2" id="elder_address_2" placeholder="Address 2" />
+            <input type="text" className="form-control" onChange={handleChange} value={formData["elder_address_2"].value ? formData["elder_address_2"].value : ''} name="elder_address_2" id="elder_address_2" placeholder="Address 2" />
             <small className="error-mesg">{formData["elder_address_2"].errorMessage}</small>
           </div>
           <div className={`form-group ${formData["elder_landmark"].errorClass}`}>
