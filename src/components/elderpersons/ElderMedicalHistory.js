@@ -559,7 +559,7 @@ function ElderMedicalHistory(){
           </div>
 
           <div className={`form-group ${formData["remarks"].errorClass}`}>
-            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <label htmlFor="describe">Describe / Explain Problems: </label>
             <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChange} value={formData["remarks"].value}></textarea>
             <small className="error-mesg">{formData["remarks"].errorMessage}</small>
           </div>
