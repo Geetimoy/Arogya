@@ -280,7 +280,12 @@ function CraeteScheduleSingle(){
       formData['scheduleConsultationMode']  = {value:scheduleDetails.consultation_mode, errorClass:"", errorMessage:""};
       formData['scheduleContactDetails']    = {value:scheduleDetails.clinic_details, errorClass:"", errorMessage:""};
       formData['scheduleTotalAppoitments']  = {value:scheduleDetails.total_appointments, errorClass:"", errorMessage:""};
-      formData['scheduleIsStrictFull']      = {value:scheduleDetails.is_strict_full, errorClass:"", errorMessage:""};
+      if(scheduleDetails.is_strict_full === 't' || scheduleDetails.is_strict_full === 'true'){
+        formData['scheduleIsStrictFull']  = {value:'Y', errorClass:"", errorMessage:""};
+      }
+      else{
+        formData['scheduleIsStrictFull']  = {value:'N', errorClass:"", errorMessage:""};
+      }
       formData['scheduleExtraAppointments'] = {value:scheduleDetails.buffer_percentage, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
