@@ -134,6 +134,7 @@ import Feedback from './Feedback';
 import Help from './Help';
 import Logout from './Logout';
 import AboutNgo from './AboutNgo';
+import MyConsent from './MyConsent';
 import Settings from './Settings';
 import UploadCertificates from './UploadCertificates';
 import InitialHistory from './InitialHistory';
@@ -500,6 +501,7 @@ export default function Core() {
             <Route path="/AboutServicePlace" exact element={<AboutServicePlace />} />
             <Route path="/AboutBorn2Help" exact element={<AboutBorn2Help />} />
             <Route path="/About-Ngo" exact element={<AboutNgo />} />
+            <Route path="/My-Consent" exact element={<MyConsent />} />
             <Route path="/Feedback" exact element={<Feedback />} />
             <Route path="/Help" exact element={<Help />} />
             <Route path="/Settings" exact element={<Settings />} />
