@@ -14,6 +14,7 @@ import appointmentscheduling from '../assets/images/icon-appointment-scheduling.
 import requestsupply from '../assets/images/icon-request-supply.png';
 import rxpharmacy from '../assets/images/icon-rx-pharmacy.png';
 import uploadrx from '../assets/images/icon-upload-rx.png';
+import serviceprovider from '../assets/images/healthcare.png'
 import uploadsupply from '../assets/images/icon-upload-supply.png';
 import youngwoman from '../assets/images/woman.png';
 import malnutrition from '../assets/images/malnutrition.png';
@@ -149,6 +150,12 @@ function Services(){
                 <h6>Elder Persons (Age&gt;60yrs)</h6></Link>
               </div>
             </div> */}
+            <div className='col-6'>
+              <div className='button-box'>
+                <Link to="/service-providers"><img src={serviceprovider} alt='' />
+                <h6>Service Providers</h6></Link>
+              </div>
+            </div>
             <div className='col-6'>
               <div className='button-box disable'>
                 <Link to="/viewappointments"><img src={rxpharmacy} alt='' />

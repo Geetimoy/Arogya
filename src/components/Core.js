@@ -151,6 +151,9 @@ import PatientUploadTestReports from './patientprofiles/PatientUploadTestReports
 import DoctorAppointmentsVolunteer from './DoctorAppointmentsVolunteer';
 import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoctorPrescriptions';
 
+import ServiceProviders from './serviceproviders/ServiceProviders';
+import ClinicNursingHome from './serviceproviders/ClinicNursingHome';
+
 
 
 
@@ -512,6 +515,8 @@ export default function Core() {
             <Route exact path="/logout" element={<Logout/>}></Route>
             <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="*" element={<Navigate to="/dashboard"/>}></Route>
+            <Route path="/service-providers" exact element={<ServiceProviders />} />
+            <Route path="/clinic-nursing-home" exact element={<ClinicNursingHome />} />
           </Routes>
         }
         {
