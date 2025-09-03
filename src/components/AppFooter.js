@@ -57,7 +57,10 @@ function Appfooter(){
       var myConsentData = result.data.results;
       setConsentStatus(myConsentData.consent_status.toString());
       if(myConsentData.consent_status.toString() === '0' || myConsentData.consent_status.toString() === '2'){
-        modalShow();
+        // modalShow();
+        setTimeout(() => {
+          modalShow();
+        }, 60000);
       }
     }
     else{
