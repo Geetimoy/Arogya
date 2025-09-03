@@ -4,7 +4,6 @@ import LoginState from './context/login/LoginState';
 import SystemState from './context/system/SystemState';
 import Core from './components/Core';
 
-
 function App() {
   return (
     <SystemState>
