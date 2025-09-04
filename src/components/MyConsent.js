@@ -7,6 +7,8 @@ import AlertContext from "../context/alert/AlertContext";
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
 
+import { Link } from "react-router-dom";
+
 function MyConsent(){
 
   const systemContext = useContext(SystemContext);
@@ -103,9 +105,9 @@ function MyConsent(){
       <h5 className="title">My Consent</h5>
       <form className="" onSubmit={handleSubmit}>
       <div>
-        <div className="custom-control custom-radio custom-control-inline mt-2">
+        {/* <div className="custom-control custom-radio custom-control-inline mt-2">
           <input type="radio" id="dont_save_info" name="consent" className="custom-control-input" onChange={()=>setConsentStatus('0')}  value="0" checked={(consentStatus === "0") ? true : false} /><label className="custom-control-label no-style" htmlFor="dont_save_info">Don't save my information </label>
-        </div>
+        </div> */}
         <div className="custom-control custom-radio custom-control-inline mt-2">
           <input type="radio" id="save_info" name="consent" className="custom-control-input" onChange={()=>setConsentStatus('1')} value="1" checked={(consentStatus === "1") ? true : false} /><label className="custom-control-label no-style" htmlFor="save_info">Yes, save my information </label>
         </div>
@@ -114,6 +116,7 @@ function MyConsent(){
         </div>
       </div>
       <div className="btns-group d-flex justify-content-center"><button type="submit" className="btn btn-primary primary-bg-color border-0 mx-2">Save</button></div>
+      <div className='text-center mt-4'><Link to="/dashboard" className='text-decoration-underline'>Return to Home</Link></div>
       </form>
     </div>
     <Appfooter></Appfooter>

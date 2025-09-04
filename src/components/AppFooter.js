@@ -60,7 +60,7 @@ function Appfooter(){
         // modalShow();
         setTimeout(() => {
           modalShow();
-        }, 60000);
+        }, 6000);
       }
     }
     else{
@@ -93,10 +93,10 @@ function Appfooter(){
         <Modal.Header>
           <Modal.Title>My Consent</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Modal body text goes here.</Modal.Body>
+        <Modal.Body>With your consent this information will be used for patient health and other legitimate purposes.</Modal.Body>
         <Modal.Footer>
           <Button variant="primary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={()=>redirect('/my-consent')}>
-            Yes Proceeds
+            Yes Proceed
           </Button>
         </Modal.Footer>
       </Modal>
