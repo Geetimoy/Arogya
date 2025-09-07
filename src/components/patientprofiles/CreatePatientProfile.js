@@ -292,9 +292,14 @@ function CreatePatientProfile(){
       <div className='app-body create-patient-profiles'>
        
         <p><small>Add Patient Information</small></p>
-        <div className='form-check'>     
-          <input className="form-check-input" type="checkbox" id="myCheckbox" value="option1"  /> 
-          <label className="form-check-label" htmlFor="myCheckbox">With your consent, this information is to be used for patient health and other legitimate purposes only.</label></div>
+        <div className='form-check-box'>     
+          {/* <input className="form-check-input" type="checkbox" id="myCheckbox" value="option1"  /> 
+          <label className="form-check-label" htmlFor="myCheckbox">With your consent, this information is to be used for patient health and other legitimate purposes only.</label> */}
+          <label class="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
+            <input type="checkbox" class="required" name="" value="" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="patient_form" id="patient_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["patient_name"].errorClass}`}>
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
