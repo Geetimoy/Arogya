@@ -112,15 +112,27 @@ function CreateChildMalnutrition(){
       }
     }
 
-    if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-    }
-    else{
-      if(formData[name].required){
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    if(name === "is_consent"){
+      let consentValue = "1";
+      if(e.target.checked){
+        consentValue = "1";
       }
       else{
+        consentValue = "2";
+      }
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
+    }
+    else{
+      if(value.trim() !== ""){
         setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
+      else{
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
     }
   }
@@ -139,6 +151,11 @@ function CreateChildMalnutrition(){
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
       }
+      else if(element === "is_consent"){
+        formData[element].value         = "1";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
       else{
         formData[element].value         = "";
         formData[element].errorClass    = "";
@@ -150,6 +167,7 @@ function CreateChildMalnutrition(){
   }
 
   const [formData, setFormData] = useState({
+    is_consent: {required:false, value:"1", errorClass:"", errorMessage:""},
     child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
     child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -197,6 +215,7 @@ function CreateChildMalnutrition(){
 
       var serviceArea                       = '{'+formData['child_service_area'].value+'}';
 
+      jsonData["is_consent"]                = formData['is_consent'].value;
       jsonData["child_body_height"]         = '0';
       jsonData["child_body_weight"]         = '0';
       jsonData["child_name"]                = formData['child_full_name'].value;
@@ -311,6 +330,12 @@ function CreateChildMalnutrition(){
       <div className='app-body create-patient-profiles create-child-malnutrition'>
        
         <p><small>Add Child Health Information</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for child health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["child_full_name"].errorClass}`}>
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
