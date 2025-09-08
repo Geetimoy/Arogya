@@ -101,6 +101,7 @@ function CraeteYoungWomen(){
   
 
   const [formData, setFormData] = useState({
+    is_consent: {required:false, value:"1", errorClass:"", errorMessage:""},
     woman_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -149,15 +150,27 @@ function CraeteYoungWomen(){
       }
     }
 
-    if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-    }
-    else{
-      if(formData[name].required){
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    if(name === "is_consent"){
+      let consentValue = "1";
+      if(e.target.checked){
+        consentValue = "1";
       }
       else{
+        consentValue = "2";
+      }
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
+    }
+    else{
+      if(value.trim() !== ""){
         setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
+      else{
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
     }
   }
@@ -167,6 +180,11 @@ function CraeteYoungWomen(){
     setSelectedOptions([]);
     fieldName.forEach((element) => {
       if(element === "gender" || element === "toilet_type" || element === "house_type" || element === "drinking_water_type"){
+        formData[element].value         = "1";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+      else if(element === "is_consent"){
         formData[element].value         = "1";
         formData[element].errorClass    = "";
         formData[element].errorMessage  = "";
@@ -200,6 +218,7 @@ function CraeteYoungWomen(){
 
       var serviceArea                       = '{'+formData['woman_service_area'].value+'}';
 
+      jsonData["is_consent"]                = formData['is_consent'].value;
       jsonData["woman_name"]                = formData['woman_name'].value;
       jsonData["woman_contact_number"]      = formData['woman_contact_number'].value;
       jsonData["woman_email_id"]            = formData['woman_email_id'].value;
@@ -318,6 +337,12 @@ function CraeteYoungWomen(){
       <div className='app-body form-all create-young-woman'>
        
         <p><small>Add Young Women Informations</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for woman health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
