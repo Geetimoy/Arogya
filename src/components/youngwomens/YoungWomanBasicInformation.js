@@ -36,6 +36,7 @@ function YoungWomanBasicInformation(){
   };
 
   const [formData, setFormData] = useState({
+    is_consent: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -53,7 +54,7 @@ function YoungWomanBasicInformation(){
     woman_state: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
-    woman_education: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_education: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_school_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_school_class: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -180,6 +181,7 @@ function YoungWomanBasicInformation(){
       }
       console.log(serviceAreaArray.join(","));
 
+      formData['is_consent']              = {required:formData['is_consent'].required, value:userDetails.is_consent, errorClass:"", errorMessage:""};
       formData['woman_name']              = {required:formData['woman_name'].required, value:userDetails.women_name, errorClass:"", errorMessage:""};
       formData['woman_father_name']       = {required:formData['woman_father_name'].required, value:userDetails.women_father_name, errorClass:"", errorMessage:""};
       formData['is_premature_birth']      = {required:formData['is_premature_birth'].required, value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
@@ -233,15 +235,28 @@ function YoungWomanBasicInformation(){
         formData['woman_contact_number'].required = false;
       }
     }
-    if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-    }
-    else{
-      if(formData[name].required){
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+
+    if(name === "is_consent"){
+      let consentValue = "1";
+      if(e.target.checked){
+        consentValue = "1";
       }
       else{
+        consentValue = "2";
+      }
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
+    }
+    else{
+      if(value.trim() !== ""){
         setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
+      else{
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
     }
   }
@@ -275,6 +290,7 @@ function YoungWomanBasicInformation(){
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
     let errorCounter = validateForm();
+    
     if(errorCounter === 0){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -300,6 +316,8 @@ function YoungWomanBasicInformation(){
       else{
         jsonData["woman_contact_number"]      = "";
       }
+
+      jsonData["is_consent"]                = formData['is_consent'].value;
       jsonData["woman_email_id"]            = formData['woman_email_id'].value;
       jsonData["woman_body_height"]         = '0';
       jsonData["woman_body_weight"]         = '0';
@@ -389,6 +407,12 @@ function YoungWomanBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
         <p className='mt-3'><small>To update your profile information</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for young woman health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>

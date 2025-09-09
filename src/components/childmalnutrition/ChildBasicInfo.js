@@ -113,21 +113,33 @@ export default function ChildBasicInfo() {
         }
       }
 
-      if(value.trim() !== ""){
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-      }
-      else{
-        if(formData[name].required){
-          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(name === "is_consent"){
+        let consentValue = "1";
+        if(e.target.checked){
+          consentValue = "1";
         }
         else{
+          consentValue = "2";
+        }
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
+      }
+      else{
+        if(value.trim() !== ""){
           setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
         }
+        else{
+          if(formData[name].required){
+            setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+          }
+          else{
+            setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+          }
+        }
       }
-      
     }
 
     const [formData, setFormData] = useState({
+      is_consent: {required: false, value:"", errorClass:"", errorMessage:""},
       child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
       child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
       child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -208,6 +220,7 @@ export default function ChildBasicInfo() {
 
             }
             console.log(serviceAreaArray.join(","));
+            formData['is_consent']        = {required:formData['is_consent'].required, value:userDetails.is_consent, errorClass:"", errorMessage:""};
             formData['child_full_name']    = {required:formData['child_full_name'].required, value:userDetails.child_name, errorClass:"", errorMessage:""};
             formData['child_father_name']  = {required:formData['child_father_name'].required, value:userDetails.child_father_name, errorClass:"", errorMessage:""};
             formData['child_mother_name']  = {required:formData['child_mother_name'].required, value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
@@ -272,6 +285,7 @@ export default function ChildBasicInfo() {
   
         var serviceArea                       = '{'+formData['child_service_area'].value+'}';
   
+        jsonData["is_consent"]                = formData['is_consent'].value;
         jsonData["child_body_height"]         = '0';
         jsonData["child_body_weight"]         = '0';
         jsonData["child_name"]                = formData['child_full_name'].value;
@@ -397,6 +411,12 @@ export default function ChildBasicInfo() {
         <div className='app-body create-patient-profiles create-child-malnutrition'>
          
           <p><small>To update your profile information</small></p>
+          <div className='form-check-box'>     
+            <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Child health and other legitimate purposes only.
+              <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+              <span className="checkmark"></span>
+            </label>
+          </div>
           <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form" onSubmit={handleFormSubmit}>
             <div className={`form-group ${formData["child_full_name"].errorClass}`}>
               <label htmlFor="name">Full Name <span className="text-danger">*</span></label>
