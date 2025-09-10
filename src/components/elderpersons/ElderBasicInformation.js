@@ -97,6 +97,7 @@ function ElderBasicInformation(){
 
 
   const [formData, setFormData] = useState({
+    is_consent: {required: false, value:"", errorClass:"", errorMessage:""},
     elder_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -132,15 +133,27 @@ function ElderBasicInformation(){
       }
     }
 
-    if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-    }
-    else{
-      if(formData[name].required){
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    if(name === "is_consent"){
+      let consentValue = "1";
+      if(e.target.checked){
+        consentValue = "1";
       }
       else{
+        consentValue = "2";
+      }
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
+    }
+    else{
+      if(value.trim() !== ""){
         setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
+      else{
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
     }
   }
@@ -185,6 +198,7 @@ function ElderBasicInformation(){
     
           var serviceArea                       = '{'+formData['elder_service_area'].value+'}';
     
+          jsonData["is_consent"]                = formData['is_consent'].value;
           jsonData["elder_name"]                = formData['elder_name'].value;
           // jsonData["elder_father_name"]         = formData['elder_father_name'].value;
           if(isMobileNumberVisible){
@@ -309,6 +323,7 @@ function ElderBasicInformation(){
         }
         console.log(serviceAreaArray.join(","));
 
+        formData['is_consent']        = {required:formData['is_consent'].required, value:userDetails.is_consent, errorClass:"", errorMessage:""};
         formData['elder_name']         = {required:formData['elder_name'].required, value:userDetails.elder_name, errorClass:"", errorMessage:""};
         formData["elder_father_name"]  = {required:formData['elder_father_name'].required, value:userDetails.elder_father_name, errorClass:"", errorMessage:""};
         formData['elder_occupation']   = {required:formData['elder_occupation'].required, value:userDetails.elder_occupation, errorClass:"", errorMessage:""};
@@ -391,12 +406,6 @@ function ElderBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-elder-persons'>
         <p><small>To update your profile information</small></p>
-        <div className='form-check-box'>     
-          <label class="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
-            <input type="checkbox" class="required" name="" value="" />
-            <span class="checkmark"></span>
-          </label>
-        </div>
         <form className="mt-3 select-box" name="elder_person_form" id="elder_person_form" onSubmit={handleFormSubmit}>
        
           <div className={`form-group ${formData["elder_name"].errorClass}`}>

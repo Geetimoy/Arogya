@@ -144,6 +144,7 @@ function PatientBasicInformation(){
 
       }
 
+      formData['is_consent']                = {required:formData['is_consent'].required, value:userDetails.is_consent, errorClass:"", errorMessage:""};
       formData['patient_name']              = {required:formData['patient_name'].required, value:userDetails.patient_name, errorClass:"", errorMessage:""};
       formData['patient_father_name']       = {required:formData['patient_father_name'].required, value:userDetails.patient_father_name, errorClass:"", errorMessage:""};
       formData['patient_is_bpl']            = {required:formData['patient_is_bpl'].required, value:userDetails.is_under_previledged, errorClass:"", errorMessage:""};
@@ -178,6 +179,7 @@ function PatientBasicInformation(){
   }
 
   const [formData, setFormData] = useState({
+    is_consent: {required: false, value:"", errorClass:"", errorMessage:""},
     patient_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_is_bpl: {required: true, value:"t", errorClass:"", errorMessage:""},
@@ -212,15 +214,27 @@ function PatientBasicInformation(){
       }
     }
 
-    if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-    }
-    else{
-      if(formData[name].required){
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    if(name === "is_consent"){
+      let consentValue = "1";
+      if(e.target.checked){
+        consentValue = "1";
       }
       else{
+        consentValue = "2";
+      }
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
+    }
+    else{
+      if(value.trim() !== ""){
         setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
+      else{
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
     }
   }
@@ -246,6 +260,7 @@ function PatientBasicInformation(){
 
       var serviceArea                       = '{'+formData['patient_service_area'].value+'}';
 
+      jsonData["is_consent"]                = formData['is_consent'].value;
       jsonData["patient_name"]              = formData['patient_name'].value;
       jsonData["patient_father_name"]       = formData['patient_father_name'].value;
       if(isMobileNumberVisible){
@@ -363,9 +378,9 @@ function PatientBasicInformation(){
        
         <p><small>To update your profile information</small></p>
         <div className='form-check-box'>     
-          <label class="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
-            <input type="checkbox" class="required" name="" value="" />
-            <span class="checkmark"></span>
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
           </label>
         </div>
         <form className="mt-3 select-box" name="patient_form" id="patient_form" onSubmit={handleFormSubmit}>

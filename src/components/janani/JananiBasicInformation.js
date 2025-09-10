@@ -39,6 +39,7 @@ function CreateJanani(){
   };
 
   const [formData, setFormData] = useState({
+    is_consent: {required: false, value:"", errorClass:"", errorMessage:""},
     janani_name: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_age: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_husband: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -90,6 +91,16 @@ function CreateJanani(){
         else{
           setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
         }
+      }
+      else if(name === "is_consent"){
+        let consentValue = "1";
+        if(e.target.checked){
+          consentValue = "1";
+        }
+        else{
+          consentValue = "2";
+        }
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
       }
       else{
         setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
@@ -170,6 +181,7 @@ function CreateJanani(){
       if(result1.data.length > 0){
         let userDetails = result1.data[0];
 
+        formData['is_consent']        = {required:formData['is_consent'].required, value:userDetails.is_consent, errorClass:"", errorMessage:""};
         formData['janani_name']       = {required:formData['janani_name'].required, value:userDetails.janani_name, errorClass:"", errorMessage:""};
         formData['janani_age']        = {required:formData['janani_age'].required, value:userDetails.janani_age, errorClass:"", errorMessage:""};
         formData['janani_husband']    = {required:formData['janani_husband'].required, value:userDetails.janani_husband_name, errorClass:"", errorMessage:""};
@@ -245,6 +257,7 @@ function CreateJanani(){
 
       var serviceArea                           = '{1,2}';
 
+      jsonData["is_consent"]                    = formData['is_consent'].value;
       jsonData["janani_name"]                   = formData['janani_name'].value;
       jsonData["janani_husband_name"]           = formData['janani_husband'].value;
       jsonData["date_missed_first_period"]      = formData['period_missed'].value;
@@ -326,9 +339,9 @@ function CreateJanani(){
       <div className='app-body form-all create-janani'>
         <p><small>To update your profile information</small></p>
         <div className='form-check-box'>     
-          <label class="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
-            <input type="checkbox" class="required" name="" value="" />
-            <span class="checkmark"></span>
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Janani health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
           </label>
         </div>
         <form className="mt-3" name="create_janani_form" id="create_janani_form" onSubmit={handleFormSubmit}>

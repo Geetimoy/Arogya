@@ -41,6 +41,7 @@ function CreateJanani(){
   const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
 
   const [formData, setFormData] = useState({
+    is_consent: {required:false, value:"1", errorClass:"", errorMessage:""},
     janani_name: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_age: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_husband: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -76,46 +77,67 @@ function CreateJanani(){
       }
     }
 
-    if(value.trim() !== ""){
-      if(name === 'janani_contact_number'){
-        var regex = /[0-9]|\./;
-        if( !regex.test(value) ) {
-          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
-        }
-        else{
-          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-        }
-      }
-      else if(name === 'janani_email_id'){
-        var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if( !regex.test(value)) {
-          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"Please enter a valid email!"}});
-        }
-        else{
-          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
-        }
+    if(name === "is_consent"){
+      let consentValue = "1";
+      if(e.target.checked){
+        consentValue = "1";
       }
       else{
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        consentValue = "2";
       }
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
     }
     else{
-      if(formData[name].required){
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(value.trim() !== ""){
+        if(name === 'janani_contact_number'){
+          var regex = /[0-9]|\./;
+          if( !regex.test(value) ) {
+            setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"Please enter a valid contact number!"}});
+          }
+          else{
+            setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+          }
+        }
+        else if(name === 'janani_email_id'){
+          var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+          if( !regex.test(value)) {
+            setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"Please enter a valid email!"}});
+          }
+          else{
+            setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+          }
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
       else{
-        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
       }
     }
+    
   }
 
   const resetForm = () => {
     const fieldName = Object.keys(formData);
     fieldName.forEach((element) => {
-      formData[element].value         = "";
-      formData[element].errorClass    = "";
-      formData[element].errorMessage  = "";
-      formData[element].required      = formData[element].required;
+      if(element === "is_consent"){
+        formData[element].value         = "1";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+        formData[element].required      = formData[element].required;
+      }
+      else{
+        formData[element].value         = "";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+        formData[element].required      = formData[element].required;
+      }
     })
     setFormData({...formData, ...formData});
     setPeriodMissedDate('');
@@ -248,8 +270,9 @@ function CreateJanani(){
       jsonData["user_lat"]                      = localStorage.getItem('latitude');
       jsonData["user_long"]                     = localStorage.getItem('longitude');
 
-      var serviceArea                       = '{'+formData['janani_service_area'].value+'}';
+      var serviceArea                           = '{'+formData['janani_service_area'].value+'}';
 
+      jsonData["is_consent"]                    = formData['is_consent'].value;
       jsonData["janani_name"]                   = formData['janani_name'].value;
       jsonData["janani_husband_name"]           = formData['janani_husband'].value;
       jsonData["date_missed_first_period"]      = formData['period_missed'].value;
@@ -305,6 +328,7 @@ function CreateJanani(){
     }
   }
 
+  
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -338,9 +362,9 @@ function CreateJanani(){
       <div className='app-body form-all create-janani'>
         <p><small>Add Janani Informations</small></p>
         <div className='form-check-box'>     
-          <label class="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
-            <input type="checkbox" class="required" name="" value="" />
-            <span class="checkmark"></span>
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Janani health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
           </label>
         </div>
         <form className="select-box mt-3" name="create_janani_form" id="create_janani_form" onSubmit={handleFormSubmit}>
