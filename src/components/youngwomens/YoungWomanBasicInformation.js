@@ -389,6 +389,12 @@ function YoungWomanBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
         <p className='mt-3'><small>To update your profile information</small></p>
+        <div className='form-check-box'>     
+          <label class="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
+            <input type="checkbox" class="required" name="" value="" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
