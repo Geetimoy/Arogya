@@ -167,7 +167,7 @@ function CreateChildMalnutrition(){
   }
 
   const [formData, setFormData] = useState({
-    is_consent: {required:false, value:"1", errorClass:"", errorMessage:""},
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
     child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},

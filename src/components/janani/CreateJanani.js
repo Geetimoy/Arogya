@@ -41,7 +41,7 @@ function CreateJanani(){
   const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
 
   const [formData, setFormData] = useState({
-    is_consent: {required:false, value:"1", errorClass:"", errorMessage:""},
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     janani_name: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_age: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_husband: {required: true, value:"", errorClass:"", errorMessage:""},

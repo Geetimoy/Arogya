@@ -100,7 +100,7 @@ function CreatePatientProfile(){
   };
 
   const [formData, setFormData] = useState({
-    is_consent: {required:false, value:"1", errorClass:"", errorMessage:""},
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     patient_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_is_bpl: {required: true, value:"t", errorClass:"", errorMessage:""},

@@ -101,7 +101,7 @@ function CraeteYoungWomen(){
   
 
   const [formData, setFormData] = useState({
-    is_consent: {required:false, value:"1", errorClass:"", errorMessage:""},
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     woman_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
