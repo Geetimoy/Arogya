@@ -37,6 +37,7 @@ function JananiViewBasicInformation(){
   };
 
   const [formData, setFormData] = useState({
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     janani_name: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_age: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_husband: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -96,6 +97,7 @@ function JananiViewBasicInformation(){
       if(result1.data.length > 0){
         let userDetails = result1.data[0];
 
+        formData['is_consent']        = {value:userDetails.is_consent, errorClass:"", errorMessage:""};
         formData['janani_name']       = {value:userDetails.janani_name, errorClass:"", errorMessage:""};
         formData['janani_age']        = {value:userDetails.janani_age, errorClass:"", errorMessage:""};
         formData['janani_husband']    = {value:userDetails.janani_husband_name, errorClass:"", errorMessage:""};
@@ -168,6 +170,12 @@ function JananiViewBasicInformation(){
       </div>
       <div className='app-body form-all create-janani'>
         <p><small>View your profile information</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Janani health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" readOnly checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3" name="create_janani_form" id="create_janani_form">
           <div className={`form-group`}>
             <label htmlFor="janani_name">Janani Name <span className="text-danger">*</span></label>

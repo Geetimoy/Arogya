@@ -84,6 +84,7 @@ function ElderViewBasicInformation(){
   }, [serviceAreaOption])
 
   const [formData, setFormData] = useState({
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     elder_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -157,6 +158,7 @@ function ElderViewBasicInformation(){
           setSelectedOptions(array1);
         }
 
+        formData['is_consent']         = {value:userDetails.is_consent, errorClass:"", errorMessage:""};
         formData['elder_name']         = {value:userDetails.elder_name, errorClass:"", errorMessage:""};
         formData["elder_father_name"]  = {value:userDetails.elder_father_name, errorClass:"", errorMessage:""};
         formData['elder_occupation']   = {value:userDetails.elder_occupation, errorClass:"", errorMessage:""};
@@ -228,6 +230,12 @@ function ElderViewBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-elder-persons'>
         <p><small>View Elder profile information</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Elder Person and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" readOnly checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="elder_person_form" id="elder_person_form">
        
           <div className={`form-group`}>

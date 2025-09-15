@@ -406,6 +406,12 @@ function ElderBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-elder-persons'>
         <p><small>To update your profile information</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Elder Person and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="elder_person_form" id="elder_person_form" onSubmit={handleFormSubmit}>
        
           <div className={`form-group ${formData["elder_name"].errorClass}`}>

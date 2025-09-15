@@ -133,6 +133,7 @@ function PatientViewBasicInformation(){
         setSelectedOptions(array1);
       }
 
+      formData['is_consent']                = {value:userDetails.is_consent, errorClass:"", errorMessage:""};
       formData['patient_name']              = {value:userDetails.patient_name, errorClass:"", errorMessage:""};
       formData['patient_father_name']       = {value:userDetails.patient_father_name, errorClass:"", errorMessage:""};
       formData['patient_is_bpl']            = {value:userDetails.is_under_previledged, errorClass:"", errorMessage:""};
@@ -159,6 +160,7 @@ function PatientViewBasicInformation(){
   }
 
   const [formData, setFormData] = useState({
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     patient_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_is_bpl: {required: true, value:"t", errorClass:"", errorMessage:""},
@@ -233,6 +235,12 @@ function PatientViewBasicInformation(){
       <div className='app-body create-patient-profiles'>
        
         <p><small>View Patient's profile information</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" readOnly checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="patient_form" id="patient_form">
           <div className={`form-group`}>
             <label htmlFor="name">Full Name <span className="text-danger">*</span></label>

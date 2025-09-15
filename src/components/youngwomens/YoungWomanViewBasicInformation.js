@@ -36,6 +36,7 @@ function YoungWomanViewBasicInformation(){
   };
 
   const [formData, setFormData] = useState({
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     woman_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -168,6 +169,7 @@ function YoungWomanViewBasicInformation(){
         setSelectedOptions(array1);
       }
 
+      formData['is_consent']              = {value:userDetails.is_consent, errorClass:"", errorMessage:""};
       formData['woman_name']              = {value:userDetails.women_name, errorClass:"", errorMessage:""};
       formData['woman_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
       formData['is_premature_birth']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
@@ -244,6 +246,12 @@ function YoungWomanViewBasicInformation(){
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
         <p><small>Young Women profile information</small></p>
+        <div className='form-check-box'>     
+          <label className="custom-chk custom-checkbox">With your consent, this information is to be used for young woman health and other legitimate purposes only.
+            <input type="checkbox" className="required" name="is_consent" value="1" readOnly checked={formData["is_consent"].value === "1" ? true : false}/>
+            <span className="checkmark"></span>
+          </label>
+        </div>
         <form className="mt-3 select-box" name="young_women_form" id="young_women_form">
           <div className={`form-group`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>

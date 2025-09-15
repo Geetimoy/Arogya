@@ -82,6 +82,7 @@ export default function ChildViewBasicInfo() {
   
 
     const [formData, setFormData] = useState({
+      is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
       child_full_name: {required: true, value:"", errorClass:"", errorMessage:""},
       child_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
       child_mother_name: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -164,6 +165,8 @@ export default function ChildViewBasicInfo() {
 
             }
             console.log(serviceAreaArray.join(","));
+
+            formData['is_consent']         = {value:userDetails.is_consent, errorClass:"", errorMessage:""};
             formData['child_full_name']    = {value:userDetails.child_name, errorClass:"", errorMessage:""};
             formData['child_father_name']  = {value:userDetails.child_father_name, errorClass:"", errorMessage:""};
             formData['child_mother_name']  = {value:userDetails.child_mother_name, errorClass:"", errorMessage:""};
@@ -252,6 +255,12 @@ export default function ChildViewBasicInfo() {
         <div className='app-body create-patient-profiles create-child-malnutrition'>
          
           <p><small>To view profile information</small></p>
+          <div className='form-check-box'>     
+            <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Child health and other legitimate purposes only.
+              <input type="checkbox" className="required" name="is_consent" value="1" readOnly checked={formData["is_consent"].value === "1" ? true : false}/>
+              <span className="checkmark"></span>
+            </label>
+          </div>
           <form className="mt-3 select-box" name="child_malnutrition_form" id="child_malnutrition_form">
             <div className={`form-group`}>
               <label htmlFor="name">Full Name </label>
