@@ -153,6 +153,11 @@ import PatientUploadDoctorPrescriptions from './patientprofiles/PatientUploadDoc
 
 import ServiceProviders from './serviceproviders/ServiceProviders';
 import ClinicNursingHome from './serviceproviders/ClinicNursingHome';
+import PreferedHospital from './serviceproviders/PreferedHospital';
+import Pathology from './serviceproviders/Pathology';
+import NurseCare from './serviceproviders/NurseCare';
+import HomeCare from './serviceproviders/HomeCare';
+import Pharmacy from './serviceproviders/Pharmacy';
 
 
 
@@ -517,6 +522,11 @@ export default function Core() {
             <Route path="*" element={<Navigate to="/dashboard"/>}></Route>
             <Route path="/service-providers" exact element={<ServiceProviders />} />
             <Route path="/clinic-nursing-home" exact element={<ClinicNursingHome />} />
+            <Route path="/prefered-hospital" exact element={<PreferedHospital />} />
+            <Route path="/pathology" exact element={<Pathology />} />
+            <Route path="/nurse-care" exact element={<NurseCare />} />
+            <Route path="/home-care" exact element={<HomeCare />} />
+            <Route path="/pharmacy" exact element={<Pharmacy />} />
           </Routes>
         }
         {

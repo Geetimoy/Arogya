@@ -116,6 +116,7 @@ function MyConsent(){
         </div>
       </div>
       <div className="btns-group d-flex justify-content-center"><button type="submit" className="btn btn-primary primary-bg-color border-0 mx-2">Save</button></div>
+      <div className='mt-3'>With your consent, this information is to be used for patient health and other legitimate purposes only.</div>
       <div className='text-center mt-4'><Link to="/dashboard" className='text-decoration-underline'>Return to Home</Link></div>
       </form>
     </div>

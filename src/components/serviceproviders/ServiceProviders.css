@@ -10,3 +10,6 @@
     min-width: 75px;
     display: inline-block;
 }
+.button-box-providers ul li{
+    display: flex;
+}

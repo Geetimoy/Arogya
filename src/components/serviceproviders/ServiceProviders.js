@@ -13,6 +13,10 @@ import nursinghome from '../../assets/images/nursing-home.png';
 import pathology from '../../assets/images/pathology.png';
 import pharmacy from '../../assets/images/pharmacy.png';
 import nursecare from '../../assets/images/nurse-care.png';
+import hospital from '../../assets/images/hospital.png';
+import aaya from '../../assets/images/aaya.png';
+
+import './ServiceProviders.css'
 
 function ServiceProviders(){
 
@@ -58,8 +62,14 @@ function ServiceProviders(){
       <div className='row'>
         <div className='col-6 mb-3'>
           <div className='button-box'>
+            <Link to="/prefered-hospital"><img src={hospital} alt='' />
+            <h6 className='mb-0'>Prefered Hospital</h6></Link>
+          </div>
+        </div>
+        <div className='col-6 mb-3'>
+          <div className='button-box'>
             <Link to="/clinic-nursing-home"><img src={nursinghome} alt='' />
-            <h6 className='mb-0'>Clinic Nursing Home</h6></Link>
+            <h6 className='mb-0'>Clinic, Nursing Home</h6></Link>
           </div>
         </div>
         <div className='col-6 mb-3'>
@@ -71,8 +81,8 @@ function ServiceProviders(){
         </div>
         <div className='col-6 mb-3'>
           <div className='button-box'>
-            <Link to="/medicine-store"><img src={pharmacy} alt='' />
-            <h6 className='mb-0'>Medicine Store</h6></Link>
+            <Link to="/pharmacy"><img src={pharmacy} alt='' />
+            <h6 className='mb-0'>Pharmacy</h6></Link>
             
           </div>
         </div>
@@ -80,6 +90,13 @@ function ServiceProviders(){
           <div className='button-box'>
             <Link to="/nurse-care"><img src={nursecare} alt='' />
             <h6 className='mb-0'>Nurse Care</h6></Link>
+            
+          </div>
+        </div>
+        <div className='col-6 mb-3'>
+          <div className='button-box'>
+            <Link to="/home-care"><img src={aaya} alt='' />
+            <h6 className='mb-0'>In Home Care</h6></Link>
             
           </div>
         </div>
