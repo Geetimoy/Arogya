@@ -158,7 +158,7 @@ function ClinicNursingHome() {
           {providerList && providerList.map((provider, index) => (
             <div className='button-box-providers' key={provider.id}>
               <ul className='p-0 m-0'>
-                <li><span className='fw-bold min-width'>Name :</span> {provider.provider_name}</li>
+                <li><span className='fw-bold min-width'>Name :</span> {provider.name}</li>
                 <li><span className='fw-bold'>Location :</span> {provider.location}</li>
                 <li><span className='fw-bold'>Contact :</span> {provider.contact}</li>
                 <li><span className='fw-bold'>Services :</span> {provider.services}</li>
