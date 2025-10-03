@@ -149,18 +149,18 @@ function ClinicNursingHome() {
     <div className="app-body service-provider">
       <div className='search-patient mt-3 mb-3'>
         <div className='input-group'>
-          <input type="text" className='form-control' placeholder='Search Clinic' id="searchClinic" name="searchClinic" ref={searchRef}/>
+          <input type="text" className='form-control' placeholder='Search Clinic Nursing Home' id="searchClinic" name="searchClinic" ref={searchRef}/>
           <span className="input-group-text"><FontAwesomeIcon icon={faSearch} onClick={searchClinicNursingHome}/></span>
         </div>
       </div>
       <div className='row'>
         <div className='col-12 mb-3'>
           {providerList && providerList.map((provider, index) => (
-            <div className='button-box-providers' key={provider.id}>
+            <div className='button-box-providers mb-3' key={provider.id}>
               <ul className='p-0 m-0'>
                 <li><span className='fw-bold min-width'>Name :</span> {provider.name}</li>
                 <li><span className='fw-bold'>Location :</span> {provider.location}</li>
-                <li><span className='fw-bold'>Contact :</span> {provider.contact}</li>
+                <li><span className='fw-bold'>Contact :</span> {provider.contact_number}</li>
                 <li><span className='fw-bold'>Services :</span> {provider.services}</li>
               </ul>
             </div>
