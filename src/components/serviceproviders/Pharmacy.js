@@ -1,9 +1,12 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
+import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } from "../util/Constants";
 
 import './ServiceProviders.css'
 import AppTopNotifications from '../AppTopNotifications';
@@ -11,13 +14,98 @@ import SystemContext from "../../context/system/SystemContext";
 
 function Pharmacy() {
 
+  const searchRef = useRef(null);
+
   const systemContext = useContext(SystemContext);
   
-     const [isMActive, setIsMActive] = useState(false);
-  
-     const handle2Click = () => {
-      setIsMActive(!isMActive); // Toggle the state
-    };
+  const [isMActive, setIsMActive] = useState(false);
+
+  const handle2Click = () => {
+    setIsMActive(!isMActive); // Toggle the state
+  };
+
+  const [providerId, setProviderId] = useState('3');
+  const [providerList, setProviderList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loadMore, setLoadMore] = useState(false);
+  const [offset, setOffset] = useState(0);
+
+  const searchPharmacy = (e) => {
+    setProviderList([]); // Reset child list when searching
+    setLoadMore(false); // Reset load more state
+    setTotalCount(0); // Reset total count
+    setTimeout(()=>{
+      listPharmacy(searchRef.current.value, 0); // Call listChild with search key
+    }, 500)
+  }
+
+  const listPharmacy = async (searchKey, customOffset) => {
+    
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["provider_id"]               = providerId; // 1 - Clinic Nursing Home
+    jsonData["search_param"]              = {
+                                              "by_keywords": searchKey,
+                                              "limit": PAGINATION_LIMIT,
+                                              "offset": customOffset,
+                                              "order_by_field": "id",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/getServiceProviderDetails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      if(result.data.length > 0){
+        setProviderList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
+        setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
+        setTotalCount(result.total_count); // Update total count
+        if(providerList.length + result.data.length >= result.total_count){
+          setLoadMore(false); // Disable load more if all data is loaded
+        }
+        else{
+          setLoadMore(true); // Enable load more if more data is available
+        }
+      }
+      else{
+        setProviderList([]); // Reset list if no data found
+        setLoadMore(false);
+        setTotalCount(0);
+      }
+    }
+    else{
+      setProviderList([]); 
+      setLoadMore(false);
+      setTotalCount(0);
+    }
+
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id){
+      listPharmacy("", 0);
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id]);
+
+  const loadMorePharmacy = () => {
+    listPharmacy(searchRef.current.value, offset); // Load more data
+  }
 
   return (
     <>
@@ -52,44 +140,29 @@ function Pharmacy() {
     <div className="app-body service-provider">
       <div className='search-patient mt-3 mb-3'>
         <div className='input-group'>
-          <input type="text" className='form-control' placeholder='Search Pharmacist' id="searchPharmacist" name="searchPharmacist"  />
-          <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+          <input type="text" className='form-control' placeholder='Search Pharmacist' id="searchPharmacist" name="searchPharmacist" />
+          <span className="input-group-text" onClick={searchPharmacy}><FontAwesomeIcon icon={faSearch} /></span>
         </div>
       </div>
       <div className='row'>
-        <div className='col-12 mb-3'>
-          <div className='button-box-providers'>
-           <ul className='p-0 m-0'>
-              <li><span className='fw-bold min-width'>Name :</span> Appolo Pharmacy</li>
-              <li><span className='fw-bold'>Location :</span> Bablatala, Kolkata</li>
-              <li><span className='fw-bold'>Contact :</span> 9876543210</li>
-              <li><span className='fw-bold'>Services :</span> Your health, our priority.
-Quality medicines with trusted care.</li>
-            </ul>
+        {providerList && providerList.map((provider, index) => (
+          <div className='col-12 mb-3' key={provider.id}>
+            <div className='button-box-providers mb-3'>
+              <ul className='p-0 m-0'>
+                <li><span className='fw-bold min-width'>Name :</span> {provider.name}</li>
+                <li><span className='fw-bold'>Location :</span> {provider.location}</li>
+                <li><span className='fw-bold'>Contact :</span> {provider.contact_number}</li>
+                <li><span className='fw-bold'>Services :</span> {provider.services}</li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div className='col-12 mb-3'>
-          <div className='button-box-providers'>
-           <ul className='p-0 m-0'>
-              <li><span className='fw-bold min-width'>Name :</span> Appolo Pharmacy</li>
-              <li><span className='fw-bold'>Location :</span> Bablatala, Kolkata</li>
-              <li><span className='fw-bold'>Contact :</span> 9876543210</li>
-              <li><span className='fw-bold'>Services :</span> Your health, our priority.
-Quality medicines with trusted care.</li>
-            </ul>
-          </div>
-        </div>
-        <div className='col-12 mb-3'>
-          <div className='button-box-providers'>
-           <ul className='p-0 m-0'>
-              <li><span className='fw-bold min-width'>Name :</span> Appolo Pharmacy</li>
-              <li><span className='fw-bold'>Location :</span> Bablatala, Kolkata</li>
-              <li><span className='fw-bold'>Contact :</span> 9876543210</li>
-              <li><span className='fw-bold'>Services :</span> Your health, our priority.
-Quality medicines with trusted care.</li>
-            </ul>
-          </div>
-        </div>
+        ))}
+
+        {providerList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
+
+        {loadMore && <div className='col-12 text-center'>
+          <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={loadMorePharmacy}>Load More</Link> 
+        </div>}
       </div>
     </div>
     <Appfooter></Appfooter>

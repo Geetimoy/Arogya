@@ -43,60 +43,60 @@ function NurseCare() {
 
   const listNurseCare = async (searchKey, customOffset) => {
   
-      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-  
-      let jsonData = {};
-      jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-      jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["user_lat"]                  = localStorage.getItem('latitude');
-      jsonData["user_long"]                 = localStorage.getItem('longitude');
-      jsonData["provider_id"]               = providerId; // 1 - Clinic Nursing Home
-      jsonData["search_param"]              = {
-                                                "by_keywords": searchKey,
-                                                "limit": PAGINATION_LIMIT,
-                                                "offset": customOffset,
-                                                "order_by_field": "id",
-                                                "order_by_value": "desc"
-                                              }
-  
-      const response = await fetch(`${API_URL}/getServiceProviderDetails`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
-  
-      let result = await response.json();
-     
-      if(result.success){
-        if(result.data.length > 0){
-          setProviderList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
-          setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
-          setTotalCount(result.total_count); // Update total count
-          if(providerList.length + result.data.length >= result.total_count){
-            setLoadMore(false); // Disable load more if all data is loaded
-          }
-          else{
-            setLoadMore(true); // Enable load more if more data is available
-          }
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["provider_id"]               = providerId; // 1 - Clinic Nursing Home
+    jsonData["search_param"]              = {
+                                              "by_keywords": searchKey,
+                                              "limit": PAGINATION_LIMIT,
+                                              "offset": customOffset,
+                                              "order_by_field": "id",
+                                              "order_by_value": "desc"
+                                            }
+
+    const response = await fetch(`${API_URL}/getServiceProviderDetails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+    
+    if(result.success){
+      if(result.data.length > 0){
+        setProviderList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
+        setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
+        setTotalCount(result.total_count); // Update total count
+        if(providerList.length + result.data.length >= result.total_count){
+          setLoadMore(false); // Disable load more if all data is loaded
         }
         else{
-          setProviderList([]); // Reset list if no data found
-          setLoadMore(false);
-          setTotalCount(0);
+          setLoadMore(true); // Enable load more if more data is available
         }
       }
       else{
-        setProviderList([]); 
+        setProviderList([]); // Reset list if no data found
         setLoadMore(false);
         setTotalCount(0);
       }
-  
     }
+    else{
+      setProviderList([]); 
+      setLoadMore(false);
+      setTotalCount(0);
+    }
+
+  }
 
   
   useEffect(() => {
