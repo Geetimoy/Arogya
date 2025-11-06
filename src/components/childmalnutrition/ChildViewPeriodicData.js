@@ -2,6 +2,8 @@ import { useContext, useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
+import Category from "./Category";
+
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
@@ -12,8 +14,11 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AppTopNotifications from "../AppTopNotifications";
+
+import './ChildMalnutrition.css';
 
 function ChildViewPeriodicData(){
 
@@ -21,18 +26,157 @@ function ChildViewPeriodicData(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
+
+  const [inputValues, setInputValues] = useState({
+    select1: {category:"", value:""},
+    select2: {category:"", value:""},
+    select3: {category:"", value:""},
+    select4: {category:"", value:""},
+    select5: {category:"", value:""},
+    select6: {category:"", value:""},
+    select7: {category:"", value:""},
+    select8: {category:"", value:""},
+    select9: {category:"", value:""},
+    select10: {category:"", value:""},
+    select11: {category:"", value:""},
+    select12: {category:"", value:""},
+    select13: {category:"", value:""},
+    select14: {category:"", value:""},
+    select15: {category:"", value:""},
+    select16: {category:"", value:""}
+  });
+
   const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const [isMActive, setIsMActive] = useState(false);
-
+  const [userDetails, setUserDetails] = useState([]);
+  const [remarks, setRemarks] = useState(''); 
   const [periodicList, setPeriodicList] = useState([]); 
   const [urlParam, setUrlParam] = useState(useParams());
   const editAccountKey = urlParam.accountKey;
 
+  const [dataProcessedDate, setDataProcessedDate] = useState(new Date());
+  const onChangeDataProcessedDate = (date) => {
+    setDataProcessedDate(date);
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [inputValues]);
+
+  const selectCategory = (e) => {
+    const { name, value } = e.target;
+    inputValues[name].category = value;
+    console.log(inputValues);
+  }
+  const changeCategoryValue = (e) => {
+    const { name, value } = e.target;
+    inputValues[name].value = value;
+    console.log(inputValues);
+  }
+
+  const [inputList, setInputList] = useState([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
   };
+
+  const onAddBtnClick = event => {
+  
+    if(inputList.length < 16){
+      
+      var newKey = 'select'+(inputList.length+1);
+      setInputList(inputList.concat(<Category key={inputList.length+1} name={`${newKey}`} changefunc={selectCategory} changecatval={changeCategoryValue}/>));
+
+    }
+    else{
+      return false;
+    }
+
+  };
+
+  const handleRemarks = (e) => {
+    const { name, value } = e.target;
+    setRemarks(value);
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+
+    var womenCategory = [];
+    Object.keys(inputValues).forEach(function(k, i){
+      if(inputValues[k].category != '' && parseInt(inputValues[k].category) > 0){
+        womenCategory[i] = {category: inputValues[k].category, value: inputValues[k].value}
+      }
+    });
+
+    if(womenCategory.length > 0){
+
+      let strday   = String(dataProcessedDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+      let strmonth = String(dataProcessedDate.getMonth() + 1).padStart(2, '0');  // Months are zero-indexed
+      let stryear  = dataProcessedDate.getFullYear();
+      
+      let dataProcessedOn = `${strday}-${strmonth}-${stryear}`;
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      /*var currentDate = new Date();
+      var day         = currentDate.getDate();
+          day         = (day < 10) ? '0'+day : day;
+      var month       = currentDate.getMonth() + 1; // Add 1 as months are zero-based
+          month       = (month < 10) ? '0'+month : month;
+      var year        = currentDate.getFullYear();
+      var currentDate = `${day}-${month}-${year}`;*/
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
+      jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["child_account_type"]        = '3';
+      jsonData["child_account_key"]         = editAccountKey;
+      jsonData["data_processed_on"]         = dataProcessedOn;
+      jsonData["remarks"]                   = remarks;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["child_cat_value"]           = womenCategory;
+
+      const response = await fetch(`${API_URL}/childPeriodicDataAddFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 2000);
+        /*Object.keys(inputValues).forEach(function(k, i){
+          inputValues[k].category = "";
+          inputValues[k].value    = "";
+        });
+        setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
+        setRemarks("");
+        listPeriodicData();*/
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    }
+    else{
+      alertContext.setAlertMessage({show:true, type: "error", message: "Please select at least one category!"});
+    }
+  }
 
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
@@ -112,6 +256,39 @@ function ChildViewPeriodicData(){
     }
   }
 
+  const getProfileDetails = async () => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 31;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response1 = await fetch(`${API_URL}/getProfileDetails`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+    let result = await response1.json();
+
+    if(result.success){
+      setUserDetails(result.data);
+    }
+    else{
+      setUserDetails([]); 
+    }
+  }
+
   useEffect(() => {
     if(systemContext.systemDetails.system_id && editAccountKey){
       getUserBasicDetails();
@@ -155,6 +332,30 @@ function ChildViewPeriodicData(){
         <div className="patient-details">
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </div>
+
+        <form className="" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
+          <div className="patient-details">
+              {(userDetails.display_name) && <span className="text-muted d-flex"><span>{userDetails.display_name}</span>, {userDetails.gender}, {userDetails.age}yrs</span>}
+          </div>
+          <div className='mb-3 mt-3 text-end'>
+            <button type="button" className='btn btn-sm primary-bg-color text-light' onClick={onAddBtnClick}>Add More Category</button>
+          </div>
+
+          <div className={`form-group`}>
+            <label htmlFor="period_missed">Date <span className="text-danger">*</span></label>
+            <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
+          </div>
+
+          {[...inputList].reverse()}
+
+          <div className="form-group">
+            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <textarea name="remarks" id="remarks" rows="3" onChange={handleRemarks} className="form-control" placeholder="Describe / Explain Problems"></textarea>
+          </div>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light min-width-100'>Update</button>
+          </div>
+        </form>
 
         <div className="saved-periodic-data">
           <div className="row mt-4">
