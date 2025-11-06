@@ -140,7 +140,7 @@ function Pharmacy() {
     <div className="app-body service-provider">
       <div className='search-patient mt-3 mb-3'>
         <div className='input-group'>
-          <input type="text" className='form-control' placeholder='Search Pharmacist' id="searchPharmacist" name="searchPharmacist" />
+          <input type="text" className='form-control' placeholder='Search Pharmacy' id="searchPharmacy" name="searchPharmacy" />
           <span className="input-group-text" onClick={searchPharmacy}><FontAwesomeIcon icon={faSearch} /></span>
         </div>
       </div>
