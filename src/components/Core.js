@@ -70,6 +70,8 @@ import ChildViewBasicInfo from './childmalnutrition/ChildViewBasicInfo';
 import ChildViewMedicalHistory from './childmalnutrition/ChildViewMedicalHistory';
 import ChildViewPeriodicData from './childmalnutrition/ChildViewPeriodicData';
 import ChildProfilePhoto from './childmalnutrition/ChildProfilePhoto';
+import CreateChildMalnutritionDoctor from './childmalnutrition/CreateChildMalnutritionDoctor';
+
 
 import YoungWomens from './youngwomens/YoungWomens';
 import CreateYoungWomen from './youngwomens/CreateYoungWomen';
@@ -168,8 +170,8 @@ import Pharmacy from './serviceproviders/Pharmacy';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
-  const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
+  const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
+  //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
   //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
@@ -444,6 +446,8 @@ export default function Core() {
             <Route path="/childmalnutrition/child-view-medical-history/:accountKey" exact element={<ChildViewMedicalHistory/>} />
             <Route path="/childmalnutrition/child-view-periodic-data/:accountKey" exact element={<ChildViewPeriodicData />} />
             <Route path="/childmalnutrition/child-profile-photo/:accountKey" exact element={<ChildProfilePhoto />} />
+            <Route path="/create-child-malnutrition-doctor" exact element={<CreateChildMalnutritionDoctor />} />
+
 
             <Route path="/YoungWomens" exact element={<YoungWomens />} />
             <Route path="/youngwomens/Create-Young-Women" exact element={<CreateYoungWomen />} />

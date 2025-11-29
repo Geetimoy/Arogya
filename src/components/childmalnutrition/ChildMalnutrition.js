@@ -3,6 +3,7 @@ import CryptoJS from "crypto-js";
 
 import Appfooter from "../AppFooter";
 import Rating from "./Ratingsave";
+import WeightLineChart from "../WeightLineChart";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faBell, faLongArrowAltLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +18,8 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } f
 
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
+
+
 
 function ChildMalnutrion(){
 
@@ -55,15 +58,58 @@ function ChildMalnutrion(){
   const [offset, setOffset] = useState(0);
   const [openMenuId, setOpenMenuId] = useState(0);
 
-  const handleMenuClick = (accountId) => {
+  
+
+  const handleMenuClick = async (accountId) => {
     setOpenMenuId(openMenuId === accountId ? 0 : accountId);
+
+
+    // var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    //  let jsonData = {};
+    //   jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    //   jsonData["account_key"]               = decryptedLoginDetails.account_key;
+    //   jsonData["account_type"]              = decryptedLoginDetails.account_type;
+
+    //   jsonData["call_for"]       				    = decryptedLoginDetails.weight;
+    //   jsonData["user_login_id"]       		  = decryptedLoginDetails.login_id;
+      
+
+    //   jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    //   jsonData["device_token"]              = DEVICE_TOKEN;
+    //   jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    //   jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      
+
+    //  const response = await fetch(`${API_URL}/getWeightHistory`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(jsonData)
+    //   })
+
+
+    //    let result = await response.json();
+    //     if(result.success && result.data && result.data.appointments.length > 0){
+    //       setOpenMenuId(openMenuId === accountId ? 0 : accountId);
+    //     }
+    //     else{
+    //       alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+    //     }
   };
 
   const [isActive, setIsActive] = useState(false);
   const [closeProfileAccountKey, setCloseProfileAccountKey] = useState('');
   const [closeRemarks, setCloseRemarks] = useState('');
 
-  const [showCloseProfileModal, setShowCloseProfileModal] = useState(false); 
+  const [showCloseProfileModal, setShowCloseProfileModal] = useState(false);
+  const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
+  
+
+  const modalHealthChartClose  = () => setModalHealthChartShow(false);  
+  // const modalHealthChartShow   = () => setModalHealthChartShow(true);
 
   const modalCloseProfile  = () => setShowCloseProfileModal(false);  
   const modalShowProfile   = () => setShowCloseProfileModal(true); 
@@ -377,6 +423,49 @@ function ChildMalnutrion(){
  
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
+  const [chartChildName, setChartChildName] = useState("");
+  //const [childChart, setChildChart] = useState([]);
+  const [weightChart, setWeightChart] = useState([]);
+  const showChart = async(child_account_key, child_name) => {
+    
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+     let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_key"]               = child_account_key;
+      jsonData["account_type"]              = 31;
+
+      jsonData["call_for"]       				    = "all";
+      jsonData["user_login_id"]       		  = decryptedLoginDetails.login_id;
+      
+
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+
+
+      const response = await fetch(`${API_URL}/getChildChartHistory`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+
+
+       let result = await response.json();
+        if(result.success){
+          setChartChildName(child_name);
+          setWeightChart(result.data);
+          setModalHealthChartShow(true);
+        }
+        else{
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        }
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -413,6 +502,10 @@ function ChildMalnutrion(){
           {
             (decryptedLoginDetails.account_type !== '5') && <Link to="/create-child-malnutrition" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Health</Link>
           }
+          {
+            (decryptedLoginDetails.account_type == '5') && <Link to="/create-child-malnutrition-doctor" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child Health</Link>
+          }
+          {/* <div className='health-chart'><Link onClick={() => { setModalHealthChartShow(true) }} to="#" className='primary-color'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M448 64h-25.98C438.44 92.28 448 125.01 448 160c0 105.87-86.13 192-192 192S64 265.87 64 160c0-34.99 9.56-67.72 25.98-96H64C28.71 64 0 92.71 0 128v320c0 35.29 28.71 64 64 64h384c35.29 0 64-28.71 64-64V128c0-35.29-28.71-64-64-64zM256 320c88.37 0 160-71.63 160-160S344.37 0 256 0 96 71.63 96 160s71.63 160 160 160zm-.3-151.94l33.58-78.36c3.5-8.17 12.94-11.92 21.03-8.41 8.12 3.48 11.88 12.89 8.41 21l-33.67 78.55C291.73 188 296 197.45 296 208c0 22.09-17.91 40-40 40s-40-17.91-40-40c0-21.98 17.76-39.77 39.7-39.94z"/></svg> Health Chart </Link></div> */}
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
@@ -425,6 +518,10 @@ function ChildMalnutrion(){
           {childList.map((child, index) => (
             <div className='col-6 mb-4' key={child.account_id}>
               <div className='button-box'>
+                <div className='charts'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM464 96H345.94c-21.38 0-32.09 25.85-16.97 40.97l32.4 32.4L288 242.75l-73.37-73.37c-12.5-12.5-32.76-12.5-45.25 0l-68.69 68.69c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.62c6.25 6.25 16.38 6.25 22.63 0L192 237.25l73.37 73.37c12.5 12.5 32.76 12.5 45.25 0l96-96 32.4 32.4c15.12 15.12 40.97 4.41 40.97-16.97V112c.01-8.84-7.15-16-15.99-16z"/></svg>
+                <Link onClick={() => { showChart(child.account_key, child.child_name) }} to="#" className='primary-color'>  Charts</Link>
+                </div>
+
                 <div className={`three-dot my-element2 ${openMenuId === child.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(child.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
 
                 {openMenuId === child.account_id && <div className='drop-menu'>
@@ -435,7 +532,7 @@ function ChildMalnutrion(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/childmalnutrition/child-basic-info/${child.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/childmalnutrition/child-view-basic-info/${child.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/childmalnutrition/child-view-basic-info/${child.account_key}`}>View/Edit Basic Information</Link>
                         }
                       </li>
                       {
@@ -447,7 +544,7 @@ function ChildMalnutrion(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/childmalnutrition/child-medical-history/${child.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-view-medical-history/${child.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-view-medical-history/${child.account_key}`}>View/Edit Medical History</Link>
                         }
                       </li>
                       <li>
@@ -457,7 +554,7 @@ function ChildMalnutrion(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-view-periodic-data/${child.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/child-view-periodic-data/${child.account_key}`}>View/Edit Periodic Data</Link>
                         }
                       </li>
                       {/* <li><Link to={`/childmalnutrition/child-prescription/${child.account_key}`}>Upload Survey Report/Prescription</Link></li> */}
@@ -481,8 +578,7 @@ function ChildMalnutrion(){
                       {/* <li><Link to={`/childmalnutrition/child-awareness-survey/`}>Update Awareness Survey</Link></li> */}
                       {
                       (decryptedLoginDetails.account_type !== '5') &&
-                      <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>
-}
+                      <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>}
                       {/* {loginAccountType === '5' && <li><Link onClick={() => { modalReviewShow(child.account_key, child.child_name); }} to="#">Write/View Review </Link></li>} */}
                     </ul>
                   </div>
@@ -607,6 +703,39 @@ function ChildMalnutrion(){
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalReviewClose}>Cancel</Button>  
           </Modal.Footer>  
           
+        </Modal>
+
+        <Modal show={modalHealthChartShow} onHide={modalHealthChartClose}>
+          <Modal.Body>  
+            <p className='text-center'>Child: {chartChildName}</p> 
+            <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
+            {/* <button type="button" className="btn-close" data-bs-dismiss="modal"></button> */}
+            <div className='health-chart'>
+              <WeightLineChart weightChart={weightChart} />
+              {/* <table className='table table-bordered'>
+                
+                <tbody>
+                  <tr>
+                    <td><strong>Weight (in Kg)</strong></td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>15</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Date</strong></td>
+                    <td>28/05/25</td>
+                    <td>05/06/25</td>
+                    <td>29/10/2025</td>
+                  </tr>
+                </tbody>
+              </table> */}
+            </div>
+            <p className='mt-5 d-text'>This chart is for reference only. Please consult a healthcare professional for accurate assessment and advice.</p>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalHealthChartClose}>Periodic Data</Button>  
+            
+          </Modal.Footer>  
         </Modal>
 
       </div>

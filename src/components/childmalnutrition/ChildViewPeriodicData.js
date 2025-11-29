@@ -356,7 +356,7 @@ function ChildViewPeriodicData(){
             <button type="submit" className='btn primary-bg-color text-light min-width-100'>Update</button>
           </div>
         </form>
-
+        <div className="text-end"><Link to="#" className='primary-color'>Show in Charts</Link></div>
         <div className="saved-periodic-data">
           <div className="row mt-4">
 

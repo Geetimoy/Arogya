@@ -389,7 +389,7 @@ export default function ChildViewBasicInfo() {
                   <FontAwesomeIcon icon={faLongArrowAltLeft} />
                 </Link>
               </div>
-              <h5 className='mx-2 mb-0'>View Child Basic Info </h5>
+              <h5 className='mx-2 mb-0'>View/Edit Child Basic Info </h5>
             </div>
             <div className='app-top-right d-flex'> 
               <AppTopNotifications /> 
@@ -411,7 +411,7 @@ export default function ChildViewBasicInfo() {
         </div>
         <div className='app-body create-patient-profiles create-child-malnutrition'>
          
-          <p><small>To view profile information</small></p>
+          <p><small>To view/edit profile information</small></p>
           <div className='form-check-box'>     
             <label className="custom-chk custom-checkbox">With your consent, this information is to be used for Child health and other legitimate purposes only.
               <input type="checkbox" className="required" name="is_consent" value="1" readOnly checked={formData["is_consent"].value === "1" ? true : false}/>

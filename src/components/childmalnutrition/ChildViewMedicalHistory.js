@@ -98,6 +98,45 @@ function ChildViewMedicalHistory(){
     { label: 'Age of Menarchy(menstruation)', value: '4' }
   ]);
 
+  const handleChange1 = (values, element) => {
+    var selectedArea = [];
+    if(values.length > 0){
+      values.forEach((item, index) => {
+        selectedArea.push(item.value);
+      })
+    }
+    if(selectedArea.length > 0){
+      setFormData({...formData, [element]: {...formData[element], value:selectedArea.join(), errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, [element]: {...formData[element], value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+    }console.log(values);
+    if(element === 'eye_type'){
+      setSelectedEyeOptions(values);
+    }
+    else if(element === 'ears_type'){ 
+      setSelectedEarOptions(values);
+    }
+    else if(element === 'nose_type'){ 
+      setSelectedNoseOptions(values);
+    }
+    else if(element === 'mouth_type'){ 
+      setSelectedMouthOptions(values);
+    }
+    else if(element === 'digestive_type'){ 
+      setSelectedDigestiveOptions(values);
+    }
+    else if(element === 'general_type'){ 
+      setSelectedGeneralOptions(values);
+    }
+    else if(element === 'urinary_problems_type'){ 
+      setSelectedUrinaryOptions(values);
+    }
+    else if(element === 'periods_type'){ 
+      setSelectedPeriodsOptions(values);
+    }
+  };
+
   const [formData, setFormData] = useState({
     eye_type: {required: true, value:"", errorClass:"", errorMessage:""},
     ears_type: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -109,6 +148,34 @@ function ChildViewMedicalHistory(){
     periods_type: {required: true, value:"", errorClass:"", errorMessage:""},
     remarks: {required: false, value:"", errorClass:"", errorMessage:""}
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if(value.trim() !== ""){
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+  }
+
+  const validateForm = () => {
+    const fieldName = Object.keys(formData);
+    let errorCounter = 0;
+    fieldName.forEach((element) => {console.log(element, formData[element].value);
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
+        formData[element].errorMessage = "This field is required!";
+        formData[element].errorClass = "form-error";
+        errorCounter++;
+      }
+      else{
+        formData[element].errorMessage = "";
+        formData[element].errorClass = "";
+      }
+    })
+    setFormData({...formData, ...formData});
+    return errorCounter;
+  }
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -290,6 +357,54 @@ function ChildViewMedicalHistory(){
     
   }, [systemContext.systemDetails.system_id]);
 
+  const handleFormSubmit = async (e) => {
+      e.preventDefault(); 
+      let errorCounter = validateForm(); console.log(errorCounter);
+      if(errorCounter === 0){
+  
+        var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  
+        let jsonData = {};
+        jsonData['system_id']                 = systemContext.systemDetails.system_id;
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+        jsonData["sub_volunteer_id"]          = "";
+        jsonData["child_account_key"]         = editAccountKey;
+        jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+        jsonData["device_token"]              = DEVICE_TOKEN;
+        jsonData["user_lat"]                  = localStorage.getItem('latitude');
+        jsonData["user_long"]                 = localStorage.getItem('longitude');
+  
+        jsonData["eye_type"]                  = '{'+formData['eye_type'].value+'}';
+        jsonData["ears_type"]                 = '{'+formData['ears_type'].value+'}';
+        jsonData["nose_type"]                 = '{'+formData['nose_type'].value+'}';
+        jsonData["mouth_type"]                = '{'+formData['mouth_type'].value+'}';
+        jsonData["digestive_system_type"]     = '{'+formData['digestive_type'].value+'}';
+        jsonData["general_type"]              = '{'+formData['general_type'].value+'}';
+        jsonData["urinary_problems_type"]     = '{'+formData['urinary_problems_type'].value+'}';
+        jsonData["periods_type"]              = '{'+formData['periods_type'].value+'}';
+        jsonData["remarks"]                   = formData['remarks'].value;
+  
+        const response = await fetch(`${API_URL}/addUpdateChildMedicalHistory`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+        console.log(response)
+        let result = await response.json();
+  
+        if(result.success){
+          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        }
+        else{
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        }
+      }
+    }
+
 
   const [eyeTypeClass, setEyeTypeClass] = useState('');
   const [earTypeClass, setEarTypeClass] = useState('');
@@ -385,7 +500,7 @@ function ChildViewMedicalHistory(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Child Medical History </h5>
+            <h5 className='mx-2 mb-0'>View/Edit Child Medical History </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications />
@@ -411,42 +526,54 @@ function ChildViewMedicalHistory(){
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
         <p><strong>Do you have these problems?</strong></p>
-        <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm">
-          <div className={`form-group ${eyeTypeClass}`}>
+        <form className="mt-3 select-box" name="medicalHistoryForm" id="medicalHistoryForm" onSubmit={handleFormSubmit}>
+          <div className={`form-group ${formData["eye_type"].errorClass} ${eyeTypeClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedEyeOptions} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedEyeOptions} onChange={(values) =>  handleChange1(values, 'eye_type')} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')}/>
+            <small className="error-mesg">{formData["eye_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${earTypeClass}`}>
+          <div className={`form-group ${formData["ears_type"].errorClass} ${earTypeClass}`}>
             <label><span className="d-block">Ears <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedEarOptions} options={earOption} onFocus={() =>  setActiveClass('ears_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedEarOptions} onChange={(values) =>  handleChange1(values, 'ears_type')} options={earOption} onFocus={() =>  setActiveClass('ears_type')}/>
+            <small className="error-mesg">{formData["ears_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${noseTypeClass}`}>
+          <div className={`form-group ${formData["nose_type"].errorClass} ${noseTypeClass}`}>
             <label><span className="d-block">Nose <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedNoseOptions} options={noseOption} onFocus={() =>  setActiveClass('nose_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedNoseOptions} onChange={(values) =>  handleChange1(values, 'nose_type')} options={noseOption} onFocus={() =>  setActiveClass('nose_type')}/>
+            <small className="error-mesg">{formData["nose_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${mouthTypeClass}`}>
+          <div className={`form-group ${formData["mouth_type"].errorClass} ${mouthTypeClass}`}>
             <label><span className="d-block">Mouth <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedMouthOptions} options={mouthOption} onFocus={() =>  setActiveClass('mouth_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedMouthOptions} onChange={(values) =>  handleChange1(values, 'mouth_type')} options={mouthOption} onFocus={() =>  setActiveClass('mouth_type')}/>
+            <small className="error-mesg">{formData["mouth_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${digestiveTypeClass}`}>
+          <div className={`form-group ${formData["digestive_type"].errorClass} ${digestiveTypeClass}`}>
             <label><span className="d-block">Digestive system <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} options={digestiveOption} onFocus={() =>  setActiveClass('digestive_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedDigestiveOptions} onChange={(values) =>  handleChange1(values, 'digestive_type')} options={digestiveOption} onFocus={() =>  setActiveClass('digestive_type')}/>
+            <small className="error-mesg">{formData["digestive_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${generalTypeClass}`}>
+          <div className={`form-group ${formData["general_type"].errorClass} ${generalTypeClass}`}>
             <label><span className="d-block">General <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} options={generalOption} onFocus={() =>  setActiveClass('general_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedGeneralOptions} onChange={(values) =>  handleChange1(values, 'general_type')} options={generalOption} onFocus={() =>  setActiveClass('general_type')}/>
+            <small className="error-mesg">{formData["general_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${urinaryTypeClass}`}>
+          <div className={`form-group ${formData["urinary_problems_type"].errorClass} ${urinaryTypeClass}`}>
             <label><span className="d-block">Urinary <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedUrinaryOptions} options={generalOption} onFocus={() =>  setActiveClass('urinary_problems_type')} isDisabled={true}/>
+            <Select className='form-control select-multi' isMulti value={selectedUrinaryOptions} onChange={(values) =>  handleChange1(values, 'urinary_problems_type')} options={urinaryOption} onFocus={() =>  setActiveClass('urinary_problems_type')}/>
+            <small className="error-mesg">{formData["urinary_problems_type"].errorMessage}</small>
           </div>
-          <div className={`form-group ${periodsTypeClass}`}>
-            <label><span className="d-block">Period <span className="text-danger">*</span></span></label>
-            <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} options={periodsOption} onFocus={() =>  setActiveClass('periods_type')} isDisabled={true}/>
+          <div className={`form-group ${formData["periods_type"].errorClass} ${periodsTypeClass}`}>
+            <label><span className="d-block">Period (woman)<span className="text-danger">*</span></span></label>
+            <Select className='form-control select-multi' isMulti value={selectedPeriodsOptions} onChange={(values) =>  handleChange1(values, 'periods_type')} options={periodsOption} onFocus={() =>  setActiveClass('periods_type')}/>
+            <small className="error-mesg">{formData["periods_type"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["remarks"].errorClass}`}>
             <label htmlFor="describe">Describe / Explain Problems: </label>
-            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" value={formData["remarks"].value}></textarea>
+            <textarea rows="3" name="remarks" id="remarks" className="form-control" placeholder="Describe / Explain Problems" onChange={handleChange} value={formData["remarks"].value}></textarea>
+            {/* <small className="error-mesg">{formData["remarks"].errorMessage}</small> */}
+          </div>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
           </div>
         </form>
       </div>

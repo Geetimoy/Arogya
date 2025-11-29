@@ -447,7 +447,7 @@ function DoctorAppointments(){
         </div>
       </div>
       <div className="app-body bookings">
-
+        
         <div className='tab-container'>
           <div className="d-flex justify-content-center">
             <button onClick={() => setActiveTab('tab1')} className={`${ activeTab === 'tab1' ? 'active' : ''
@@ -455,6 +455,7 @@ function DoctorAppointments(){
             <button onClick={() => setActiveTab('tab2')} className={`${ activeTab === 'tab2' ? 'active' : ''
               }`} > Recent Bookings </button>
           </div>
+          <div className='text-end mt-3'><Link to={"/child-growth-charts"} className='primary-color'>All Child Growth Charts</Link></div>
           <div className="tab-content">
             {activeTab === 'tab1' && <PreviousBookings />}
             {activeTab === 'tab2' && <RecentBookings />}

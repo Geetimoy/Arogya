@@ -18,3 +18,39 @@
     width: auto; */
     font-weight: 600;
 }
+.health-chart a svg{
+  width:16px;
+  fill: #af1e25;
+}
+
+.charts{
+  position: absolute;
+  top: 65px;
+  right: -20px;
+  font-size: 14px;
+  font-weight: 500;
+  transform: rotate(90deg);
+  width:65px;
+  display: flex;
+}
+
+.charts svg{
+  width:16px;
+  fill: #af1e25;
+  margin-right: 6px;
+}
+
+.button-box .charts a{
+  padding: 0;
+}
+.d-text{
+  font-style: italic;
+  font-size: 12px;
+}
+.btn:hover{
+  background-color: transparent;
+}
+.btn:active{
+  background-color: transparent;
+  border: 0;
+}
