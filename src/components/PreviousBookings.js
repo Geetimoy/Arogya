@@ -445,6 +445,18 @@ function PreviouBookings(){
                       {
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject', appointment.appointment_key)}>Reject Booking</Link></li>
                       }
+                       {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/child-medical-history/${appointment.patient_key}`}>Basic Medical History</Link></li>
+                      }
+                      {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/child-periodic-data/${appointment.patient_key}`} >Periodic Data</Link></li>
+                      }
+                      {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} >Upload Form</Link></li>
+                      }
+                      {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} >Upload Prescription</Link></li>
+                      }
                       {/* <li><Link to={"/"}>Send Notifications</Link></li>
                       {
                         (decryptedLoginDetails.account_type === '4') &&<li> <Link to={"/"}>Doctor Details</Link></li>

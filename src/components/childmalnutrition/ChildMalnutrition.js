@@ -734,7 +734,7 @@ function ChildMalnutrion(){
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalHealthChartClose}>Periodic Data</Button>  
-            
+            {/* <Link to={`/childmalnutrition/child-view-periodic-data/${child.account_key}`}>Periodic Data</Link> */}
           </Modal.Footer>  
         </Modal>
 
