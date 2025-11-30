@@ -30,6 +30,56 @@ function CreateChildMalnutritionDoctor() {
 
   const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [serviceAreaOption, setServiceAreaOption] = useState([
+    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
+    { label: 'Navagraha Temple, Guwahati', value: '2' },
+    { label: 'Umananda Temple, Guwahati', value: '3' },
+    { label: 'Morigaon', value: '4' },
+		{ label: 'Saparam Bera', value: '5' }
+  ]);
+
+   const getMasterServicesArea = async (e) => {
+  
+      let jsonData = {};
+  
+      jsonData['system_id']        = systemContext.systemDetails.system_id;
+      jsonData["device_type"]      = DEVICE_TYPE;
+      jsonData["device_token"]     = DEVICE_TOKEN;
+      jsonData["user_lat"]         = localStorage.getItem('latitude');
+      jsonData["user_long"]        = localStorage.getItem('longitude');
+      jsonData["center_id"]        = 1;
+  
+      const response = await fetch(`${API_URL}/masterServiceAreas`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+  
+      let result = await response.json();
+  
+      if(result.data.rows > 0){
+        var areas         = result.data.results;
+        var optionsArray  = [];
+        for(var i=0; i<areas.length; i++){
+          optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
+        }
+        setServiceAreaOption(optionsArray);
+      }
+  
+    }
+  
+    useEffect(() => {
+      if(systemContext.systemDetails.system_id){
+        getMasterServicesArea();
+      }
+      // eslint-disable-next-line
+    }, [systemContext.systemDetails.system_id]);
+  
+    useEffect(() => {
+  
+    }, [serviceAreaOption])
 
 
    const handleChange1 = (values) => {
@@ -156,8 +206,10 @@ const resetForm = () => {
   
         let jsonData = {};
         jsonData['system_id']                 = systemContext.systemDetails.system_id;
-        jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
-        jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+        // jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+        // jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
         jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
         jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
         jsonData["device_token"]              = DEVICE_TOKEN;
@@ -201,7 +253,7 @@ const resetForm = () => {
         jsonData["toilet_type"]               = formData['toilet_type'].value;
         jsonData["special_note"]              = formData['special_notes'].value;
   
-        const response = await fetch(`${API_URL}/addUpdateChildProfile`, {
+        const response = await fetch(`${API_URL}/addUpdateChildProfileFromDoctorLogin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -349,23 +401,24 @@ const resetForm = () => {
             <small className="error-mesg">{formData["child_age"].errorMessage}</small>
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${formData["is_your_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is guardian's personal mobile number? <span className="text-danger">*</span></span> </label>
-            <select className="form-control" id="is_your_personal_mobile_number" name="is_your_personal_mobile_number">
+            <select className="form-control" id="is_your_personal_mobile_number" name="is_your_personal_mobile_number" value={formData["is_your_personal_mobile_number"].value} onChange={handleChange}>
               <option value="t">Yes</option>
               <option value="f">No</option>
             </select>
-            {/* <small className="error-mesg">{formData["is_your_personal_mobile_number"].errorMessage}</small> */}
+            <small className="error-mesg">{formData["is_your_personal_mobile_number"].errorMessage}</small>
           </div>
-           <div className="form-group">
+          {isMobileNumberVisible && <div className={`form-group ${formData["child_phone_no"].errorClass}`}>
             <label htmlFor="child_phone_no">Phone No <span className="text-danger">*</span></label>
-            <input type="tel" className="form-control" name="child_phone_no" id="child_phone_no" placeholder="Phone No" />
-            {/* <small className="error-mesg">{formData["child_phone_no"].errorMessage}</small> */}
-          </div>
-          <div className="form-group">
+            <input type="tel" className="form-control" name="child_phone_no" id="child_phone_no" placeholder="Phone No" onChange={handleChange} value={formData["child_phone_no"].value ? formData["child_phone_no"].value : ''}/>
+            <small className="error-mesg">{formData["child_phone_no"].errorMessage}</small>
+          </div>}
+           
+          <div className={`form-group ${formData["child_whatsapp_no"].errorClass}`}>
             <label htmlFor="child_whatsapp_no">WhatsApp No </label>
-            <input type="tel" className="form-control" name="child_whatsapp_no" id="child_whatsapp_no" placeholder="WhatsApp No" />
-            {/* <small className="error-mesg">{formData["child_whatsapp_no"].errorMessage}</small> */}
+            <input type="tel" className="form-control" name="child_whatsapp_no" id="child_whatsapp_no" placeholder="WhatsApp No" onChange={handleChange} value={formData["child_whatsapp_no"].value ? formData["child_whatsapp_no"].value : ''}/>
+            <small className="error-mesg">{formData["child_whatsapp_no"].errorMessage}</small>
           </div>
 
 
@@ -375,93 +428,93 @@ const resetForm = () => {
             <input type="text" className="form-control" name="child_email" id="child_email" placeholder="Email" />
             {/* <small className="error-mesg">{formData["child_email"].errorMessage}</small> */}
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["child_address"].errorClass}`}>
             <label htmlFor="child_address">Address <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_address" id="child_address" placeholder="Address" />
-            {/* <small className="error-mesg">{formData["child_address"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_address" id="child_address" placeholder="Address"  onChange={handleChange} value={formData["child_address"].value ? formData["child_address"].value : ''}/>
+            <small className="error-mesg">{formData["child_address"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["child_address_2"].errorClass}`}>
             <label htmlFor="child_address_2">Address 2 </label>
-            <input type="text" className="form-control" name="child_address_2" id="child_address_2" placeholder="Address 2" />
-            {/* <small className="error-mesg">{formData["child_address_2"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_address_2" id="child_address_2" placeholder="Address 2" onChange={handleChange} value={formData["child_address_2"].value ? formData["child_address_2"].value : ''}/>
+            <small className="error-mesg">{formData["child_address_2"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["child_landmark"].errorClass}`}>
             <label htmlFor="child_landmark">Landmark </label>
-            <input type="text" className="form-control" name="child_landmark" id="child_landmark" placeholder="Landmark" />
-            {/* <small className="error-mesg">{formData["child_landmark"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_landmark" id="child_landmark" placeholder="Landmark" onChange={handleChange} value={formData["child_landmark"].value ? formData["child_landmark"].value : ''}/>
+            <small className="error-mesg">{formData["child_landmark"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["child_city"].errorClass}`}>
             <label htmlFor="child_city">Village/Town/City <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_city" id="child_city" placeholder="Village/Town/City" />
-            {/* <small className="error-mesg">{formData["child_city"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_city" id="child_city" placeholder="Village/Town/City" onChange={handleChange} value={formData["child_city"].value ? formData["child_city"].value : ''}/>
+            <small className="error-mesg">{formData["child_city"].errorMessage}</small>
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${formData["child_state"].errorClass}`}>
             <label htmlFor="child_state">State <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_state" id="child_state" placeholder="State"/>
-            {/* <small className="error-mesg">{formData["child_state"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_state" id="child_state" placeholder="State" onChange={handleChange} value={formData["child_state"].value ? formData["child_state"].value : ''}/>
+            <small className="error-mesg">{formData["child_state"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["child_pincode"].errorClass}`}>
             <label htmlFor="child_pincode">Pincode <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_pincode" id="child_pincode" placeholder="Pincode" />
-            {/* <small className="error-mesg">{formData["child_pincode"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_pincode" id="child_pincode" placeholder="Pincode" onChange={handleChange} value={formData["child_pincode"].value ? formData["child_pincode"].value : ''}/>
+            <small className="error-mesg">{formData["child_pincode"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["child_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            <Select className='form-control select-multi' isMulti />
-            {/* <small className="error-mesg">{formData["child_service_area"].errorMessage}</small> */}
+            <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={serviceAreaOption} />
+            <small className="error-mesg">{formData["child_service_area"].errorMessage}</small>
           </div>
 
-          <div className="sp-notes form-group">
+          <div className={`sp-notes form-group ${formData["child_school_name"].errorClass}`}>
             <label htmlFor="child_school_name">School Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_school_name" id="child_school_name" placeholder="School Name"/>
-            {/* <small className="error-mesg">{formData["child_school_name"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_school_name" id="child_school_name" placeholder="School Name" onChange={handleChange} value={formData["child_school_name"].value ? formData["child_school_name"].value : ''}/>
+            <small className="error-mesg">{formData["child_school_name"].errorMessage}</small>
           </div>
-          <div className="sp-notes form-group">
+          <div className={`sp-notes form-group ${formData["child_school_class"].errorClass}`}>
             <label htmlFor="child_school_class">Class <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_school_class" id="child_school_class" placeholder="Class" />
-            {/* <small className="error-mesg">{formData["child_school_class"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_school_class" id="child_school_class" placeholder="Class" onChange={handleChange} value={formData["child_school_class"].value ? formData["child_school_class"].value : ''}/>
+            <small className="error-mesg">{formData["child_school_class"].errorMessage}</small>
           </div>
-          <div className="form-group">
+          <div className={`form-group ${formData["child_school_section"].errorClass}`}>
             <label htmlFor="child_school_section">Section <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="child_school_section" id="child_school_section" placeholder="Section" />
-            {/* <small className="error-mesg">{formData["child_school_section"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="child_school_section" id="child_school_section" placeholder="Section" onChange={handleChange} value={formData["child_school_section"].value ? formData["child_school_section"].value : ''}/>
+            <small className="error-mesg">{formData["child_school_section"].errorMessage}</small>
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${formData["house_type"].errorClass}`}>
             <label htmlFor="house_type">House <span className="text-danger">*</span></label>
-            <select className="form-control" name="house_type" id="house_type">
+            <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value} onChange={handleChange}>
               <option value="1">Mud House</option>
               <option value="2">Paved House</option>
             </select>
-            {/* <small className="error-mesg">{formData["house_type"].errorMessage}</small> */}
+            <small className="error-mesg">{formData["house_type"].errorMessage}</small>
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${formData["drinking_water_type"].errorClass}`}>
             <label htmlFor="drinking_water_type">Drinking Water <span className="text-danger">*</span></label>
-            <select className="form-control" name="drinking_water_type" id="drinking_water_type">
+            <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value} onChange={handleChange}>
               <option value="1">Tap</option>
               <option value="2">Well</option>
               <option value="3">Pond</option>
             </select>
-            {/* <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small> */}
+            <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
           </div>
           
-          <div className="form-group ">
+          <div className={`form-group ${formData["toilet_type"].errorClass}`}>
             <label htmlFor="toilet_type">Toilet <span className="text-danger">*</span></label>
-            <select className="form-control"  name="toilet_type" id="toilet_type" >
+            <select className="form-control"  value={formData["toilet_type"].value} name="toilet_type" id="toilet_type" onChange={handleChange} >
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>
               <option value="3">Flush-toilet</option>
             </select>
-            {/* <small className="error-mesg">{formData["toilet_type"].errorMessage}</small> */}
+            <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
           </div>
 
-          <div className="form-group "><label htmlFor="sub_volunteer_name">Sub Volunteer Name</label><select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Sub Volunteer1</option><option value="2">Sub Volunteer2</option></select></div>
-          <div className="form-group ">
+          <div className="form-group "><label htmlFor="sub_volunteer_name">Sub Volunteer Name</label><select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Suprio</option></select></div>
+          <div className={`form-group ${formData["special_notes"].errorClass}`}>
             <label htmlFor="special_notes">Special Notes </label>
-            <input type="text" className="form-control" name="special_notes" id="special_notes" placeholder="Special Notes" />
-            {/* <small className="error-mesg">{formData["special_notes"].errorMessage}</small> */}
+            <input type="text" className="form-control" name="special_notes" id="special_notes" placeholder="Special Notes" onChange={handleChange} value={formData["special_notes"].value ? formData["special_notes"].value : ''}/>
+            <small className="error-mesg">{formData["special_notes"].errorMessage}</small>
           </div>
 
           <div className='mb-3 mt-3 text-center'>
