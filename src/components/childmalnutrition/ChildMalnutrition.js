@@ -424,6 +424,7 @@ function ChildMalnutrion(){
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
   const [chartChildName, setChartChildName] = useState("");
+  const [chartChildKey, setChartChildKey] = useState("");
   //const [childChart, setChildChart] = useState([]);
   const [weightChart, setWeightChart] = useState([]);
   const showChart = async(child_account_key, child_name) => {
@@ -458,12 +459,22 @@ function ChildMalnutrion(){
        let result = await response.json();
         if(result.success){
           setChartChildName(child_name);
+          setChartChildKey(child_account_key);
           setWeightChart(result.data);
           setModalHealthChartShow(true);
         }
         else{
           alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
         }
+  }
+
+  const redirectToPeriodicDataPage = (child_account_key) => {
+    if(decryptedLoginDetails.account_type === '5'){
+      window.location.href = `/childmalnutrition/child-view-periodic-data/${child_account_key}`;
+    }
+    else{
+      window.location.href = `/childmalnutrition/child-periodic-data/${child_account_key}`;
+    }
   }
 
   return(
@@ -733,7 +744,7 @@ function ChildMalnutrion(){
             <p className='mt-5 d-text'>This chart is for reference only. Please consult a healthcare professional for accurate assessment and advice.</p>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'>  
-            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalHealthChartClose}>Periodic Data</Button>  
+            <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={() => redirectToPeriodicDataPage(chartChildKey) } >Periodic Data</Button>  
             {/* <Link to={`/childmalnutrition/child-view-periodic-data/${child.account_key}`}>Periodic Data</Link> */}
           </Modal.Footer>  
         </Modal>
