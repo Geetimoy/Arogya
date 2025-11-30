@@ -443,7 +443,9 @@ export default function Core() {
             <Route path="/childmalnutrition/child-booking/:accountKey" exact element={<ChildBooking />} />
             <Route path="/childmalnutrition/child-booked-appointment/:patientKey" exact element={<ChildBookedAppointment />} />
             <Route path="/childmalnutrition/child-view-basic-info/:accountKey" exact element={<ChildViewBasicInfo/>} />
+            <Route path="/childmalnutrition/child-view-medical-history/:accountKey/:redirectedFrom" exact element={<ChildViewMedicalHistory/>} />
             <Route path="/childmalnutrition/child-view-medical-history/:accountKey" exact element={<ChildViewMedicalHistory/>} />
+            <Route path="/childmalnutrition/child-view-periodic-data/:accountKey/:redirectedFrom" exact element={<ChildViewPeriodicData />} />
             <Route path="/childmalnutrition/child-view-periodic-data/:accountKey" exact element={<ChildViewPeriodicData />} />
             <Route path="/childmalnutrition/child-profile-photo/:accountKey" exact element={<ChildProfilePhoto />} />
             <Route path="/create-child-malnutrition-doctor" exact element={<CreateChildMalnutritionDoctor />} />
