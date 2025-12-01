@@ -54,6 +54,7 @@ function ChildViewPeriodicData(){
   const [periodicList, setPeriodicList] = useState([]); 
   const [urlParam, setUrlParam] = useState(useParams());
   const editAccountKey = urlParam.accountKey;
+  const redirectedFrom = urlParam.redirectedFrom || '';
 
   const [dataProcessedDate, setDataProcessedDate] = useState(new Date());
   const onChangeDataProcessedDate = (date) => {
@@ -302,11 +303,17 @@ function ChildViewPeriodicData(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/child-malnutrition" className=''>
-                <FontAwesomeIcon icon={faLongArrowAltLeft} />
-              </Link>
+              {
+                (redirectedFrom === 'from-bookings') ? 
+                  <Link to="/doctor-appointments" className=''>
+                    <FontAwesomeIcon icon={faLongArrowAltLeft} />
+                  </Link> : 
+                  <Link to="/child-malnutrition" className=''>
+                    <FontAwesomeIcon icon={faLongArrowAltLeft} />
+                  </Link>
+              }
             </div>
-            <h5 className='mx-2 mb-0'>View Child Periodic Data</h5>
+            <h5 className='mx-2 mb-0'>View/Edit Child Periodic Data</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications /> 
