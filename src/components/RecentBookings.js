@@ -457,7 +457,7 @@ function DoctorAppointments(){
 
     const redirectToPeriodicDataPage = (child_account_key) => {
       if(decryptedLoginDetails.account_type === '5'){
-        window.location.href = `/childmalnutrition/child-view-periodic-data/${child_account_key}`;
+        window.location.href = `/childmalnutrition/child-view-periodic-data/${child_account_key}/from-bookings`;
       }
       else{
         window.location.href = `/childmalnutrition/child-periodic-data/${child_account_key}`;
