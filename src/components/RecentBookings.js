@@ -661,7 +661,7 @@ function DoctorAppointments(){
                     <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={() => redirectToPeriodicDataPage(chartChildKey) }>Periodic Data</Button>  
                     
                   </Modal.Footer>  
-                </Modal>
+        </Modal>
         
       <Appfooter></Appfooter>
     </>
