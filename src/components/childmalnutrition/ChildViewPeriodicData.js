@@ -340,6 +340,7 @@ const [chartChildName, setChartChildName] = useState("");
   
   
          let result = await response.json();
+         console.log(periodicList);
           if(result.success){
             setChartChildName(child_name);
             setChartChildKey(child_account_key);
@@ -449,7 +450,7 @@ const [chartChildName, setChartChildName] = useState("");
 
         <Modal show={modalHealthChartShow} onHide={modalHealthChartClose}>
                   <Modal.Body>  
-                    <p className='text-center'>Child: {chartChildName}</p> 
+                    <p className='text-center'>Child: {userBasicDetails.display_name}</p> 
                     <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
                     {/* <button type="button" className="btn-close" data-bs-dismiss="modal"></button> */}
                     <div className='health-chart'>
