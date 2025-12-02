@@ -2,6 +2,8 @@ import { useContext, useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
 import Appfooter from "../AppFooter";
 
+import WeightLineChart from "../WeightLineChart";
+
 import Category from "./Category";
 
 import SystemContext from "../../context/system/SystemContext";
@@ -16,6 +18,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from "../AppTopNotifications";
 
 import './ChildMalnutrition.css';
@@ -297,6 +301,56 @@ function ChildViewPeriodicData(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id, editAccountKey]);
 
+const [chartChildName, setChartChildName] = useState("");
+  const [chartChildKey, setChartChildKey] = useState("");
+  //const [childChart, setChildChart] = useState([]);
+  const [weightChart, setWeightChart] = useState([]);
+  const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
+  
+
+  const modalHealthChartClose  = () => setModalHealthChartShow(false);  
+
+  const showChart = async(child_account_key, child_name) => {
+      
+  
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  
+       let jsonData = {};
+        jsonData['system_id']                 = systemContext.systemDetails.system_id;
+        jsonData["account_key"]               = child_account_key;
+        jsonData["account_type"]              = 31;
+  
+        jsonData["call_for"]       				    = "all";
+        jsonData["user_login_id"]       		  = decryptedLoginDetails.login_id;
+        
+  
+        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+        jsonData["device_token"]              = DEVICE_TOKEN;
+        jsonData["user_lat"]                  = localStorage.getItem('latitude');
+        jsonData["user_long"]                 = localStorage.getItem('longitude');
+  
+  
+        const response = await fetch(`${API_URL}/getChildChartHistory`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData)
+        })
+  
+  
+         let result = await response.json();
+          if(result.success){
+            setChartChildName(child_name);
+            setChartChildKey(child_account_key);
+            setWeightChart(result.data);
+            setModalHealthChartShow(true);
+          }
+          else{
+            alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+          }
+    }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -363,12 +417,18 @@ function ChildViewPeriodicData(){
             <button type="submit" className='btn primary-bg-color text-light min-width-100'>Update</button>
           </div>
         </form>
-        <div className="text-end"><Link to="#" className='primary-color'>Show in Charts</Link></div>
+       {periodicList.map((child, index) => (
+          <div key={index} className="my-4">
+            <div className="text-end"><Link onClick={() => { showChart(child.account_key, child.child_name) }} to="#" className='primary-color'>Show in Charts</Link></div>
+          </div>
+        ))}
         <div className="saved-periodic-data">
           <div className="row mt-4">
 
             {periodicList.map((child, index) => (
+              
               <div className="col-6" key={index}>
+                 {/* <div className="text-end"><Link onClick={() => { showChart(child.account_key, child.child_name) }} to="#" className='primary-color'>Show in Charts</Link></div> */}
                 <div className="jumbotron rounded p-2">
                   <div className="periodic-data position-relative">
                     <p className="primary-color"><strong>Date -  {child.data_processed_on}</strong></p>
@@ -386,6 +446,39 @@ function ChildViewPeriodicData(){
 
           </div>
         </div>
+
+        <Modal show={modalHealthChartShow} onHide={modalHealthChartClose}>
+                  <Modal.Body>  
+                    <p className='text-center'>Child: {chartChildName}</p> 
+                    <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
+                    {/* <button type="button" className="btn-close" data-bs-dismiss="modal"></button> */}
+                    <div className='health-chart'>
+                      <WeightLineChart weightChart={weightChart} />
+                      {/* <table className='table table-bordered'>
+                        
+                        <tbody>
+                          <tr>
+                            <td><strong>Weight (in Kg)</strong></td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>15</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Date</strong></td>
+                            <td>28/05/25</td>
+                            <td>05/06/25</td>
+                            <td>29/10/2025</td>
+                          </tr>
+                        </tbody>
+                      </table> */}
+                    </div>
+                    <p className='mt-5 d-text'>This chart is for reference only. Please consult a healthcare professional for accurate assessment and advice.</p>
+                  </Modal.Body>  
+                  {/* <Modal.Footer className='justify-content-center'>  
+                    <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0'>Periodic Data</Button>  
+                    <Link to={`/childmalnutrition/child-view-periodic-data/${child.account_key}`}>Periodic Data</Link>
+                  </Modal.Footer>   */}
+                </Modal>
       </div>
       <Appfooter></Appfooter>
     </>
