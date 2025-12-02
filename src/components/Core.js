@@ -55,6 +55,9 @@ import JananiProfilePhoto from './janani/JananiProfilePhoto';
 import ChildMalnutrition from './childmalnutrition/ChildMalnutrition';
 import CreateChildMalnutrition from './childmalnutrition/CreateChildMalnutrition';
 import ChildPrescription from './childmalnutrition/ChildPrescription';
+
+import ChildPrescriptionDoctor from './childmalnutrition/ChildPrescriptionDoctor';
+
 import ChildTestReports from './childmalnutrition/ChildTestReports';
 import ChildMedicalHistory from './childmalnutrition/ChildMedicalHistory';
 import ChildPeriodicData from './childmalnutrition/ChildPeriodicData';
@@ -430,6 +433,9 @@ export default function Core() {
             <Route path="/Create-Child-Malnutrition" exact element={<CreateChildMalnutrition />} />
             <Route path="/childmalnutrition/child-basic-info/:accountKey" exact element={<ChildBasicInfo/>} />
             <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
+
+            <Route path="/childmalnutrition/child-prescription-doctor/:accountKey" exact element={<ChildPrescriptionDoctor />} />
+
             <Route path="/childmalnutrition/child-prescription/:accountKey/:prescriptionType" exact element={<ChildPrescription />} />
             <Route path="/childmalnutrition/child-prescription/:accountKey/:prescriptionType/:appointmentId" exact element={<ChildPrescription />} />
             <Route path="/childmalnutrition/child-upload-prescription/:accountKey" exact element={<ChildUploadPrescription />}/>
