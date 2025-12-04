@@ -49,3 +49,7 @@
 .font-weight-500{
   font-weight: 500;
 }
+.show-charts svg{
+  width: 20px;
+  fill:#af1e25;
+}
