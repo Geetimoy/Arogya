@@ -163,6 +163,7 @@ export default function ChildViewBasicInfo() {
       house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
       drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
       toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+      sub_volunteer: {required: true, value:"", errorClass:"", errorMessage:""},
       special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
     });
   
@@ -256,6 +257,7 @@ export default function ChildViewBasicInfo() {
             formData['house_type']         = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
             formData['drinking_water_type']= {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
             formData['toilet_type']        = {value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
+            jsonData["sub_volunteer"]      = {value:userDetails.sub_volunteer, errorClass:"", errorMessage:""};
             formData['special_notes']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
             setFormData({...formData, ...formData});
@@ -319,6 +321,7 @@ export default function ChildViewBasicInfo() {
         jsonData["house_type"]                = formData['house_type'].value;
         jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
         jsonData["toilet_type"]               = formData['toilet_type'].value;
+        jsonData["sub_volunteer"]             = formData['sub_volunteer'].value;
         jsonData["special_note"]              = formData['special_notes'].value;
   
         const response = await fetch(`${API_URL}/addUpdateChildBasicInformationFromDoctorLogin`, {
@@ -584,6 +587,16 @@ export default function ChildViewBasicInfo() {
                 <option value="3">Flush-toilet</option>
               </select>
               <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
+            </div>
+
+            <div className={`form-group ${formData["sub_volunteer"].errorClass}`}>
+              <label htmlFor="sub_volunteer">Volunteer Name <span className="text-danger">*</span></label>
+              <select className="form-control" name="sub_volunteer" id="sub_volunteer" value={formData["sub_volunteer"].value} onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="uoo22662626">John</option>
+                <option value="uoo22662633">Fredy</option>
+              </select>
+              <small className="error-mesg">{formData["sub_volunteer"].errorMessage}</small>
             </div>
   
             <div className={`form-group ${formData["special_notes"].errorClass}`}>

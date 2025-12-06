@@ -194,6 +194,7 @@ const resetForm = () => {
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
+    sub_volunteer: {required: true, value:"", errorClass:"", errorMessage:""},
     special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
@@ -251,6 +252,7 @@ const resetForm = () => {
         jsonData["house_type"]                = formData['house_type'].value;
         jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
         jsonData["toilet_type"]               = formData['toilet_type'].value;
+        jsonData["sub_volunteer"]             = formData['sub_volunteer'].value;
         jsonData["special_note"]              = formData['special_notes'].value;
   
         const response = await fetch(`${API_URL}/addUpdateChildProfileFromDoctorLogin`, {
@@ -510,7 +512,16 @@ const resetForm = () => {
             <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
           </div>
 
-          <div className="form-group "><label htmlFor="sub_volunteer_name">Volunteer Name</label><select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name"><option value="1">Suprio</option></select></div>
+          <div className={`form-group ${formData["sub_volunteer"].errorClass}`}>
+            <label htmlFor="sub_volunteer">Volunteer Name <span className="text-danger">*</span></label>
+            <select className="form-control" name="sub_volunteer" id="sub_volunteer" value={formData["sub_volunteer"].value} onChange={handleChange}>
+              <option value="">Select</option>
+              <option value="uoo22662626">John</option>
+              <option value="uoo22662633">Fredy</option>
+            </select>
+            <small className="error-mesg">{formData["sub_volunteer"].errorMessage}</small>
+          </div>
+          
           <div className={`form-group ${formData["special_notes"].errorClass}`}>
             <label htmlFor="special_notes">Special Notes </label>
             <input type="text" className="form-control" name="special_notes" id="special_notes" placeholder="Special Notes" onChange={handleChange} value={formData["special_notes"].value ? formData["special_notes"].value : ''}/>
