@@ -166,6 +166,7 @@ function DoctorAppointmentsPrescriptions(){
     jsonData["account_type"]          = 3;
     jsonData["file_type"]             = prescriptionType;
     jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
+    jsonData["delete_for"]            = 'child';
     jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]          = DEVICE_TOKEN;
     jsonData["user_lat"]              = localStorage.getItem('latitude');
