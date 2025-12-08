@@ -168,6 +168,8 @@ import NurseCare from './serviceproviders/NurseCare';
 import HomeCare from './serviceproviders/HomeCare';
 import Pharmacy from './serviceproviders/Pharmacy';
 import DoctorAppointmentsUploadPresciption from './DoctorAppointmentsUploadPresciption';
+import DoctorAppointmentSurveyForms from './DoctorAppointmentSurveyForms';
+import DoctorAppointmentUploadSurveyForm from './DoctorAppointmentUploadSurveyForm';
 
 
 
@@ -515,6 +517,8 @@ export default function Core() {
             <Route path="/doctor-appointments-prescription/:appointmentKey/:accountKey/:prescriptionType" exact element={<DoctorAppointmentsPrescriptions />} />
             <Route path="/doctor-appointments-upload-prescription/:accountKey/:prescriptionType/:appointmentKey" exact element={<DoctorAppointmentsUploadPresciption />} />
             <Route path="/patientprofiles-booking/:doctorAccountKey/:scheduleId" exact element={<PatientProfilesBooking />} />
+            <Route path="/doctor-appointment-survey-forms/:appointmentKey/:accountKey/:prescriptionType" exact element={<DoctorAppointmentSurveyForms/>} />
+            <Route path="/doctor-appointment-upload-survey-form/:accountKey/:prescriptionType/:appointmentKey" exact element={<DoctorAppointmentUploadSurveyForm/>} />
 
             <Route path="/upload-prescription" exact element={<UploadPrescription />} />
             <Route path="/upload-test-report" exact element={<UploadTestReport />} />

@@ -520,7 +520,7 @@ function DoctorAppointments(){
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/child-view-periodic-data/${appointment.patient_key}/from-bookings`} >Periodic Data</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} >Upload Form</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/doctor-appointment-survey-forms/${appointment.appointment_key}/${appointment.patient_key}/doctor`} >Upload Form</Link></li>
                       }
                       {
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/doctor-appointments-prescription/${appointment.appointment_key}/${appointment.patient_key}/doctor`} >Upload Prescription</Link></li>

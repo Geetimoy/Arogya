@@ -20,7 +20,7 @@ import AppTopNotifications from './AppTopNotifications';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function DoctorAppointmentsPrescriptions(){
+function DoctorAppointmentSurveyForms(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -70,22 +70,22 @@ function DoctorAppointmentsPrescriptions(){
     setFormData({...formData, ...formData});
   }
 
+  const appointmentKey    = (urlParam.appointmentKey) ? urlParam.appointmentKey : '';
   const editAccountKey    = urlParam.accountKey;
-  const appointmentKey    = urlParam.appointmentKey;
   const prescriptionType  = urlParam.prescriptionType;
+  
 
   /*if(prescriptionType === 'initial'){
-    var uploadUrl = `/childmalnutrition/doctor-appointments-upload-prescription/${editAccountKey}/${prescriptionType}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentFromDoctorLoginForChild`;
+    var uploadUrl = `/childmalnutrition/child-upload-prescription/${editAccountKey}/${prescriptionType}`;
+    var fetchUrl  = `childSurveyPrescriptionListFromDoctorLogin`;
   }
   else if(prescriptionType === 'doctor'){
-    var uploadUrl = `/childmalnutrition/child-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+    var uploadUrl = `/childmalnutrition/child-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentKey}`;
     var fetchUrl  = `fetchInitialAppointmentDocumentForChild`;
   }*/
 
-  var uploadUrl = `/doctor-appointments-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentKey}`;
-  var fetchUrl  = `fetchInitialAppointmentDocumentFromDoctorLoginForChild`;
-
+  var uploadUrl = `/doctor-appointment-upload-survey-form/${editAccountKey}/${prescriptionType}/${appointmentKey}`;
+  var fetchUrl  = `childSurveyPrescriptionListFromDoctorLogin`;
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -105,8 +105,8 @@ function DoctorAppointmentsPrescriptions(){
     let jsonData = {};
     jsonData['system_id']               = systemContext.systemDetails.system_id;
     jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+    jsonData["doctor_account_type"]     = 5;
     jsonData["account_key"]             = editAccountKey;
-    jsonData["appointment_key"]         = appointmentKey;
     jsonData["account_type"]            = 3;
     jsonData["file_type"]               = prescriptionType;
     jsonData["search_param"]            = {
@@ -165,15 +165,14 @@ function DoctorAppointmentsPrescriptions(){
     jsonData["account_key"]           = editAccountKey;
     jsonData["account_type"]          = 3;
     jsonData["file_type"]             = prescriptionType;
-    jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
-    jsonData["delete_for"]            = 'child';
+    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;
     jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]          = DEVICE_TOKEN;
     jsonData["user_lat"]              = localStorage.getItem('latitude');
     jsonData["user_long"]             = localStorage.getItem('longitude');
     jsonData["file_id"]               = deletePrescriptionFileId;
 
-    const response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForChildFromDoctorLogin`, {
+    const response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForChild`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -514,12 +513,8 @@ function DoctorAppointmentsPrescriptions(){
           jsonData["device_token"]              = DEVICE_TOKEN;
           jsonData["user_lat"]                  = localStorage.getItem('latitude');
           jsonData["user_long"]                 = localStorage.getItem('longitude');
-
-          //Geetimoy da
-          jsonData["upload_for"]                = "child";
-
           jsonData["appointment_initial_type"]  = 1;
-          jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+          jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
           jsonData["user_account_key"]          = editAccountKey;
           jsonData["user_account_type"]         = 3;
           jsonData["appointment_key"]           = appointmentKey;
@@ -530,7 +525,7 @@ function DoctorAppointmentsPrescriptions(){
           jsonData["recheck_date"]              = recheckDate;
           jsonData["files"]                     = fileUploadArray;
 
-          const response = await fetch(`${API_URL}/uploadAppointmentDocumentForChildFromDoctorLogin`, {
+          const response = await fetch(`${API_URL}/uploadAppointmentDocumentForChild`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -584,7 +579,7 @@ function DoctorAppointmentsPrescriptions(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Upload Prescriptions </h5>
+            <h5 className='mx-2 mb-0'>Upload Survey Form</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications />
@@ -606,12 +601,9 @@ function DoctorAppointmentsPrescriptions(){
       </div>
       <div className="app-body young-womens upload-prescription">
         <p className='patient-details'>
-            Appointment Id: {appointmentKey.toUpperCase()}
-        </p>
-        <p className='patient-details'>
             {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-
+        
         <div className='add-patient align-items-center d-flex justify-content-between'>
           <span>Total - {prescriptionList.length}</span>
           <div className='d-flex justify-content-end'><button className='btn btn-sm btn-primary primary-bg-color border-0' onClick={openCameraPopup} >Use Camera</button>
@@ -743,4 +735,4 @@ function DoctorAppointmentsPrescriptions(){
   );
 }
 
-export default DoctorAppointmentsPrescriptions;
+export default DoctorAppointmentSurveyForms;
