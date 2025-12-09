@@ -76,6 +76,16 @@ function GrowthTracker() {
                 <td>76</td>
                 <td>80-90 Cm <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
               </tr>
+              <tr>
+                <td>BMI</td>
+                <td>76</td>
+                <td>80-90 Cm <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+              </tr>
+              <tr>
+                <td>Mid Arm </td>
+                <td>76</td>
+                <td>80-90 Cm <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+              </tr>
             </tbody>
           </table>
           <Link to='' className='btn btn-sm btn-primary primary-bg-color border-0 w-100'>View Growth Chart</Link>
