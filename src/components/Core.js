@@ -442,7 +442,7 @@ export default function Core() {
             <Route path="/childmalnutrition/child-prescription/:accountKey" exact element={<ChildPrescription />} />
 
             <Route path="/childmalnutrition/child-prescription-doctor/:accountKey" exact element={<ChildPrescriptionDoctor />} />
-            <Route path="/childmalnutrition/growth-tracker/" exact element={<GrowthTracker />} />
+            <Route path="/childmalnutrition/growth-tracker/:accountKey/:redirectedFrom" exact element={<GrowthTracker />} />
             <Route path="/childmalnutrition/past-meas-weight/" exact element={<PastMeasurmentsWeight />} />
             <Route path="/childmalnutrition/past-meas-height/" exact element={<PastMeasurmentsHeight />} />
 
