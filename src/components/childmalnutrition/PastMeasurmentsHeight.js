@@ -83,9 +83,11 @@ function PastMeasurmentsHeight() {
 
   useEffect(() => {
     
-    fetchGrowthData();
+    if(systemContext.systemDetails.system_id){
+      fetchGrowthData();
+    }
 
-  }, []);
+  }, [systemContext.systemDetails.system_id]);
 
   return (
     <>
