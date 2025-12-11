@@ -28,6 +28,20 @@ function PastMeasurmentsHeight() {
   const editAccountKey    = urlParam.accountKey;
   const redirectedFrom    = urlParam.redirectedFrom;
   const measuremenType    = urlParam.measuremenType;
+
+  var measurementLabel = '';
+  if(measuremenType === 'weight'){
+    measurementLabel = 'Weight';
+  }
+  else if(measuremenType === 'height'){
+    measurementLabel = 'Height';
+  }
+  else if(measuremenType === 'bmi'){
+    measurementLabel = 'BMI';
+  }
+  else if(measuremenType === 'mid_arm'){
+    measurementLabel = 'Mid Arm';
+  }
   
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -83,7 +97,7 @@ function PastMeasurmentsHeight() {
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-             <h5 className='mx-2 mb-0'>Past Measurments Height </h5> 
+             <h5 className='mx-2 mb-0'>Past Measurments {measurementLabel} </h5> 
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications /> 
