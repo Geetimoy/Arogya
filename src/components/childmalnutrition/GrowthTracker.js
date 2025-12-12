@@ -14,6 +14,8 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 
 import AppTopNotifications from '../AppTopNotifications';
 import { keyframes } from '@mui/material';
+import MetricChart from '../../util/MetricChart';
+import {Modal, Button} from 'react-bootstrap'; 
 
 
 function GrowthTracker() {
@@ -66,10 +68,59 @@ function GrowthTracker() {
   }
 
   useEffect(() => {
-    
-    fetchGrowthData();
 
+    if(systemContext.systemDetails.system_id){
+      fetchGrowthData();
+    }
+
+  }, [systemContext.systemDetails.system_id]);
+
+
+  const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
+  const modalHealthChartClose  = () => setModalHealthChartShow(false);  
+  const [labels, setLabels] = useState([]);
+  const [metrics, setMetrics] = useState([]);
+
+  useEffect(() => {
+    // Example: simulate API response
+    const fetchMetricData = async () => {
+      // API response structure YOU can customize
+      const response = {
+        months: [36, 40, 44, 48, 52, 56, 60],
+        metrics: [
+          {
+            name: "Weight (kg)",
+            data: [12.5, 13.2, 13.8, 14.8, 15.4, 16.0, 16.7],
+            color: "#ff4b91",
+          },
+          {
+            name: "Height (cm)",
+            data: [95, 97, 99, 101, 103, 105, 107],
+            color: "#4285f4",
+          },
+          {
+            name: "BMI",
+            data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
+            color: "#34a853",
+          },
+          {
+            name: "Mid Arm",
+            data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
+            color: "#a83834ff",
+          },
+        ],
+      };
+
+      setLabels(response.months);
+      setMetrics(response.metrics);
+    };
+
+    fetchMetricData();
   }, []);
+
+  const showChart = () => {
+    setModalHealthChartShow(true);
+  }
 
   return (
     <>
@@ -123,7 +174,7 @@ function GrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].weight && <tr>
                       <td>Weight</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight }</td>
-                      <td><span className='d-inline-block min-width-100'>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg </span><Link to={'/childmalnutrition/past-meas-weight'} className='primary-color'>(History)</Link></td> 
+                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg <Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/weight`} className='primary-color'>(History)</Link></td> 
                     </tr>
                   } 
 
@@ -131,7 +182,7 @@ function GrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].height && <tr>
                       <td>Height</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height }</td>
-                      <td><span className='d-inline-block min-width-100'>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm </span><Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
                     </tr>
                   }
 
@@ -139,7 +190,7 @@ function GrowthTracker() {
                       latestGrowthData[Object.keys(latestGrowthData)[0]].bmi && <tr>
                         <td>BMI</td>
                         <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi }</td>
-                        <td><span className='d-inline-block min-width-100'>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } </span><Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+                        <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
                       </tr>
                   }
                   
@@ -147,7 +198,7 @@ function GrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm && <tr>
                       <td>Mid Arm</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm }</td>
-                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm_range } <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm_range } <Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/mid_arm`} className='primary-color'>(History)</Link></td> 
                     </tr>
                   }
                   
@@ -157,8 +208,23 @@ function GrowthTracker() {
 
             </tbody>
           </table>
-          <Link to='' className='btn btn-sm btn-primary primary-bg-color border-0 w-100'>View Growth Chart</Link>
+          <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0 w-100' onClick={() =>  showChart()}>View Growth Chart</Link>
       </div>
+
+      <Modal show={modalHealthChartShow} onHide={modalHealthChartClose}>
+        <Modal.Footer className='justify-content-center'> 
+          <h5 className='modal-title'>Growth Chart</h5> 
+          <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
+        </Modal.Footer>  
+        <Modal.Body>   
+          <div className='health-chart'>
+              <MetricChart labels={labels} metrics={metrics}/>
+          </div>
+        </Modal.Body>  
+        <Modal.Footer className='justify-content-center'>  
+        </Modal.Footer>  
+      </Modal>
+
       <Appfooter></Appfooter>
     </>
   );
