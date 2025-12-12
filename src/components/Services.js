@@ -88,7 +88,7 @@ function Services(){
               (decryptedLoginDetails.account_type == 4 || decryptedLoginDetails.account_type == 5) && <div className='col-6'>
                 <div className='button-box'>
                   <Link to="/youngwomens"><img src={youngwoman} alt='' />
-                  <h6>Young Women's (11yrs to 18yrs)</h6></Link>
+                  <h6>Young Women's (12yrs to 19yrs)</h6></Link>
                 </div>
               </div>
             }

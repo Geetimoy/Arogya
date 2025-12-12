@@ -410,10 +410,11 @@ function DoctorAppointments(){
   const modalHealthChartClose  = () => setModalHealthChartShow(false);  
 
   const [chartChildName, setChartChildName] = useState("");
+  const [chartChildAge, setChartChildAge] = useState("");
   const [chartChildKey, setChartChildKey] = useState("");
   const [weightChart, setWeightChart] = useState([]);
 
-  const showChart = async(child_account_key, child_name) => {
+  const showChart = async(child_account_key, child_name, child_age) => {
       
   //console.log("child_account_key", child_account_key);
   
@@ -446,6 +447,7 @@ function DoctorAppointments(){
          let result = await response.json();
           if(result.success){
             setChartChildName(child_name);
+            setChartChildAge(child_age);
             setChartChildKey(child_account_key);
             setWeightChart(result.data);
             setModalHealthChartShow(true);
@@ -635,7 +637,7 @@ function DoctorAppointments(){
 
         <Modal show={modalHealthChartShow} onHide={modalHealthChartClose}>
                   <Modal.Body>  
-                    <p className='text-center'>Child: {chartChildName}</p> 
+                    <p className='text-center'>Child: {chartChildName}, Age:{chartChildAge}</p> 
                     <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
                     {/* <button type="button" className="btn-close" data-bs-dismiss="modal"></button> */}
                     <div className='health-chart'>

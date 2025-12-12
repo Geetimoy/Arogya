@@ -182,7 +182,7 @@ function GrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].height && <tr>
                       <td>Height</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height }</td>
-                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm <Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/height`} className='primary-color'>(History)</Link></td> 
+                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
                     </tr>
                   }
 
@@ -190,7 +190,7 @@ function GrowthTracker() {
                       latestGrowthData[Object.keys(latestGrowthData)[0]].bmi && <tr>
                         <td>BMI</td>
                         <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi }</td>
-                        <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } <Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/bmi`} className='primary-color'>(History)</Link></td> 
+                        <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
                       </tr>
                   }
                   
