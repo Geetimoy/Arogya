@@ -22,6 +22,8 @@ import RecentBookings from './RecentBookings';
 import PreviousBookings from './PreviousBookings';
 import AppTopNotifications from './AppTopNotifications';
 
+import allChildInfo from '../assets/reports/all-child-info-19122025.pdf';
+
 function DoctorAppointments(){
 
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -455,7 +457,7 @@ function DoctorAppointments(){
             <button onClick={() => setActiveTab('tab2')} className={`${ activeTab === 'tab2' ? 'active' : ''
               }`} > Recent Bookings </button>
           </div>
-          <div className='text-end mt-3'><Link to={"/child-growth-charts"} className='primary-color'>All Child Growth Charts</Link></div>
+          <div className='text-end mt-3'><a href={allChildInfo} target='_blank' className='primary-color'>All Child Growth Charts</a></div>
           <div className="tab-content">
             {activeTab === 'tab1' && <PreviousBookings />}
             {activeTab === 'tab2' && <RecentBookings />}

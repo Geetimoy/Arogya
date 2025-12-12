@@ -123,7 +123,7 @@ function GrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].weight && <tr>
                       <td>Weight</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight }</td>
-                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg <Link to={'/childmalnutrition/past-meas-weight'} className='primary-color'>(History)</Link></td> 
+                      <td><span className='d-inline-block min-width-100'>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg </span><Link to={'/childmalnutrition/past-meas-weight'} className='primary-color'>(History)</Link></td> 
                     </tr>
                   } 
 
@@ -131,7 +131,7 @@ function GrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].height && <tr>
                       <td>Height</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height }</td>
-                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+                      <td><span className='d-inline-block min-width-100'>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm </span><Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
                     </tr>
                   }
 
@@ -139,7 +139,7 @@ function GrowthTracker() {
                       latestGrowthData[Object.keys(latestGrowthData)[0]].bmi && <tr>
                         <td>BMI</td>
                         <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi }</td>
-                        <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+                        <td><span className='d-inline-block min-width-100'>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } </span><Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
                       </tr>
                   }
                   
