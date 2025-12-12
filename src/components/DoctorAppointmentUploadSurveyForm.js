@@ -68,7 +68,8 @@ function DoctorAppointmentUploadSurveyForm(){
       jsonData["device_token"]            = DEVICE_TOKEN;
       jsonData["user_lat"]                = localStorage.getItem('latitude');
       jsonData["user_long"]               = localStorage.getItem('longitude');
-      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+      jsonData["upload_for"]              = "child";
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
       jsonData["file"]                    = uploadedFileBase64Array[1];
@@ -76,7 +77,7 @@ function DoctorAppointmentUploadSurveyForm(){
 
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/uploadChildSurveyPrescription`, {
+      const response = await fetch(`${API_URL}/uploadChildSurveyPrescriptionFromDoctorLogin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +93,7 @@ function DoctorAppointmentUploadSurveyForm(){
           fileUpload['inputPrescription'].upload   = true;
           fileUpload['inputPrescription'].fileName = "";
           setFileUpload({...fileUpload, ...fileUpload});
-          redirect('/childmalnutrition/child-prescription/'+editAccountKey);
+          redirect(`/doctor-appointment-survey-forms/${appointmentKey}/${editAccountKey}/${prescriptionType}`);
         }, 2000);
       }
       else{
@@ -138,7 +139,7 @@ function DoctorAppointmentUploadSurveyForm(){
           <div className='col-12'>
             <div className={`form-group brdr-btm parent`}>
               <input type="file" name="inputPrescription" id="inputPrescription" onChange={(event) => uploadCertificateChange(event)}/>
-              <label>{(fileUpload['inputPrescription'].fileName === '') ? 'Upload Prescription' : fileUpload['inputPrescription'].fileName}</label>
+              <label>{(fileUpload['inputPrescription'].fileName === '') ? 'Upload Survey Form' : fileUpload['inputPrescription'].fileName}</label>
             </div>
           </div>
           <div className='col-12 mt-4'>

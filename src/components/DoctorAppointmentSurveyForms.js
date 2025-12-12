@@ -128,9 +128,6 @@ function DoctorAppointmentSurveyForms(){
     let result = await response.json();
     console.log(result);
     if(result.success){
-      if(result.data.length > 0){
-
-      }
       setPrescriptionList(result.data);
     }
     else{
