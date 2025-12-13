@@ -593,8 +593,7 @@ export default function ChildViewBasicInfo() {
               <label htmlFor="sub_volunteer">Volunteer Name <span className="text-danger">*</span></label>
               <select className="form-control" name="sub_volunteer" id="sub_volunteer" value={formData["sub_volunteer"].value} onChange={handleChange}>
                 <option value="">Select</option>
-                <option value="uoo22662626">John</option>
-                <option value="uoo22662633">Fredy</option>
+                <option value="0uv2567333b5b">Suprio</option>
               </select>
               <small className="error-mesg">{formData["sub_volunteer"].errorMessage}</small>
             </div>
