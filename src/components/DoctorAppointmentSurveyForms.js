@@ -110,7 +110,7 @@ function DoctorAppointmentSurveyForms(){
     jsonData["account_type"]            = 3;
     jsonData["file_type"]               = prescriptionType;
     jsonData["search_param"]            = {
-                                            "by_keywords": searchKey,
+                                            "keyword": searchKey,
                                             "limit": "0",
                                             "offset": "0",
                                             "order_by_field": "",
