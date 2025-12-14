@@ -17,6 +17,11 @@ import { keyframes } from '@mui/material';
 import MetricChart from '../../util/MetricChart';
 import {Modal, Button} from 'react-bootstrap'; 
 
+import HeightGrowthChart from '../../util/HeightGrowthChart';
+import WeightGrowthChart from '../../util/WeightGrowthChart';
+import BMIGrowthChart from '../../util/BMIGrowthChart';
+import MidArmGrowthChart from '../../util/MidArmGrowthChart';
+
 
 function GrowthTracker() {
 
@@ -122,6 +127,156 @@ function GrowthTracker() {
     setModalHealthChartShow(true);
   }
 
+  const [defaultGrowthParam, setDefaultGrowthParam] = useState('height');
+  const heightGrowthData = [
+    {
+      month: 36,
+      who: { min: 11.8, max: 17.8 },
+      child: { height: 15 }
+    },
+    {
+      month: 40,
+      who: { min: 12.1, max: 18.5 },
+      child: { height: 16 }
+    },
+    {
+      month: 44,
+      who: { min: 12.6, max: 19.2 },
+      child: { height: 17 }
+    },
+    {
+      month: 48,
+      who: { min: 13.0, max: 20.0 },
+      child: { height: 18 }
+    },
+    {
+      month: 52,
+      who: { min: 13.4, max: 20.8 },
+      child: { height: null }
+    },
+    {
+      month: 56,
+      who: { min: 13.9, max: 22.0 },
+      child: { height: null }
+    },
+    {
+      month: 60,
+      who: { min: 14.5, max: 24.0 },
+      child: { height: null }
+    }
+  ];
+  const weightGrowthData = [
+    {
+      month: 36,
+      who: { min: 11.8, max: 17.8 },
+      child: { weight: 15 }
+    },
+    {
+      month: 40,
+      who: { min: 12.1, max: 18.5 },
+      child: { weight: 16 }
+    },
+    {
+      month: 44,
+      who: { min: 12.6, max: 19.2 },
+      child: { weight: 17 }
+    },
+    {
+      month: 48,
+      who: { min: 13.0, max: 20.0 },
+      child: { weight: 18 }
+    },
+    {
+      month: 52,
+      who: { min: 13.4, max: 20.8 },
+      child: { weight: null }
+    },
+    {
+      month: 56,
+      who: { min: 13.9, max: 22.0 },
+      child: { weight: null }
+    },
+    {
+      month: 60,
+      who: { min: 14.5, max: 24.0 },
+      child: { weight: null }
+    }
+  ];
+  const bmiGrowthData = [
+    {
+      month: 36,
+      who: { min: 11.8, max: 17.8 },
+      child: { bmi: 15 }
+    },
+    {
+      month: 40,
+      who: { min: 12.1, max: 18.5 },
+      child: { bmi: 16 }
+    },
+    {
+      month: 44,
+      who: { min: 12.6, max: 19.2 },
+      child: { bmi: 17 }
+    },
+    {
+      month: 48,
+      who: { min: 13.0, max: 20.0 },
+      child: { bmi: 18 }
+    },
+    {
+      month: 52,
+      who: { min: 13.4, max: 20.8 },
+      child: { bmi: null }
+    },
+    {
+      month: 56,
+      who: { min: 13.9, max: 22.0 },
+      child: { bmi: null }
+    },
+    {
+      month: 60,
+      who: { min: 14.5, max: 24.0 },
+      child: { bmi: null }
+    }
+  ];
+  const midArmGrowthData = [
+    {
+      month: 36,
+      who: { min: 11.8, max: 17.8 },
+      child: { mid_arm: 15 }
+    },
+    {
+      month: 40,
+      who: { min: 12.1, max: 18.5 },
+      child: { mid_arm: 16 }
+    },
+    {
+      month: 44,
+      who: { min: 12.6, max: 19.2 },
+      child: { mid_arm: 17 }
+    },
+    {
+      month: 48,
+      who: { min: 13.0, max: 20.0 },
+      child: { mid_arm: 18 }
+    },
+    {
+      month: 52,
+      who: { min: 13.4, max: 20.8 },
+      child: { mid_arm: null }
+    },
+    {
+      month: 56,
+      who: { min: 13.9, max: 22.0 },
+      child: { mid_arm: null }
+    },
+    {
+      month: 60,
+      who: { min: 14.5, max: 24.0 },
+      child: { mid_arm: null }
+    }
+  ];
+
   return (
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -217,8 +372,28 @@ function GrowthTracker() {
           <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
         </Modal.Footer>  
         <Modal.Body>   
+          <select className='form-select mb-3' value={defaultGrowthParam} onChange={ (e) => setDefaultGrowthParam(e.target.value) } >
+            <option value="height">Height</option>
+            <option value="weight">Weight</option>
+            <option value="bmi">BMI</option>
+            <option value="mid_arm">Mid Arm</option>
+          </select>
           <div className='health-chart'>
-              <MetricChart labels={labels} metrics={metrics}/>
+            {/* <MetricChart labels={labels} metrics={metrics}/> */}
+
+            {
+              defaultGrowthParam === 'height' && <HeightGrowthChart data={heightGrowthData} />
+            }  
+            {
+              defaultGrowthParam === 'weight' && <WeightGrowthChart data={weightGrowthData} />
+            }
+            {
+              defaultGrowthParam === 'bmi' && <BMIGrowthChart data={bmiGrowthData} />
+            }
+            {
+              defaultGrowthParam === 'mid_arm' && <MidArmGrowthChart data={midArmGrowthData} />
+            }
+
           </div>
         </Modal.Body>  
         <Modal.Footer className='justify-content-center'>  
