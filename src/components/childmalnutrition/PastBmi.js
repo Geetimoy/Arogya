@@ -32,7 +32,24 @@ function PastBmi(){
         </div>
     </div>
     <div className='app-body create-patient-profiles create-child-malnutrition'>
-      
+      <table className='border-0 table mt-3'>
+        <thead>
+            <tr>
+              <th>Date.</th> 
+              <th>Age</th>
+              <th>Weight</th>
+              <th>WHO Range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                  <td></td>
+                  <td> Months</td>
+                  <td> Kg </td> 
+                  <td> Kg </td> 
+                </tr>
+          </tbody>
+      </table>
     </div>
     <Appfooter></Appfooter>
     </>

@@ -53,3 +53,8 @@
   width: 20px;
   fill:#af1e25;
 }
+
+.create-patient-profiles table tr td span{
+  min-width:100px;
+  display: inline-block;
+}
