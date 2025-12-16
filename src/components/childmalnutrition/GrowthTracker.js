@@ -129,7 +129,7 @@ function GrowthTracker() {
     setModalHealthChartShow(true);
   }
 
-  const [defaultGrowthParam, setDefaultGrowthParam] = useState('height');
+  const [defaultGrowthParam, setDefaultGrowthParam] = useState('all');
   
   const heightGrowthData = [
     {
@@ -376,6 +376,7 @@ function GrowthTracker() {
         </Modal.Footer>  
         <Modal.Body>   
           <select className='form-select mb-3' value={defaultGrowthParam} onChange={ (e) => setDefaultGrowthParam(e.target.value) } >
+            <option value="all">All</option>
             <option value="height">Height</option>
             <option value="weight">Weight</option>
             <option value="bmi">BMI</option>
@@ -384,6 +385,9 @@ function GrowthTracker() {
           <div className='health-chart'>
             {/* <MetricChart labels={labels} metrics={metrics}/> */}
 
+            {
+              defaultGrowthParam === 'all' && <MetricChart labels={labels} metrics={metrics}/>
+            }  
             {
               defaultGrowthParam === 'height' && <HeightGrowthChart data={heightGrowthData} />
             }  
