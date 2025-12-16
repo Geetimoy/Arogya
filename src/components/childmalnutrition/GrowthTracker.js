@@ -345,7 +345,7 @@ function GrowthTracker() {
                       latestGrowthData[Object.keys(latestGrowthData)[0]].bmi && <tr>
                         <td>BMI</td>
                         <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi }</td>
-                        <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } <Link to={'/childmalnutrition/past-meas-height'} className='primary-color'>(History)</Link></td> 
+                        <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } <Link to={'/childmalnutrition/past-bmi'} className='primary-color'>(History)</Link></td> 
                       </tr>
                   }
                   
