@@ -128,6 +128,7 @@ function GrowthTracker() {
   }
 
   const [defaultGrowthParam, setDefaultGrowthParam] = useState('height');
+  
   const heightGrowthData = [
     {
       month: 36,
