@@ -10,33 +10,17 @@ import {
   CartesianGrid,
 } from "recharts";
 
-export default function MetricChart() {
-  const [chartData, setChartData] = useState([]);
+export default function MetricChart(props) {
+  /*const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     const response = {
-      months: [36, 40, 44, 48, 52, 56, 60],
-      metrics: [
-        {
-          name: "Weight",
-          data: [12.5, 13.2, 13.8, 14.8, 15.4, 16.0, 16.7],
-          color: "#ff4b91",
-        },
-        {
-          name: "Height",
-          data: [95, 97, 99, 101, 103, 105, 107],
-          color: "#4285f4",
-        },
-        {
-          name: "BMI",
-          data: [23.1, 23.5, 23.8, 24.0, 21.2, 33.5, 33.7],
-          color: "#34a853",
-        },
-        {
-          name: "Mid Arm",
-          data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
-          color: "#a83834",
-        },
+      months: props.labels || ["0", "1", "2", "3", "4", "5", "6"],
+      metrics: props.metrics || [
+        { name: "Weight", data: [] },
+        { name: "Height", data: [] },
+        { name: "BMI", data: [] },
+        { name: "Mid Arm", data: [] },
       ],
     };
 
@@ -52,7 +36,31 @@ export default function MetricChart() {
     });
 
     setChartData(mergedData);
-  }, []);
+  }, []);*/
+
+
+  var response = {
+    months: props.labels || ["0", "1", "2", "3", "4", "5", "6"],
+    metrics: props.metrics || [
+      { name: "Weight", data: [] },
+      { name: "Height", data: [] },
+      { name: "BMI", data: [] },
+      { name: "Mid Arm", data: [] },
+    ],
+  };
+
+  // Convert to Recharts-friendly structure
+  var chartData = response.months.map((month, index) => {
+    let row = { month };
+
+    response.metrics.forEach((metric) => {
+      row[metric.name] = metric.data[index];
+    });
+
+    return row;
+  });
+
+
 
   const metrics = [
     { name: "Weight", color: "#ff4b91" },

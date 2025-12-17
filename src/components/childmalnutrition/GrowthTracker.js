@@ -23,6 +23,7 @@ import BMIGrowthChart from '../../util/BMIGrowthChart';
 import MidArmGrowthChart from '../../util/MidArmGrowthChart';
 
 import '../../components/childmalnutrition/CreateChildMalnutrition.css';
+import { use } from 'react';
 
 
 function GrowthTracker() {
@@ -82,13 +83,74 @@ function GrowthTracker() {
 
   }, [systemContext.systemDetails.system_id]);
 
-
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
   const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
   const modalHealthChartClose  = () => setModalHealthChartShow(false);  
   const [labels, setLabels] = useState([]);
   const [metrics, setMetrics] = useState([]);
 
+
+  const getUserBasicDetails = async () => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+
+    if(decryptedLoginDetails.account_type == 5){
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 31;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 31;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetails`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
   useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
+
+  /*useEffect(() => {
     // Example: simulate API response
     const fetchMetricData = async () => {
       // API response structure YOU can customize
@@ -118,18 +180,116 @@ function GrowthTracker() {
         ],
       };
 
+      let jsonData = {};
+
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 31;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["age"]                       = 5;
+      jsonData["gender"]                    = 1;
+      jsonData["growth_param"]              = "all";
+
+
+      var response = await fetch(`${API_URL}/getChildChartHistory`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+
+      let result = await response.json();
+
+
       setLabels(response.months);
       setMetrics(response.metrics);
     };
 
     fetchMetricData();
-  }, []);
+  }, []);*/
 
-  const showChart = () => {
-    setModalHealthChartShow(true);
-  }
+  const fetchMetricData = async () => {
+    // API response structure YOU can customize
+    /*const response = {
+      months: [36, 40, 44, 48, 52, 56, 60],
+      metrics: [
+        {
+          name: "Weight (kg)",
+          data: [12.5, 13.2, 13.8, 14.8, 15.4, 16.0, 16.7],
+          color: "#ff4b91",
+        },
+        {
+          name: "Height (cm)",
+          data: [95, 97, 99, 101, 103, 105, 107],
+          color: "#4285f4",
+        },
+        {
+          name: "BMI",
+          data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
+          color: "#34a853",
+        },
+        {
+          name: "Mid Arm",
+          data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
+          color: "#a83834ff",
+        },
+      ],
+    };*/
+
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 31;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["age"]                       = 5;
+    jsonData["gender"]                    = 1;
+    jsonData["growth_param"]              = "all";
+
+
+    var response = await fetch(`${API_URL}/getChildChartHistory`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      setLabels(result.months);
+      setMetrics(result.metrics);
+    }
+    else{
+      setLabels([]);
+      setMetrics([]);
+    }
+    
+  };
 
   const [defaultGrowthParam, setDefaultGrowthParam] = useState('all');
+
+  const changeGrowthTrackerParam = (param) => {
+    setDefaultGrowthParam(param);
+    if(param === 'all'){
+      fetchMetricData();
+    }
+  }
+
+  
+  const showChart = () => {
+    setModalHealthChartShow(true);
+    changeGrowthTrackerParam('all');
+  }
+
   
   const heightGrowthData = [
     {
@@ -375,7 +535,7 @@ function GrowthTracker() {
           <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
         </Modal.Footer>  
         <Modal.Body>   
-          <select className='form-select mb-3' value={defaultGrowthParam} onChange={ (e) => setDefaultGrowthParam(e.target.value) } >
+          <select className='form-select mb-3' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value) } >
             <option value="all">All</option>
             <option value="height">Height</option>
             <option value="weight">Weight</option>
