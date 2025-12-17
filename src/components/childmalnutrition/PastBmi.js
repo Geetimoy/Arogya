@@ -1,6 +1,45 @@
+import { useState, useContext, useEffect } from 'react';
 import Appfooter from "../AppFooter";
 
+import { Link, useParams } from "react-router-dom";
+
+import AppTopNotifications from '../AppTopNotifications';
+
+import SystemContext from "../../context/system/SystemContext";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+
 function PastBmi(){
+
+   const systemContext = useContext(SystemContext);
+   const [isMActive, setIsMActive] = useState(false);
+
+     const [urlParam, setUrlParam] = useState(useParams());
+
+
+   const editAccountKey    = urlParam.accountKey;
+  const redirectedFrom    = urlParam.redirectedFrom;
+  const measuremenType    = urlParam.measuremenType;
+
+  var measurementLabel = '';
+  if(measuremenType === 'weight'){
+    measurementLabel = 'Weight';
+  }
+  else if(measuremenType === 'height'){
+    measurementLabel = 'Height';
+  }
+  else if(measuremenType === 'bmi'){
+    measurementLabel = 'BMI';
+  }
+  else if(measuremenType === 'mid_arm'){
+    measurementLabel = 'Mid Arm';
+  }
+
+    const handle2Click = () => {
+    setIsMActive(!isMActive); // Toggle the state
+  };
+
   return (
     <>
     <div className='app-top inner-app-top services-app-top'>
@@ -37,7 +76,7 @@ function PastBmi(){
             <tr>
               <th>Date.</th> 
               <th>Age</th>
-              <th>Weight</th>
+              <th>BMI</th>
               <th>WHO Range</th>
             </tr>
           </thead>
@@ -45,8 +84,8 @@ function PastBmi(){
             <tr>
                   <td></td>
                   <td> Months</td>
-                  <td> Kg </td> 
-                  <td> Kg </td> 
+                  <td>  </td> 
+                  <td>  </td> 
                 </tr>
           </tbody>
       </table>

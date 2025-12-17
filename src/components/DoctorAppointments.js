@@ -457,7 +457,7 @@ function DoctorAppointments(){
             <button onClick={() => setActiveTab('tab2')} className={`${ activeTab === 'tab2' ? 'active' : ''
               }`} > Recent Bookings </button>
           </div>
-          <div className='text-end mt-3'><a href={allChildInfo} target='_blank' className='primary-color'>All Child Growth Charts</a></div>
+          <div className='text-end mt-3'><a href={allChildInfo} target='_blank' className='primary-color'>All Child Old Prescriptions</a></div>
           <div className="tab-content">
             {activeTab === 'tab1' && <PreviousBookings />}
             {activeTab === 'tab2' && <RecentBookings />}
