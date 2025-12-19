@@ -510,7 +510,7 @@ function GrowthTracker() {
       <div className='app-body create-patient-profiles create-child-malnutrition'>
          <div className='align-items-center d-flex justify-content-between'>
             <p className='mb-0'><small>Updated on { (latestGrowthData) ? Object.keys(latestGrowthData)[0] : '' }</small></p>
-            <Link to={`/childmalnutrition/child-view-periodic-data/`} className='btn btn-sm btn-primary primary-bg-color border-0'>Add Growth Details</Link>
+            <Link to={`/childmalnutrition/child-view-periodic-data/${editAccountKey}/from-bookings`} className='btn btn-sm btn-primary primary-bg-color border-0'>Add Growth Details</Link>
           </div>
           <table className='border-0 table mt-3'>
             <thead>
