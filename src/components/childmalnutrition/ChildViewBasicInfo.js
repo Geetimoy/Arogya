@@ -257,7 +257,7 @@ export default function ChildViewBasicInfo() {
             formData['house_type']         = {value:userDetails.child_house_type, errorClass:"", errorMessage:""};
             formData['drinking_water_type']= {value:userDetails.child_drinking_water_type, errorClass:"", errorMessage:""};
             formData['toilet_type']        = {value:userDetails.child_toilet_type, errorClass:"", errorMessage:""};
-            jsonData["sub_volunteer"]      = {value:userDetails.sub_volunteer, errorClass:"", errorMessage:""};
+            formData["sub_volunteer"]      = {value:((userDetails.sub_volunteer) ? userDetails.sub_volunteer : '0uv2567333b5b'), errorClass:"", errorMessage:""};
             formData['special_notes']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
             setFormData({...formData, ...formData});
@@ -591,7 +591,7 @@ export default function ChildViewBasicInfo() {
 
             <div className={`form-group ${formData["sub_volunteer"].errorClass}`}>
               <label htmlFor="sub_volunteer">Volunteer Name <span className="text-danger">*</span></label>
-              <select className="form-control" name="sub_volunteer" id="sub_volunteer" value={formData["sub_volunteer"].value ? formData["sub_volunteer"].value : '0uv2567333b5b'} onChange={handleChange}>
+              <select className="form-control" name="sub_volunteer" id="sub_volunteer" value={formData["sub_volunteer"].value} onChange={handleChange}>
                 <option value="">Select</option>
                 <option value="0uv2567333b5b">Suprio Majhi</option>
               </select>
