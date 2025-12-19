@@ -591,7 +591,7 @@ export default function ChildViewBasicInfo() {
 
             <div className={`form-group ${formData["sub_volunteer"].errorClass}`}>
               <label htmlFor="sub_volunteer">Volunteer Name <span className="text-danger">*</span></label>
-              <select className="form-control" name="sub_volunteer" id="sub_volunteer" value={formData["sub_volunteer"].value} onChange={handleChange}>
+              <select className="form-control" name="sub_volunteer" id="sub_volunteer" value={formData["sub_volunteer"].value ? formData["sub_volunteer"].value : '0uv2567333b5b'} onChange={handleChange}>
                 <option value="">Select</option>
                 <option value="0uv2567333b5b">Suprio Majhi</option>
               </select>
