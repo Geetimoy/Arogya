@@ -88,6 +88,7 @@ function GrowthTracker() {
   const modalHealthChartClose  = () => setModalHealthChartShow(false);  
   const [labels, setLabels] = useState([]);
   const [metrics, setMetrics] = useState([]);
+  const [individualMetricData, setIndividualMetricData] = useState([]);
 
 
   const getUserBasicDetails = async () => {
@@ -249,8 +250,8 @@ function GrowthTracker() {
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
-    jsonData["age"]                       = 5;
-    jsonData["gender"]                    = 1;
+    jsonData["age"]                       = userBasicDetails.age;
+    jsonData["gender"]                    = (userBasicDetails.gender === 'male') ? 1 : 2;
     jsonData["growth_param"]              = "all";
 
 
@@ -275,6 +276,40 @@ function GrowthTracker() {
     
   };
 
+  const fetchIndividualMetricData = async (param) => {
+
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 31;
+    jsonData["account_key"]               = editAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["age"]                       = userBasicDetails.age;
+    jsonData["gender"]                    = (userBasicDetails.gender === 'male') ? 1 : 2;
+    jsonData["growth_param"]              = param;
+
+    var response = await fetch(`${API_URL}/getChildChartHistory`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      setIndividualMetricData(result.data);
+    }
+    else{
+      setIndividualMetricData([]);
+    }
+    
+  }
+
   const [defaultGrowthParam, setDefaultGrowthParam] = useState('all');
 
   const changeGrowthTrackerParam = (param) => {
@@ -282,16 +317,18 @@ function GrowthTracker() {
     if(param === 'all'){
       fetchMetricData();
     }
+    else{
+      fetchIndividualMetricData(param);
+    }
   }
 
-  
   const showChart = () => {
     setModalHealthChartShow(true);
     changeGrowthTrackerParam('all');
   }
 
   
-  const heightGrowthData = [
+  /*const heightGrowthData = [
     {
       month: 36,
       who: { min: 11.8, max: 17.8 },
@@ -438,7 +475,7 @@ function GrowthTracker() {
       who: { min: 14.5, max: 24.0 },
       child: { mid_arm: null }
     }
-  ];
+  ];*/
 
   return (
     <>
@@ -549,16 +586,16 @@ function GrowthTracker() {
               defaultGrowthParam === 'all' && <MetricChart labels={labels} metrics={metrics}/>
             }  
             {
-              defaultGrowthParam === 'height' && <HeightGrowthChart data={heightGrowthData} />
+              defaultGrowthParam === 'height' && <HeightGrowthChart data={individualMetricData} />
             }  
             {
-              defaultGrowthParam === 'weight' && <WeightGrowthChart data={weightGrowthData} />
+              defaultGrowthParam === 'weight' && <WeightGrowthChart data={individualMetricData} />
             }
             {
-              defaultGrowthParam === 'bmi' && <BMIGrowthChart data={bmiGrowthData} />
+              defaultGrowthParam === 'bmi' && <BMIGrowthChart data={individualMetricData} />
             }
             {
-              defaultGrowthParam === 'mid_arm' && <MidArmGrowthChart data={midArmGrowthData} />
+              defaultGrowthParam === 'mid_arm' && <MidArmGrowthChart data={individualMetricData} />
             }
 
           </div>
