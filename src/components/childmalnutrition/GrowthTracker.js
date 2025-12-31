@@ -38,7 +38,7 @@ function GrowthTracker() {
     setIsMActive(!isMActive); // Toggle the state
   };
 
-  const [latestGrowthData, setLatestGrowthData] = useState(null);
+  const [latestGrowthData, setLatestGrowthData] = useState([]);
 
   const editAccountKey    = urlParam.accountKey;
   const redirectedFrom    = urlParam.redirectedFrom;
@@ -523,7 +523,7 @@ function GrowthTracker() {
             <tbody>
 
               {
-                latestGrowthData && <>
+                (latestGrowthData && latestGrowthData.length) ? <>
                   
                   {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].weight && <tr>
@@ -557,8 +557,7 @@ function GrowthTracker() {
                     </tr>
                   }
                   
-
-                </>
+                </>:<></>
               }
 
             </tbody>
