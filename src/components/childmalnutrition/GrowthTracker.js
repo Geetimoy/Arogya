@@ -566,19 +566,28 @@ function GrowthTracker() {
           <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0 w-100' onClick={() =>  showChart()}>View Growth Chart</Link>
       </div>
 
-      <Modal show={modalHealthChartShow} onHide={modalHealthChartClose}>
+      <Modal show={modalHealthChartShow} onHide={modalHealthChartClose} className='growth-chart'>
         <Modal.Footer className='justify-content-center'> 
-          <h5 className='modal-title'>Growth Chart</h5> 
-          <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
-        </Modal.Footer>  
-        <Modal.Body>   
-          <select className='form-select mb-3' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value) } >
+          <div className='d-flex align-items-center'>
+            <h6 className='modal-title min-width-120'>Growth Chart</h6> 
+          <select className='form-select' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value) } >
             <option value="all">All</option>
             <option value="height">Height</option>
             <option value="weight">Weight</option>
             <option value="bmi">BMI</option>
             <option value="mid_arm">Mid Arm</option>
           </select>
+          </div>
+          <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
+        </Modal.Footer>  
+        <Modal.Body>   
+          {/* <select className='form-select mb-3' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value) } >
+            <option value="all">All</option>
+            <option value="height">Height</option>
+            <option value="weight">Weight</option>
+            <option value="bmi">BMI</option>
+            <option value="mid_arm">Mid Arm</option>
+          </select> */}
           <div className='health-chart'>
             {/* <MetricChart labels={labels} metrics={metrics}/> */}
 

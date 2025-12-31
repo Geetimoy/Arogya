@@ -58,3 +58,10 @@
   min-width:100px;
   display: inline-block;
 }
+
+.min-width-120{
+  width: 120px;
+}
+.growth-chart select.form-select{
+  width: 120px;
+}
