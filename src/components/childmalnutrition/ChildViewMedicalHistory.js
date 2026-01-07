@@ -78,7 +78,8 @@ function ChildViewMedicalHistory(){
     { label: 'None', value: '0' },
     { label: 'Cough - dry/productive ?', value: '1' },
     { label: 'Shortness of breath', value: '2' },
-    { label: 'Sound while breathing (Wheezing)', value: '3' }
+    { label: 'Sound while breathing (Wheezing)', value: '3' },
+    { label: 'Chest clean', value: '4' }
   ]);
 
   const [selectedUrinaryOptions, setSelectedUrinaryOptions] = useState([]);
