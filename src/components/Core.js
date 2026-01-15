@@ -58,6 +58,7 @@ import ChildPrescription from './childmalnutrition/ChildPrescription';
 
 import ChildPrescriptionDoctor from './childmalnutrition/ChildPrescriptionDoctor';
 import GrowthTracker from './childmalnutrition/GrowthTracker';
+import GrowthDetails from './childmalnutrition/GrowthDetails';
 import PastMeasurmentsWeight from './childmalnutrition/PastMeasurmentsWeight';
 import PastMeasurmentsHeight from './childmalnutrition/PastMeasurmentsHeight';
 import PastBmi from './childmalnutrition/PastBmi';
@@ -445,6 +446,7 @@ export default function Core() {
 
             <Route path="/childmalnutrition/child-prescription-doctor/:accountKey" exact element={<ChildPrescriptionDoctor />} />
             <Route path="/childmalnutrition/growth-tracker/:accountKey/:redirectedFrom" exact element={<GrowthTracker />} />
+            <Route path="/childmalnutrition/growth-details/" exact element={<GrowthDetails />} />
             <Route path="/childmalnutrition/past-meas-weight/" exact element={<PastMeasurmentsWeight />} />
             <Route path="/childmalnutrition/past-meas-height/" exact element={<PastMeasurmentsHeight />} />
             <Route path="/childmalnutrition/past-bmi/" exact element={<PastBmi />} />
