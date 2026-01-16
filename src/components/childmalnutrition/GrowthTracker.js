@@ -523,7 +523,7 @@ function GrowthTracker() {
             <tbody>
 
               {
-                (latestGrowthData && latestGrowthData.length) ? <>
+                (latestGrowthData && Object.keys(latestGrowthData).length) ? <>
                   
                   {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].weight && <tr>
