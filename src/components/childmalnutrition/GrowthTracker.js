@@ -90,6 +90,8 @@ function GrowthTracker() {
   const [metrics, setMetrics] = useState([]);
   const [individualMetricData, setIndividualMetricData] = useState([]);
 
+  
+
 
   const getUserBasicDetails = async () => {
   
@@ -327,6 +329,13 @@ function GrowthTracker() {
     changeGrowthTrackerParam('all');
   }
 
+  const [modalGrowthDetailsShow, setModalGrowthDetailsShow] = useState(false);
+  const modalGrowthDetailsClose  = () => setModalGrowthDetailsShow(false);
+
+  const showGrowthDetails = () => {
+    setModalGrowthDetailsShow(true);
+  }
+
   
   /*const heightGrowthData = [
     {
@@ -510,7 +519,7 @@ function GrowthTracker() {
       <div className='app-body create-patient-profiles create-child-malnutrition'>
          <div className='align-items-center d-flex justify-content-between'>
             <p className='mb-0'><small>Updated on { (latestGrowthData) ? Object.keys(latestGrowthData)[0] : '' }</small></p>
-            <Link to={`/childmalnutrition/growth-details`} className='btn btn-sm btn-primary primary-bg-color border-0'>Add Growth Details</Link>
+            <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0' onClick={() =>  showGrowthDetails()}>Add Growth Details</Link>
           </div>
           <table className='border-0 table mt-3'>
             <thead>
@@ -607,6 +616,63 @@ function GrowthTracker() {
             }
 
           </div>
+        </Modal.Body>  
+        <Modal.Footer className='justify-content-center'>  
+        </Modal.Footer>  
+      </Modal>
+
+      <Modal show={modalGrowthDetailsShow} onHide={modalGrowthDetailsClose} className='growth-details'>
+        <Modal.Header className='justify-content-center'> 
+          <div className='d-flex'>
+            <h3 className='mb-0'>Add Growth Details</h3>
+          </div>
+          <Button variant="secondary" className='btn-delete btn-close' onClick={modalGrowthDetailsClose}></Button>
+        </Modal.Header>  
+        <Modal.Body> 
+          <div className='custom-scrollbar'>
+          <form>
+          <div className='form-group mb-3'>
+            <label>Measurement Date</label>
+            <input type="date" className='form-control' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Height (in cm)</label>
+            <input type="text" className='form-control' placeholder='Enter Height in cm' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Weight (in kg)</label>
+            <input type="text" className='form-control' placeholder='Enter Weight in kg' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Body Temperature (in Fahrenheit)</label>
+            <input type="text" className='form-control' placeholder='Enter Body Temperature in °F' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Blood Oxygen Level SpO2</label>
+            <input type="text" className='form-control' placeholder='Enter Blood Oxygen Level in %' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Heart Rate (per minute)</label>
+            <input type="text" className='form-control' placeholder='Enter Heart Rate per Minute' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Mid Arm length</label>
+            <input type="text" className='form-control' placeholder='Enter Mid Arm length' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Blood Pressure</label>
+            <input type="text" className='form-control' placeholder='Enter Blood Pressure' />
+          </div>
+          <div className='form-group mb-3'>
+            <label>Are you Diabetic?  </label>
+            <input type="text" className='form-control' placeholder='Enter Sugar Level' />
+          </div>
+          <div className='form-group mt-4 d-flex justify-content-center align-items-center'>
+            <button type="submit" className='btn primary-bg-color text-light min-width-100 mx-2'>Save Details</button>
+            <button type="submit" className='btn primary-bg-color text-light min-width-100 mx-2'>Cancel</button>
+          </div>
+        </form>
+        </div>  
         </Modal.Body>  
         <Modal.Footer className='justify-content-center'>  
         </Modal.Footer>  

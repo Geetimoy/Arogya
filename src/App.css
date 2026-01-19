@@ -358,6 +358,9 @@ body:has(.ukhra-container-class) .modal .rating-symbol .star,
 body:has(.sevaapurulia-container-class) .modal .rating-symbol .star{
     color: #af1e25;
 }
+body:has(.sevaapurulia-container-class) .modal .primary-bg-color{
+    background-color: #952025;
+}
 
 /* RGVN */
 .rgvn-container-class .primary-color{
