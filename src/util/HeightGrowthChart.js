@@ -12,6 +12,70 @@ import {
   ReferenceLine,
 } from "recharts";
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null;
+
+  // 👇 full custom object
+  const row = payload[0].payload;
+  return (
+    <div
+      className="recharts-default-tooltip"
+      role="status"
+      aria-live="assertive"
+      style={{
+        margin: 0,
+        padding: "10px",
+        backgroundColor: "#ffffff",
+        border: "1px solid #cccccc",
+        whiteSpace: "nowrap"
+      }}
+    >
+      <ul
+        className="recharts-tooltip-item-list"
+        style={{ padding: 0, margin: 0 }}
+      >
+        <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
+          <span className="recharts-tooltip-item-name">
+            Age
+          </span>
+          <span className="recharts-tooltip-item-separator">
+            {" : "}
+          </span>
+          <span className="recharts-tooltip-item-value">
+            {row.month} Months
+          </span>
+        </li>
+        <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
+          <span className="recharts-tooltip-item-name">
+            Child Height
+          </span>
+          <span className="recharts-tooltip-item-separator">
+            {" : "}
+          </span>
+          <span className="recharts-tooltip-item-value">
+            {row.height} cm
+          </span>
+        </li>
+        {
+          (row.min && row.max) && (
+            <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
+              <span className="recharts-tooltip-item-name">
+                WHO Range
+              </span>
+              <span className="recharts-tooltip-item-separator">
+                {" : "}
+              </span>
+              <span className="recharts-tooltip-item-value">
+                {row.min} - {row.max}
+              </span>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+  );
+};
+
 export default function HeightGrowthChart({ data }) {
   // Convert consolidated data to chart-friendly format
   const chartData = data.map(item => ({
@@ -43,7 +107,7 @@ export default function HeightGrowthChart({ data }) {
             dataKey="max"
             fill="#e6e6e6"
             stroke="none"
-            name="Ideal Range (WHO)"
+            name="WHO Range"
           />
           <Area
             dataKey="min"
@@ -58,13 +122,13 @@ export default function HeightGrowthChart({ data }) {
             strokeWidth={3}
             dot={{ r: 5 }}
             activeDot={{ r: 7 }}
-            name="Your Entries"
+            name="Child Height"
           />
 
           {/* Reference lines (optional) */}
           <ReferenceLine x={48} stroke="#999" strokeDasharray="4 4" />
 
-          <Tooltip formatter={(v) => `${v} cm`} />
+          <Tooltip formatter={(v) => `${v} cm`}  content={<CustomTooltip/>}/>
           <Legend verticalAlign="bottom" />
         </AreaChart>
       </ResponsiveContainer>

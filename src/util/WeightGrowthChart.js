@@ -43,7 +43,7 @@ export default function WeightGrowthChart({ data }) {
             dataKey="max"
             fill="#e6e6e6"
             stroke="none"
-            name="Ideal Range (WHO)"
+            name="WHO Range"
           />
           <Area
             dataKey="min"
