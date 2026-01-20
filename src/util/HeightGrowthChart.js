@@ -87,7 +87,6 @@ export default function HeightGrowthChart({ data }) {
 
   return (
     <div style={{ width: "100%", height: 500 }}>
-      <h2>HEIGHT (cm)</h2>
 
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 20, right: 30, bottom: 30 }}>
