@@ -73,3 +73,14 @@
   overflow-y: auto;
   padding-right: 20px;
 }
+.recharts-legend-wrapper{
+  bottom: 0!important;
+}
+li.legend-item-1 span.recharts-legend-item-text,
+li.legend-item-1 svg{
+  color: #000 !important;
+}
+
+li.legend-item-1 svg path{
+  stroke:#000;
+}

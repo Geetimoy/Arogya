@@ -517,7 +517,7 @@ function GrowthTracker() {
         </div>
       </div>
       <div className='app-body create-patient-profiles create-child-malnutrition'>
-         <h3><strong>{ userBasicDetails.display_name }</strong></h3>
+         <h4><strong>{ userBasicDetails.display_name }</strong></h4>
          <div className='align-items-center d-flex justify-content-between'>
             <p className='mb-0'><small>Updated on { (latestGrowthData) ? Object.keys(latestGrowthData)[0] : '' }</small></p>
             <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0' onClick={() =>  showGrowthDetails()}>Add Growth Details</Link>
@@ -577,8 +577,9 @@ function GrowthTracker() {
 
       <Modal show={modalHealthChartShow} onHide={modalHealthChartClose} className='growth-chart'>
         <Modal.Footer className='justify-content-center'> 
+          <h6 className='modal-title'><strong>Name: { userBasicDetails.display_name }</strong></h6> 
           <div className='d-flex align-items-center'>
-            <h6 className='modal-title min-width-120'><strong>{ userBasicDetails.display_name }</strong></h6> 
+            
             <h6 className='modal-title min-width-120'>Growth Chart</h6> 
             <select className='form-select' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value) } >
               <option value="all">All</option>

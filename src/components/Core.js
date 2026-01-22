@@ -120,6 +120,7 @@ import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
 import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory`';
 import ElderViewAwarenessSuevey from './elderpersons/ElderViewAwarenessSurvey';
 import ElderProfilePhoto from './elderpersons/ElderProfilePhoto';
+import CreateElderPersonDoctor from './elderpersons/CreateElderPersonDoctor';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -183,10 +184,10 @@ import DoctorAppointmentUploadSurveyForm from './DoctorAppointmentUploadSurveyFo
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
+  //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
   //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
-  //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
+  const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
   const [systemId, setSystemId] = useState(null);
 
@@ -516,7 +517,7 @@ export default function Core() {
             <Route path="/elderpersons/Elder-view-medical-history/:accountKey" exact element={<ElderViewMedicalHistory />} />
             <Route path="/elderpersons/Elder-View-Awareness-Survey/:accountKey" exact element={<ElderViewAwarenessSuevey />} />
             <Route path="/elderpersons/Elder-profile-photo/:accountKey" exact element={<ElderProfilePhoto />} />
-            
+            <Route path="/elderpersons/create-elder-person-doctor" exact element={<CreateElderPersonDoctor />} />
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
             <Route path="/doctor-appointments-volunteer" exact element={<DoctorAppointmentsVolunteer/>} />

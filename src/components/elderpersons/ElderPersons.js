@@ -386,6 +386,9 @@ function ElderPersons(){
           {
             (decryptedLoginDetails.account_type !== '5') && <Link to="/elderpersons/create-elder-person" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Person</Link>
           }
+          {
+            (decryptedLoginDetails.account_type == '5') && <Link to="/elderpersons/create-elder-person-doctor" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Elder Person </Link>
+          }
         </div>
         
         <div className='search-elder-persons mt-3 mb-3'>
