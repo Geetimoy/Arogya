@@ -635,40 +635,40 @@ function GrowthTracker() {
           <div className='custom-scrollbar'>
           <form>
           <div className='form-group mb-3'>
-            <label>Measurement Date</label>
-            <input type="date" className='form-control' />
+            <label htmlFor='measurement_date'>Measurement Date</label>
+            <input type="date" className='form-control' name="measurement_date" id="measurement_date" />
           </div>
           <div className='form-group mb-3'>
-            <label>Height (in cm)</label>
-            <input type="text" className='form-control' placeholder='Enter Height in cm' />
+            <label htmlFor='child_height'>Height (in cm)</label>
+            <input type="text" className='form-control' name="child_height" id="child_height" placeholder='Enter Height in cm' />
           </div>
           <div className='form-group mb-3'>
-            <label>Weight (in kg)</label>
-            <input type="text" className='form-control' placeholder='Enter Weight in kg' />
+            <label htmlFor='child_weight'>Weight (in kg)</label>
+            <input type="text" className='form-control' name="child_weight" id="child_weight" placeholder='Enter Weight in kg' />
           </div>
           <div className='form-group mb-3'>
-            <label>Body Temperature (in Fahrenheit)</label>
-            <input type="text" className='form-control' placeholder='Enter Body Temperature in °F' />
+            <label htmlFor='child_temperature'>Body Temperature (in Fahrenheit)</label>
+            <input type="text" className='form-control' name="child_temperature" id="child_temperature" placeholder='Enter Body Temperature in °F' />
           </div>
           <div className='form-group mb-3'>
-            <label>Blood Oxygen Level SpO2</label>
-            <input type="text" className='form-control' placeholder='Enter Blood Oxygen Level in %' />
+            <label htmlFor='child_spo2'>Blood Oxygen Level SpO2</label>
+            <input type="text" className='form-control' name="child_spo2" id="child_spo2" placeholder='Enter Blood Oxygen Level in %' />
           </div>
           <div className='form-group mb-3'>
-            <label>Heart Rate (per minute)</label>
-            <input type="text" className='form-control' placeholder='Enter Heart Rate per Minute' />
+            <label htmlFor='child_heart_rate'>Heart Rate (per minute)</label>
+            <input type="text" className='form-control' name="child_heart_rate" id="child_heart_rate" placeholder='Enter Heart Rate per Minute' />
           </div>
           <div className='form-group mb-3'>
-            <label>Mid Arm length</label>
-            <input type="text" className='form-control' placeholder='Enter Mid Arm length' />
+            <label htmlFor='child_mid_arm'>Mid Arm length</label>
+            <input type="text" className='form-control' name="child_mid_arm" id="child_mid_arm" placeholder='Enter Mid Arm length' />
           </div>
           <div className='form-group mb-3'>
-            <label>Blood Pressure</label>
-            <input type="text" className='form-control' placeholder='Enter Blood Pressure' />
+            <label htmlFor='child_blood_pressure'>Blood Pressure</label>
+            <input type="text" className='form-control' name="child_blood_pressure" id="child_blood_pressure" placeholder='Enter Blood Pressure' />
           </div>
           <div className='form-group mb-3'>
-            <label>Are you Diabetic?  </label>
-            <input type="text" className='form-control' placeholder='Enter Sugar Level' />
+            <label htmlFor='child_diabetic'>Are you Diabetic?  </label>
+            <input type="text" className='form-control' name="child_diabetic" id="child_diabetic" placeholder='Enter Sugar Level' />
           </div>
           <div className='form-group mt-4 d-flex justify-content-center align-items-center'>
             <button type="submit" className='btn primary-bg-color text-light min-width-100 mx-2'>Save Details</button>

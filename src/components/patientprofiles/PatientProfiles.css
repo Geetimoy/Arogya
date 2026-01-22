@@ -74,10 +74,7 @@ p.disease{
   line-height: 20px;
   background: #fff;
 }
-.tab-container button.active{
-  background: #af1e25;
-  color: #fff;
-}
+
 .tab-container .tab-content{
   padding: 20px 0;
 }

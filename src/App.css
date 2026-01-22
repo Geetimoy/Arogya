@@ -268,6 +268,19 @@ body:has(.serviceplace-container-class) .modal .rating-symbol .star{
     color: #2aa142;
 }
 
+.telehealth-container-class .health-chart a svg{
+      fill: #2aa142;
+}
+
+.telehealth-container-class .tab-container button.active{
+  background: #2aa142;
+  color: #fff;
+}
+
+.telehealth-container-class .charts svg{
+    fill: #2aa142;
+}
+
 body:has(.telehealth-container-class) .modal .modal-footer .primary-bg-color{
     background-color: #2aa142;
 }
@@ -343,6 +356,16 @@ body:has(.telehealth-container-class) .modal .rating-symbol .star{
     color: #af1e25;
 }
 
+.ukhra-container-class .health-chart a svg,
+.sevaapurulia-container-class .health-chart a svg{
+    fill: #af1e25;
+}
+
+.ukhra-container-class .charts svg,
+.sevaapurulia-container-class .charts svg{
+    fill: #af1e25;
+}
+
 body:has(.ukhra-container-class) .modal .modal-footer .primary-bg-color,
 body:has(.sevaapurulia-container-class) .modal .modal-footer .primary-bg-color
 {
@@ -360,6 +383,11 @@ body:has(.sevaapurulia-container-class) .modal .rating-symbol .star{
 }
 body:has(.sevaapurulia-container-class) .modal .primary-bg-color{
     background-color: #952025;
+}
+
+.sevaapurulia-container-class .tab-container button.active{
+  background: #af1e25;
+  color: #fff;
 }
 
 /* RGVN */
@@ -408,6 +436,19 @@ body:has(.sevaapurulia-container-class) .modal .primary-bg-color{
 
 .rgvn-container-class .bookings .button-box span{
     color: #2aa142;
+}
+
+.rgvn-container-class .tab-container button.active{
+  background: #2aa142;
+  color: #fff;
+}
+
+.rgvn-container-class .health-chart a svg{
+    fill: #2aa142;
+}
+
+.rgvn-container-class .charts svg{
+    fill: #2aa142;
 }
 
 body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color{
@@ -468,6 +509,15 @@ body:has(.rgvn-container-class) .modal .rating-symbol .star{
 
 .b2h-container-class .bookings .button-box span{
     color: #a30707;
+}
+
+.b2h-container-class .tab-container button.active{
+  background: #a30707;
+  color: #fff;
+}
+
+.b2h-container-class .charts svg{
+    fill: #a30707;
 }
 
 body:has(.b2h-container-class) .modal .modal-footer .primary-bg-color{

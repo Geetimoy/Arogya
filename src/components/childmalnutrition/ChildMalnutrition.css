@@ -20,7 +20,7 @@
 }
 .health-chart a svg{
   width:16px;
-  fill: #af1e25;
+  /* fill: #af1e25; */
 }
 
 .charts{
@@ -36,7 +36,7 @@
 
 .charts svg{
   width:16px;
-  fill: #af1e25;
+  /* fill: #af1e25; */
   margin-right: 6px;
 }
 
