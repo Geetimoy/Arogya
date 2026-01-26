@@ -326,7 +326,7 @@ function ElderViewMedicalHistory(){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
       jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
-      jsonData["sub_volunteer_id"]          = "2211212";
+      jsonData["sub_volunteer_id"]          = "";
       jsonData["elder_account_key"]         = editAccountKey;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
