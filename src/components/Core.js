@@ -117,7 +117,7 @@ import ElderBooking from './elderpersons/ElderBooking';
 import ElderBookedAppointment from './elderpersons/ElderBookedAppointment';
 import ElderViewBasicInformation from './elderpersons/ElderViewBasicInformation';
 import ElderViewPeriodicData from './elderpersons/ElderViewPeriodicData';
-import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory`';
+import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory';
 import ElderViewAwarenessSuevey from './elderpersons/ElderViewAwarenessSurvey';
 import ElderProfilePhoto from './elderpersons/ElderProfilePhoto';
 import CreateElderPersonDoctor from './elderpersons/CreateElderPersonDoctor';
