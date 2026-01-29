@@ -273,7 +273,7 @@ function ElderViewPeriodicData(){
               <FontAwesomeIcon icon={faLongArrowAltLeft} />
             </Link>
           </div>
-          <h5 className='mx-2 mb-0'>View Elder Periodic Data </h5>
+          <h5 className='mx-2 mb-0'>View/Edit Elder Periodic Data </h5>
         </div>
         <div className='app-top-right d-flex'> 
           <AppTopNotifications /> 

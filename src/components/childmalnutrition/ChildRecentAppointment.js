@@ -126,29 +126,29 @@ function ChildRecentAppointment(){
               </label>
             </div>
           </div>
-        </div>
-        <div className="row">
-          {appointmentList.map((appointment, index) => (
-            <div className="col-12">
-              <div className='button-box mb-3 position-relative' key={appointment.appointment_id}>
-                <div className='scheduleactive position-absolute'>
-                  {
-                    (appointment.appt_status === 'Active') && <div className='actives'>A</div>
-                  }
-                  {
-                    (appointment.appt_status !== 'Active') && <div className='not-active'>N-A</div>
-                  }
-                </div>
-                <p><span className="d-block">Volunteer Name:</span> {appointment.volunteer_display_name
-}</p>
-                <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
-                <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
-                <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
-                <p><span className="d-block">Place:</span> {appointment.location} - {(appointment.appointment_mode === '1') ? `Offline (Clinic)` : ((appointment.appointment_mode === '2') ? `Online` : `Call on Emergency`)}</p>
+      </div>
+      <div className="row">
+        {appointmentList.map((appointment, index) => (
+          <div className="col-12">
+            <div className='button-box mb-3 position-relative' key={appointment.appointment_id}>
+              <div className='scheduleactive position-absolute'>
+                {
+                  (appointment.appt_status === 'Active') && <div className='actives'>A</div>
+                }
+                {
+                  (appointment.appt_status !== 'Active') && <div className='not-active'>N-A</div>
+                }
               </div>
+              <p><span className="d-block">Volunteer Name:</span> {appointment.volunteer_display_name
+}</p>
+              <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
+              <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
+              <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
+              <p><span className="d-block">Place:</span> {appointment.location} - {(appointment.appointment_mode === '1') ? `Offline (Clinic)` : ((appointment.appointment_mode === '2') ? `Online` : `Call on Emergency`)}</p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

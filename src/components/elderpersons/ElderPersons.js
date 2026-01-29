@@ -13,6 +13,8 @@ import AlertContext from '../../context/alert/AlertContext';
 
 import elderpersons from '../../assets/images/profile.png';
 
+import  './ElderPersons.css';
+
 import CryptoJS from "crypto-js";
 
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
@@ -413,7 +415,7 @@ function ElderPersons(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-basic-info/${elder.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/elderpersons/elder-view-basic-info/${elder.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/elderpersons/elder-view-basic-info/${elder.account_key}`}>View/Edit Basic Information</Link>
                         }
 
                         </li>
@@ -426,7 +428,7 @@ function ElderPersons(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-medical-history/${elder.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-medical-history/${elder.account_key}`}>View/Edit Medical History</Link>
                         }
                         </li>
                         <li>
@@ -436,7 +438,7 @@ function ElderPersons(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-periodic-data/${elder.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-periodic-data/${elder.account_key}`}>View/Edit Periodic Data</Link>
                         }
                         </li>
                         {/* <li><Link to={"/elderpersons/patient-prescription"}>Upload Prescription</Link></li> */}
@@ -447,7 +449,7 @@ function ElderPersons(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-awareness-survey/${elder.account_key}`}>View Awareness Survey</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-awareness-survey/${elder.account_key}`}>View/Edit Awareness Survey</Link>
                         }
                         </li>
                         {
@@ -474,6 +476,8 @@ function ElderPersons(){
                     (elder.shared_image && elder.shared_image !== "") ? <img src={elder.shared_image+`?`+Math.random()} alt='' /> : <img src={elderpersons} alt='' />
                   }
                   <h6>{elder.elder_name}</h6>
+                  <p>{elder.elder_gender}, ({elder.elder_age} yrs)</p>  
+                  
                 </Link>
               </div>
             </div>

@@ -4,3 +4,11 @@
   font-size: 16px;
   position: relative;
 }
+
+.elder-persons .button-box p{
+  text-transform: capitalize;
+}
+
+.tab-container button.large {
+    width: 120px;
+}

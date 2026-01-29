@@ -17,6 +17,11 @@ import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
 
+import ElderRecentAppointment from './ElderRecentAppointment';
+import ElderPreviousAppointment from './ElderPreviousAppointment';
+
+import  './ElderPersons.css';
+
 function ElderBookedAppointment(){
 
   const systemContext = useContext(SystemContext);
@@ -109,6 +114,7 @@ function ElderBookedAppointment(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
+  const [activeTab, setActiveTab] = useState('tab2');
 
   const getUserBasicDetails = async () => {
 
@@ -180,7 +186,20 @@ function ElderBookedAppointment(){
         <p className='patient-details'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <div className='d-flex justify-content-between align-items-center'>
+        <div className='tab-container'>
+          <div className="d-flex justify-content-center">
+              <button onClick={() => setActiveTab('tab1')} className={`large ${ activeTab === 'tab1' ? 'active' : ''
+                }`} > Previous Appointment </button>
+              <button onClick={() => setActiveTab('tab2')} className={`large ${ activeTab === 'tab2' ? 'active' : ''
+                }`} > Recent Appointment </button>
+          </div>
+
+          <div className="tab-content">
+            {activeTab === 'tab1' && <ElderPreviousAppointment />}
+            {activeTab === 'tab2' && <ElderRecentAppointment />}
+          </div>
+        </div>
+        {/* <div className='d-flex justify-content-between align-items-center'>
           <div className='status d-flex mb-2'>
             <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>
             <p className='me-1 mb-0'><small>Pending: <strong>{pendingCounter}</strong></small>,</p>
@@ -193,8 +212,8 @@ function ElderBookedAppointment(){
               </label>
             </div>
           </div>
-        </div>
-        <div className="row">
+        </div> */}
+        {/* <div className="row">
           {appointmentList.map((appointment, index) => (
             <div className="col-12">
               <div className='button-box mb-3 position-relative' key={appointment.appointment_id}>
@@ -216,7 +235,7 @@ function ElderBookedAppointment(){
           ))}
 
           
-        </div>
+        </div> */}
       </div>
       <Appfooter></Appfooter>
     </>

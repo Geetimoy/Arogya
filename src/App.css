@@ -463,6 +463,11 @@ body:has(.rgvn-container-class) .modal .rating-symbol .star{
     color: #2aa142;
 }
 
+.rgvn-container-class .tab-container button.active{
+  background: #2aa142;
+  color: #fff;
+}
+
 /* B2B */
 .b2h-container-class .primary-color{
     color: #c10000; 

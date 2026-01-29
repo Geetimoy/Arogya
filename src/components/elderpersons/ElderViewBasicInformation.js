@@ -380,7 +380,7 @@ function ElderViewBasicInformation(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Elder Basic Info</h5>
+            <h5 className='mx-2 mb-0'>View/Edit Elder Basic Info</h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications />

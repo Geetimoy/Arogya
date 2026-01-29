@@ -467,7 +467,7 @@ function ElderViewMedicalHistory(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Elder's Medical History </h5>
+            <h5 className='mx-2 mb-0'>View/Edit Elder's Medical History </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications /> 
@@ -492,7 +492,7 @@ function ElderViewMedicalHistory(){
         <p className='patient-details'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <form className="mt-3" name="elderMedicalHistoryForm" id="elderMedicalHistoryForm" onSubmit={handleFormSubmit}>
+        <form className="mt-3 select-box" name="elderMedicalHistoryForm" id="elderMedicalHistoryForm" onSubmit={handleFormSubmit}>
           <div className={`form-group ${formData["eye_type"].errorClass} ${eyeTypeClass}`}>
             <label><span className="d-block">Eye <span className="text-danger">*</span></span></label>
             <Select className='form-control select-multi' isMulti value={selectedEyeOptions} onChange={(values) =>  handleChange1(values, 'eye_type')} options={eyeOption} onFocus={() =>  setActiveClass('eye_type')}/>
