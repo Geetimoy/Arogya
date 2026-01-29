@@ -12,8 +12,6 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 import Appfooter from "../AppFooter";
 
 import './ElderUploadPrescription.css'
-
-import youngwomenprescription from '../../assets/images/sample-rx.png';
 import AppTopNotifications from '../AppTopNotifications';
 
 function ElderUploadInitialPrescriptions(){
