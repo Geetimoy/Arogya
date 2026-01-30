@@ -42,6 +42,10 @@ function ElderRecentAppointment(){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = 5;
+
       jsonData["patient_key"]               = editAccountKey;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
@@ -60,7 +64,7 @@ function ElderRecentAppointment(){
                                                 "order_by_value": "desc"
                                               }
   
-      const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+      const response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +124,7 @@ function ElderRecentAppointment(){
                     (appointment.appt_status !== 'Active') && <div className='not-active'>N-A</div>
                   }
                 </div>
-                <p><span className="d-block">Doctor Name:</span> Dr. {appointment.doctor_display_name}</p>
+                <p><span className="d-block">Volunteer Name:</span> {appointment.volunteer_display_name}</p>
                 <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
                 <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
                 <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>

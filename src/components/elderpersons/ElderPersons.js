@@ -350,6 +350,11 @@ function ElderPersons(){
     setSavedRating(rating); // Update the saved rating state
   };
 
+  const genderMap = {
+  1: "Male",
+  2: "Female",
+};
+
   
   return(
     <>
@@ -476,7 +481,8 @@ function ElderPersons(){
                     (elder.shared_image && elder.shared_image !== "") ? <img src={elder.shared_image+`?`+Math.random()} alt='' /> : <img src={elderpersons} alt='' />
                   }
                   <h6>{elder.elder_name}</h6>
-                  <p>{elder.elder_gender}, ({elder.elder_age} yrs)</p>  
+                  <p>{genderMap[Number(elder.elder_gender)] || "N/A"}
+, ({elder.elder_age} yrs)</p>  
                   
                 </Link>
               </div>
