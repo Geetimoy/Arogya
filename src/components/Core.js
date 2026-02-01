@@ -121,6 +121,7 @@ import ElderViewMedicalHistory from './elderpersons/ElderViewMedicalHistory';
 import ElderViewAwarenessSuevey from './elderpersons/ElderViewAwarenessSurvey';
 import ElderProfilePhoto from './elderpersons/ElderProfilePhoto';
 import CreateElderPersonDoctor from './elderpersons/CreateElderPersonDoctor';
+import ElderGrowthTracker from './elderpersons/ElderGrowthTracker';
 
 
 import AppointmentScheduling from './AppointmentScheduling';
@@ -513,11 +514,17 @@ export default function Core() {
             <Route path="/elderpersons/elder-booking/:accountKey" exact element={<ElderBooking />} />
             <Route path="/elderpersons/elder-booked-appointment/:patientKey" exact element={<ElderBookedAppointment />} />
             <Route path="/elderpersons/Elder-View-Basic-Info/:accountKey" exact element={<ElderViewBasicInformation />} />
+            <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey/:redirectedFrom" exact element={<ElderViewPeriodicData />} />
             <Route path="/elderpersons/Elder-View-Periodic-Data/:accountKey" exact element={<ElderViewPeriodicData />} />
+            <Route path="/elderpersons/Elder-view-medical-history/:accountKey/:redirectedFrom" exact element={<ElderViewMedicalHistory />} />
             <Route path="/elderpersons/Elder-view-medical-history/:accountKey" exact element={<ElderViewMedicalHistory />} />
             <Route path="/elderpersons/Elder-View-Awareness-Survey/:accountKey" exact element={<ElderViewAwarenessSuevey />} />
             <Route path="/elderpersons/Elder-profile-photo/:accountKey" exact element={<ElderProfilePhoto />} />
             <Route path="/elderpersons/create-elder-person-doctor" exact element={<CreateElderPersonDoctor />} />
+
+            <Route path="/elderpersons/growth-tracker/:accountKey/:redirectedFrom" exact element={<ElderGrowthTracker />} />
+            <Route path="/elderpersons/growth-details/" exact element={<GrowthDetails />} />
+            <Route path="/elderpersons/growth-tracker/history/:accountKey/:redirectedFrom/:measuremenType" exact element={<PastMeasurmentsHeight />} />
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
             <Route path="/doctor-appointments-volunteer" exact element={<DoctorAppointmentsVolunteer/>} />

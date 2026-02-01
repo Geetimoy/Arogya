@@ -512,13 +512,13 @@ function DoctorAppointments(){
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject', appointment.appointment_key)}>Reject Booking</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/growth-tracker/${appointment.patient_key}/from-bookings`}>{ (appointment.patient_type === "elder") ? 'Health Tracker' : 'Growth Tracker' }</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/${(appointment.patient_type === "elder") ? 'elderpersons' : 'childmalnutrition'}/growth-tracker/${appointment.patient_key}/from-bookings`}>{ (appointment.patient_type === "elder") ? 'Health Tracker' : 'Growth Tracker' }</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/child-view-medical-history/${appointment.patient_key}/from-bookings`}>Basic Medical History</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/${(appointment.patient_type === "elder") ? 'elderpersons/elder-view-medical-history' : 'childmalnutrition/child-view-medical-history'}/${appointment.patient_key}/from-bookings`}>Basic Medical History</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/child-view-periodic-data/${appointment.patient_key}/from-bookings`} >Periodic Data</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/${(appointment.patient_type === "elder") ? 'elderpersons/elder-view-periodic-data' : 'childmalnutrition/child-view-periodic-data'}/${appointment.patient_key}/from-bookings`} >Periodic Data</Link></li>
                       }
                       {
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/doctor-appointment-survey-forms/${appointment.appointment_key}/${appointment.patient_key}/initial`} >Upload Form</Link></li>
