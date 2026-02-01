@@ -477,6 +477,11 @@ function ElderPersons(){
                           (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/elderpersons/elder-profile-photo/${elder.account_key}`}>Upload Profile Photo</Link></li>
                         }
                         <li>
+                          {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-medical-history/${elder.account_key}`}>Health Data</Link>
+                        }
+                        </li>
+                        <li>
                           
                           {
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-medical-history/${elder.account_key}`}>Update Medical History</Link>
@@ -485,6 +490,7 @@ function ElderPersons(){
                           (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-medical-history/${elder.account_key}`}>View/Edit Medical History</Link>
                         }
                         </li>
+                        
                         <li>
                           
                           {
