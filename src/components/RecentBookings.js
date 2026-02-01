@@ -512,7 +512,7 @@ function DoctorAppointments(){
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject', appointment.appointment_key)}>Reject Booking</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/growth-tracker/${appointment.patient_key}/from-bookings`}>Growth Tracker</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/growth-tracker/${appointment.patient_key}/from-bookings`}>{ (appointment.patient_type === "elder") ? 'Health Tracker' : 'Growth Tracker' }</Link></li>
                       }
                       {
                         (decryptedLoginDetails.account_type === '5' && appointment.patient_type === '34' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/growth-tracker/${appointment.patient_key}/from-bookings`}>Health Data</Link></li>
