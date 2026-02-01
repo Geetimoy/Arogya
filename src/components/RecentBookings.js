@@ -515,6 +515,9 @@ function DoctorAppointments(){
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/growth-tracker/${appointment.patient_key}/from-bookings`}>Growth Tracker</Link></li>
                       }
                       {
+                        (decryptedLoginDetails.account_type === '5' && appointment.patient_type === '34' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/growth-tracker/${appointment.patient_key}/from-bookings`}>Health Data</Link></li>
+                      }
+                      {
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/child-view-medical-history/${appointment.patient_key}/from-bookings`}>Basic Medical History</Link></li>
                       }
                       {
