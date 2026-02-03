@@ -634,6 +634,11 @@ function ChildMalnutrion(){
                           (decryptedLoginDetails.account_type == '5') && <Link to={`/childmalnutrition/child-view-basic-info/${child.account_key}`}>View/Edit Basic Information</Link>
                         }
                       </li>
+                      <li>
+                          {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/growth-tracker/${child.account_key}`}>Growth Tracker</Link>
+                        }
+                        </li>
                       {
                         (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/childmalnutrition/child-profile-photo/${child.account_key}`}>Upload Profile Photo</Link></li>
                       }
