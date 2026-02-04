@@ -346,7 +346,7 @@ function ElderGrowthTracker() {
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-             <h5 className='mx-2 mb-0'>Health Tracker </h5> 
+             <h5 className='mx-2 mb-0'>Health Data </h5> 
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications /> 
@@ -371,13 +371,13 @@ function ElderGrowthTracker() {
          <h4><strong>{ userBasicDetails.display_name }</strong></h4>
          <div className='align-items-center d-flex justify-content-between'>
             <p className='mb-0'><small>Updated on { (latestGrowthData) ? Object.keys(latestGrowthData)[0] : '' }</small></p>
-            <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0' onClick={() =>  showGrowthDetails()}>Add Growth Details</Link>
+            <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0' onClick={() =>  showGrowthDetails()}>Add Health Details</Link>
           </div>
           <table className='border-0 table mt-3'>
             <thead>
               <tr>
                 <th>Meas.</th> 
-                <th>Childs Info.</th>
+                <th>Elder Info.</th>
                 <th>WHO Range</th>
               </tr>
             </thead>
@@ -423,7 +423,7 @@ function ElderGrowthTracker() {
 
             </tbody>
           </table>
-          <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0 w-100' onClick={() =>  showChart()}>View Growth Chart</Link>
+          <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0 w-100' onClick={() =>  showChart()}>View Health Chart</Link>
       </div>
 
       <Modal show={modalHealthChartShow} onHide={modalHealthChartClose} className='growth-chart'>
