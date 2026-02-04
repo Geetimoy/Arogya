@@ -133,31 +133,65 @@ function ElderUploadTestReports(){
     
             reportDate  = `${year}-${month}-${day}`;
           }
+
+          if(decryptedLoginDetails.account_key === '5'){
+
+            jsonData['system_id']                 = systemContext.systemDetails.system_id;
+            jsonData["user_account_key"]          = editAccountKey;
+            jsonData["user_account_type"]         = 3;
+            jsonData["appointment_key"]           = appointmentId;
+            jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+            jsonData["initial_summary"]           = formData['report_summary'].value;
+            jsonData["report_name"]               = formData['report_name'].value;
+            jsonData["file"]                      = formData['report_file'].value;
+            jsonData["report_date"]               = reportDate;
+            jsonData["report_done_from"]          = formData['report_clinic'].value;
+            jsonData["report_done_dr_name"]       = formData['report_approved_doctor'].value;
+            jsonData["file_extension"]            = formData['report_file_extension'].value;
+            jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+            jsonData["device_token"]              = DEVICE_TOKEN;
+            jsonData["user_lat"]                  = localStorage.getItem('latitude');
+            jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+            var response = await fetch(`${API_URL}/uploadTestReportForElderFromDoctorLogin`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+
+          }
+          else{
+
+            jsonData['system_id']                 = systemContext.systemDetails.system_id;
+            jsonData["user_account_key"]          = editAccountKey;
+            jsonData["user_account_type"]         = 3;
+            jsonData["appointment_key"]           = appointmentId;
+            jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+            jsonData["initial_summary"]           = formData['report_summary'].value;
+            jsonData["report_name"]               = formData['report_name'].value;
+            jsonData["file"]                      = formData['report_file'].value;
+            jsonData["report_date"]               = reportDate;
+            jsonData["report_done_from"]          = formData['report_clinic'].value;
+            jsonData["report_done_dr_name"]       = formData['report_approved_doctor'].value;
+            jsonData["file_extension"]            = formData['report_file_extension'].value;
+            jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+            jsonData["device_token"]              = DEVICE_TOKEN;
+            jsonData["user_lat"]                  = localStorage.getItem('latitude');
+            jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+            var response = await fetch(`${API_URL}/uploadTestReportForElder`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+
+          }
     
-          jsonData['system_id']                 = systemContext.systemDetails.system_id;
-          jsonData["user_account_key"]          = editAccountKey;
-          jsonData["user_account_type"]         = 3;
-          jsonData["appointment_key"]           = appointmentId;
-          jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-          jsonData["initial_summary"]           = formData['report_summary'].value;
-          jsonData["report_name"]               = formData['report_name'].value;
-          jsonData["file"]                      = formData['report_file'].value;
-          jsonData["report_date"]               = reportDate;
-          jsonData["report_done_from"]          = formData['report_clinic'].value;
-          jsonData["report_done_dr_name"]       = formData['report_approved_doctor'].value;
-          jsonData["file_extension"]            = formData['report_file_extension'].value;
-          jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-          jsonData["device_token"]              = DEVICE_TOKEN;
-          jsonData["user_lat"]                  = localStorage.getItem('latitude');
-          jsonData["user_long"]                 = localStorage.getItem('longitude');
-    
-          const response = await fetch(`${API_URL}/uploadTestReportForElder`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jsonData),
-          });
+          
           
           let result = await response.json();
     
