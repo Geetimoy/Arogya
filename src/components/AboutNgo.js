@@ -4,13 +4,16 @@ import AppTop from "./AppTop";
 import Appfooter from "./AppFooter";
 
 import { API_URL, DEVICE_TYPE, DEVICE_TOKEN } from "./util/Constants";
+import SystemContext from "../context/system/SystemContext";
 
 function AboutNgo(){
+
+  const systemContext = useContext(SystemContext);
 
   const [data, setData] = useState({page_content:'', page_title:''});
 
   let jsonData = {};
-      // jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData['system_id']             = systemContext.systemDetails.system_id;
       jsonData['device_type']           = DEVICE_TYPE;
       jsonData['device_token']          = DEVICE_TOKEN;
       jsonData['user_lat']              = localStorage.getItem('latitude');
@@ -18,7 +21,8 @@ function AboutNgo(){
 
       //jsonData["page_key"] = localStorage.getItem('page_key');
       jsonData["page_key"]              = "ABOUT_AROGYA_TELEHEALTH";
-      jsonData["system_id"]             = "telehealth.serviceplace.org.in";
+      // jsonData["system_id"]             = "telehealth.serviceplace.org.in";
+      //jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["page_id"]               = 2;
 
       useEffect(() => {
@@ -48,6 +52,12 @@ function AboutNgo(){
           // setLoading(false);
         }
       }
+
+      useEffect(() => {
+        if (systemContext.systemDetails.system_id) {
+          fetchData();
+        }
+      }, [systemContext.systemDetails.system_id]);
 
   return(
     <>

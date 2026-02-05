@@ -587,16 +587,16 @@ const showChart = async(elder_account_key, elder_name) => {
                         }
                         </li>
                         {/* <li><Link to={"/elderpersons/patient-prescription"}>Upload Prescription</Link></li> */}
-                        <li>
+                        
                           
                           {
-                          (decryptedLoginDetails.account_type !== '5') &&<Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>Update Awareness Survey</Link>
-                          
+                          (decryptedLoginDetails.account_type !== '5') && <li><Link to={`/elderpersons/elder-awareness-survey/${elder.account_key}`}>Update Awareness Survey</Link>
+                          </li>
                         }
-                        {
+                        {/* {
                           (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/elder-view-awareness-survey/${elder.account_key}`}>View/Edit Awareness Survey</Link>
-                        }
-                        </li>
+                        } */}
+                        
                         {
                           (decryptedLoginDetails.account_type == '5') &&
                         <li><Link to={`/elderpersons/elder-booked-appointment/${elder.account_key}`}>Booked Appointment</Link></li>

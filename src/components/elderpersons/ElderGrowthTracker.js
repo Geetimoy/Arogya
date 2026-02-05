@@ -478,7 +478,7 @@ function ElderGrowthTracker() {
       <Modal show={modalGrowthDetailsShow} onHide={modalGrowthDetailsClose} className='growth-details'>
         <Modal.Header className='justify-content-center'> 
           <div className='d-flex'>
-            <h3 className='mb-0'>Add Growth Details</h3>
+            <h3 className='mb-0'>Add Health Details</h3>
           </div>
           <Button variant="secondary" className='btn-delete btn-close' onClick={modalGrowthDetailsClose}></Button>
         </Modal.Header>  
@@ -509,10 +509,10 @@ function ElderGrowthTracker() {
             <label htmlFor='child_heart_rate'>Heart Rate (per minute)</label>
             <input type="text" className='form-control' name="child_heart_rate" id="child_heart_rate" placeholder='Enter Heart Rate per Minute' />
           </div>
-          <div className='form-group mb-3'>
+          {/* <div className='form-group mb-3'>
             <label htmlFor='child_mid_arm'>Mid Arm length</label>
             <input type="text" className='form-control' name="child_mid_arm" id="child_mid_arm" placeholder='Enter Mid Arm length' />
-          </div>
+          </div> */}
           <div className='form-group mb-3'>
             <label htmlFor='child_blood_pressure'>Blood Pressure</label>
             <input type="text" className='form-control' name="child_blood_pressure" id="child_blood_pressure" placeholder='Enter Blood Pressure' />
