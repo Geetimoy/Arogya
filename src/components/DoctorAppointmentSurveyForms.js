@@ -164,18 +164,44 @@ function DoctorAppointmentSurveyForms(){
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
     let jsonData = {};
-    jsonData['system_id']             = systemContext.systemDetails.system_id;
-    jsonData["account_key"]           = editAccountKey;
-    jsonData["account_type"]          = 3;
-    jsonData["file_type"]             = prescriptionType;
-    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;
-    jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]          = DEVICE_TOKEN;
-    jsonData["user_lat"]              = localStorage.getItem('latitude');
-    jsonData["user_long"]             = localStorage.getItem('longitude');
-    jsonData["file_id"]               = deletePrescriptionFileId;
 
-    const response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForChild`, {
+    if(decryptedLoginDetails.account_type == 5){
+
+      jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData["account_key"]           = editAccountKey;
+      jsonData["account_type"]          = 3;
+      jsonData["file_type"]             = prescriptionType;
+      jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
+      jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]          = DEVICE_TOKEN;
+      jsonData["user_lat"]              = localStorage.getItem('latitude');
+      jsonData["user_long"]             = localStorage.getItem('longitude');
+      jsonData["file_id"]               = deletePrescriptionFileId;
+
+    }
+    else{
+
+      jsonData['system_id']             = systemContext.systemDetails.system_id;
+      jsonData["account_key"]           = editAccountKey;
+      jsonData["account_type"]          = 3;
+      jsonData["file_type"]             = prescriptionType;
+      jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;
+      jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]          = DEVICE_TOKEN;
+      jsonData["user_lat"]              = localStorage.getItem('latitude');
+      jsonData["user_long"]             = localStorage.getItem('longitude');
+      jsonData["file_id"]               = deletePrescriptionFileId;
+
+    }
+    
+    if(userBasicDetails.account_type_name === "child"){
+      var fetchUrl = 'deleteInitialAppointmentDocumentForChild';
+    }
+    else{
+      var fetchUrl = 'deleteInitialAppointmentDocumentForElder';
+    }
+
+    const response = await fetch(`${API_URL}/${fetchUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
