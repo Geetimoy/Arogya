@@ -85,7 +85,7 @@ function DoctorAppointmentSurveyForms(){
   }*/
 
   var uploadUrl = `/doctor-appointment-upload-survey-form/${editAccountKey}/${prescriptionType}/${appointmentKey}`;
-  var fetchUrl  = `childSurveyPrescriptionListFromDoctorLogin`;
+  //var fetchUrl  = `childSurveyPrescriptionListFromDoctorLogin`;
 
   const handle2Click = () => {
     setIsMActive(!isMActive); // Toggle the state
@@ -108,7 +108,6 @@ function DoctorAppointmentSurveyForms(){
     jsonData["doctor_account_type"]     = 5;
     jsonData["account_key"]             = editAccountKey;
     jsonData["account_type"]            = 3;
-    jsonData["file_type"]               = prescriptionType;
     jsonData["search_param"]            = {
                                             "keyword": searchKey,
                                             "limit": "0",
@@ -116,6 +115,13 @@ function DoctorAppointmentSurveyForms(){
                                             "order_by_field": "",
                                             "order_by_value": "desc"
                                           }
+
+    if(userBasicDetails.account_type_name === "child"){
+      var fetchUrl = 'childSurveyPrescriptionListFromDoctorLogin';
+    }
+    else{
+      var fetchUrl = 'elderSurveyPrescriptionListFromDoctorLogin';
+    }
 
     const response = await fetch(`${API_URL}/${fetchUrl}`, {
       method: "POST",
@@ -198,7 +204,7 @@ function DoctorAppointmentSurveyForms(){
 
     if(decryptedLoginDetails.account_type == 5){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 31;
+      jsonData["account_type"]              = 34;
       jsonData["account_key"]               = editAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -215,7 +221,7 @@ function DoctorAppointmentSurveyForms(){
     }
     else{
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 31;
+      jsonData["account_type"]              = 34;
       jsonData["account_key"]               = editAccountKey;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;

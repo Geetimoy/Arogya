@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 import Appfooter from "./AppFooter";
 
@@ -25,6 +25,8 @@ function DoctorAppointmentUploadSurveyForm(){
   const prescriptionType  = urlParam.prescriptionType;
   const appointmentKey    = urlParam.appointmentKey;
 
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
+
   const [isMActive, setIsMActive] = useState(false);
 
   const redirect = useNavigate();
@@ -45,6 +47,66 @@ function DoctorAppointmentUploadSurveyForm(){
       reader.onerror = reject;
     });
   }
+
+  const getUserBasicDetails = async () => {
+  
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+    
+    let jsonData = {};
+
+    if(decryptedLoginDetails.account_type == 5){
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 34;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetailsFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_type"]              = 34;
+      jsonData["account_key"]               = editAccountKey;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      var response1 = await fetch(`${API_URL}/getProfileDetails`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+      });
+    }
+
+    let result = await response1.json();
+
+    if(result.success){
+      setUserBasicDetails(result.data);
+    }
+    else{
+      setUserBasicDetails([]); 
+    }
+  }
+
+  useEffect(() => {
+    if(systemContext.systemDetails.system_id && editAccountKey){
+      getUserBasicDetails();
+    }
+    // eslint-disable-next-line
+  }, [systemContext.systemDetails.system_id, editAccountKey]);
 
   const uploadCertificateChange = async (event) => {
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -69,7 +131,7 @@ function DoctorAppointmentUploadSurveyForm(){
       jsonData["user_lat"]                = localStorage.getItem('latitude');
       jsonData["user_long"]               = localStorage.getItem('longitude');
       jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
-      jsonData["upload_for"]              = "child";
+      jsonData["upload_for"]              = userBasicDetails.account_type_name;
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
       jsonData["file"]                    = uploadedFileBase64Array[1];
@@ -77,13 +139,24 @@ function DoctorAppointmentUploadSurveyForm(){
 
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/uploadChildSurveyPrescriptionFromDoctorLogin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
+      if(userBasicDetails.account_type_name === "child"){
+        var response = await fetch(`${API_URL}/uploadChildSurveyPrescriptionFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      else{
+        var response = await fetch(`${API_URL}/uploadElderSurveyPrescriptionFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
 
       let result = await response.json();
 
