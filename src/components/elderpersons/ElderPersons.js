@@ -355,6 +355,14 @@ function ElderPersons(){
           body: JSON.stringify(jsonData)
         })
 
+        let result = await response.json();
+        if(result.data && result.data.results.length > 0){
+          setTestReportAppointmentList(result.data.results);
+        }
+        else{
+          setTestReportAppointmentList([]);
+        }
+
       }
       else{
 
@@ -382,16 +390,16 @@ function ElderPersons(){
           body: JSON.stringify(jsonData)
         })
 
+        let result = await response.json();
+        if(result.data && result.data.appointments.length > 0){
+          setTestReportAppointmentList(result.data.appointments);
+        }
+        else{
+          setTestReportAppointmentList([]);
+        }
+
       }
-      
-  
-      let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
-        setTestReportAppointmentList(result.data.appointments);
-      }
-      else{
-        setTestReportAppointmentList([]);
-      }
+
 
     setShowTestReportsModal(true);
     setTestReportElderKey(elderAccountKey);
