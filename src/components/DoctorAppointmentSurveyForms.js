@@ -109,7 +109,7 @@ function DoctorAppointmentSurveyForms(){
     jsonData["account_key"]             = editAccountKey;
     jsonData["account_type"]            = 3;
     jsonData["search_param"]            = {
-                                            "keyword": searchKey,
+                                            "by_keywords": searchKey,
                                             "limit": "0",
                                             "offset": "0",
                                             "order_by_field": "",
@@ -120,7 +120,9 @@ function DoctorAppointmentSurveyForms(){
       var fetchUrl = 'childSurveyPrescriptionListFromDoctorLogin';
     }
     else{
-      var fetchUrl = 'elderSurveyPrescriptionListFromDoctorLogin';
+      jsonData["file_type"]               = 'initial';
+      jsonData["appointment_key"]         = appointmentKey;
+      var fetchUrl = 'fetchInitialAppointmentDocumentFromDoctorLoginForElder';
     }
 
     const response = await fetch(`${API_URL}/${fetchUrl}`, {

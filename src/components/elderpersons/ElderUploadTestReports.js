@@ -315,7 +315,7 @@ function ElderUploadTestReports(){
             </div>
             <div className={`form-group ${formData["report_date"].errorClass}`}>
               <label htmlFor="report_date">Report Date <span className="text-danger">*</span></label>
-              <DatePicker dateFormat="yyyy-MM-dd" selected={formData["report_date"].value ? formData["report_date"].value : ''} onChange={(date) => onChangeReportDate(date)} className='form-control' placeholderText="Report Date"/>
+              <DatePicker minDate={new Date()} dateFormat="yyyy-MM-dd" selected={formData["report_date"].value ? formData["report_date"].value : ''} onChange={(date) => onChangeReportDate(date)} className='form-control' placeholderText="Report Date"/>
               <small className="error-mesg">{formData["report_date"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["report_clinic"].errorClass}`}>
