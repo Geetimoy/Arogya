@@ -25,10 +25,10 @@ function AboutNgo(){
       //jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["page_id"]               = 21;
 
-      useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line
-      }, []);
+      // useEffect(() => {
+      //   fetchData();
+      //   // eslint-disable-next-line
+      // }, []);
 
       const fetchData = async () => {
         try {
@@ -41,7 +41,7 @@ function AboutNgo(){
           });
           
           const responseData = await response.json();
-          // console.log(responseData.data.results[0]);
+           console.log(responseData.data.results[0]);
           
           setData(responseData.data.results[0]);
           // console.log('Hi');
