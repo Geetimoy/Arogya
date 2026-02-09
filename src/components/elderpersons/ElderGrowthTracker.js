@@ -336,6 +336,66 @@ function ElderGrowthTracker() {
     setModalGrowthDetailsShow(true);
   }
 
+  // const handleFormSubmit = async (e) => {
+  //     e.preventDefault(); 
+  //     let errorCounter = validateForm();console.log(formData);
+  //     if(errorCounter === 0){
+  
+  //       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+  
+  //       let jsonData = {};
+  //       jsonData['system_id']                 = systemContext.systemDetails.system_id;
+  //       jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+  //       jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+  //       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+  //       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+  //       jsonData["device_token"]              = DEVICE_TOKEN;
+  //       jsonData["user_lat"]                  = localStorage.getItem('latitude');
+  //       jsonData["user_long"]                 = localStorage.getItem('longitude');
+  
+        
+  
+  //       jsonData["is_consent"]                = formData['is_consent'].value;
+  //       jsonData["elder_email_id"]            = formData['elder_email_id'].value;
+  //       jsonData["elder_age"]                 = formData['elder_age'].value;
+  //       jsonData["elder_address"]             = formData['elder_address'].value;
+  //       jsonData["elder_address_2"]           = formData['elder_address_2'].value;
+  //       jsonData["elder_state"]               = formData['elder_state'].value;
+  //       jsonData["elder_postal_code"]         = formData['elder_postal_code'].value;
+  //       jsonData["elder_landmark"]            = formData['elder_landmark'].value;
+  //       jsonData["elder_city"]                = formData['elder_city'].value;
+  //       jsonData["elder_father_name"]         = formData['elder_father_name'].value;
+  //       jsonData["elder_education"]           = formData['elder_education'].value;;
+  //       jsonData["elder_occupation"]          = formData['elder_occupation'].value;
+  //       jsonData["elder_gender"]              = formData['elder_gender'].value;
+  //       jsonData["elder_is_mobile_phone"]     = formData['is_personal_mobile_number'].value;
+  //       jsonData["special_notes"]             = formData['special_notes'].value;
+  //       jsonData["whatsapp"]                  = formData['whatsapp'].value;
+        
+  
+  //       const response = await fetch(`${API_URL}/addUpdateElderProfile`, {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(jsonData),
+  //       });
+  //       console.log(response)
+  //       let result = await response.json();
+  
+  //       if(result.success){
+  //         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+  //         resetForm();
+  //       }
+  //       else{
+  //         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+  //       }
+  
+  
+  
+  //     }
+  //   }
+
   return (
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -484,7 +544,7 @@ function ElderGrowthTracker() {
         </Modal.Header>  
         <Modal.Body> 
           <div className='custom-scrollbar'>
-          <form>
+          <form className='' name="growthDetailsForm" id="growthDetailsForm">
           <div className='form-group mb-3'>
             <label htmlFor='measurement_date'>Measurement Date</label>
             <input type="date" className='form-control' name="measurement_date" id="measurement_date" />

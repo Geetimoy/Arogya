@@ -20,10 +20,10 @@ function AboutNgo(){
       jsonData['user_long']             = localStorage.getItem('longitude');
 
       //jsonData["page_key"] = localStorage.getItem('page_key');
-      jsonData["page_key"]              = "ABOUT_AROGYA_TELEHEALTH";
+      jsonData["page_key"]              = "ABOUT_RGVN";
       // jsonData["system_id"]             = "telehealth.serviceplace.org.in";
       //jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["page_id"]               = 2;
+      jsonData["page_id"]               = 21;
 
       useEffect(() => {
         fetchData();
