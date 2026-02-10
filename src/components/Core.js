@@ -528,8 +528,8 @@ export default function Core() {
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
             <Route path="/doctor-appointments-volunteer" exact element={<DoctorAppointmentsVolunteer/>} />
-            <Route path="/doctor-appointments-prescription/:appointmentKey/:accountKey/:prescriptionType" exact element={<DoctorAppointmentsPrescriptions />} />
-            <Route path="/doctor-appointments-upload-prescription/:accountKey/:prescriptionType/:appointmentKey" exact element={<DoctorAppointmentsUploadPresciption />} />
+            <Route path="/doctor-appointments-prescription/:appointmentKey/:accountKey/:prescriptionType/:patientType" exact element={<DoctorAppointmentsPrescriptions />} />
+            <Route path="/doctor-appointments-upload-prescription/:accountKey/:prescriptionType/:appointmentKey/:patientType" exact element={<DoctorAppointmentsUploadPresciption />} />
             <Route path="/patientprofiles-booking/:doctorAccountKey/:scheduleId" exact element={<PatientProfilesBooking />} />
             <Route path="/doctor-appointment-survey-forms/:appointmentKey/:accountKey/:prescriptionType" exact element={<DoctorAppointmentSurveyForms/>} />
             <Route path="/doctor-appointment-upload-survey-form/:accountKey/:prescriptionType/:appointmentKey" exact element={<DoctorAppointmentUploadSurveyForm/>} />

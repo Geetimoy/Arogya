@@ -28,6 +28,7 @@ function DoctorAppointmentsUploadPresciption(){
   const editAccountKey    = urlParam.accountKey;
   const prescriptionType  = urlParam.prescriptionType;
   const appointmentKey     = (urlParam.appointmentKey) ? urlParam.appointmentKey : '';
+  const patientType       = urlParam.patientType;
   const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   if(prescriptionType == 'initial'){
@@ -200,7 +201,7 @@ function DoctorAppointmentsUploadPresciption(){
         jsonData["user_long"]                 = localStorage.getItem('longitude');
 
         //Geetimoy da
-        jsonData["upload_for"]                = "child";
+        jsonData["upload_for"]                = patientType;
 
         jsonData["appointment_initial_type"]  = appointmentInitialType;
         jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
@@ -214,13 +215,24 @@ function DoctorAppointmentsUploadPresciption(){
         jsonData["recheck_date"]              = recheckDate;
         jsonData["files"]                     = fileUploadArray;
 
-        const response = await fetch(`${API_URL}/uploadAppointmentDocumentForChildFromDoctorLogin`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        });
+        if(patientType === 'child'){
+          var response = await fetch(`${API_URL}/uploadAppointmentDocumentForChildFromDoctorLogin`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
+        else{
+          var response = await fetch(`${API_URL}/uploadAppointmentDocumentForElderFromDoctorLogin`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
   
         let result = await response.json();
   
@@ -365,7 +377,7 @@ function DoctorAppointmentsUploadPresciption(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to={`/doctor-appointments-prescription/${appointmentKey}/${editAccountKey}/${prescriptionType}`} className=''>
+              <Link to={`/doctor-appointments-prescription/${appointmentKey}/${editAccountKey}/${prescriptionType}/${patientType}`} className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
