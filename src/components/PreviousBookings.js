@@ -518,7 +518,7 @@ const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/doctor-appointment-survey-forms/${appointment.appointment_key}/${appointment.patient_key}/initial`} >Upload Form</Link></li>
                       }
                       {
-                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/doctor-appointments-prescription/${appointment.appointment_key}/${appointment.patient_key}/doctor`} >Upload Prescription</Link></li>
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/doctor-appointments-prescription/${appointment.appointment_key}/${appointment.patient_key}/doctor/${appointment.patient_type}`} >Upload Prescription</Link></li>
                       }
                       {/* <li><Link to={"/"}>Send Notifications</Link></li>
                       {
