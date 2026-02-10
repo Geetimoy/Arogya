@@ -379,6 +379,10 @@ function YoungWomens(){
           {
             (decryptedLoginDetails.account_type !== '5') && <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women</Link>
           }
+
+          {
+            (decryptedLoginDetails.account_type == '5') && <Link to="/youngwomens/create-youngwomens-doctor" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child </Link>
+          }
           
         </div>
         <div className='search-patient mt-3 mb-3'>
@@ -402,7 +406,7 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/young-woman-basicinfo/${women.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/youngwomens/young-woman-view-basicinfo/${women.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/youngwomens/young-woman-view-basicinfo/${women.account_key}`}>View/Edit Basic Information</Link>
                         }
                         </li>
                         {
@@ -413,7 +417,7 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/update-medical-history/${women.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/young-woman-view-medical-history/${women.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/young-woman-view-medical-history/${women.account_key}`}>View/Edit Medical History</Link>
                         }
                         </li>
                         <li>
@@ -422,7 +426,7 @@ function YoungWomens(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/young-woman-view-periodic-data/${women.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/young-woman-view-periodic-data/${women.account_key}`}>View/Edit Periodic Data</Link>
                         }
                         </li>
                         <li>
@@ -430,7 +434,7 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>Update Awareness Survey</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>View Awareness Survey</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/update-awareness-survey/${women.account_key}`}>View/Edit Awareness Survey</Link>
                         }
                         </li>
                         {

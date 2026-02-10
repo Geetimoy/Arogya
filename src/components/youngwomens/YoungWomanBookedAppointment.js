@@ -176,7 +176,7 @@ function YoungWomanBookedAppointment(){
         </div>
       </div>
       <div className="app-body bookings">
-        <p className='patient-details'>
+        <p className='patient-details mt-4'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
         <div className='d-flex justify-content-between align-items-center'>

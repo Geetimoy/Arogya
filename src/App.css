@@ -390,6 +390,11 @@ body:has(.sevaapurulia-container-class) .modal .primary-bg-color{
   color: #fff;
 }
 
+.ukhra-container-class .tab-container button.active {
+    background: #af1e25;
+    color: #fff;
+}
+
 /* RGVN */
 .rgvn-container-class .primary-color{
     color: #2aa142; 
