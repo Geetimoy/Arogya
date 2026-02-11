@@ -477,13 +477,24 @@ function DoctorAppointmentSurveyForms(){
           jsonData["file_extension"]          = 'jpg';
           jsonData["initial_summary"]         = '';
 
-          const response = await fetch(`${API_URL}/uploadInitialDocumentForChild`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jsonData),
-          });
+          if(userBasicDetails.account_type_name === "child"){
+            var response = await fetch(`${API_URL}/uploadInitialDocumentForChild`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
+          else{
+            var response = await fetch(`${API_URL}/uploadInitialDocumentForElder`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
 
           let result = await response.json();
 
@@ -657,6 +668,7 @@ function DoctorAppointmentSurveyForms(){
                   <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(child.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
                   <p className='mb-1'><strong>{child.file_name}</strong></p>
+                  <p className='mb-0'><small className='text-muted'>{child.prescription_date}</small></p>
                 </div>
               </div>
             </div>

@@ -492,9 +492,16 @@ function GrowthTracker() {
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/doctor-appointments" className=''>
-                <FontAwesomeIcon icon={faLongArrowAltLeft} />
-              </Link>
+              {
+                (redirectedFrom === 'from-listing') && <Link to="/child-malnutrition" className=''>
+                  <FontAwesomeIcon icon={faLongArrowAltLeft} />
+                </Link>
+              }
+              {
+                (redirectedFrom === 'from-bookings') && <Link to="/doctor-appointments" className=''>
+                  <FontAwesomeIcon icon={faLongArrowAltLeft} />
+                </Link>
+              }
             </div>
              <h5 className='mx-2 mb-0'>Growth Tracker </h5> 
           </div>
