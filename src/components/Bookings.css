@@ -94,3 +94,12 @@
   padding-top: 1.825rem;
   height: 100px;
 }
+
+.rgvn-container-class .bookings .button-box span.uppercase{
+  color: #212529;
+  text-transform: uppercase;
+}
+.ukhra-container-class .bookings .button-box span.uppercase, .sevaapurulia-container-class .bookings .button-box span.uppercase{
+  color: #212529;
+  text-transform: uppercase;
+}

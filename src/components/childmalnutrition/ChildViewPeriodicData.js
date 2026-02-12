@@ -478,7 +478,7 @@ const [chartChildName, setChartChildName] = useState("");
                     <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0'>Periodic Data</Button>  
                     <Link to={`/childmalnutrition/child-view-periodic-data/${child.account_key}`}>Periodic Data</Link>
                   </Modal.Footer>   */}
-                </Modal>
+        </Modal>
       </div>
       <Appfooter></Appfooter>
     </>

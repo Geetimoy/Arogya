@@ -493,8 +493,9 @@ const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
             {appointmentList.map((appointment, index) => (
               <div className='button-box mb-3 position-relative' key={appointment.appointment_id}>
                 <div className='charts'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM464 96H345.94c-21.38 0-32.09 25.85-16.97 40.97l32.4 32.4L288 242.75l-73.37-73.37c-12.5-12.5-32.76-12.5-45.25 0l-68.69 68.69c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.62c6.25 6.25 16.38 6.25 22.63 0L192 237.25l73.37 73.37c12.5 12.5 32.76 12.5 45.25 0l96-96 32.4 32.4c15.12 15.12 40.97 4.41 40.97-16.97V112c.01-8.84-7.15-16-15.99-16z"/></svg>
-                                                <Link to={`/${(appointment.patient_type === "elder") ? 'elderpersons' : 'childmalnutrition'}/growth-tracker/${appointment.patient_key}/from-bookings`} className='primary-color p-0'>  Charts</Link>
-                                                </div>
+                <Link to={`/${(appointment.patient_type === "elder") ? 'elderpersons' : 'childmalnutrition'}/growth-tracker/${appointment.patient_key}/from-bookings`} className='primary-color p-0'>  Charts</Link>
+                {/* <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0 w-100' onClick={() =>  showChart()}>View Growth Chart</Link> */}
+                </div>
                 <div className={`three-dot my-element2 ${openMenuId === appointment.appointment_id ? 'active' : ''}`} onClick={() => handleMenuClick(appointment.appointment_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
                 {openMenuId === appointment.appointment_id && 
                   <div className='drop-menu'>
@@ -507,6 +508,9 @@ const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
                       }
                       {
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={"#"} onClick={() => modalConfirmationShow('reject', appointment.appointment_key)}>Reject Booking</Link></li>
+                      }
+                      {
+                        (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/${(appointment.patient_type === "elder") ? 'elderpersons' : 'childmalnutrition'}/growth-tracker/${appointment.patient_key}/from-bookings`}>{ (appointment.patient_type === "elder") ? 'Health Data' : 'Growth Tracker' }</Link></li>
                       }
                        {
                         (decryptedLoginDetails.account_type === '5' && appointment.appt_status === 'Approved') &&<li><Link to={`/childmalnutrition/child-view-medical-history/${appointment.patient_key}/from-bookings`}>Basic Medical History</Link></li>
@@ -529,14 +533,14 @@ const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
                       <li><Link to={"#"}>Download Prescriptions</Link></li>
                       <li><Link to={"#"}>Upload Test Reports</Link></li>
                       <li><Link to={"#"}>Download Test Reports</Link></li> */}
-                      <li><Link onClick={() => { modalReviewShow(appointment.appointment_key, appointment.patient_display_name, appointment.volunteer_display_name, appointment.patient_key, appointment.volunteer_key, appointment.appt_status); }} to="#">Write/View Review</Link></li>
+                      {/* <li><Link onClick={() => { modalReviewShow(appointment.appointment_key, appointment.patient_display_name, appointment.volunteer_display_name, appointment.patient_key, appointment.volunteer_key, appointment.appt_status); }} to="#">Write/View Review</Link></li> */}
                     </ul>
                   </div>
                 }
                 {
                   (decryptedLoginDetails.account_type === '4') &&<p><span className="d-block">Doctor Name:</span> {appointment.doctor_display_name}</p>
                 }
-                <p><span className="d-block">Appointment ID / Status:</span> {appointment.appointment_key} - ({appointment.appt_status})</p>
+                <p><span className="d-block">Appointment ID / Status:</span> <span className='uppercase'>{appointment.appointment_key}</span> - ({appointment.appt_status})</p>
                 <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
                 <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
                 <p><span className="d-block">Place / Consultation Mode:</span> {appointment.location} / {(appointment.consultation_mode === '1') ? `Offline (Clinic)` : ((appointment.consultation_mode === '2') ? `Online` : `Call on Emergency`)}</p>

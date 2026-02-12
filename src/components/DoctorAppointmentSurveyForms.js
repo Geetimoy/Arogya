@@ -654,7 +654,7 @@ function DoctorAppointmentSurveyForms(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Prescription' onChange={searchPrescription}/>
+            <input type="text" className='form-control' placeholder='Search Survey Form' onChange={searchPrescription}/>
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
@@ -667,8 +667,9 @@ function DoctorAppointmentSurveyForms(){
                   <div className="btn-download"><Link target="_blank" to={`${child.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
                   <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(child.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
+                  <p className='mb-0'><small className='text-muted'>Date: {child.prescription_date}</small></p>
                   <p className='mb-1'><strong>{child.file_name}</strong></p>
-                  <p className='mb-0'><small className='text-muted'>{child.prescription_date}</small></p>
+                  
                 </div>
               </div>
             </div>
