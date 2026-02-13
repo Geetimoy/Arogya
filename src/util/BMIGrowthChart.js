@@ -86,7 +86,7 @@ export default function BMIGrowthChart({ data }) {
   }));
 
   return (
-    <div style={{ width: "100%", height: 500 }}>
+    <div style={{ width: "100%", height: 420 }}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 20, right: 30, bottom: 30 }}>
           <CartesianGrid strokeDasharray="3 3" />
