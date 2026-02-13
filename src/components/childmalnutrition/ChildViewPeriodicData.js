@@ -301,7 +301,7 @@ function ChildViewPeriodicData(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id, editAccountKey]);
 
-const [chartChildName, setChartChildName] = useState("");
+  const [chartChildName, setChartChildName] = useState("");
   const [chartChildKey, setChartChildKey] = useState("");
   //const [childChart, setChildChart] = useState([]);
   const [weightChart, setWeightChart] = useState([]);
