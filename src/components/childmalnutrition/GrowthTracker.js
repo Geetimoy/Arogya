@@ -17,6 +17,9 @@ import { keyframes } from '@mui/material';
 import MetricChart from '../../util/MetricChart';
 import {Modal, Button} from 'react-bootstrap'; 
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import HeightGrowthChart from '../../util/HeightGrowthChart';
 import WeightGrowthChart from '../../util/WeightGrowthChart';
 import BMIGrowthChart from '../../util/BMIGrowthChart';
@@ -584,9 +587,9 @@ function GrowthTracker() {
           alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
         }
   
-      }
+  }
       
-    const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
    
       if(value.trim() !== ""){
@@ -596,6 +599,11 @@ function GrowthTracker() {
         setFormData({...formData, [name]: {...formData[name], category:formData[name].category, value:value}});
       }
   }
+
+   const [dataProcessedDate, setDataProcessedDate] = useState(new Date());
+    const onChangeDataProcessedDate = (date) => {
+      setDataProcessedDate(date);
+    }
 
   return (
     <>
@@ -754,7 +762,8 @@ function GrowthTracker() {
           <form className="" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
           <div className='form-group mb-3'>
             <label htmlFor='measurement_date'>Measurement Date</label>
-            <input type="date" className='form-control' name="measurement_date" id="measurement_date" />
+            {/* <input type="date" className='form-control' name="measurement_date" id="measurement_date" /> */}
+            <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
           </div>
           <div className='form-group mb-3'>
             <label htmlFor='child_height'>Height (in cm)</label>
