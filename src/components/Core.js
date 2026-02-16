@@ -174,6 +174,7 @@ import Pharmacy from './serviceproviders/Pharmacy';
 import DoctorAppointmentsUploadPresciption from './DoctorAppointmentsUploadPresciption';
 import DoctorAppointmentSurveyForms from './DoctorAppointmentSurveyForms';
 import DoctorAppointmentUploadSurveyForm from './DoctorAppointmentUploadSurveyForm';
+import ElderPastMeasurmentsHeight from './elderpersons/ElderPastMeasurmentsHeight';
 
 
 
@@ -185,10 +186,10 @@ import DoctorAppointmentUploadSurveyForm from './DoctorAppointmentUploadSurveyFo
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
+  //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
   //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
-  //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
+  const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
   const [systemId, setSystemId] = useState(null);
 
@@ -524,7 +525,7 @@ export default function Core() {
 
             <Route path="/elderpersons/growth-tracker/:accountKey/:redirectedFrom" exact element={<ElderGrowthTracker />} />
             <Route path="/elderpersons/growth-details/" exact element={<GrowthDetails />} />
-            <Route path="/elderpersons/growth-tracker/history/:accountKey/:redirectedFrom/:measuremenType" exact element={<PastMeasurmentsHeight />} />
+            <Route path="/elderpersons/growth-tracker/history/:accountKey/:redirectedFrom/:measuremenType" exact element={<ElderPastMeasurmentsHeight/>} />
 
             <Route path="/doctor-appointments" exact element={<DoctorAppointments />} />
             <Route path="/doctor-appointments-volunteer" exact element={<DoctorAppointmentsVolunteer/>} />

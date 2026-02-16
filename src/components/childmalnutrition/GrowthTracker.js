@@ -14,16 +14,16 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 
 import AppTopNotifications from '../AppTopNotifications';
 import { keyframes } from '@mui/material';
-import MetricChart from '../../util/MetricChart';
+import MetricChart from '../../util/child/MetricChart';
 import {Modal, Button} from 'react-bootstrap'; 
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import HeightGrowthChart from '../../util/HeightGrowthChart';
-import WeightGrowthChart from '../../util/WeightGrowthChart';
-import BMIGrowthChart from '../../util/BMIGrowthChart';
-import MidArmGrowthChart from '../../util/MidArmGrowthChart';
+import HeightGrowthChart from '../../util/child/HeightGrowthChart';
+import WeightGrowthChart from '../../util/child/WeightGrowthChart';
+import BMIGrowthChart from '../../util/child/BMIGrowthChart';
+import MidArmGrowthChart from '../../util/child/MidArmGrowthChart';
 
 import '../../components/childmalnutrition/CreateChildMalnutrition.css';
 import { use } from 'react';

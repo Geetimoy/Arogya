@@ -14,13 +14,13 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 
 import AppTopNotifications from '../AppTopNotifications';
 import { keyframes } from '@mui/material';
-import MetricChart from '../../util/MetricChart';
+import MetricChart from '../../util/elder/MetricChart';
 import {Modal, Button} from 'react-bootstrap'; 
 
-import HeightGrowthChart from '../../util/HeightGrowthChart';
-import WeightGrowthChart from '../../util/WeightGrowthChart';
-import BMIGrowthChart from '../../util/BMIGrowthChart';
-import MidArmGrowthChart from '../../util/MidArmGrowthChart';
+import HeightGrowthChart from '../../util/elder/HeightGrowthChart';
+import WeightGrowthChart from '../../util/elder/WeightGrowthChart';
+import BMIGrowthChart from '../../util/elder/BMIGrowthChart';
+//import MidArmGrowthChart from '../../util/elder/MidArmGrowthChart';
 
 import '../../components/childmalnutrition/CreateChildMalnutrition.css';
 import { use } from 'react';
@@ -48,14 +48,14 @@ function ElderGrowthTracker() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 31;
+    jsonData["account_type"]              = 33;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
 
-    var response = await fetch(`${API_URL}/getChildHistorySummary`, {
+    var response = await fetch(`${API_URL}/getElderHistorySummary`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +101,7 @@ function ElderGrowthTracker() {
 
     if(decryptedLoginDetails.account_type == 5){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 31;
+      jsonData["account_type"]              = 34;
       jsonData["account_key"]               = editAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -118,7 +118,7 @@ function ElderGrowthTracker() {
     }
     else{
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 31;
+      jsonData["account_type"]              = 34;
       jsonData["account_key"]               = editAccountKey;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
@@ -186,7 +186,7 @@ function ElderGrowthTracker() {
       let jsonData = {};
 
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 31;
+      jsonData["account_type"]              = 34;
       jsonData["account_key"]               = editAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -197,7 +197,7 @@ function ElderGrowthTracker() {
       jsonData["growth_param"]              = "all";
 
 
-      var response = await fetch(`${API_URL}/getChildChartHistory`, {
+      var response = await fetch(`${API_URL}/getElderChartHistory`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -246,7 +246,7 @@ function ElderGrowthTracker() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 31;
+    jsonData["account_type"]              = 34;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -257,7 +257,7 @@ function ElderGrowthTracker() {
     jsonData["growth_param"]              = "all";
 
 
-    var response = await fetch(`${API_URL}/getChildChartHistory`, {
+    var response = await fetch(`${API_URL}/getElderChartHistory`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +283,7 @@ function ElderGrowthTracker() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 31;
+    jsonData["account_type"]              = 34;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -293,7 +293,7 @@ function ElderGrowthTracker() {
     jsonData["gender"]                    = (userBasicDetails.gender === 'male') ? 1 : 2;
     jsonData["growth_param"]              = param;
 
-    var response = await fetch(`${API_URL}/getChildChartHistory`, {
+    var response = await fetch(`${API_URL}/getElderChartHistory`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -450,7 +450,7 @@ function ElderGrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].weight && <tr>
                       <td>Weight</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight }</td>
-                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg</span> <Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/weight`} className='primary-color'>(History)</Link></td> 
+                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg</span> <Link to={`/elderpersons/growth-tracker/history/${editAccountKey}/${redirectedFrom}/weight`} className='primary-color'>(History)</Link></td> 
                     </tr>
                   } 
 
@@ -458,7 +458,7 @@ function ElderGrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].height && <tr>
                       <td>Height</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height }</td>
-                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm </span><Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/height`} className='primary-color'>(History)</Link></td> 
+                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm </span><Link to={`/elderpersons/growth-tracker/history/${editAccountKey}/${redirectedFrom}/height`} className='primary-color'>(History)</Link></td> 
                     </tr>
                   }
 
@@ -466,16 +466,16 @@ function ElderGrowthTracker() {
                       latestGrowthData[Object.keys(latestGrowthData)[0]].bmi && <tr>
                         <td>BMI</td>
                         <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi }</td>
-                        <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } </span><Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/bmi`} className='primary-color'>(History)</Link></td> 
+                        <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } </span><Link to={`/elderpersons/growth-tracker/history/${editAccountKey}/${redirectedFrom}/bmi`} className='primary-color'>(History)</Link></td> 
                       </tr>
                   }
                   
                   {
-                    latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm && <tr>
-                      <td>Mid Arm</td>
-                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm }</td>
-                      <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm_range } <Link to={`/childmalnutrition/growth-tracker/history/${editAccountKey}/${redirectedFrom}/mid_arm`} className='primary-color'>(History)</Link></td> 
-                    </tr>
+                    // latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm && <tr>
+                    //   <td>Mid Arm</td>
+                    //   <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm }</td>
+                    //   <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm_range } <Link to={`/elderpersons/growth-tracker/history/${editAccountKey}/${redirectedFrom}/mid_arm`} className='primary-color'>(History)</Link></td> 
+                    // </tr>
                   }
                   
                 </>:<></>
@@ -491,13 +491,12 @@ function ElderGrowthTracker() {
           <h6 className='modal-title'><strong>Name: { userBasicDetails.display_name }</strong></h6> 
           <div className='d-flex align-items-center'>
             
-            <h6 className='modal-title min-width-120'>Growth Chart</h6> 
+            <h6 className='modal-title min-width-120'>Health Chart</h6> 
             <select className='form-select' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value) } >
               <option value="all">All</option>
               <option value="height">Height</option>
               <option value="weight">Weight</option>
               <option value="bmi">BMI</option>
-              <option value="mid_arm">Mid Arm</option>
             </select>
           </div>
           <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
@@ -508,7 +507,6 @@ function ElderGrowthTracker() {
             <option value="height">Height</option>
             <option value="weight">Weight</option>
             <option value="bmi">BMI</option>
-            <option value="mid_arm">Mid Arm</option>
           </select> */}
           <div className='health-chart'>
             {/* <MetricChart labels={labels} metrics={metrics}/> */}
@@ -526,7 +524,7 @@ function ElderGrowthTracker() {
               defaultGrowthParam === 'bmi' && <BMIGrowthChart data={individualMetricData} />
             }
             {
-              defaultGrowthParam === 'mid_arm' && <MidArmGrowthChart data={individualMetricData} />
+              // defaultGrowthParam === 'mid_arm' && <MidArmGrowthChart data={individualMetricData} />
             }
 
           </div>

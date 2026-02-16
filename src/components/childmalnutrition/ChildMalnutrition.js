@@ -18,11 +18,11 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } f
 
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
-import MetricChart from '../../util/MetricChart';
-import HeightGrowthChart from '../../util/HeightGrowthChart';
-import WeightGrowthChart from '../../util/WeightGrowthChart';
-import BMIGrowthChart from '../../util/BMIGrowthChart';
-import MidArmGrowthChart from '../../util/MidArmGrowthChart';
+import MetricChart from '../../util/child/MetricChart';
+import HeightGrowthChart from '../../util/child/HeightGrowthChart';
+import WeightGrowthChart from '../../util/child/WeightGrowthChart';
+import BMIGrowthChart from '../../util/child/BMIGrowthChart';
+import MidArmGrowthChart from '../../util/child/MidArmGrowthChart';
 
 
 
