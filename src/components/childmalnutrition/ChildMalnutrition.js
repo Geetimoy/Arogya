@@ -111,8 +111,6 @@ function ChildMalnutrion(){
 
   const [showCloseProfileModal, setShowCloseProfileModal] = useState(false);
   const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
-  
-
   const modalHealthChartClose  = () => setModalHealthChartShow(false);  
   // const modalHealthChartShow   = () => setModalHealthChartShow(true);
 
