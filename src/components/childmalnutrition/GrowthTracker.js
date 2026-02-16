@@ -513,79 +513,50 @@ function GrowthTracker() {
 
   const handleFormSubmit = async (e) => {
       e.preventDefault(); 
-  
-      // var womenCategory = [];
-      // Object.keys(inputValues).forEach(function(k, i){
-      //   if(inputValues[k].category != '' && parseInt(inputValues[k].category) > 0){
-      //     womenCategory[i] = {category: inputValues[k].category, value: inputValues[k].value}
-      //   }
-      // });
-  
-     
-  
-        // let strday   = String(dataProcessedDate.getDate()).padStart(2, '0');  // Add leading zero if needed
-        // let strmonth = String(dataProcessedDate.getMonth() + 1).padStart(2, '0');  // Months are zero-indexed
-        // let stryear  = dataProcessedDate.getFullYear();
-        
-        //let dataProcessedOn = `${strday}-${strmonth}-${stryear}`;
-  
-        var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-  
-        /*var currentDate = new Date();
-        var day         = currentDate.getDate();
-            day         = (day < 10) ? '0'+day : day;
-        var month       = currentDate.getMonth() + 1; // Add 1 as months are zero-based
-            month       = (month < 10) ? '0'+month : month;
-        var year        = currentDate.getFullYear();
-        var currentDate = `${day}-${month}-${year}`;*/
-  
-        let jsonData = {};
-        jsonData['system_id']                 = systemContext.systemDetails.system_id;
-        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-        jsonData["device_token"]              = DEVICE_TOKEN;
-        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
-        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
-        jsonData["user_lat"]                  = localStorage.getItem('latitude');
-        jsonData["user_long"]                 = localStorage.getItem('longitude');
-        jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
-        jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
-        jsonData["child_account_key"]         = editAccountKey;
-        
-        //jsonData["child_account_type"]        = '3';
-        
-        //jsonData["data_processed_on"]         = dataProcessedOn;
-        jsonData["remarks"]                   = remarks;
-        //jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-        //jsonData["child_cat_value"]           = womenCategory;
-        jsonData["child_cat_value"] = formData;
+
+      let strday   = String(dataProcessedDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+      let strmonth = String(dataProcessedDate.getMonth() + 1).padStart(2, '0');  // Months are zero-indexed
+      let stryear  = dataProcessedDate.getFullYear();
+      
+      let dataProcessedOn = `${strday}-${strmonth}-${stryear}`;
+      
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
+      jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
+      jsonData["child_account_key"]         = editAccountKey;
+      jsonData["data_processed_on"]         = dataProcessedOn;
+      jsonData["remarks"]                   = remarks;
+      jsonData["child_cat_value"]           = formData;
 
 
-        const response = await fetch(`${API_URL}/childPeriodicHealthDataAddFromDoctorLogin`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        });
-        
-        let result = await response.json();
-  
-        if(result.success){
-          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-          setTimeout(() => {
-            window.location.reload(false);
-          }, 2000);
-          /*Object.keys(inputValues).forEach(function(k, i){
-            inputValues[k].category = "";
-            inputValues[k].value    = "";
-          });
-          setInputList([<Category key={1} name="select1" changefunc={selectCategory} changecatval={changeCategoryValue}/>]);
-          setRemarks("");
-          listPeriodicData();*/
-        }
-        else{
-          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-        }
+      const response = await fetch(`${API_URL}/childPeriodicHealthDataAddFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 2000);
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
   
   }
       
