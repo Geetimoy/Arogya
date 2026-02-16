@@ -25,10 +25,14 @@ import BMIGrowthChart from '../../util/elder/BMIGrowthChart';
 import '../../components/childmalnutrition/CreateChildMalnutrition.css';
 import { use } from 'react';
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function ElderGrowthTracker() {
 
   const systemContext = useContext(SystemContext);
+  const alertContext  = useContext(AlertContext);
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -336,65 +340,88 @@ function ElderGrowthTracker() {
     setModalGrowthDetailsShow(true);
   }
 
-  // const handleFormSubmit = async (e) => {
-  //     e.preventDefault(); 
-  //     let errorCounter = validateForm();console.log(formData);
-  //     if(errorCounter === 0){
+  const [remarks, setRemarks] = useState(''); 
+
+  const handleRemarks = (e) => {
+    const { name, value } = e.target;
+    setRemarks(value);
+  }
+
+  const [formData, setFormData] = useState({
+      elder_weight: { category: 1, value: "" },
+      elder_height: { category: 2, value: "" },
+      elder_temperature: { category: 4, value: "" },
+      elder_heart_rate: { category: 6, value: "" },
+      elder_mid_arm: { category: 8, value: "" },
+      elder_blood_pressure: { category: 9, value: "" },
+      elder_spo2: { category: 10, value: "" },
+      elder_diabetic: { category: 11, value: "" },
+    });
+
+  const handleFormSubmit = async (e) => {
+        e.preventDefault(); 
   
-  //       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-  
-  //       let jsonData = {};
-  //       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-  //       jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
-  //       jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
-  //       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
-  //       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-  //       jsonData["device_token"]              = DEVICE_TOKEN;
-  //       jsonData["user_lat"]                  = localStorage.getItem('latitude');
-  //       jsonData["user_long"]                 = localStorage.getItem('longitude');
-  
+        let strday   = String(dataProcessedDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+        let strmonth = String(dataProcessedDate.getMonth() + 1).padStart(2, '0');  // Months are zero-indexed
+        let stryear  = dataProcessedDate.getFullYear();
         
-  
-  //       jsonData["is_consent"]                = formData['is_consent'].value;
-  //       jsonData["elder_email_id"]            = formData['elder_email_id'].value;
-  //       jsonData["elder_age"]                 = formData['elder_age'].value;
-  //       jsonData["elder_address"]             = formData['elder_address'].value;
-  //       jsonData["elder_address_2"]           = formData['elder_address_2'].value;
-  //       jsonData["elder_state"]               = formData['elder_state'].value;
-  //       jsonData["elder_postal_code"]         = formData['elder_postal_code'].value;
-  //       jsonData["elder_landmark"]            = formData['elder_landmark'].value;
-  //       jsonData["elder_city"]                = formData['elder_city'].value;
-  //       jsonData["elder_father_name"]         = formData['elder_father_name'].value;
-  //       jsonData["elder_education"]           = formData['elder_education'].value;;
-  //       jsonData["elder_occupation"]          = formData['elder_occupation'].value;
-  //       jsonData["elder_gender"]              = formData['elder_gender'].value;
-  //       jsonData["elder_is_mobile_phone"]     = formData['is_personal_mobile_number'].value;
-  //       jsonData["special_notes"]             = formData['special_notes'].value;
-  //       jsonData["whatsapp"]                  = formData['whatsapp'].value;
+        let dataProcessedOn = `${strday}-${strmonth}-${stryear}`;
         
+        var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
   
-  //       const response = await fetch(`${API_URL}/addUpdateElderProfile`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(jsonData),
-  //       });
-  //       console.log(response)
-  //       let result = await response.json();
-  
-  //       if(result.success){
-  //         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-  //         resetForm();
-  //       }
-  //       else{
-  //         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-  //       }
+        let jsonData = {};
+        jsonData['system_id']                 = systemContext.systemDetails.system_id;
+        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+        jsonData["device_token"]              = DEVICE_TOKEN;
+        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+        jsonData["user_lat"]                  = localStorage.getItem('latitude');
+        jsonData["user_long"]                 = localStorage.getItem('longitude');
+        jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
+        jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
+        jsonData["elder_account_key"]         = editAccountKey;
+        jsonData["data_processed_on"]         = dataProcessedOn;
+        jsonData["remarks"]                   = remarks;
+        jsonData["elder_cat_value"]           = formData;
   
   
+        const response = await fetch(`${API_URL}/elderPeriodicHealthDataAddFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+        
+        let result = await response.json();
   
-  //     }
-  //   }
+        if(result.success){
+          alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 2000);
+        }
+        else{
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        }
+    
+    }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+   
+      if(value.trim() !== ""){
+        setFormData({...formData, [name]: {...formData[name], category:formData[name].category, value:value}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], category:formData[name].category, value:value}});
+      }
+  }
+
+  const [dataProcessedDate, setDataProcessedDate] = useState(new Date());
+      const onChangeDataProcessedDate = (date) => {
+        setDataProcessedDate(date);
+    }
 
   return (
     <>
@@ -542,42 +569,47 @@ function ElderGrowthTracker() {
         </Modal.Header>  
         <Modal.Body> 
           <div className='custom-scrollbar'>
-          <form className='' name="growthDetailsForm" id="growthDetailsForm">
+          <form className='' name="growthDetailsForm" id="growthDetailsForm" onSubmit={handleFormSubmit}>
           <div className='form-group mb-3'>
             <label htmlFor='measurement_date'>Measurement Date</label>
-            <input type="date" className='form-control' name="measurement_date" id="measurement_date" />
+            {/* <input type="date" className='form-control' name="measurement_date" id="measurement_date" /> */}
+            <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='child_height'>Height (in cm)</label>
-            <input type="text" className='form-control' name="child_height" id="child_height" placeholder='Enter Height in cm' />
+            <label htmlFor='elder_height'>Height (in cm)</label>
+            <input type="text" className='form-control' name="elder_height" id="elder_height" placeholder='Enter Height in cm' onChange={handleChange} value={formData["elder_height"] ? formData["elder_height"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='child_weight'>Weight (in kg)</label>
-            <input type="text" className='form-control' name="child_weight" id="child_weight" placeholder='Enter Weight in kg' />
+            <label htmlFor='elder_weight'>Weight (in kg)</label>
+            <input type="text" className='form-control' name="elder_weight" id="elder_weight" placeholder='Enter Weight in kg' onChange={handleChange} value={formData["elder_weight"] ? formData["elder_weight"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='child_temperature'>Body Temperature (in Fahrenheit)</label>
-            <input type="text" className='form-control' name="child_temperature" id="child_temperature" placeholder='Enter Body Temperature in °F' />
+            <label htmlFor='elder_temperature'>Body Temperature (in Fahrenheit)</label>
+            <input type="text" className='form-control' name="elder_temperature" id="elder_temperature" placeholder='Enter Body Temperature in °F' onChange={handleChange} value={formData["elder_temperature"] ? formData["elder_temperature"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='child_spo2'>Blood Oxygen Level SpO2</label>
-            <input type="text" className='form-control' name="child_spo2" id="child_spo2" placeholder='Enter Blood Oxygen Level in %' />
+            <label htmlFor='elder_spo2'>Blood Oxygen Level SpO2</label>
+            <input type="text" className='form-control' name="elder_spo2" id="elder_spo2" placeholder='Enter Blood Oxygen Level in %' onChange={handleChange} value={formData["elder_spo2"] ? formData["elder_spo2"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='child_heart_rate'>Heart Rate (per minute)</label>
-            <input type="text" className='form-control' name="child_heart_rate" id="child_heart_rate" placeholder='Enter Heart Rate per Minute' />
+            <label htmlFor='elder_heart_rate'>Heart Rate (per minute)</label>
+            <input type="text" className='form-control' name="elder_heart_rate" id="elder_heart_rate" placeholder='Enter Heart Rate per Minute' onChange={handleChange} value={formData["elder_heart_rate"] ? formData["elder_heart_rate"].value : ''}/>
           </div>
           {/* <div className='form-group mb-3'>
             <label htmlFor='child_mid_arm'>Mid Arm length</label>
             <input type="text" className='form-control' name="child_mid_arm" id="child_mid_arm" placeholder='Enter Mid Arm length' />
           </div> */}
           <div className='form-group mb-3'>
-            <label htmlFor='child_blood_pressure'>Blood Pressure</label>
-            <input type="text" className='form-control' name="child_blood_pressure" id="child_blood_pressure" placeholder='Enter Blood Pressure' />
+            <label htmlFor='elder_blood_pressure'>Blood Pressure</label>
+            <input type="text" className='form-control' name="elder_blood_pressure" id="elder_blood_pressure" placeholder='Enter Blood Pressure' onChange={handleChange} value={formData["elder_blood_pressure"] ? formData["elder_blood_pressure"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='child_diabetic'>Are you Diabetic?  </label>
-            <input type="text" className='form-control' name="child_diabetic" id="child_diabetic" placeholder='Enter Sugar Level' />
+            <label htmlFor='elder_diabetic'>Are you Diabetic?  </label>
+            <input type="text" className='form-control' name="elder_diabetic" id="elder_diabetic" placeholder='Enter Sugar Level' onChange={handleChange} value={formData["elder_diabetic"] ? formData["elder_diabetic"].value : ''}/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>
+            <textarea name="remarks" id="remarks" rows="3" onChange={handleRemarks} className="form-control" placeholder="Describe / Explain Problems"></textarea>
           </div>
           <div className='form-group mt-4 d-flex justify-content-center align-items-center'>
             <button type="submit" className='btn primary-bg-color text-light min-width-100 mx-2'>Save Details</button>

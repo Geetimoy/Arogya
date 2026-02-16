@@ -29,7 +29,15 @@
 .my-element+.left-scroll-menu ul li svg{
   min-width: 19px;
 }
-
+.min-width-100{
+  min-width:100px;
+}
+.min-width-80{
+  min-width:80px;
+}
+.font-size-12{
+  font-size: 12px;
+}
 .my-element.active+.left-scroll-menu{
   transform: translateX(0);
 }

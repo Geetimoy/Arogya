@@ -501,13 +501,13 @@ function GrowthTracker() {
   }
 
   const [formData, setFormData] = useState({
-      child_height: { category: 1, value: "" },
-      child_weight: { category: 2, value: "" },
+      child_weight: { category: 1, value: "" },
+      child_height: { category: 2, value: "" },
       child_temperature: { category: 4, value: "" },
-      child_spo2: { category: 6, value: "" },
-      child_heart_rate: { category: 8, value: "" },
-      child_mid_arm: { category: 9, value: "" },
-      child_blood_pressure: { category: 10, value: "" },
+      child_heart_rate: { category: 6, value: "" },
+      child_mid_arm: { category: 8, value: "" },
+      child_blood_pressure: { category: 9, value: "" },
+      child_spo2: { category: 10, value: "" },
       child_diabetic: { category: 11, value: "" },
     });
 
@@ -571,10 +571,10 @@ function GrowthTracker() {
       }
   }
 
-   const [dataProcessedDate, setDataProcessedDate] = useState(new Date());
+  const [dataProcessedDate, setDataProcessedDate] = useState(new Date());
     const onChangeDataProcessedDate = (date) => {
       setDataProcessedDate(date);
-    }
+  }
 
   return (
     <>
@@ -614,7 +614,7 @@ function GrowthTracker() {
         </div>
       </div>
       <div className='app-body create-patient-profiles create-child-malnutrition'>
-         <h4><strong>{ userBasicDetails.display_name }</strong></h4>
+         <h5>{ userBasicDetails.display_name }</h5>
          <div className='align-items-center d-flex justify-content-between'>
             <p className='mb-0'><small>Updated on { (latestGrowthData) ? Object.keys(latestGrowthData)[0] : '' }</small></p>
             <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0' onClick={() =>  showGrowthDetails()}>Add Growth Details</Link>
@@ -622,8 +622,8 @@ function GrowthTracker() {
           <table className='border-0 table mt-3'>
             <thead>
               <tr>
-                <th>Meas.</th> 
-                <th>Childs Info.</th>
+                <th className='min-width-80'>Meas.</th> 
+                <th className='min-width-100'>Childs Info.</th>
                 <th>WHO Range</th>
               </tr>
             </thead>
