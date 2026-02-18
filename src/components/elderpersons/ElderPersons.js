@@ -677,8 +677,8 @@ function ElderPersons(){
                         }
                         <li>
                           {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/growth-tracker/${elder.account_key}`}>Health Data</Link>
-                        }
+                            (decryptedLoginDetails.account_type == '5') &&<Link to={`/elderpersons/growth-tracker/${elder.account_key}/from-listing`}>Health Data</Link>
+                          }
                         </li>
                         <li>
                           
