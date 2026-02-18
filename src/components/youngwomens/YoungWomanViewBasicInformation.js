@@ -386,6 +386,9 @@ function YoungWomanViewBasicInformation(){
             <label htmlFor="special_note">Special Notes </label>
             <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''}/>
           </div>
+          <div className='mb-3 mt-3 text-center'>
+            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
+          </div>
         </form>
       </div>
       <Appfooter></Appfooter>

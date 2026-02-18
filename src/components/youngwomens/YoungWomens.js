@@ -409,6 +409,11 @@ function YoungWomens(){
                           (decryptedLoginDetails.account_type == '5') && <Link to={`/youngwomens/young-woman-view-basicinfo/${women.account_key}`}>View/Edit Basic Information</Link>
                         }
                         </li>
+                         <li>
+                          {
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/growth-tracker/${women.account_key}`}>Health Data</Link>
+                        }
+                        </li>
                         {
                           (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/youngwomens/young-woman-profile-photo/${women.account_key}`}>Upload Profile Photo</Link></li>
                         }
