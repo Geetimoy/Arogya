@@ -47,7 +47,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         </li>
         <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
           <span className="recharts-tooltip-item-name">
-            Child Height
+            Elder Height
           </span>
           <span className="recharts-tooltip-item-separator">
             {" : "}
@@ -114,14 +114,14 @@ export default function HeightGrowthChart({ data }) {
             stroke="none"
           />
 
-          {/* Child Height */}
+          {/* Elder Height */}
           <Line
             dataKey="height"
             stroke="#f0487f"
             strokeWidth={3}
             dot={{ r: 5 }}
             activeDot={{ r: 7 }}
-            name="Child Height"
+            name="Elder Height"
           />
 
           {/* Reference lines (optional) */}

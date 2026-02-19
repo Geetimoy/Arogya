@@ -47,7 +47,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         </li>
         <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
           <span className="recharts-tooltip-item-name">
-            Child Mid Arm
+            Elder Mid Arm
           </span>
           <span className="recharts-tooltip-item-separator">
             {" : "}
@@ -114,7 +114,7 @@ export default function MidArmGrowthChart({ data }) {
             stroke="none"
           />
 
-          {/* Child Mid Arm */}
+          {/* Elder Mid Arm */}
           <Line
             dataKey="mid_arm"
             stroke="#f0487f"

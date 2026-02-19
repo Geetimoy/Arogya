@@ -47,7 +47,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         </li>
         <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
           <span className="recharts-tooltip-item-name">
-            Child Weight
+            Elder Weight
           </span>
           <span className="recharts-tooltip-item-separator">
             {" : "}
@@ -114,14 +114,14 @@ export default function WeightGrowthChart({ data }) {
             stroke="none"
           />
 
-          {/* Child Weight */}
+          {/* Elder Weight */}
           <Line
             dataKey="weight"
             stroke="#f0487f"
             strokeWidth={3}
             dot={{ r: 5 }}
             activeDot={{ r: 7 }}
-            name="Child Weight"
+            name="Elder Weight"
           />
 
           {/* Reference lines (optional) */}
