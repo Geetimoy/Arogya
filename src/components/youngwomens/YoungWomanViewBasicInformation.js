@@ -36,7 +36,7 @@ function YoungWomanViewBasicInformation(){
   };
 
   const [formData, setFormData] = useState({
-    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
+    is_consent: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     is_premature_birth: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -54,7 +54,7 @@ function YoungWomanViewBasicInformation(){
     woman_state: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
-    woman_education: {required: true, value:"", errorClass:"", errorMessage:""},
+    woman_education: {required: false, value:"", errorClass:"", errorMessage:""},
     woman_school_name: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_school_class: {required: true, value:"", errorClass:"", errorMessage:""},
     woman_school_section: {required: true, value:"", errorClass:"", errorMessage:""},
@@ -64,16 +64,17 @@ function YoungWomanViewBasicInformation(){
     special_note: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
-  const [options, setOptions] = useState([
-    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
-    { label: 'Navagraha Temple, Guwahati', value: '2' },
-    { label: 'Umananda Temple, Guwahati', value: '3' },
-    { label: 'Morigaon', value: '4' },
-		{ label: 'Saparam Bera', value: '5' }
-  ]);
+  const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [serviceAreaOption, setServiceAreaOption] = useState([]);
+
+  useEffect(() => {
+  
+  }, [serviceAreaOption])
 
   const getMasterServicesArea = async (e) => {
-
+  
     let jsonData = {};
 
     jsonData['system_id']        = systemContext.systemDetails.system_id;
@@ -99,7 +100,9 @@ function YoungWomanViewBasicInformation(){
       for(var i=0; i<areas.length; i++){
         optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
       }
-      setOptions(optionsArray);
+      setServiceAreaOption(optionsArray);
+
+
     }
 
   }
@@ -111,13 +114,22 @@ function YoungWomanViewBasicInformation(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
-  useEffect(() => {
-
-  }, [options])
-
-
-  // Define the selectedOptions state and the corresponding setter function
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const handleChange1 = (values) => {
+    //console.log(values);
+    var selectedArea = [];
+    if(values.length > 0){
+      values.forEach((item, index) => {
+        selectedArea.push(item.value);
+      })
+    }
+    if(selectedArea.length > 0){
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], required:formData['woman_service_area'].required, value:selectedArea.join(), errorClass:"", errorMessage:""}});
+    }
+    else{
+      setFormData({...formData, ['woman_service_area']: {...formData['woman_service_area'], required:formData['woman_service_area'].required, value:"", errorClass:"form-error", errorMessage:"This field is required!"}});
+    }
+    setSelectedOptions(values);
+  };
 
   const getUserDetails = async () => {
 
@@ -157,45 +169,57 @@ function YoungWomanViewBasicInformation(){
       console.log(userDetails.service_area_ids);
       var serviceAreaArray = [];
       if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-        var serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+        console.log(serviceAreaArray);
         var array1 = new Array();
+        console.log(serviceAreaOption);
         serviceAreaArray.forEach((item)=>{
-          options.forEach((opt)=>{
+          serviceAreaOption.forEach((opt)=>{
             if(opt.value === item){
               array1.push(opt);
             }
           })
         })
         setSelectedOptions(array1);
-      }
 
-      formData['is_consent']              = {value:userDetails.is_consent, errorClass:"", errorMessage:""};
-      formData['woman_name']              = {value:userDetails.women_name, errorClass:"", errorMessage:""};
-      formData['woman_father_name']       = {value:userDetails.women_father_name, errorClass:"", errorMessage:""};
-      formData['is_premature_birth']      = {value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
-      formData['woman_father_occupation'] = {value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
-      formData['is_personal_mobile_number'] = {value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-      formData['gender']                  = {value:1, errorClass:"", errorMessage:""};
-      formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-      formData['woman_contact_number']    = {value:userDetails.contact_no, errorClass:"", errorMessage:""};
-      formData['whatsapp']                = {value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-      formData['woman_age']               = {value:userDetails.women_age, errorClass:"", errorMessage:""};
-      formData['woman_email_id']          = {value:userDetails.women_email_id, errorClass:"", errorMessage:""};
-      formData['woman_address']           = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
-      formData['woman_address_2']         = {value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
-      formData['woman_landmark']          = {value:userDetails.women_addr_landmark, errorClass:"", errorMessage:""};
-      formData['woman_city']              = {value:userDetails.women_city, errorClass:"", errorMessage:""};
-      formData['woman_state']             = {value:userDetails.women_state, errorClass:"", errorMessage:""};
-      formData['woman_postal_code']       = {value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
-      formData['woman_service_area']      = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-      formData['woman_education']         = {value:userDetails.women_education, errorClass:"", errorMessage:""};
-      formData['woman_school_name']       = {value:userDetails.women_school_name, errorClass:"", errorMessage:""};
-      formData['woman_school_class']      = {value:userDetails.women_school_class, errorClass:"", errorMessage:""};
-      formData['woman_school_section']    = {value:userDetails.women_school_section, errorClass:"", errorMessage:""};
-      formData['toilet_type']             = {value:userDetails.women_toilet_type, errorClass:"", errorMessage:""};
-      formData['house_type']              = {value:userDetails.women_house_type, errorClass:"", errorMessage:""};
-      formData['drinking_water_type']     = {value:userDetails.women_drinking_water_type, errorClass:"", errorMessage:""};
-      formData['special_note']            = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+      }
+      console.log(serviceAreaArray.join(","));
+
+      formData['is_consent']              = {required:formData['is_consent'].required, value:userDetails.is_consent, errorClass:"", errorMessage:""};
+      formData['woman_name']              = {required:formData['woman_name'].required, value:userDetails.women_name, errorClass:"", errorMessage:""};
+      formData['woman_father_name']       = {required:formData['woman_father_name'].required, value:userDetails.women_father_name, errorClass:"", errorMessage:""};
+      formData['is_premature_birth']      = {required:formData['is_premature_birth'].required, value:userDetails.women_is_premature_birth, errorClass:"", errorMessage:""};
+      formData['woman_father_occupation'] = {required:formData['woman_father_occupation'].required, value:userDetails.women_father_occupation, errorClass:"", errorMessage:""};
+      formData['is_personal_mobile_number'] = {required:formData['is_personal_mobile_number'].required, value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
+      formData['gender']                  = {required:formData['gender'].required, value:1, errorClass:"", errorMessage:""};
+      if(userDetails.is_your_personal_number === "t"){
+        setIsMobileNumberVisible(true);
+        formData['woman_contact_number']    = {required:true, value:userDetails.contact_no, errorClass:"", errorMessage:""};
+      }
+      else if(userDetails.is_your_personal_number === "f"){
+        setIsMobileNumberVisible(false);
+        formData['woman_contact_number']    = {required:false, value:"", errorClass:"", errorMessage:""};
+      }
+      
+
+      formData['whatsapp']                = {required:formData['whatsapp'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
+      formData['woman_age']               = {required:formData['woman_age'].required, value:userDetails.women_age, errorClass:"", errorMessage:""};
+      formData['woman_email_id']          = {required:formData['woman_email_id'].required, value:userDetails.women_email_id, errorClass:"", errorMessage:""};
+      formData['woman_address']           = {required:formData['woman_address'].required, value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
+      formData['woman_address_2']         = {required:formData['woman_address_2'].required, value:userDetails.women_addr_1, errorClass:"", errorMessage:""};
+      formData['woman_landmark']          = {required:formData['woman_landmark'].required, value:userDetails.women_addr_landmark, errorClass:"", errorMessage:""};
+      formData['woman_city']              = {required:formData['woman_city'].required, value:userDetails.women_city, errorClass:"", errorMessage:""};
+      formData['woman_state']             = {required:formData['woman_state'].required, value:userDetails.women_state, errorClass:"", errorMessage:""};
+      formData['woman_postal_code']       = {required:formData['woman_postal_code'].required, value:userDetails.women_postal_code, errorClass:"", errorMessage:""};
+      formData['woman_service_area']      = {required:formData['woman_service_area'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
+      formData['woman_education']         = {required:formData['woman_education'].required, value:userDetails.women_education, errorClass:"", errorMessage:""};
+      formData['woman_school_name']       = {required:formData['woman_school_name'].required, value:userDetails.women_school_name, errorClass:"", errorMessage:""};
+      formData['woman_school_class']      = {required:formData['woman_school_class'].required, value:userDetails.women_school_class, errorClass:"", errorMessage:""};
+      formData['woman_school_section']    = {required:formData['woman_school_section'].required, value:userDetails.women_school_section, errorClass:"", errorMessage:""};
+      formData['toilet_type']             = {required:formData['toilet_type'].required, value:userDetails.women_toilet_type, errorClass:"", errorMessage:""};
+      formData['house_type']              = {required:formData['house_type'].required, value:userDetails.women_house_type, errorClass:"", errorMessage:""};
+      formData['drinking_water_type']     = {required:formData['drinking_water_type'].required, value:userDetails.women_drinking_water_type, errorClass:"", errorMessage:""};
+      formData['special_note']            = {required:formData['special_note'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
 
@@ -203,16 +227,157 @@ function YoungWomanViewBasicInformation(){
 
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if(name === "is_personal_mobile_number"){
+      if(value === "t"){
+        setIsMobileNumberVisible(true);
+        formData['woman_contact_number'].required = true;
+      }
+      else if(value === "f"){
+        setIsMobileNumberVisible(false);
+        formData['woman_contact_number'].required = false;
+      }
+    }
+
+    if(name === "is_consent"){
+      let consentValue = "1";
+      if(e.target.checked){
+        consentValue = "1";
+      }
+      else{
+        consentValue = "2";
+      }
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:consentValue, errorClass:"", errorMessage:""}});
+    }
+    else{
+      if(value.trim() !== ""){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
+      else{
+        if(formData[name].required){
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+        }
+        else{
+          setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+        }
+      }
+    }
+  }
+
+  const validateForm = () => {
+    const fieldName = Object.keys(formData);
+    let errorCounter = 0;
+    fieldName.forEach((element) => {
+      if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
+        formData[element].errorMessage = "This field is required!";
+        formData[element].errorClass = "form-error";
+        errorCounter++;
+      }
+      else{
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if((element === "woman_email_id") && (formData[element].value.trim() !== "") && (!formData[element].value.match(validRegex))){
+          formData[element].errorMessage = "Please enter a valid email!";
+          formData[element].errorClass = "form-error";
+        }
+        else{
+          formData[element].errorMessage = "";
+          formData[element].errorClass = "";
+        }
+      }
+      formData[element].required = formData[element].required;
+    })
+    setFormData({...formData, ...formData});
+    return errorCounter;
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); 
+    let errorCounter = validateForm();
+    
+    if(errorCounter === 0){
+
+      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+      jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      jsonData["woman_account_type"]        = '3';
+      jsonData["woman_account_key"]         = editAccountKey;
+      jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+
+      var serviceArea                       = '{'+formData['woman_service_area'].value+'}';
+
+      jsonData["woman_name"]                = formData['woman_name'].value;
+      if(isMobileNumberVisible){
+        jsonData["woman_contact_number"]      = formData['woman_contact_number'].value;
+      }
+      else{
+        jsonData["woman_contact_number"]      = "";
+      }
+
+      jsonData["is_consent"]                = formData['is_consent'].value;
+      jsonData["woman_email_id"]            = formData['woman_email_id'].value;
+      jsonData["woman_body_height"]         = '0';
+      jsonData["woman_body_weight"]         = '0';
+      jsonData["woman_age"]                 = formData['woman_age'].value;
+      jsonData["woman_address"]             = formData['woman_address'].value;
+      jsonData["woman_address_2"]           = formData['woman_address_2'].value;
+      jsonData["woman_state"]               = formData['woman_state'].value;
+      jsonData["woman_postal_code"]         = formData['woman_postal_code'].value;
+      jsonData["woman_landmark"]            = formData['woman_landmark'].value;
+      jsonData["woman_city"]                = formData['woman_city'].value;
+      jsonData["woman_father_name"]         = formData['woman_father_name'].value;
+      jsonData["woman_education"]           = formData['woman_education'].value;
+      jsonData["woman_school_name"]         = formData['woman_school_name'].value;
+      jsonData["woman_school_class"]        = formData['woman_school_class'].value;
+      jsonData["woman_school_section"]      = formData['woman_school_section'].value;
+      jsonData["toilet_type"]               = formData['toilet_type'].value;
+      jsonData["house_type"]                = formData['house_type'].value;
+      jsonData["drinking_water_type"]       = formData['drinking_water_type'].value;
+      jsonData["is_premature_birth"]        = formData['is_premature_birth'].value;
+      jsonData["is_bpl"]                    = 'f';
+      jsonData["woman_father_occupation"]   = formData['woman_father_occupation'].value;
+      jsonData["is_your_personal_number"]   = formData['is_personal_mobile_number'].value;
+      jsonData["special_note"]              = formData['special_note'].value;
+      jsonData["woman_whatsup_number"]      = formData['whatsapp'].value;
+      jsonData["service_area"]              = serviceArea;
+
+      const response = await fetch(`${API_URL}/addUpdateWomanProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      console.log(response)
+      let result = await response.json();
+
+      if(result.success){
+        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+    }
+  }
+
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
-      getUserDetails();
+      if(serviceAreaOption.length > 0){
+        getUserDetails();
+      }
     }
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id]);
-
+  }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
   return(
     <>
@@ -245,35 +410,44 @@ function YoungWomanViewBasicInformation(){
         </div>
       </div>
       <div className='app-body form-all basicinfo-young-woman'>
-        <p><small>Young Women profile information</small></p>
+        <p className='mt-3'><small>To update your profile information</small></p>
         <div className='form-check-box'>     
           <label className="custom-chk custom-checkbox">With your consent, this information is to be used for young woman health and other legitimate purposes only.
-            <input type="checkbox" className="required" name="is_consent" value="1" readOnly checked={formData["is_consent"].value === "1" ? true : false}/>
+            <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
             <span className="checkmark"></span>
           </label>
         </div>
-        <form className="mt-3 select-box" name="young_women_form" id="young_women_form">
-          <div className={`form-group`}>
+        <form className="mt-3 select-box" name="young_women_form" id="young_women_form" onSubmit={handleFormSubmit}>
+          <div className={`form-group ${formData["woman_name"].errorClass}`}>
             <label htmlFor="woman_name">Full Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''}/>
+            <input type="text" className="form-control" name="woman_name" id="woman_name" placeholder="Full Name" value={formData["woman_name"].value ? formData["woman_name"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_name"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
-            <label htmlFor="woman_father_name">Name of Parent/Guardian<span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" value={formData["woman_father_name"].value ? formData["woman_father_name"].value : ''}/>
+          <div className={`form-group ${formData["woman_father_name"].errorClass}`}>
+            <label htmlFor="woman_father_name">Name of Parent/Guardian <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_father_name" id="woman_father_name" placeholder="Name of Parent/Guardian" value={formData["woman_father_name"].value ? formData["woman_father_name"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_father_name"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["is_premature_birth"].errorClass}`}>
             <label htmlFor="premature_birth" className="no-style">Premature Birth? <span className="text-danger">*</span></label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_y" name="is_premature_birth" className="custom-control-input" value="t" checked={(formData["is_premature_birth"].value === 't') ? true : false}/><label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
+                <input type="radio" id="premature_birth_y" name="is_premature_birth" className="custom-control-input" value="t" checked={(formData["is_premature_birth"].value === 't') ? true : false} onChange={handleChange}/><label className="custom-control-label no-style" htmlFor="premature_birth_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="premature_birth_n" name="is_premature_birth" className="custom-control-input" value="f" checked={(formData["is_premature_birth"].value === 'f') ? true : false}/><label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
+                <input type="radio" id="premature_birth_n" name="is_premature_birth" className="custom-control-input" value="f" checked={(formData["is_premature_birth"].value === 'f') ? true : false} onChange={handleChange}/><label className="custom-control-label no-style" htmlFor="premature_birth_n">No</label>
               </div>
+
+              <div className="custom-control custom-radio custom-control-inline mt-2">
+                  <input type="radio" id="premature_birth_na" name="is_premature_birth" value="n" className="custom-control-input" onChange={handleChange} checked={(formData["is_premature_birth"].value === 'n') ? true : false}/>
+                  <label className="custom-control-label no-style" htmlFor="premature_birth_na">N/A</label>
+                </div>
+                
             </div>
+            <small className="error-mesg">{formData["is_premature_birth"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
-            <label htmlFor="woman_father_occupation">Occupation of Guardian <span className="text-danger">*</span></label><input type="text" className="form-control" name="woman_father_occupation" id="woman_father_occupation" placeholder="Occupation of Guardian" value={formData["woman_father_occupation"].value ? formData["woman_father_occupation"].value : ''} />
+          <div className={`form-group ${formData["woman_father_occupation"].errorClass}`}>
+            <label htmlFor="woman_father_occupation">Occupation of Guardian <span className="text-danger">*</span></label><input type="text" className="form-control" name="woman_father_occupation" id="woman_father_occupation" placeholder="Occupation of Guardian" value={formData["woman_father_occupation"].value ? formData["woman_father_occupation"].value : ''} onChange={handleChange}/>
             <small className="error-mesg">{formData["woman_father_occupation"].errorMessage}</small>
           </div>
           <div className="form-group">
@@ -282,110 +456,131 @@ function YoungWomanViewBasicInformation(){
               <option value="1">Female</option>
             </select>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is woman's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="personal_mobile_number_y" name="is_personal_mobile_number" className="custom-control-input" value="t" checked={(formData["is_personal_mobile_number"].value === 't') ? true : false}/>
+                <input type="radio" id="personal_mobile_number_y" name="is_personal_mobile_number" className="custom-control-input" value="t" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 't') ? true : false}/>
                 <label className="custom-control-label no-style" htmlFor="personal_mobile_number_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="personal_mobile_number_n" name="is_personal_mobile_number" className="custom-control-input" value="f" checked={(formData["is_personal_mobile_number"].value === 'f') ? true : false}/>
+                <input type="radio" id="personal_mobile_number_n" name="is_personal_mobile_number" className="custom-control-input" value="f" onChange={handleChange} checked={(formData["is_personal_mobile_number"].value === 'f') ? true : false}/>
                 <label className="custom-control-label no-style" htmlFor="personal_mobile_number_n">No</label>
               </div>
             </div>
+            <small className="error-mesg">{formData["is_personal_mobile_number"].errorMessage}</small>
           </div>
-          <div className="form-group ">
+          {isMobileNumberVisible && <div className="form-group ">
             <label htmlFor="woman_contact_number">Phone No <span className="text-danger">*</span></label>
-            <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''}/>
-          </div>
-          <div className={`form-group`}>
+            <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} onChange={handleChange}/>
+          </div>}
+          <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
-            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''}/>
+            <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["whatsapp"].errorMessage}</small>
           </div>
           <div className="form-group">
             <label htmlFor="woman_email_id">Email </label>
-            <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} />
+            <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} onChange={handleChange}/>
+            {/* <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small> */}
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_age"].errorClass}`}>
             <label htmlFor="woman_age">Age <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_age" id="woman_age" placeholder="Age" value={formData["woman_age"].value ? formData["woman_age"].value : ''} />
+            <input type="text" className="form-control" name="woman_age" id="woman_age" placeholder="Age" value={formData["woman_age"].value ? formData["woman_age"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_age"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_address"].errorClass}`}>
             <label htmlFor="woman_address">Address <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_address" id="woman_address" placeholder="Address" value={formData["woman_address"].value ? formData["woman_address"].value : ''}/>
+            <input type="text" className="form-control" name="woman_address" id="woman_address" placeholder="Address" value={formData["woman_address"].value ? formData["woman_address"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_address"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_address_2"].errorClass}`}>
             <label htmlFor="woman_address_2">Address 2 </label>
-            <input type="text" className="form-control" name="woman_address_2" id="woman_address_2" placeholder="Address 2" value={formData["woman_address_2"].value ? formData["woman_address_2"].value : ''} />
+            <input type="text" className="form-control" name="woman_address_2" id="woman_address_2" placeholder="Address 2" value={formData["woman_address_2"].value ? formData["woman_address_2"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_address_2"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_landmark"].errorClass}`}>
             <label htmlFor="woman_landmark">Landmark <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_landmark" id="woman_landmark" placeholder="Landmark" value={formData["woman_landmark"].value ? formData["woman_landmark"].value : ''} />
+            <input type="text" className="form-control" name="woman_landmark" id="woman_landmark" placeholder="Landmark" value={formData["woman_landmark"].value ? formData["woman_landmark"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_landmark"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_city"].errorClass}`}>
             <label htmlFor="woman_city">Village/Town/City <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_city" id="woman_city" placeholder="Village/Town/City" value={formData["woman_city"].value ? formData["woman_city"].value : ''} />
+            <input type="text" className="form-control" name="woman_city" id="woman_city" placeholder="Village/Town/City" value={formData["woman_city"].value ? formData["woman_city"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_city"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_state"].errorClass}`}>
             <label htmlFor="woman_state">State <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_state" id="woman_state" placeholder="State" value={formData["woman_state"].value ? formData["woman_state"].value : ''}/>
+            <input type="text" className="form-control" name="woman_state" id="woman_state" placeholder="State" value={formData["woman_state"].value ? formData["woman_state"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_state"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_postal_code"].errorClass}`}>
             <label htmlFor="woman_postal_code">Pincode <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_postal_code" id="woman_postal_code" placeholder="Pincode" value={formData["woman_postal_code"].value ? formData["woman_postal_code"].value : ''}/>
+            <input type="text" className="form-control" name="woman_postal_code" id="woman_postal_code" placeholder="Pincode" value={formData["woman_postal_code"].value ? formData["woman_postal_code"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_postal_code"].errorMessage}</small>
           </div>
 
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_service_area"].errorClass}`}>
             <label>Service Area <span className='text-danger'> *</span></label>
-            <Select className='form-control select-multi' isMulti value={selectedOptions} options={options} />
+            <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={serviceAreaOption} />
+            <small className="error-mesg">{formData["woman_service_area"].errorMessage}</small>
           </div>
           
 
-          <div className={`d-none form-group`}>
+          <div className={`d-none form-group ${formData["woman_education"].errorClass}`}>
             <label htmlFor="woman_education">Education <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value={formData["woman_education"].value ? formData["woman_education"].value : ''}/>
+            <input type="text" className="form-control" name="woman_education" id="woman_education" placeholder="Education" value={formData["woman_education"].value ? formData["woman_education"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_education"].errorMessage}</small>
           </div>
-          <div className={`sp-notes form-group`}>
+          <div className={`sp-notes form-group ${formData["woman_school_name"].errorClass}`}>
             <label htmlFor="woman_school_name">School Name <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value={formData["woman_school_name"].value ? formData["woman_school_name"].value : ''} />
+            <input type="text" className="form-control" name="woman_school_name" id="woman_school_name" placeholder="School Name" value={formData["woman_school_name"].value ? formData["woman_school_name"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_school_name"].errorMessage}</small>
           </div>
 
-          <div className={`sp-notes form-group`}>
+          <div className={`sp-notes form-group ${formData["woman_school_class"].errorClass}`}>
             <label htmlFor="woman_school_class">Class <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value={formData["woman_school_class"].value ? formData["woman_school_class"].value : ''}/>
+            <input type="text" className="form-control" name="woman_school_class" id="woman_school_class" placeholder="Class" value={formData["woman_school_class"].value ? formData["woman_school_class"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_school_class"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["woman_school_section"].errorClass}`}>
             <label htmlFor="woman_school_section">Section <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_school_section" id="woman_school_section" placeholder="Section" value={formData["woman_school_section"].value ? formData["woman_school_section"].value : ''}/>
+            <input type="text" className="form-control" name="woman_school_section" id="woman_school_section" placeholder="Section" value={formData["woman_school_section"].value ? formData["woman_school_section"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_school_section"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["house_type"].errorClass}`}>
             <label htmlFor="house_type">House<span className="text-danger">*</span></label>
-            <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value ? formData["house_type"].value : '1'}>
+            <select className="form-control" name="house_type" id="house_type" value={formData["house_type"].value ? formData["house_type"].value : '1'} onChange={handleChange}>
               <option value="1">Mud House</option>
               <option value="2">Paved House</option>
             </select>
+            <small className="error-mesg">{formData["house_type"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["drinking_water_type"].errorClass}`}>
             <label htmlFor="drinking_water_type">Drinking Water<span className="text-danger">*</span></label>
-            <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value ? formData["drinking_water_type"].value : '1'}>
+            <select className="form-control" name="drinking_water_type" id="drinking_water_type" value={formData["drinking_water_type"].value ? formData["drinking_water_type"].value : '1'} onChange={handleChange}>
               <option value="1">Tap</option>
               <option value="2">Well</option>
               <option value="3">Pond</option>
             </select>
+            <small className="error-mesg">{formData["drinking_water_type"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["toilet_type"].errorClass}`}>
             <label htmlFor="toilet_type">Toilet<span className="text-danger">*</span></label>
-            <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'}>
+            <select className="form-control" name="toilet_type" id="toilet_type" value={formData["toilet_type"].value ? formData["toilet_type"].value : '1'} onChange={handleChange}>
               <option value="1">Open-field</option>
               <option value="2">Country-latrine</option>
               <option value="3">Flush-toilet</option>
             </select>
+            <small className="error-mesg">{formData["toilet_type"].errorMessage}</small>
           </div>
-          <div className={`form-group`}>
+          <div className={`form-group ${formData["special_note"].errorClass}`}>
             <label htmlFor="special_note">Special Notes </label>
-            <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''}/>
+            <input type="text" className="form-control" name="special_note" id="special_note" placeholder="Special Notes" value={formData["special_note"].value ? formData["special_note"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["special_note"].errorMessage}</small>
           </div>
+          <div className="mb-3 mt-3 text-center">
+            <button type="submit" className="btn primary-bg-color text-light">Update</button></div>
         </form>
       </div>
       <Appfooter></Appfooter>
