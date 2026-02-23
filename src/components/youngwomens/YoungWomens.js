@@ -381,7 +381,7 @@ function YoungWomens(){
           }
 
           {
-            (decryptedLoginDetails.account_type == '5') && <Link to="/youngwomens/create-youngwomens-doctor" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child </Link>
+            (decryptedLoginDetails.account_type == '5') && <Link to="/youngwomens/create-young-women" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Young Women </Link>
           }
           
         </div>

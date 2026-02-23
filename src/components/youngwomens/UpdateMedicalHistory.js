@@ -135,7 +135,7 @@ function UpadteMedicalHistory(){
     else if(element === 'general_type'){ 
       setSelectedGeneralOptions(values);
     }
-    else if(element === 'urinary_problems_type'){ 
+    else if(element === 'urinary_type'){ 
       setSelectedUrinaryOptions(values);
     }
     else if(element === 'periods_type'){ 

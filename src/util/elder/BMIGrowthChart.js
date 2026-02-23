@@ -47,7 +47,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         </li>
         <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
           <span className="recharts-tooltip-item-name">
-            Child BMI
+            Elder BMI
           </span>
           <span className="recharts-tooltip-item-separator">
             {" : "}
@@ -113,7 +113,7 @@ export default function BMIGrowthChart({ data }) {
             stroke="none"
           />
 
-          {/* Child BMI */}
+          {/* Elder BMI */}
           <Line
             dataKey="bmi"
             stroke="#f0487f"
