@@ -411,7 +411,7 @@ function YoungWomens(){
                         </li>
                          <li>
                           {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/growth-tracker/${women.account_key}`}>Health Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/growth-tracker/`}>Health Data</Link>
                         }
                         </li>
                         {

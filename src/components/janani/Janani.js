@@ -394,8 +394,13 @@ function Janani(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/janani/janani-basic-information/${janani.account_key}`}>Edit Basic Information</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') && <Link to={`/janani/janani-view-basic-information/${janani.account_key}`}>View Basic Information</Link>
+                          (decryptedLoginDetails.account_type == '5') && <Link to={`/janani/janani-view-basic-information/${janani.account_key}`}>View/ Edit Basic Information</Link>
                         }
+                      </li>
+                      <li>
+                        {
+                        (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/growth-tracker/`}>Health Data</Link>
+                      }
                       </li>
                       {
                         (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/janani/janani-profile-photo/${janani.account_key}`}>Upload Profile Photo</Link></li>
@@ -406,7 +411,7 @@ function Janani(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/janani/janani-medical-history/${janani.account_key}`}>Update Medical History</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-view-medical-history/${janani.account_key}`}>View Medical History</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-view-medical-history/${janani.account_key}`}>View/ Edit Medical History</Link>
                         }
                       </li>
                       <li>
@@ -416,7 +421,7 @@ function Janani(){
                           
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-view-periodic-data/${janani.account_key}`}>View Periodic Data</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-view-periodic-data/${janani.account_key}`}>View/ Edit Periodic Data</Link>
                         }
                       </li>
                       <li>
@@ -425,7 +430,7 @@ function Janani(){
                           (decryptedLoginDetails.account_type !== '5') &&<Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>Update Awareness Survey</Link>
                         }
                         {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>View Awareness Survey</Link>
+                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/janani-awareness-survey/${janani.account_key}`}>View/ Edit Awareness Survey</Link>
                         }
                       </li>
                       {/* <li><Link to={`/janani/janani-prescriptions/${janani.account_key}`}>Upload Prescriptions</Link></li> */}

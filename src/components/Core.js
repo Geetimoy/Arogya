@@ -101,6 +101,7 @@ import YoungWomanViewBasicInformation from './youngwomens/YoungWomanViewBasicInf
 import YoungWomanViewMedicalHistory from './youngwomens/YoungWomanViewMedicalHistory';
 import YoungWomanViewPeriodicData from './youngwomens/YoungWomanViewPeriodicData';
 import YoungWomanProfilePhoto from './youngwomens/YoungWomanProfilePhoto';
+import YoungWomanGrowthTracker from './youngwomens/YoungWomanGrowthTracker';
 
 import ElderPersons from './elderpersons/ElderPersons';
 import CreateElderPerson from './elderpersons/CreateElderPerson';
@@ -497,6 +498,7 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-view-medical-history/:accountKey" exact element={<YoungWomanViewMedicalHistory />} />
             <Route path="/youngwomens/young-woman-view-periodic-data/:accountKey" exact element={<YoungWomanViewPeriodicData />} />
             <Route path="/youngwomens/young-woman-profile-photo/:accountKey" exact element={<YoungWomanProfilePhoto />} />
+            <Route path="/youngwomens/growth-tracker/" exact element={<YoungWomanGrowthTracker />} />
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
