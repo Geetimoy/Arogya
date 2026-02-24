@@ -35,6 +35,7 @@ import PatientProfilePhoto from './patientprofiles/PatientProfilePhoto';
 
 import Janani from './janani/Janani';
 import CreateJanani from './janani/CreateJanani';
+import CreateJananiDoctor from './janani/CreateJananiDoctor';
 import JananiBasicInformation from './janani/JananiBasicInformation';
 import JananiUploadPrescriptions from './janani/JananiUploadPrescriptions';
 import JananiPeriodicData from './janani/JananiPeriodicData';
@@ -424,6 +425,7 @@ export default function Core() {
             
             <Route path="/Janani" exact element={<Janani />} />
             <Route path="/janani/create-janani" exact element={<CreateJanani />} />
+            <Route path="/janani/create-janani-doctor" exact element={<CreateJananiDoctor />} />
             <Route path="/janani/janani-basic-information/:accountKey" exact element={<JananiBasicInformation />} />
             <Route path="/janani/janani-prescription/:accountKey" exact element={<JananiPrescriptions />} />
             <Route path="/janani/janani-prescription/:accountKey/:prescriptionType" exact element={<JananiPrescriptions />} />
