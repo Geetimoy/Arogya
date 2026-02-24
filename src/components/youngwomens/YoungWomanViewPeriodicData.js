@@ -131,8 +131,8 @@ function YoungWomanViewPeriodicData(){
       jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
       jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
 
-      jsonData["woman_account_type"]        = '3';
-      jsonData["woman_account_key"]         = editAccountKey;
+      jsonData["women_account_type"]        = '3';
+      jsonData["women_account_key"]         = editAccountKey;
       jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
       jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
       jsonData["data_processed_on"]         = dataProcessedOn;
@@ -142,7 +142,7 @@ function YoungWomanViewPeriodicData(){
       jsonData["device_token"]              = DEVICE_TOKEN;
       jsonData["user_lat"]                  = localStorage.getItem('latitude');
       jsonData["user_long"]                 = localStorage.getItem('longitude');
-      jsonData["woman_cat_value"]           = womenCategory;
+      jsonData["women_cat_value"]           = womenCategory;
 
       const response = await fetch(`${API_URL}/womenPeriodicHealthDataAddFromDoctorLogin`, {
         method: "POST",

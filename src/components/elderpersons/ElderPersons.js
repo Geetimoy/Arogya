@@ -361,8 +361,8 @@ function ElderPersons(){
         })
 
         let result = await response.json();
-        if(result.data && result.data.results.length > 0){
-          setTestReportAppointmentList(result.data.results);
+        if(result.data && result.data.appointments.length > 0){
+          setTestReportAppointmentList(result.data.appointments);
         }
         else{
           setTestReportAppointmentList([]);
