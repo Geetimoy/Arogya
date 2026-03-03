@@ -208,8 +208,16 @@ function CraeteYoungWomen(){
 
       let jsonData = {};
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
-      jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      }
+      else{
+        jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+        jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      }
+
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -255,13 +263,25 @@ function CraeteYoungWomen(){
       jsonData["woman_whatsup_number"]      = formData['whatsapp'].value;
       jsonData["service_area"]              = serviceArea;
 
-      const response = await fetch(`${API_URL}/addUpdateWomanProfile`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
+      if(decryptedLoginDetails.account_type === '5'){
+        var response = await fetch(`${API_URL}/addUpdateWomanProfileFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      else{
+        var response = await fetch(`${API_URL}/addUpdateWomanProfile`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      
       console.log(response)
       let result = await response.json();
 

@@ -228,7 +228,7 @@ function YoungWomens(){
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["search_param"]              = {
                                               "by_keywords": searchKey,
-                                              "limit": "10",
+                                              "limit": "0",
                                               "offset": "0",
                                               "order_by_field": "women_name",
                                               "order_by_value": "desc"

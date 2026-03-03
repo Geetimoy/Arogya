@@ -301,8 +301,16 @@ function YoungWomanViewBasicInformation(){
 
       let jsonData = {};
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
-      jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      }
+      else{
+        jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
+        jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
+      }
+
       jsonData["woman_account_type"]        = '3';
       jsonData["woman_account_key"]         = editAccountKey;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
@@ -348,13 +356,25 @@ function YoungWomanViewBasicInformation(){
       jsonData["woman_whatsup_number"]      = formData['whatsapp'].value;
       jsonData["service_area"]              = serviceArea;
 
-      const response = await fetch(`${API_URL}/addUpdateWomanProfile`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
+      if(decryptedLoginDetails.account_type === '5'){
+        var response = await fetch(`${API_URL}/addUpdateWomanProfileFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      else{
+        var response = await fetch(`${API_URL}/addUpdateWomanProfile`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+
       console.log(response)
       let result = await response.json();
 
@@ -580,9 +600,7 @@ function YoungWomanViewBasicInformation(){
             <small className="error-mesg">{formData["special_note"].errorMessage}</small>
           </div>
           <div className="mb-3 mt-3 text-center">
-            <button type="submit" className="btn primary-bg-color text-light">Update</button></div>
-          <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
+            <button type="submit" className="btn primary-bg-color text-light">Update</button>
           </div>
         </form>
       </div>

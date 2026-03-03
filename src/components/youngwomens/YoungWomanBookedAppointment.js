@@ -17,6 +17,9 @@ import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
 
+import YoungWomanRecentAppointment from './YoungWomanRecentAppointment';
+import YoungWomanPreviousAppointment from './YoungWomanPreviousAppointment';
+
 function YoungWomanBookedAppointment(){
 
   const systemContext = useContext(SystemContext);
@@ -57,8 +60,16 @@ function YoungWomanBookedAppointment(){
 
     let jsonData = {};
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    }
+    
     jsonData["patient_key"]               = editAccountKey;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
@@ -76,14 +87,25 @@ function YoungWomanBookedAppointment(){
                                               "order_by_field": "appointment_id",
                                               "order_by_value": "desc"
                                             }
-
-    const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
 
     let result = await response.json();
     console.log(result);
@@ -108,6 +130,8 @@ function YoungWomanBookedAppointment(){
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
+
+  const [activeTab, setActiveTab] = useState('tab2');
 
   const getUserBasicDetails = async () => {
         
@@ -176,7 +200,23 @@ function YoungWomanBookedAppointment(){
         </div>
       </div>
       <div className="app-body bookings">
-        <p className='patient-details mt-4'>
+        <p className='patient-details'>
+          {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
+        </p>
+        <div className='tab-container'>
+          <div className="d-flex justify-content-center">
+              <button onClick={() => setActiveTab('tab1')} className={`large ${ activeTab === 'tab1' ? 'active' : ''
+                }`} > Previous Appointment </button>
+              <button onClick={() => setActiveTab('tab2')} className={`large ${ activeTab === 'tab2' ? 'active' : ''
+                }`} > Recent Appointment </button>
+          </div>
+
+          <div className="tab-content">
+            {activeTab === 'tab1' && <YoungWomanRecentAppointment />}
+            {activeTab === 'tab2' && <YoungWomanPreviousAppointment />}
+          </div>
+        </div>
+        {/* <p className='patient-details mt-4'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
         <div className='d-flex justify-content-between align-items-center'>
@@ -213,7 +253,7 @@ function YoungWomanBookedAppointment(){
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
       <Appfooter></Appfooter>
     </>
