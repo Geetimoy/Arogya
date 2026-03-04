@@ -120,8 +120,8 @@ function YoungWomanRecentAppointment(){
             <p className='me-0 mb-0'><small>Rejected: <strong>{rejectedCounter}</strong></small></p>
           </div>
           <div className='filter'>
-            <div class="form-check mb-2">
-              <label class="form-check-label">
+            <div className="form-check mb-2">
+              <label className="form-check-label">
               <input className="form-check-input" type="checkbox" name="filter_appointment" value="pending" onChange={()=>setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked)} checked={filterPendingAppointmentChecked}/> <small>Pending</small>
               </label>
             </div>

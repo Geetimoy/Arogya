@@ -409,7 +409,7 @@ function YoungWomanViewBasicInformation(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Young Women Basic Info </h5>
+            <h5 className='mx-2 mb-0'>View/Edit Young Women Basic Info </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications /> 
