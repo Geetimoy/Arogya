@@ -68,7 +68,14 @@ function UpdateAwarenessSurvey(){
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["woman_account_key"]         = editAccountKey;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]     = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_account_key"]  = decryptedLoginDetails.account_key;
+    }
+
     jsonData["sub_volunteer_id"]          = "";
 
     jsonData["menstruation_cycle_value"]        = formData['menstruation_cycle_value'].value;
@@ -80,14 +87,25 @@ function UpdateAwarenessSurvey(){
     jsonData["resources_available_value"]       = formData['resources_available_value'].value;
     jsonData["education_support_remarks"]       = formData['education_support_remarks'].value;
     
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/addUpdateWomanHealthAwarenessSurveyFromDoctorLoginCI`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/addUpdateWomanHealthAwarenessSurveyCI`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
     
-    const response = await fetch(`${API_URL}/addUpdateWomanHealthAwarenessSurveyCI`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
     console.log(response)
     let result = await response.json();
 
