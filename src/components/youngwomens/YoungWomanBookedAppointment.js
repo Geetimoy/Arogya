@@ -200,7 +200,7 @@ function YoungWomanBookedAppointment(){
         </div>
       </div>
       <div className="app-body bookings">
-        <p className='patient-details'>
+        <p className='patient-details mt-3'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
         <div className='tab-container'>
