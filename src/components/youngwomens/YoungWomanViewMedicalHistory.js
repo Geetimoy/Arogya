@@ -502,7 +502,7 @@ function YoungWomanViewMedicalHistory(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>View Medical History </h5>
+            <h5 className='mx-2 mb-0'>View/Edit Medical History </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications /> 
