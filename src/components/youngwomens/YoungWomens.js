@@ -94,8 +94,14 @@ function YoungWomens(){
 
       let jsonData = {};
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]    = decryptedLoginDetails.account_type;
+      }
+      else{
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      }
       jsonData["patient_key"]       				= accountKeyForWomenPrescription;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -109,13 +115,24 @@ function YoungWomens(){
 																								"order_by_value": "desc"
                                               }
       
-      const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData)
-      })
+      if(decryptedLoginDetails.account_type === '5'){
+        var response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData)
+        })
+      }
+      else{
+        var response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData)
+        })
+      }
   
       let result = await response.json();
       if(result.data && result.data.appointments && result.data.appointments.length > 0){
@@ -148,8 +165,14 @@ function YoungWomens(){
 
       let jsonData = {};
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]    = decryptedLoginDetails.account_type;
+      }
+      else{
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      }
       jsonData["patient_key"]       				= womanAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -163,13 +186,24 @@ function YoungWomens(){
 																								"order_by_value": "desc"
                                               }
       
-      const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData)
-      })
+      if(decryptedLoginDetails.account_type === '5'){
+        var response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData)
+        })
+      }
+      else{
+        var response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData)
+        })
+      }
   
       let result = await response.json();
       if(result.data && result.data.appointments && result.data.appointments.length > 0){
