@@ -73,13 +73,27 @@ function YoungWomanPrescriptions(){
   const prescriptionType  = urlParam.prescriptionType;
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
   if(prescriptionType === 'initial'){
-    var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForWoman`;
+    if(decryptedLoginDetails.account_type === '5'){
+      var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentFromDoctorLoginForWomen`;
+    }
+    else{
+      var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForWoman`;
+    }
   }
   else if(prescriptionType === 'doctor'){
-    var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForWoman`;
+    if(decryptedLoginDetails.account_type === '5'){
+      var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentFromDoctorLoginForWomen`;
+    }
+    else{
+      var uploadUrl = `/youngwomens/young-woman-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForWoman`;
+    }
   }
 
   const [isMActive, setIsMActive] = useState(false);
@@ -103,7 +117,12 @@ function YoungWomanPrescriptions(){
 
     let jsonData = {};
     jsonData['system_id']       = systemContext.systemDetails.system_id;
-    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_key"]         = decryptedLoginDetails.account_key;
+    }
     jsonData["account_key"]     = editAccountKey;
     jsonData["account_type"]    = 3;
     jsonData["file_type"]       = prescriptionType;

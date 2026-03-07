@@ -258,8 +258,14 @@ function YoungWomanUploadDoctorPrescriptions(){
         jsonData["device_token"]              = DEVICE_TOKEN;
         jsonData["user_lat"]                  = localStorage.getItem('latitude');
         jsonData["user_long"]                 = localStorage.getItem('longitude');
+        jsonData["upload_for"]                = 'women';
         jsonData["appointment_initial_type"]  = appointmentInitialType;
-        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        if(decryptedLoginDetails.account_type === '5'){
+          jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+        }
+        else{
+          jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+        }
         jsonData["user_account_key"]          = editAccountKey;
         jsonData["user_account_type"]         = 3;
         jsonData["appointment_key"]           = appointmentId;
@@ -270,13 +276,24 @@ function YoungWomanUploadDoctorPrescriptions(){
         jsonData["recheck_date"]              = recheckDate;
         jsonData["files"]                     = fileUploadArray;
 
-        const response = await fetch(`${API_URL}/uploadAppointmentDocumentForWoman`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        });
+        if(decryptedLoginDetails.account_type === '5'){
+          var response = await fetch(`${API_URL}/uploadInitialDocumentForWomanFromDoctorLogin`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
+        else{
+          var response = await fetch(`${API_URL}/uploadInitialDocumentForWoman`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
   
         let result = await response.json();
   
