@@ -95,11 +95,14 @@ function YoungWomanUploadInitialPrescriptions(){
       }
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
-      jsonData["file"]                    = uploadedFileBase64Array[1];
-      jsonData["file_seq"]                = 'initialpatient'+seq;
-      jsonData["file_extension"]          = fileExtension;
-      jsonData["initial_summary"]         = '';
-
+      jsonData["files"]                   = [
+                                                {
+                                                  "file"                    : uploadedFileBase64Array[1],
+                                                  "file_seq"                : 'initialpatient'+seq,
+                                                  "file_extension"          : fileExtension,
+                                                  "initial_summary"         : ''
+                                                }
+                                            ]
       console.log(jsonData);
 
       if(decryptedLoginDetails.account_type === '5'){

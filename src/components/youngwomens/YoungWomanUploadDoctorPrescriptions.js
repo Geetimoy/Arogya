@@ -277,7 +277,7 @@ function YoungWomanUploadDoctorPrescriptions(){
         jsonData["files"]                     = fileUploadArray;
 
         if(decryptedLoginDetails.account_type === '5'){
-          var response = await fetch(`${API_URL}/uploadInitialDocumentForWomanFromDoctorLogin`, {
+          var response = await fetch(`${API_URL}/uploadAppointmentDocumentForWomanFromDoctorLogin`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -286,7 +286,7 @@ function YoungWomanUploadDoctorPrescriptions(){
           });
         }
         else{
-          var response = await fetch(`${API_URL}/uploadInitialDocumentForWoman`, {
+          var response = await fetch(`${API_URL}/uploadAppointmentDocumentForWoman`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

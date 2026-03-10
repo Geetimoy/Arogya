@@ -457,17 +457,15 @@ function YoungWomanPrescriptions(){
 
           jsonData["user_account_key"]        = editAccountKey;
           jsonData["user_account_type"]       = 3;
-          jsonData["file"]                     = uploadedFileBase64Array[1];
-
-          if(prescriptionType === 'initial'){
-            jsonData["file_seq"]              = 'initialpatient'+(index+1);
-          }
-          else{
-            return false;
-          }
-
-          jsonData["file_extension"]          = 'jpg';
-          jsonData["initial_summary"]         = '';
+          jsonData["upload_for"]              = 'women';
+          jsonData["files"]                   = [
+                                                    {
+                                                      "file"                    : uploadedFileBase64Array[1],
+                                                      "file_seq"                : 'initialpatient'+(index+1),
+                                                      "file_extension"          : 'jpg',
+                                                      "initial_summary"         : ''
+                                                    }
+                                                ]
 
           if(decryptedLoginDetails.account_type === '5'){
             var response = await fetch(`${API_URL}/uploadInitialDocumentForWomanFromDoctorLogin`, {
@@ -548,6 +546,7 @@ function YoungWomanPrescriptions(){
           jsonData["user_lat"]                  = localStorage.getItem('latitude');
           jsonData["user_long"]                 = localStorage.getItem('longitude');
           jsonData["appointment_initial_type"]  = 1;
+          jsonData["upload_for"]                = 'women';
 
           if(decryptedLoginDetails.account_type === '5'){
             jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
@@ -567,7 +566,7 @@ function YoungWomanPrescriptions(){
           jsonData["files"]                     = fileUploadArray;
 
           if(decryptedLoginDetails.account_type === '5'){
-            var response = await fetch(`${API_URL}/uploadAppointmentDocumentForWoman`, {
+            var response = await fetch(`${API_URL}/uploadAppointmentDocumentForWomanFromDoctorLogin`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -677,6 +676,7 @@ function YoungWomanPrescriptions(){
                   <div className="btn-download"><Link target="_blank" to={`${women.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
                   <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(women.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
+                  <p className='mb-1'><small>Date: {women.prescription_date}</small></p>
                   <p className='mb-1'><strong>{women.file_name}</strong></p>
                 </div>
               </div>
