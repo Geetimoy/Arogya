@@ -39,8 +39,18 @@ function ServiceProviders(){
 
     let jsonData = {};
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+    if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]    = decryptedLoginDetails.account_type;
+      }
+      else{
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      }
+
+    // jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+    // jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
@@ -125,7 +135,24 @@ function ServiceProviders(){
         </div>
     </div>
     <div className="app-body service-provider">
-      <div className='row'>
+      
+
+      <div className='add-service-providers align-items-center d-flex justify-content-between'>
+        <span>
+          {/* Total - 0 */}
+          </span>
+
+        {/* {
+          (decryptedLoginDetails.account_type !== '5') && <Link to="/service-providers" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Service Providers</Link>
+        } */}
+
+         <Link to="/create-service-providers" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Service Providers </Link>
+        
+        
+      </div>
+
+
+      <div className='row mt-3'>
         {/* <div className='col-6 mb-3'>
           <div className='button-box'>
             <Link to="/prefered-hospital"><img src={hospital} alt='' />

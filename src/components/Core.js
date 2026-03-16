@@ -173,6 +173,9 @@ import Pathology from './serviceproviders/Pathology';
 import NurseCare from './serviceproviders/NurseCare';
 import HomeCare from './serviceproviders/HomeCare';
 import Pharmacy from './serviceproviders/Pharmacy';
+import CreateServiceProviders from './serviceproviders/CreateServiceProviders';
+
+
 import DoctorAppointmentsUploadPresciption from './DoctorAppointmentsUploadPresciption';
 import DoctorAppointmentSurveyForms from './DoctorAppointmentSurveyForms';
 import DoctorAppointmentUploadSurveyForm from './DoctorAppointmentUploadSurveyForm';
@@ -565,7 +568,10 @@ export default function Core() {
             <Route exact path="/logout" element={<Logout/>}></Route>
             <Route path="/ContactUs" exact element={<ContactUs />} />
             <Route path="*" element={<Navigate to="/dashboard"/>}></Route>
+
             <Route path="/service-providers" exact element={<ServiceProviders />} />
+            <Route path="/create-service-providers" exact element={<CreateServiceProviders />} />
+
             <Route path="/clinic-nursing-home" exact element={<ClinicNursingHome />} />
             <Route path="/prefered-hospital" exact element={<PreferedHospital />} />
             <Route path="/pathology" exact element={<Pathology />} />
