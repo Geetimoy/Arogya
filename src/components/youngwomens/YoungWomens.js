@@ -445,8 +445,8 @@ function YoungWomens(){
                         </li>
                          <li>
                           {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/growth-tracker/`}>Health Data</Link>
-                        }
+                            (decryptedLoginDetails.account_type == '5') &&<Link to={`/youngwomens/growth-tracker/${women.account_key}/from-listing`}>Health Data</Link>
+                          }
                         </li>
                         {
                           (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/youngwomens/young-woman-profile-photo/${women.account_key}`}>Upload Profile Photo</Link></li>

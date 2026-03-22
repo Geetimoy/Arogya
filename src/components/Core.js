@@ -180,6 +180,7 @@ import DoctorAppointmentsUploadPresciption from './DoctorAppointmentsUploadPresc
 import DoctorAppointmentSurveyForms from './DoctorAppointmentSurveyForms';
 import DoctorAppointmentUploadSurveyForm from './DoctorAppointmentUploadSurveyForm';
 import ElderPastMeasurmentsHeight from './elderpersons/ElderPastMeasurmentsHeight';
+import YoungWomanPastMeasurmentsHeight from './youngwomens/YoungWomanPastMeasurmentsHeight';
 
 
 
@@ -503,7 +504,9 @@ export default function Core() {
             <Route path="/youngwomens/young-woman-view-medical-history/:accountKey" exact element={<YoungWomanViewMedicalHistory />} />
             <Route path="/youngwomens/young-woman-view-periodic-data/:accountKey" exact element={<YoungWomanViewPeriodicData />} />
             <Route path="/youngwomens/young-woman-profile-photo/:accountKey" exact element={<YoungWomanProfilePhoto />} />
-            <Route path="/youngwomens/growth-tracker/" exact element={<YoungWomanGrowthTracker />} />
+            {/* <Route path="/youngwomens/growth-tracker/" exact element={<YoungWomanGrowthTracker />} /> */}
+            <Route path="/youngwomens/growth-tracker/:accountKey/:redirectedFrom" exact element={<YoungWomanGrowthTracker />} />
+            <Route path="/youngwomens/growth-tracker/history/:accountKey/:redirectedFrom/:measuremenType" exact element={<YoungWomanPastMeasurmentsHeight/>} />
 
 
             <Route path="/Elder-Persons" exact element={<ElderPersons />} />
