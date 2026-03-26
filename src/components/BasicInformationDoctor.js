@@ -27,7 +27,7 @@ function BasicInformationDoctor(){
   const [isMActive, setIsMActive]           = useState(false);
   const [accountDetails, setAccountDetails] = useState([]);
   // Define the selectedOptions state and the corresponding setter function
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  // const [selectedOptions, setSelectedOptions] = useState([]);
   const [options, setOptions] = useState([
     { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
     { label: 'Navagraha Temple, Guwahati', value: '2' },
@@ -36,8 +36,15 @@ function BasicInformationDoctor(){
 		{ label: 'Saparam Bera', value: '5' }
   ]);
 
-  const getMasterServicesArea = async (e) => {
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [serviceAreaOption, setServiceAreaOption] = useState([]);
 
+  useEffect(() => {
+    
+  }, [serviceAreaOption])
+
+  const getMasterServicesArea = async (e) => {
+  
     let jsonData = {};
 
     jsonData['system_id']        = systemContext.systemDetails.system_id;
@@ -63,7 +70,9 @@ function BasicInformationDoctor(){
       for(var i=0; i<areas.length; i++){
         optionsArray[i] = {label: areas[i].service_area_name+', '+areas[i].service_area_state, value: areas[i].service_area_id}
       }
-      setOptions(optionsArray);
+      setServiceAreaOption(optionsArray);
+
+
     }
 
   }
@@ -150,15 +159,18 @@ function BasicInformationDoctor(){
     var serviceAreaArray = [];
     if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
       serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+      console.log(serviceAreaArray);
       var array1 = new Array();
+      console.log(serviceAreaOption);
       serviceAreaArray.forEach((item)=>{
-        options.forEach((opt)=>{
+        serviceAreaOption.forEach((opt)=>{
           if(opt.value === item){
             array1.push(opt);
           }
         })
       })
       setSelectedOptions(array1);
+
     }
 
     formData['basicInfoName']         = {required:formData['basicInfoName'].required, value:userDetails.display_name, errorClass:"", errorMessage:""};
@@ -203,12 +215,14 @@ function BasicInformationDoctor(){
   useEffect(() => {
 
     if(systemContext.systemDetails.system_id){
-      getUserDetails();
+      if(serviceAreaOption.length > 0){
+        getUserDetails();
+      }
     }
 
     // eslint-disable-next-line
     
-  }, [systemContext.systemDetails.system_id]);
+  }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault(); console.log(formData['basicInfoName'].value);
@@ -245,7 +259,8 @@ function BasicInformationDoctor(){
       jsonData["basicInfoLandmark"]         = formData['basicInfoLandmark'].value;
       jsonData["basicInfoCity"]             = formData['basicInfoTown'].value;
       jsonData["basicInfoPostalCode"]       = formData['basicInfoPostalCode'].value;
-      jsonData["basicInfoServiceArea"]      = formData['basicInfoServiceArea'].value;
+      var serviceArea                       = '{'+formData['basicInfoServiceArea'].value+'}';
+      jsonData["basicInfoServiceArea"]      = serviceArea;
       jsonData["basicInfoSpecialNotes"]     = formData['basicInfoSpecialNotes'].value;
       
       
@@ -436,10 +451,9 @@ function BasicInformationDoctor(){
               <input type="text" className="form-control" name="basicInfoPostalCode" id="basicInfoPostalCode" placeholder="" onChange={handleChange} maxLength={6} value={formData["basicInfoPostalCode"].value ? formData["basicInfoPostalCode"].value : ''}/>
               <small className="error-mesg">{formData["basicInfoPostalCode"].errorMessage}</small>
             </div>
-            
             <div className={`form-group ${formData["basicInfoServiceArea"].errorClass}`}>
-              <label>Service Area : <span className='text-danger'> *</span></label>
-              <Dropdown className='form-control select-multi' multi options={options} values={selectedOptions} onChange={handleChange1} />
+              <label>Service Area <span className='text-danger'> *</span></label>
+              <Select className='form-control select-multi' isMulti value={selectedOptions} onChange={handleChange1} options={serviceAreaOption} />
               <small className="error-mesg">{formData["basicInfoServiceArea"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["basicInfoSpecialNotes"].errorClass}`}>
