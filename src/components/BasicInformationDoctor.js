@@ -157,8 +157,8 @@ function BasicInformationDoctor(){
     setAccountDetails(userDetails);
 
     var serviceAreaArray = [];
-    if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-      serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
+    if(userDetails.service_area_id && userDetails.service_area_id !== ''){
+      serviceAreaArray = userDetails.service_area_id.replace(/^\{|\}$/g,'').split(',');
       console.log(serviceAreaArray);
       var array1 = new Array();
       console.log(serviceAreaOption);
