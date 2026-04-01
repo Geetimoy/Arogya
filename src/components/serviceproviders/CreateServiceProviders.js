@@ -28,7 +28,7 @@ function CreateServiceProviders(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>Craete Service Providers </h5>
+            <h5 className='mx-2 mb-0'>Create Service Provider </h5>
           </div>
           <div className='app-top-right d-flex'> 
             <AppTopNotifications />
@@ -50,10 +50,10 @@ function CreateServiceProviders(){
       </div>
       <div className='app-body'>
         <div className='service-providers signup login-box p-0 mt-0'>
-          <p>Create an Service Providers account </p>
+          <p>Create a Service Provider account </p>
           <form className='select-box'>
             <div className="form-group">
-                <label htmlFor="userType"> Register As <span className='text-danger'> *</span></label>
+                <label htmlFor="userType"> Service Area <span className='text-danger'> *</span></label>
                 <select className="form-control" id="userType" name="userType">
                   <option value="">Select</option>
                   <option value="3">Prefered Hospital</option>
