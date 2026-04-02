@@ -57,10 +57,10 @@ function JananiMedicalHistory(){
   const handleChange = (e) => {
     const { name, value } = e.target;
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
     }
   }
 
@@ -71,11 +71,13 @@ function JananiMedicalHistory(){
       if(formData[element].required && (formData[element].value === "" || formData[element].value === null)){
         formData[element].errorMessage = "This field is required!";
         formData[element].errorClass = "form-error";
+        formData[element].required = formData[element].required;
         errorCounter++;
       }
       else{
         formData[element].errorMessage = "";
         formData[element].errorClass = "";
+        formData[element].required = formData[element].required;
       }
     })
     setFormData({...formData, ...formData});
@@ -114,26 +116,26 @@ function JananiMedicalHistory(){
       let medicalHistory = result1.data[0];
       console.log(medicalHistory);
 
-      formData['previous_pregnancy_count']    = {value:medicalHistory.previous_pregnancy_count, required: true, errorClass:"", errorMessage:""};
-      formData['previous_boy_birth_count']    = {value:medicalHistory.previous_boy_birth_count, required: true, errorClass:"", errorMessage:""};
-      formData['previous_girl_birth_count']   = {value:medicalHistory.previous_girl_birth_count, required: true, errorClass:"", errorMessage:""};
-      formData['usg_needed']                  = {value:medicalHistory.no_of_ultrasound_needed, required: true, errorClass:"", errorMessage:""};
-      formData['usg_done']                    = {value:medicalHistory.no_of_ultrasound_done, required: true, errorClass:"", errorMessage:""};
-      formData['injection_needed']            = {value:medicalHistory.no_of_tt_injection_needed, required: true, errorClass:"", errorMessage:""};
-      formData['injection_done']              = {value:medicalHistory.no_of_tt_injection_done, required: true, errorClass:"", errorMessage:""};
-      formData['is_drinking_alcohol']         = {value:medicalHistory.is_drinking_alcohol, required: true, errorClass:"", errorMessage:""};
-      formData['drinking_duration']           = {value:medicalHistory.drinking_duration_months, required: true, errorClass:"", errorMessage:""};
-      formData['is_smoking']                  = {value:medicalHistory.is_smoking, required: true, errorClass:"", errorMessage:""};
-      formData['smoking_duration']            = {value:medicalHistory.smoking_duration_months, required: true, errorClass:"", errorMessage:""};
-      formData['is_low_body_weight']          = {value:medicalHistory.is_low_body_weight, required: true, errorClass:"", errorMessage:""};
-      formData['is_adequate_weight']          = {value:medicalHistory.is_adequate_weight_gain, required: true, errorClass:"", errorMessage:""};
-      formData['prenatal_care']               = {value:medicalHistory.no_prenatal_care, required: true, errorClass:"", errorMessage:""};
-      formData['is_emotional_stress']         = {value:medicalHistory.is_emotional_stress, required: true, errorClass:"", errorMessage:""};
-      formData['is_placenta_problems']        = {value:medicalHistory.is_placenta_problems, required: true, errorClass:"", errorMessage:""};
-      formData['placenta_problems_desc']      = {value:medicalHistory.placenta_description, required: true, errorClass:"", errorMessage:""};
-      formData['is_diabetic']                 = {value:medicalHistory.is_diabetic, required: true, errorClass:"", errorMessage:""};
-      formData['is_conjestive_heart_failure'] = {value:medicalHistory.is_conjestive_heart_failure, required: true, errorClass:"", errorMessage:""};
-      formData['is_existing_infection']       = {value:medicalHistory.is_existing_infection_done, required: true, errorClass:"", errorMessage:""};
+      formData['previous_pregnancy_count']    = {required:formData['previous_pregnancy_count'].required, value:medicalHistory.previous_pregnancy_count, required: true, errorClass:"", errorMessage:""};
+      formData['previous_boy_birth_count']    = {required:formData['previous_boy_birth_count'].required, value:medicalHistory.previous_boy_birth_count, required: true, errorClass:"", errorMessage:""};
+      formData['previous_girl_birth_count']   = {required:formData['previous_girl_birth_count'].required, value:medicalHistory.previous_girl_birth_count, required: true, errorClass:"", errorMessage:""};
+      formData['usg_needed']                  = {required:formData['usg_needed'].required, value:medicalHistory.no_of_ultrasound_needed, required: true, errorClass:"", errorMessage:""};
+      formData['usg_done']                    = {required:formData['usg_done'].required, value:medicalHistory.no_of_ultrasound_done, required: true, errorClass:"", errorMessage:""};
+      formData['injection_needed']            = {required:formData['injection_needed'].required, value:medicalHistory.no_of_tt_injection_needed, required: true, errorClass:"", errorMessage:""};
+      formData['injection_done']              = {required:formData['injection_done'].required, value:medicalHistory.no_of_tt_injection_done, required: true, errorClass:"", errorMessage:""};
+      formData['is_drinking_alcohol']         = {required:formData['is_drinking_alcohol'].required, value:medicalHistory.is_drinking_alcohol, required: true, errorClass:"", errorMessage:""};
+      formData['drinking_duration']           = {required:formData['drinking_duration'].required, value:medicalHistory.drinking_duration_months, required: true, errorClass:"", errorMessage:""};
+      formData['is_smoking']                  = {required:formData['is_smoking'].required, value:medicalHistory.is_smoking, required: true, errorClass:"", errorMessage:""};
+      formData['smoking_duration']            = {required:formData['smoking_duration'].required, value:medicalHistory.smoking_duration_months, required: true, errorClass:"", errorMessage:""};
+      formData['is_low_body_weight']          = {required:formData['is_low_body_weight'].required, value:medicalHistory.is_low_body_weight, required: true, errorClass:"", errorMessage:""};
+      formData['is_adequate_weight']          = {required:formData['is_adequate_weight'].required, value:medicalHistory.is_adequate_weight_gain, required: true, errorClass:"", errorMessage:""};
+      formData['prenatal_care']               = {required:formData['prenatal_care'].required, value:medicalHistory.no_prenatal_care, required: true, errorClass:"", errorMessage:""};
+      formData['is_emotional_stress']         = {required:formData['is_emotional_stress'].required, value:medicalHistory.is_emotional_stress, required: true, errorClass:"", errorMessage:""};
+      formData['is_placenta_problems']        = {required:formData['is_placenta_problems'].required, value:medicalHistory.is_placenta_problems, required: true, errorClass:"", errorMessage:""};
+      formData['placenta_problems_desc']      = {required:formData['placenta_problems_desc'].required, value:medicalHistory.placenta_description, required: true, errorClass:"", errorMessage:""};
+      formData['is_diabetic']                 = {required:formData['is_diabetic'].required, value:medicalHistory.is_diabetic, required: true, errorClass:"", errorMessage:""};
+      formData['is_conjestive_heart_failure'] = {required:formData['is_conjestive_heart_failure'].required, value:medicalHistory.is_conjestive_heart_failure, required: true, errorClass:"", errorMessage:""};
+      formData['is_existing_infection']       = {required:formData['is_existing_infection'].required, value:medicalHistory.is_existing_infection_done, required: true, errorClass:"", errorMessage:""};
 
       setFormData({...formData, ...formData});
 
