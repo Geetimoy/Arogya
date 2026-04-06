@@ -107,7 +107,7 @@ function JananiViewMedicalHistory(){
                                         "order_by_value": "desc"
                                       }
     
-    const response1 = await fetch(`${API_URL}/jananiMedicalHistoryList`, {
+    const response1 = await fetch(`${API_URL}/jananiMedicalHistoryListFromDoctorLogin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,7 +198,7 @@ function JananiViewMedicalHistory(){
       jsonData["is_existing_infection_done"]    = formData['is_existing_infection'].value;
       jsonData["remarks"]                       = '';
 
-      const response = await fetch(`${API_URL}/addUpdateJananiMedicalHistory`, {
+      const response = await fetch(`${API_URL}/addUpdateJananiMedicalHistoryFromDoctorLogin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
