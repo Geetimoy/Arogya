@@ -129,6 +129,8 @@ function JananiViewPeriodicData(){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
       jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
       jsonData["woman_account_type"]        = '3';
       jsonData["janani_account_key"]        = editAccountKey;
       jsonData["data_processed_on"]         = dataProcessedOn;
@@ -140,7 +142,7 @@ function JananiViewPeriodicData(){
       jsonData["user_long"]                 = localStorage.getItem('longitude');
       jsonData["janani_cat_value"]          = womenCategory;
 
-      const response = await fetch(`${API_URL}/jananiPeriodicDataAdd`, {
+      const response = await fetch(`${API_URL}/jananiPeriodicHealthDataAddFromDoctorLogin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -188,6 +190,8 @@ function JananiViewPeriodicData(){
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
     jsonData["janani_account_type"]       = 3;
     jsonData["janani_account_key"]        = editAccountKey;
+    jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+    jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -201,7 +205,7 @@ function JananiViewPeriodicData(){
                                               "order_by_value": "desc"
                                             }
 
-    const response = await fetch(`${API_URL}/jananiPeriodicDataList`, {
+    const response = await fetch(`${API_URL}/jananiPeriodicDataListFromDoctorLogin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

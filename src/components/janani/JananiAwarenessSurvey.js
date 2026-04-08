@@ -65,7 +65,15 @@ function JananiAwarenesssurvey(){
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["janani_account_key"]        = editAccountKey;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]     = decryptedLoginDetails.account_type;
+    }
+    else{
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    }
+
     jsonData["sub_volunteer_id"]          = "";
 
     jsonData["menstruation_cycle_value"]        = formData['menstruation_cycle_value'].value;
@@ -77,14 +85,25 @@ function JananiAwarenesssurvey(){
     jsonData["resources_available_value"]       = formData['resources_available_value'].value;
     jsonData["education_support_remarks"]       = formData['education_support_remarks'].value;
     
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/addUpdateJananiHealthAwarenessSurveyFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/addUpdateJananiHealthAwarenessSurvey`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
     
-    const response = await fetch(`${API_URL}/addUpdateJananiHealthAwarenessSurvey`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
     console.log(response)
     let result = await response.json();
 
@@ -105,6 +124,12 @@ function JananiAwarenesssurvey(){
     jsonData['system_id']           = systemContext.systemDetails.system_id;
     jsonData["janani_account_key"]  = editAccountKey;
     jsonData["janani_account_type"] = 3;
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]     = decryptedLoginDetails.account_type;
+    }
+
     jsonData["device_type"]         = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]        = DEVICE_TOKEN;
     jsonData["user_lat"]            = localStorage.getItem('latitude');
@@ -117,13 +142,25 @@ function JananiAwarenesssurvey(){
                                         "order_by_value": "desc"
                                       }
     
-    const response1 = await fetch(`${API_URL}/jananiHealthAwarenessSurveyList`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type === '5'){
+      var response1 = await fetch(`${API_URL}/jananiHealthAwarenessSurveyListFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }                              
+    else{
+      var response1 = await fetch(`${API_URL}/jananiHealthAwarenessSurveyList`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+
     let result1     = await response1.json();
 
     if(result1.data.length > 0){
