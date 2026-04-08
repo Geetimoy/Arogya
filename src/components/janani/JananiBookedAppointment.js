@@ -17,13 +17,16 @@ import { faSearch, faEllipsisV, faBell, faLongArrowAltLeft } from '@fortawesome/
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
 
+import JananiRecentAppointment from './JananiRecentAppointment';
+import JananiPreviousAppointment from './JananiPreviousAppointment';
+
 function JananiBookedAppointment(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const [urlParam, setUrlParam]       = useState(useParams());
-  const [userBasicDetails, setUserBasicDetails] = useState([]);
 
   const editAccountKey    = urlParam.patientKey;
 
@@ -57,8 +60,16 @@ function JananiBookedAppointment(){
 
     let jsonData = {};
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    }
+    
     jsonData["patient_key"]               = editAccountKey;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
@@ -76,14 +87,25 @@ function JananiBookedAppointment(){
                                               "order_by_field": "appointment_id",
                                               "order_by_value": "desc"
                                             }
-
-    const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
 
     let result = await response.json();
     console.log(result);
@@ -109,12 +131,14 @@ function JananiBookedAppointment(){
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
 
+  const [activeTab, setActiveTab] = useState('tab2');
+
   const getUserBasicDetails = async () => {
         
    let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 33;
+    jsonData["account_type"]              = 32;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -144,7 +168,6 @@ function JananiBookedAppointment(){
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id, editAccountKey]);
-
   
   return(
     <>
@@ -152,7 +175,7 @@ function JananiBookedAppointment(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to="/services" className=''>
+              <Link to="/janani" className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -177,43 +200,21 @@ function JananiBookedAppointment(){
         </div>
       </div>
       <div className="app-body bookings">
-        <p className='patient-details'>
+        <p className='patient-details mt-3'>
           {(userBasicDetails.display_name) && <span className="text-muted d-flex"><span>{userBasicDetails.display_name}</span>, {userBasicDetails.gender}, {userBasicDetails.age}yrs</span>}
         </p>
-        <div className='d-flex justify-content-between align-items-center'>
-          <div className='status d-flex mb-2'>
-            <p className='me-1 mb-0'><small>Approved: <strong>{approvedCounter}</strong></small>,</p>
-            <p className='me-1 mb-0'><small>Pending: <strong>{pendingCounter}</strong></small>,</p>
-            <p className='me-0 mb-0'><small>Rejected: <strong>{rejectedCounter}</strong></small></p>
+        <div className='tab-container'>
+          <div className="d-flex justify-content-center">
+              <button onClick={() => setActiveTab('tab1')} className={`large ${ activeTab === 'tab1' ? 'active' : ''
+                }`} > Previous Appointment </button>
+              <button onClick={() => setActiveTab('tab2')} className={`large ${ activeTab === 'tab2' ? 'active' : ''
+                }`} > Recent Appointment </button>
           </div>
-          <div className='filter'>
-            <div class="form-check mb-2">
-              <label class="form-check-label">
-              <input className="form-check-input" type="checkbox" name="filter_appointment" value="pending" onChange={()=>setFilterPendingAppointmentChecked(!filterPendingAppointmentChecked)} checked={filterPendingAppointmentChecked}/> <small>Pending</small>
-              </label>
-            </div>
+
+          <div className="tab-content">
+            {activeTab === 'tab1' && <JananiRecentAppointment />}
+            {activeTab === 'tab2' && <JananiPreviousAppointment />}
           </div>
-        </div>
-        <div className="row">
-          {appointmentList.map((appointment, index) => (
-            <div className="col-12">
-              <div className='button-box mb-3 position-relative' key={appointment.appointment_id}>
-                <div className='scheduleactive position-absolute'>
-                  {
-                    (appointment.appt_status === 'Active') && <div className='actives'>A</div>
-                  }
-                  {
-                    (appointment.appt_status !== 'Active') && <div className='not-active'>N-A</div>
-                  }
-                </div>
-                <p><span className="d-block">Doctor Name:</span> Dr. {appointment.doctor_display_name}</p>
-                <p><span className="d-block">Appointment ID:</span> {appointment.appointment_key}</p>
-                <p><span className="d-block">Patient Name:</span> {appointment.patient_display_name}</p>
-                <p><span className="d-block">Date of Visit & Appointment Time:</span><label>{appointment.appointment_date} @ {appointment.appointment_time}</label></p>
-                <p><span className="d-block">Place:</span> {appointment.location} - {(appointment.consultation_mode === '1') ? `Offline (Clinic)` : ((appointment.consultation_mode === '2') ? `Online` : `Call on Emergency`)}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
       <Appfooter></Appfooter>
