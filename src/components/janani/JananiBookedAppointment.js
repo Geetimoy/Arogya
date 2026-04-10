@@ -212,8 +212,8 @@ function JananiBookedAppointment(){
           </div>
 
           <div className="tab-content">
-            {activeTab === 'tab1' && <JananiRecentAppointment />}
-            {activeTab === 'tab2' && <JananiPreviousAppointment />}
+            {activeTab === 'tab1' && <JananiPreviousAppointment />}
+            {activeTab === 'tab2' && <JananiRecentAppointment />}
           </div>
         </div>
       </div>
