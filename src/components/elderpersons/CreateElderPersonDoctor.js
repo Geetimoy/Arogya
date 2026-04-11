@@ -423,13 +423,13 @@ function CreateElderPersonDoctor() {
           </div>
           
           
-          <div className={`form-group ${formData["elder_education"].errorClass}`}>
+          <div className={`form-group z-index-0 ${formData["elder_education"].errorClass}`}>
             <label htmlFor="elder_education">Education <span className="text-danger">*</span></label>
             <input type="text" className="form-control" onChange={handleChange} value={formData["elder_education"].value ? formData["elder_education"].value : ''} name="elder_education" id="elder_education" placeholder="Education" />
             <small className="error-mesg">{formData["elder_education"].errorMessage}</small>
           </div>                          
           
-          <div className="form-group">
+          <div className="form-group z-index-0">
             <label htmlFor="sub_volunteer_name">Sub Volunteer Name</label>
             <select className="form-control" name="sub_volunteer_name" id="sub_volunteer_name">
               <option value="1">Sub Volunteer1</option>

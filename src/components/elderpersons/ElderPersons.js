@@ -649,7 +649,7 @@ function ElderPersons(){
             <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
-        <div className='row'>
+        <div className='row equal-height'>
 
         {elderList.map((elder, index) => (
             <div className='col-6 mb-3' key={elder.account_id}>

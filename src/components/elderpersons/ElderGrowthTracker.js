@@ -464,7 +464,16 @@ function ElderGrowthTracker() {
         {/* <h4><strong>Coming Soon</strong></h4> */}
          <h4><strong>{ userBasicDetails.display_name }</strong></h4>
          <div className='align-items-center d-flex justify-content-between'>
-            <p className='mb-0'><small>Updated on { (latestGrowthData) ? Object.keys(latestGrowthData)[0] : '' }</small></p>
+          
+              <p className="mb-0">
+                {latestGrowthData && Object.keys(latestGrowthData).length > 0 && (
+                <small>
+                  Updated on {Object.keys(latestGrowthData)[0]}
+                </small> 
+                )}
+              </p>
+           
+            {/* <p className='mb-0'><small>Updated on { (latestGrowthData) ? Object.keys(latestGrowthData)[0] : '' }</small></p> */}
             <Link to='#' className='btn btn-sm btn-primary primary-bg-color border-0' onClick={() =>  showGrowthDetails()}>Add Health Details</Link>
           </div>
           <table className='border-0 table mt-3'>

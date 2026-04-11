@@ -12,3 +12,6 @@
 .tab-container button.large {
     width: 120px;
 }
+.equal-height .button-box{
+  height: 100%;
+}
