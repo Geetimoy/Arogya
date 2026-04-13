@@ -448,8 +448,8 @@ function JananiMedicalHistory(){
                 <label className="custom-control-label no-style" htmlFor="diabetic_y">Yes</label>
               </div>
               <div className="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="diabetic_n" name="is_diabetic" className="custom-control-input" value="no"/>
-                <label className="custom-control-label no-style" htmlFor="diabetic_n" onChange={handleChange} checked={(formData["is_diabetic"].value === 'no') ? true : false} >No</label>
+                <input type="radio" id="diabetic_n" name="is_diabetic" className="custom-control-input" value="no" onChange={handleChange} checked={(formData["is_diabetic"].value === 'no') ? true : false} />
+                <label className="custom-control-label no-style" htmlFor="diabetic_n" >No</label>
               </div>
             </div>
             <small className="error-mesg">{formData["is_diabetic"].errorMessage}</small>
