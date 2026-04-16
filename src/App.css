@@ -599,3 +599,6 @@ body:has(.b2h-container-clas) .modal .rating-symbol .star{
     vertical-align: middle;
     font-size: large;
 }
+.camera-popup-modal .btn:hover{
+    color: #000;
+}
