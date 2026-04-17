@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 
 import Appfooter from "../AppFooter";
 import Rating from "./Ratingsave";
@@ -17,7 +17,7 @@ import  './ElderPersons.css';
 
 import CryptoJS from "crypto-js";
 
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } from "../util/Constants";
 
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
@@ -28,6 +28,8 @@ import BMIGrowthChart from '../../util/elder/BMIGrowthChart';
 //import MidArmGrowthChart from '../../util/elder/MidArmGrowthChart';
 
 function ElderPersons(){
+
+  const searchRef = useRef(null);
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
@@ -66,6 +68,9 @@ function ElderPersons(){
   const [isActive, setIsActive]     = useState(0);
 
   const [elderList, setElderList]   = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loadMore, setLoadMore] = useState(false);
+  const [offset, setOffset] = useState(0);
   const [openMenuId, setOpenMenuId]   = useState(0);
 
 
@@ -79,12 +84,15 @@ function ElderPersons(){
 
   const searchElder = (e) => {
     const { name, value } = e.target;
+    setElderList([]); // Clear current list
+    setLoadMore(false); // Reset load more state
+    setTotalCount(0); // Reset total count
     setTimeout(()=>{
-      listElder(value);
+      listElder(searchRef.current.value, 0);
     }, 1000)
   }
 
-  const listElder = async (searchKey) => {
+  const listElder = async (searchKey, customOffset) => {
   
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
   
@@ -109,8 +117,8 @@ function ElderPersons(){
       jsonData["user_long"]                 = localStorage.getItem('longitude');
       jsonData["search_param"]              = {
                                                 "by_keywords": searchKey,
-                                                "limit": "0",
-                                                "offset": "0",
+                                                "limit": PAGINATION_LIMIT,
+                                                "offset": customOffset,
                                                 "order_by_field": "account_id",
                                                 "order_by_value": "desc"
                                               }
@@ -126,17 +134,34 @@ function ElderPersons(){
       let result = await response.json();
   
       if(result.success){
-        setElderList(result.data);
+        if(result.data.length > 0){
+          setElderList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
+          setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
+          setTotalCount(result.total_count); // Update total count
+          if(elderList.length + result.data.length >= result.total_count){
+            setLoadMore(false); // Disable load more if all data is loaded
+          }
+          else{
+            setLoadMore(true); // Enable load more if more data is available
+          }
+        }
+        else{
+          setElderList([]); // Reset list if no data found
+          setLoadMore(false);
+          setTotalCount(0);
+        }
       }
       else{
         setElderList([]); 
+        setLoadMore(false);
+        setTotalCount(0);
       }
   
     }
 
     useEffect(() => {
       if(systemContext.systemDetails.system_id){
-        listElder("");
+        listElder("", 0);
       }
       // eslint-disable-next-line
     }, [systemContext.systemDetails.system_id]);
@@ -184,7 +209,7 @@ function ElderPersons(){
         setOpenMenuId(0);
         setTimeout(()=>{
           modalCloseProfile();
-          listElder("");
+          listElder("", 0);
         }, 1000);
       } 
       else {
@@ -448,6 +473,10 @@ function ElderPersons(){
     setSavedRating(rating); // Update the saved rating state
   };
 
+  const loadMoreChild = () => {
+    listElder(searchRef.current.value, offset); // Load more data
+  }
+
   const genderMap = {
   1: "Male",
   2: "Female",
@@ -645,8 +674,8 @@ function ElderPersons(){
         
         <div className='search-elder-persons mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Elder Persons' id="ElderPersons" name="searchElderPersons" onChange={searchElder} />
-            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <input type="text" className='form-control' placeholder='Search Elder Persons' id="ElderPersons" name="searchElderPersons" ref={searchRef}/>
+            <span className="input-group-text" onClick={searchElder}><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row equal-height'>
@@ -735,13 +764,18 @@ function ElderPersons(){
                     (elder.shared_image && elder.shared_image !== "") ? <img src={elder.shared_image+`?`+Math.random()} alt='' /> : <img src={elderpersons} alt='' />
                   }
                   <h6>{elder.elder_name}</h6>
-                  <p>{genderMap[Number(elder.elder_gender)] || "N/A"}
-, ({elder.elder_age} yrs)</p>  
+                  <p>{genderMap[Number(elder.elder_gender)] || "N/A"} , ({elder.elder_age} yrs)</p>  
                   
                 </Link>
               </div>
             </div>
-        ))}
+          ))}
+
+          {elderList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
+        
+          {loadMore && <div className='col-12 text-center'>
+            <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={loadMoreChild}>Load More</Link> 
+          </div>}
         </div>   
 
         <Modal show={showCloseProfileModal} onHide={modalCloseProfile}>
