@@ -47,10 +47,10 @@ function ElderUploadDoctorPrescriptions(){
 
   const [formData, setFormData] = useState({
     prescription_date: {required: true, value:"", errorClass:"", errorMessage:""},
-    previous_history: {required: true, value:"", errorClass:"", errorMessage:""},
-    prescription_summary: {required: true, value:"", errorClass:"", errorMessage:""},
-    advice: {required: true, value:"", errorClass:"", errorMessage:""},
-    recheck_date: {required: true, value:"", errorClass:"", errorMessage:""}
+    previous_history: {required: false, value:"", errorClass:"", errorMessage:""},
+    prescription_summary: {required: false, value:"", errorClass:"", errorMessage:""},
+    advice: {required: false, value:"", errorClass:"", errorMessage:""},
+    recheck_date: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -399,22 +399,22 @@ function ElderUploadDoctorPrescriptions(){
               <small className="error-mesg">{formData["prescription_date"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["previous_history"].errorClass}`}>
-              <label htmlFor="name">Previous History <span className="text-danger">*</span></label>
+              <label htmlFor="name">Previous History </label>
               <input type="text" className="form-control" name="previous_history" id="previous_history" placeholder="Previous History" onChange={handleChange} value={formData["previous_history"].value ? formData["previous_history"].value : ''}/>
               <small className="error-mesg">{formData["previous_history"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["prescription_summary"].errorClass}`}>
-              <label htmlFor="name">Prescription Summary <span className="text-danger">*</span></label>
+              <label htmlFor="name">Prescription Summary </label>
               <input type="text" className="form-control" name="prescription_summary" id="prescription_summary" placeholder="Prescription Summary" onChange={handleChange} value={formData["prescription_summary"].value ? formData["prescription_summary"].value : ''}/>
               <small className="error-mesg">{formData["prescription_summary"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["advice"].errorClass}`}>
-              <label htmlFor="name">Advice <span className="text-danger">*</span></label>
+              <label htmlFor="name">Advice </label>
               <input type="text" className="form-control" name="advice" id="advice" placeholder="Advice" onChange={handleChange} value={formData["advice"].value ? formData["advice"].value : ''}/>
               <small className="error-mesg">{formData["advice"].errorMessage}</small>
             </div>
             <div className={`form-group ${formData["recheck_date"].errorClass}`}>
-              <label htmlFor="recheck_date">Recheck Date <span className="text-danger">*</span></label>
+              <label htmlFor="recheck_date">Recheck Date </label>
               <DatePicker dateFormat="yyyy-MM-dd" selected={formData["recheck_date"].value ? formData["recheck_date"].value : ''} onChange={(date) => onChangeRecheckDate(date)} className='form-control' placeholderText="Recheck Date"/>
               <small className="error-mesg">{formData["recheck_date"].errorMessage}</small>
             </div>
