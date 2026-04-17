@@ -363,7 +363,7 @@ function ElderUploadDoctorPrescriptions(){
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to={`/elderpersons/elder-prescription/${editAccountKey}/${prescriptionType}`} className=''>
+              <Link to={`/elderpersons/elder-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`} className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
