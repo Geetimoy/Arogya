@@ -56,10 +56,15 @@ function JananiUploadDoctorPrescriptions(){
   const handleChange = (e) => {
     const { name, value } = e.target;
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -247,6 +252,7 @@ function JananiUploadDoctorPrescriptions(){
         formData[element].errorMessage = "";
         formData[element].errorClass = "";
       }
+      formData[element].required = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
@@ -276,6 +282,7 @@ function JananiUploadDoctorPrescriptions(){
   const resetForm = () => {
     const fieldName = Object.keys(formData);
     fieldName.forEach((element) => {
+      formData[element].required      = formData[element].required;
       formData[element].value         = "";
       formData[element].errorClass    = "";
       formData[element].errorMessage  = "";

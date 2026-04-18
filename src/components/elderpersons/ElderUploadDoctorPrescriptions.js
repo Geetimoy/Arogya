@@ -56,10 +56,15 @@ function ElderUploadDoctorPrescriptions(){
   const handleChange = (e) => {
     const { name, value } = e.target;
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
 
@@ -112,43 +117,6 @@ function ElderUploadDoctorPrescriptions(){
       }
 
       setFileUpload({...fileUpload, ...fileUpload});
-
-      
-      
-      /*let jsonData = {};
-
-      jsonData['system_id']               = systemContext.systemDetails.system_id;
-      jsonData["device_type"]             = DEVICE_TYPE;
-      jsonData["device_token"]            = DEVICE_TOKEN;
-      jsonData["user_lat"]                = localStorage.getItem('latitude');
-      jsonData["user_long"]               = localStorage.getItem('longitude');
-      jsonData["appointment_initial_type"]= appointmentInitialType;
-      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
-      jsonData["user_account_key"]        = editAccountKey;
-      jsonData["user_account_type"]       = 3;
-      jsonData["file"]                    = uploadedFileBase64Array[1];
-      jsonData["file_seq"]                = 'initialpatient'+seq;
-      jsonData["file_extension"]          = fileExtension;
-      jsonData["initial_summary"]         = '';
-
-      console.log(jsonData);
-
-      const response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatient`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
-
-      let result = await response.json();
-
-      if(result.success){
-        alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
-      }
-      else{
-        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
-      }*/
 
     }
     
@@ -247,6 +215,7 @@ function ElderUploadDoctorPrescriptions(){
         formData[element].errorMessage = "";
         formData[element].errorClass = "";
       }
+      formData[element].required = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
@@ -276,6 +245,7 @@ function ElderUploadDoctorPrescriptions(){
   const resetForm = () => {
     const fieldName = Object.keys(formData);
     fieldName.forEach((element) => {
+      formData[element].required      = formData[element].required;
       formData[element].value         = "";
       formData[element].errorClass    = "";
       formData[element].errorMessage  = "";
