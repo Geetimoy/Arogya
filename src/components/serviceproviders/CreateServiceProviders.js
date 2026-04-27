@@ -24,9 +24,8 @@ function CreateServiceProviders(){
   };
 
   const [formData, setFormData] = useState({
-    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
-    elder_name: {required: true, value:"", errorClass:"", errorMessage:""},
-    elder_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
+    userName: {required: true, value:"", errorClass:"", errorMessage:""},
+    userId: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_occupation: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_gender: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_age: {required: true, value:"", errorClass:"", errorMessage:""},
