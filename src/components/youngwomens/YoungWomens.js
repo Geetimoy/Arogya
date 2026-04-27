@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import CryptoJS from "crypto-js";
 
 import Appfooter from '../AppFooter';
@@ -15,7 +15,7 @@ import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
 
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } from "../util/Constants";
 
 import './YoungWomens.css'
 
@@ -24,6 +24,9 @@ import {Modal, Button} from 'react-bootstrap';
 import AppTopNotifications from '../AppTopNotifications';
 
 function YoungWomens(){
+
+  const searchRef = useRef(null);
+
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -42,6 +45,9 @@ function YoungWomens(){
   const loginAccountType  = loginDetails.account_type;
 
   const [womenList, setWomenList]   = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loadMore, setLoadMore] = useState(false);
+  const [offset, setOffset] = useState(0);
   const [openMenuId, setOpenMenuId] = useState(0);
 
   const handleMenuClick = (accountId) => {
@@ -232,12 +238,16 @@ function YoungWomens(){
 
   const searchWomen = (e) => {
     const { name, value } = e.target;
+    setWomenList([]); // Clear current list
+    setLoadMore(false); // Reset load more state
+    setTotalCount(0); // Reset total count
     setTimeout(()=>{
-      listWomen(value);
+      listWomen(searchRef.current.value, 0);
     }, 1000)
   }
 
-  const listWomen = async (searchKey) => {
+
+  const listWomen = async (searchKey, customOffset) => {
 
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -262,7 +272,7 @@ function YoungWomens(){
     jsonData["user_long"]                 = localStorage.getItem('longitude');
     jsonData["search_param"]              = {
                                               "by_keywords": searchKey,
-                                              "limit": "0",
+                                              "limit": "10",
                                               "offset": "0",
                                               "order_by_field": "account_id",
                                               "order_by_value": "desc"
@@ -280,19 +290,33 @@ function YoungWomens(){
 
     if(result.success){
       if(result.data.length > 0){
-
+        setWomenList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
+        setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
+        setTotalCount(result.total_count); // Update total count
+        if(womenList.length + result.data.length >= result.total_count){
+          setLoadMore(false); // Disable load more if all data is loaded
+        }
+        else{
+          setLoadMore(true); // Enable load more if more data is available
+        }
       }
-      setWomenList(result.data);
+      else{
+        setWomenList([]);
+        setLoadMore(false);
+        setTotalCount(0);
+      }
     }
     else{
       setWomenList([]); 
+      setLoadMore(false);
+      setTotalCount(0);
     }
 
   }
 
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
-      listWomen("");
+      listWomen("", 0);
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
@@ -340,7 +364,7 @@ function YoungWomens(){
       setOpenMenuId(0);
       setTimeout(()=>{
         modalCloseProfile();
-        listWomen("");
+        listWomen("", 0);
       }, 1000);
     } 
     else {
@@ -373,6 +397,9 @@ function YoungWomens(){
     setSavedRating(rating); // Update the saved rating state
   };
 
+  const loadMoreWomen = () => {
+    listWomen(searchRef.current.value, offset); // Load more data
+  }
   
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -421,8 +448,8 @@ function YoungWomens(){
         </div>
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' id="searchWomen" name="searchWomen" placeholder='Search Young Woman' onChange={searchWomen} />
-            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <input type="text" className='form-control' id="searchWomen" name="searchWomen" placeholder='Search Young Woman' ref={searchRef} />
+            <span className="input-group-text" onClick={searchWomen}><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className="listing-patient">
@@ -507,6 +534,10 @@ function YoungWomens(){
             ))}
 
             {womenList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
+
+            {loadMore && <div className='col-12 text-center'>
+              <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={loadMoreWomen}>Load More</Link> 
+            </div>}
 
           </div>
         </div>

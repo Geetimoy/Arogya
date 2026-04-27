@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import CryptoJS from "crypto-js";
 
 import './PatientProfiles.css'
@@ -17,7 +17,7 @@ import patientprofile from '../../assets/images/profile.png';
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
 
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } from "../util/Constants";
 
 import {Modal, Button} from 'react-bootstrap'; 
 
@@ -30,6 +30,8 @@ import more from '../../assets/images/stethoscope.png';
 import AppTopNotifications from '../AppTopNotifications';
 
 function Patientprofiles(){
+
+  const searchRef = useRef(null);
 
   const [isActive, setIsActive] = useState(false);
   const redirect = useNavigate();
@@ -56,6 +58,9 @@ function Patientprofiles(){
   const loginAccountType  = loginDetails.account_type;
 
   const [patientList, setPatientList]   = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loadMore, setLoadMore] = useState(false);
+  const [offset, setOffset] = useState(0);
   const [openMenuId, setOpenMenuId]     = useState(0);
 
   const handleMenuClick = (accountId) => {
@@ -77,12 +82,15 @@ function Patientprofiles(){
 
   const searchPatient = (e) => {
     const { name, value } = e.target;
+    setPatientList([]); // Clear current list
+    setLoadMore(false); // Reset load more state
+    setTotalCount(0); // Reset total count
     setTimeout(()=>{
-      listPatient(value);
+      listPatient(searchRef.current.value, 0);
     }, 1000)
   }
 
-  const listPatient = async (searchKey) => {
+  const listPatient = async (searchKey, customOffset) => {
 
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -125,19 +133,33 @@ function Patientprofiles(){
 
     if(result.success){
       if(result.data.length > 0){
-
+        setPatientList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
+        setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
+        setTotalCount(result.total_count); // Update total count
+        if(patientList.length + result.data.length >= result.total_count){
+          setLoadMore(false); // Disable load more if all data is loaded
+        }
+        else{
+          setLoadMore(true); // Enable load more if more data is available
+        }
       }
-      setPatientList(result.data);
+      else{
+        setPatientList([]);
+        setLoadMore(false);
+        setTotalCount(0);
+      }
     }
     else{
       setPatientList([]); 
+      setLoadMore(false);
+      setTotalCount(0);
     }
 
   }
 
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
-      listPatient("");
+      listPatient("", 0);
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
@@ -186,7 +208,7 @@ function Patientprofiles(){
       setOpenMenuId(0);
       setTimeout(()=>{
         modalCloseProfile();
-        listPatient("");
+        listPatient("", 0);
       }, 1000);
     } 
     else {
@@ -360,6 +382,10 @@ function Patientprofiles(){
     setSavedRating(rating); // Update the saved rating state
   };
 
+  const loadMorePatient = () => {
+    listPatient(searchRef.current.value, offset); // Load more data
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -415,8 +441,8 @@ function Patientprofiles(){
         </div> */}
         <div className='search-patient mt-3 mb-3'>
           <div className='input-group'>
-            <input type="text" className='form-control' placeholder='Search Patient' id="searchPatient" name="searchPatient" onChange={searchPatient} />
-            <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
+            <input type="text" className='form-control' placeholder='Search Patient' id="searchPatient" name="searchPatient" ref={searchRef} />
+            <span className="input-group-text" onClick={searchPatient}><FontAwesomeIcon icon={faSearch} /></span>
           </div>
         </div>
         <div className='row'>
@@ -491,6 +517,12 @@ function Patientprofiles(){
               </div>
             </div>
           ))}
+
+          {patientList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
+
+          {loadMore && <div className='col-12 text-center'>
+            <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={loadMorePatient}>Load More</Link> 
+          </div>}
 
         </div>
 
