@@ -81,7 +81,7 @@ function JananiPrescriptions(){
   }
   else if(prescriptionType === 'doctor'){
     var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForJanani`;
+    var fetchUrl  = `fetchInitialAppointmentDocumentForJananiFromDoctorLogin`;
   }
 
   const [isMActive, setIsMActive] = useState(false);
@@ -105,8 +105,14 @@ function JananiPrescriptions(){
 
     let jsonData = {};
     jsonData['system_id']       = systemContext.systemDetails.system_id;
-    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
+    if(decryptedLoginDetails.account_type == 5){
+      jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_key"]         = decryptedLoginDetails.account_key;
+    }
     jsonData["account_key"]     = editAccountKey;
+    jsonData["appointment_key"] = appointmentId;
     jsonData["account_type"]    = 3;
     jsonData["file_type"]       = prescriptionType;
     jsonData["search_param"]    = {
@@ -626,6 +632,7 @@ function JananiPrescriptions(){
                   <div className="btn-download"><Link target="_blank" to={`${janani.file_path}`}><FontAwesomeIcon icon={faDownload}/></Link></div>
                   <div className="btn-delete"><FontAwesomeIcon icon={faTrash} onClick={() => modalPrescriptionDeleteShow(janani.file_id)}/></div>
                   <img src={docIcon} alt='' className='w-100' />
+                  <p className='mb-1'><small>Date: {janani.prescription_date}</small></p>
                   <p className='mb-1'><strong>{janani.file_name}</strong></p>
                 </div>
               </div>
