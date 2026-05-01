@@ -48,18 +48,23 @@ function JananiPrescriptions(){
   const [totalScreenshotCanBeCaptured, setTotalScreenshotCanBeCaptured] = useState(0);
   const [formData, setFormData] = useState({
     prescription_date: {required: true, value:"", errorClass:"", errorMessage:""},
-    previous_history: {required: true, value:"", errorClass:"", errorMessage:""},
-    prescription_summary: {required: true, value:"", errorClass:"", errorMessage:""},
-    advice: {required: true, value:"", errorClass:"", errorMessage:""},
-    recheck_date: {required: true, value:"", errorClass:"", errorMessage:""}
+    previous_history: {required: false, value:"", errorClass:"", errorMessage:""},
+    prescription_summary: {required: false, value:"", errorClass:"", errorMessage:""},
+    advice: {required: false, value:"", errorClass:"", errorMessage:""},
+    recheck_date: {required: false, value:"", errorClass:"", errorMessage:""}
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
     if(value.trim() !== ""){
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"", errorMessage:""}});
+      setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
     }
     else{
-      setFormData({...formData, [name]: {...formData[name], value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      if(formData[name].required){
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"form-error", errorMessage:"This field is required!"}});
+      }
+      else{
+        setFormData({...formData, [name]: {...formData[name], required:formData[name].required, value:value, errorClass:"", errorMessage:""}});
+      }
     }
   }
   const onChangePrescriptionDate = (date) => {
@@ -172,19 +177,37 @@ function JananiPrescriptions(){
     jsonData["account_type"]          = 3;
     jsonData["file_id"]               = deletePrescriptionFileId;
     jsonData["file_type"]             = prescriptionType;
-    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;
+
+    if(decryptedLoginDetails.account_type == 5){
+      jsonData["doctor_account_key"]    = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;
+    }
+
     jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]          = DEVICE_TOKEN;
     jsonData["user_lat"]              = localStorage.getItem('latitude');
     jsonData["user_long"]             = localStorage.getItem('longitude');
 
-    const response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForJanani`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type == 5){
+      var response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForJananiFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/deleteInitialAppointmentDocumentForJanani`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
 
     let result = await response.json();
     console.log(result);
@@ -405,6 +428,7 @@ function JananiPrescriptions(){
   const resetForm = () => {
     const fieldName = Object.keys(formData);
     fieldName.forEach((element) => {
+      formData[element].required      = formData[element].required;
       formData[element].value         = "";
       formData[element].errorClass    = "";
       formData[element].errorMessage  = "";
@@ -436,7 +460,13 @@ function JananiPrescriptions(){
           jsonData["user_lat"]                = localStorage.getItem('latitude');
           jsonData["user_long"]               = localStorage.getItem('longitude');
           jsonData["appointment_initial_type"]= 0;
-          jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+          jsonData["upload_for"]                = 'janani';
+          if(decryptedLoginDetails.account_type === '5'){
+            jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+          }
+          else{
+            jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+          }
           jsonData["user_account_key"]        = editAccountKey;
           jsonData["user_account_type"]       = 3;
           jsonData["file"]                     = uploadedFileBase64Array[1];
@@ -451,13 +481,25 @@ function JananiPrescriptions(){
           jsonData["file_extension"]          = 'jpg';
           jsonData["initial_summary"]         = '';
 
-          const response = await fetch(`${API_URL}/uploadInitialDocumentForJanani`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jsonData),
-          });
+          if(decryptedLoginDetails.account_type === '5'){
+            var response = await fetch(`${API_URL}/uploadInitialDocumentForJananiFromDoctorLogin`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
+          else{
+            var response = await fetch(`${API_URL}/uploadInitialDocumentForJanani`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
+
 
           let result = await response.json();
 
@@ -519,9 +561,16 @@ function JananiPrescriptions(){
           jsonData["user_lat"]                  = localStorage.getItem('latitude');
           jsonData["user_long"]                 = localStorage.getItem('longitude');
           jsonData["appointment_initial_type"]  = 1;
-          jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+          if(decryptedLoginDetails.account_type === '5'){
+            jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+          }
+          else{
+            jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+          }
+
           jsonData["user_account_key"]          = editAccountKey;
           jsonData["user_account_type"]         = 3;
+          jsonData["upload_for"]                = 'janani';
           jsonData["appointment_key"]           = appointmentId;
           jsonData["prescription_date"]         = prescriptionDate;
           jsonData["prescription_prev_history"] = formData['previous_history'].value;
@@ -530,13 +579,24 @@ function JananiPrescriptions(){
           jsonData["recheck_date"]              = recheckDate;
           jsonData["files"]                     = fileUploadArray;
 
-          const response = await fetch(`${API_URL}/uploadAppointmentDocumentForJanani`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jsonData),
-          });
+          if(decryptedLoginDetails.account_type === '5'){
+            var response = await fetch(`${API_URL}/uploadAppointmentDocumentForJananiFromDoctorLogin`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
+          else{
+            var response = await fetch(`${API_URL}/uploadAppointmentDocumentForJanani`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
     
           let result = await response.json();
     
@@ -698,22 +758,22 @@ function JananiPrescriptions(){
                         <small className="error-mesg">{formData["prescription_date"].errorMessage}</small>
                       </div>
                       <div className={`form-group ${formData["previous_history"].errorClass}`}>
-                        <label htmlFor="name">Previous History <span className="text-danger">*</span></label>
+                        <label htmlFor="name">Previous History </label>
                         <input type="text" className="form-control" name="previous_history" id="previous_history" placeholder="Previous History" onChange={handleChange} value={formData["previous_history"].value ? formData["previous_history"].value : ''}/>
                         <small className="error-mesg">{formData["previous_history"].errorMessage}</small>
                       </div>
                       <div className={`form-group ${formData["prescription_summary"].errorClass}`}>
-                        <label htmlFor="name">Prescription Summary <span className="text-danger">*</span></label>
+                        <label htmlFor="name">Prescription Summary </label>
                         <input type="text" className="form-control" name="prescription_summary" id="prescription_summary" placeholder="Prescription Summary" onChange={handleChange} value={formData["prescription_summary"].value ? formData["prescription_summary"].value : ''}/>
                         <small className="error-mesg">{formData["prescription_summary"].errorMessage}</small>
                       </div>
                       <div className={`form-group ${formData["advice"].errorClass}`}>
-                        <label htmlFor="name">Advice <span className="text-danger">*</span></label>
+                        <label htmlFor="name">Advice </label>
                         <input type="text" className="form-control" name="advice" id="advice" placeholder="Advice" onChange={handleChange} value={formData["advice"].value ? formData["advice"].value : ''}/>
                         <small className="error-mesg">{formData["advice"].errorMessage}</small>
                       </div>
                       <div className={`form-group ${formData["recheck_date"].errorClass}`}>
-                        <label htmlFor="recheck_date">Recheck Date <span className="text-danger">*</span></label>
+                        <label htmlFor="recheck_date">Recheck Date </label>
                         <DatePicker dateFormat="yyyy-MM-dd" selected={formData["recheck_date"].value ? formData["recheck_date"].value : ''} onChange={(date) => onChangeRecheckDate(date)} className='form-control' placeholderText="Recheck Date"/>
                         <small className="error-mesg">{formData["recheck_date"].errorMessage}</small>
                       </div>
