@@ -455,10 +455,143 @@ function Janani(){
       }
     }, []);
 
-  const handleSaveRating = () => {
-    localStorage.setItem('userRating', rating);
-    setSavedRating(rating); // Update the saved rating state
+    
+
+  // const handleSaveRating = () => {
+  //   localStorage.setItem('userRating', rating);
+  //   setSavedRating(rating); // Update the saved rating state
+  // };
+  const [reviewJananiKey, setReviewJananiKey] = useState('');
+  const handleSaveRating = async () => {
+
+  if (rating === null || rating === undefined || rating === 0) {
+    alertContext.setAlertMessage({ show: true, type: "error", message: "Please give rating!" });
+    return;
+  }
+
+  if (!comments || comments.trim() === "") {
+    alertContext.setAlertMessage({ show: true, type: "error", message: "Please enter comments!" });
+    return;
+  }
+
+  try {
+
+    const decryptedLoginDetails = JSON.parse(
+      CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY)
+        .toString(CryptoJS.enc.Utf8)
+    );
+
+    let jsonData = {
+      'system_id': systemContext.systemDetails.system_id,
+
+      // POSTER (logged in user)
+      'poster_acc_type': decryptedLoginDetails.account_type,
+      'poster_acc_key': decryptedLoginDetails.account_key,
+
+      // RECEIVER (janani/patient)
+      'receiver_acc_type': "3", // Janani type (confirm once)
+      'receiver_acc_key': reviewJananiKey,
+
+      'device_type': DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+    
+
+      'user_lat': localStorage.getItem('latitude'),
+      'user_long': localStorage.getItem('longitude'),
+
+      'rating': String(rating), // API expects string
+      'comments': comments
+    };
+
+    console.log("Review Payload:", jsonData); // debug
+
+    const response = await fetch(`${API_URL}/generalPostReview`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if (result.success) {
+      alertContext.setAlertMessage({
+        show: true,
+        type: "success",
+        message: result.msg || "Review submitted successfully!"
+      });
+
+      // reset
+      setRating(0);
+      setComments("");
+      modalClose2();
+
+    } else {
+      alertContext.setAlertMessage({
+        show: true,
+        type: "error",
+        message: result.msg
+      });
+    }
+
+  } catch (error) {
+    console.error(error);
+
+    alertContext.setAlertMessage({
+      show: true,
+      type: "error",
+      message: "Something went wrong!"
+    });
+  }
   };
+  const [reviewList, setReviewList] = useState([]);
+  const [reviewLoading, setReviewLoading] = useState(false);
+
+
+  const fetchReviewList = async (jananiAccountKey) => {
+
+    try {
+
+      setReviewLoading(true);
+
+      let jsonData = {
+        'system_id': systemContext.systemDetails.system_id,
+
+        'account_key': jananiAccountKey,   //  IMPORTANT
+        'user_type': "3",           //  Janani type
+
+        'device_type': DEVICE_TYPE,
+        'device_token': DEVICE_TOKEN,
+        
+        'user_lat': localStorage.getItem('latitude'),
+        'user_long': localStorage.getItem('longitude'),
+      };
+
+      const response = await fetch(`${API_URL}/generalReviewList`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+
+      let result = await response.json();
+
+      if (result.success) {
+        setReviewList(result.data || []);
+      } else {
+        setReviewList([]);
+      }
+
+    } catch (error) {
+      console.error(error);
+      setReviewList([]);
+    } finally {
+      setReviewLoading(false);
+    }
+  };
+
 
   const loadMoreJanani = () => {
     listJanani(searchRef.current.value, offset); // Load more data
@@ -588,7 +721,10 @@ function Janani(){
                       (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
 }
-                      {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
+                     <li><Link onClick={() => {
+      setReviewJananiKey(janani.account_key);
+      fetchReviewList(janani.account_key); // 👈 call here
+      modalShow2(); }} to="#">Write/View Review </Link></li>
                     </ul>
                   </div>
                 }
