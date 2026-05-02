@@ -85,10 +85,18 @@ function JananiUploadInitialPrescriptions(){
       jsonData['system_id']               = systemContext.systemDetails.system_id;
       jsonData["device_type"]             = DEVICE_TYPE;
       jsonData["device_token"]            = DEVICE_TOKEN;
+      jsonData["upload_for"]              = 'janani';
       jsonData["user_lat"]                = localStorage.getItem('latitude');
       jsonData["user_long"]               = localStorage.getItem('longitude');
       jsonData["appointment_initial_type"]= appointmentInitialType;
-      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+      }
+      else{
+        jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+      }
+
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
       jsonData["file"]                    = uploadedFileBase64Array[1];
@@ -98,13 +106,24 @@ function JananiUploadInitialPrescriptions(){
 
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/uploadInitialDocumentForJanani`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
+      if(decryptedLoginDetails.account_type === '5'){
+        var response = await fetch(`${API_URL}/uploadInitialDocumentForJananiFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      else{
+        var response = await fetch(`${API_URL}/uploadInitialDocumentForJanani`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
 
       let result = await response.json();
 
