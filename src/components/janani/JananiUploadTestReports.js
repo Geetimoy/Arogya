@@ -139,7 +139,14 @@ function JananiUploadTestReports(){
         jsonData["user_account_key"]          = editAccountKey;
         jsonData["user_account_type"]         = 3;
         jsonData["appointment_key"]           = appointmentId;
-        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+        if(decryptedLoginDetails.account_type === '5'){
+          jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        }
+        else{
+          jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        }
+
         jsonData["initial_summary"]           = formData['report_summary'].value;
         jsonData["report_name"]               = formData['report_name'].value;
         jsonData["file"]                      = formData['report_file'].value;
@@ -152,13 +159,24 @@ function JananiUploadTestReports(){
         jsonData["user_lat"]                  = localStorage.getItem('latitude');
         jsonData["user_long"]                 = localStorage.getItem('longitude');
   
-        const response = await fetch(`${API_URL}/uploadTestReportForJanani`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        });
+        if(decryptedLoginDetails.account_type === '5'){
+          var response = await fetch(`${API_URL}/uploadTestReportForJananiFromDoctorLogin`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
+        else{
+          var response = await fetch(`${API_URL}/uploadTestReportForJanani`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
         
         let result = await response.json();
   

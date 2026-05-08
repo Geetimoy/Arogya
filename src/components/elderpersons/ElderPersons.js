@@ -386,11 +386,18 @@ function ElderPersons(){
         })
 
         let result = await response.json();
-        if(result.data && result.data.appointments.length > 0){
-          setTestReportAppointmentList(result.data.appointments);
+        if(result.success){
+          if(result.data && result.data.appointments.length > 0){
+            setTestReportAppointmentList(result.data.appointments);
+          }
+          else{
+            setTestReportAppointmentList([]);
+          }
+
+          setShowTestReportsModal(true);
         }
         else{
-          setTestReportAppointmentList([]);
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
         }
 
       }
@@ -421,17 +428,23 @@ function ElderPersons(){
         })
 
         let result = await response.json();
-        if(result.data && result.data.appointments.length > 0){
-          setTestReportAppointmentList(result.data.appointments);
+
+        if(result.success){
+          if(result.data && result.data.appointments.length > 0){
+            setTestReportAppointmentList(result.data.appointments);
+          }
+          else{
+            setTestReportAppointmentList([]);
+          }
+
+          setShowTestReportsModal(true);
         }
         else{
-          setTestReportAppointmentList([]);
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
         }
 
       }
-
-
-    setShowTestReportsModal(true);
+    
     setTestReportElderKey(elderAccountKey);
   }
 

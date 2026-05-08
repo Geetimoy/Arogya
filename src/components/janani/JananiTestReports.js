@@ -53,7 +53,13 @@ function JananiTestReports(){
 
     let jsonData = {};
     jsonData['system_id']               = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]     = decryptedLoginDetails.account_type;
+    }
+    else{
+      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    }
     jsonData["account_key"]             = editAccountKey;
     jsonData["account_type"]            = 3;
     jsonData["search_param"]            = {
@@ -64,14 +70,24 @@ function JananiTestReports(){
                                             "order_by_value": "asc"
                                           }
 
-
-    const response = await fetch(`${API_URL}/fetchTestReportForJanani`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/fetchTestReportForJananiFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/fetchTestReportForJanani`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
 
     let result = await response.json();
     console.log(result);
@@ -111,20 +127,37 @@ function JananiTestReports(){
     jsonData['system_id']             = systemContext.systemDetails.system_id;
     jsonData["account_key"]           = editAccountKey;
     jsonData["appointment_key"]       = deleteTestReportApptId;
-    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;;
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]  = decryptedLoginDetails.account_key;;
+    }
+    else{
+      jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;;
+    }
     jsonData["file_id"]               = deleteTestReportFileId;
     jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]          = DEVICE_TOKEN;
     jsonData["user_lat"]              = localStorage.getItem('latitude');
     jsonData["user_long"]             = localStorage.getItem('longitude');
 
-    const response = await fetch(`${API_URL}/deleteTestReportForJanani`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/deleteTestReportForJananiFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/deleteTestReportForJanani`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    
 
     let result = await response.json();
     
@@ -404,7 +437,14 @@ function JananiTestReports(){
         jsonData["user_account_key"]          = editAccountKey;
         jsonData["user_account_type"]         = 3;
         jsonData["appointment_key"]           = appointmentId;
-        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+        if(decryptedLoginDetails.account_type === '5'){
+          jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        }
+        else{
+          jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        }
+
         jsonData["initial_summary"]           = formData['report_summary'].value;
         jsonData["report_name"]               = formData['report_name'].value;
         jsonData["file"]                      = fileUploadArray[0];
@@ -417,13 +457,24 @@ function JananiTestReports(){
         jsonData["user_lat"]                  = localStorage.getItem('latitude');
         jsonData["user_long"]                 = localStorage.getItem('longitude');
   
-        const response = await fetch(`${API_URL}/uploadTestReportForJanani`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        });
+        if(decryptedLoginDetails.account_type === '5'){
+          var response = await fetch(`${API_URL}/uploadTestReportForJananiFromDoctorLogin`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
+        else{
+          var response = await fetch(`${API_URL}/uploadTestReportForJanani`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+        }
         
         let result = await response.json();
   
