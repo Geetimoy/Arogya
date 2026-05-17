@@ -160,96 +160,8 @@ function GrowthTracker() {
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id, editAccountKey]);
 
-  /*useEffect(() => {
-    // Example: simulate API response
-    const fetchMetricData = async () => {
-      // API response structure YOU can customize
-      const response = {
-        months: [36, 40, 44, 48, 52, 56, 60],
-        metrics: [
-          {
-            name: "Weight (kg)",
-            data: [12.5, 13.2, 13.8, 14.8, 15.4, 16.0, 16.7],
-            color: "#ff4b91",
-          },
-          {
-            name: "Height (cm)",
-            data: [95, 97, 99, 101, 103, 105, 107],
-            color: "#4285f4",
-          },
-          {
-            name: "BMI",
-            data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
-            color: "#34a853",
-          },
-          {
-            name: "Mid Arm",
-            data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
-            color: "#a83834ff",
-          },
-        ],
-      };
-
-      let jsonData = {};
-
-      jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 31;
-      jsonData["account_key"]               = editAccountKey;
-      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-      jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["user_lat"]                  = localStorage.getItem('latitude');
-      jsonData["user_long"]                 = localStorage.getItem('longitude');
-      jsonData["age"]                       = 5;
-      jsonData["gender"]                    = 1;
-      jsonData["growth_param"]              = "all";
-
-
-      var response = await fetch(`${API_URL}/getChildChartHistory`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-      });
-
-      let result = await response.json();
-
-
-      setLabels(response.months);
-      setMetrics(response.metrics);
-    };
-
-    fetchMetricData();
-  }, []);*/
-
   const fetchMetricData = async () => {
     // API response structure YOU can customize
-    /*const response = {
-      months: [36, 40, 44, 48, 52, 56, 60],
-      metrics: [
-        {
-          name: "Weight (kg)",
-          data: [12.5, 13.2, 13.8, 14.8, 15.4, 16.0, 16.7],
-          color: "#ff4b91",
-        },
-        {
-          name: "Height (cm)",
-          data: [95, 97, 99, 101, 103, 105, 107],
-          color: "#4285f4",
-        },
-        {
-          name: "BMI",
-          data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
-          color: "#34a853",
-        },
-        {
-          name: "Mid Arm",
-          data: [14.1, 14.5, 14.8, 15.0, 15.2, 15.5, 15.7],
-          color: "#a83834ff",
-        },
-      ],
-    };*/
-
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
@@ -342,156 +254,6 @@ function GrowthTracker() {
   const showGrowthDetails = () => {
     setModalGrowthDetailsShow(true);
   }
-
-  
-  /*const heightGrowthData = [
-    {
-      month: 36,
-      who: { min: 11.8, max: 17.8 },
-      child: { height: 15 }
-    },
-    {
-      month: 40,
-      who: { min: 12.1, max: 18.5 },
-      child: { height: 16 }
-    },
-    {
-      month: 44,
-      who: { min: 12.6, max: 19.2 },
-      child: { height: 17 }
-    },
-    {
-      month: 48,
-      who: { min: 13.0, max: 20.0 },
-      child: { height: 18 }
-    },
-    {
-      month: 52,
-      who: { min: 13.4, max: 20.8 },
-      child: { height: null }
-    },
-    {
-      month: 56,
-      who: { min: 13.9, max: 22.0 },
-      child: { height: null }
-    },
-    {
-      month: 60,
-      who: { min: 14.5, max: 24.0 },
-      child: { height: null }
-    }
-  ];
-  const weightGrowthData = [
-    {
-      month: 36,
-      who: { min: 11.8, max: 17.8 },
-      child: { weight: 15 }
-    },
-    {
-      month: 40,
-      who: { min: 12.1, max: 18.5 },
-      child: { weight: 16 }
-    },
-    {
-      month: 44,
-      who: { min: 12.6, max: 19.2 },
-      child: { weight: 17 }
-    },
-    {
-      month: 48,
-      who: { min: 13.0, max: 20.0 },
-      child: { weight: 18 }
-    },
-    {
-      month: 52,
-      who: { min: 13.4, max: 20.8 },
-      child: { weight: null }
-    },
-    {
-      month: 56,
-      who: { min: 13.9, max: 22.0 },
-      child: { weight: null }
-    },
-    {
-      month: 60,
-      who: { min: 14.5, max: 24.0 },
-      child: { weight: null }
-    }
-  ];
-  const bmiGrowthData = [
-    {
-      month: 36,
-      who: { min: 11.8, max: 17.8 },
-      child: { bmi: 15 }
-    },
-    {
-      month: 40,
-      who: { min: 12.1, max: 18.5 },
-      child: { bmi: 16 }
-    },
-    {
-      month: 44,
-      who: { min: 12.6, max: 19.2 },
-      child: { bmi: 17 }
-    },
-    {
-      month: 48,
-      who: { min: 13.0, max: 20.0 },
-      child: { bmi: 18 }
-    },
-    {
-      month: 52,
-      who: { min: 13.4, max: 20.8 },
-      child: { bmi: null }
-    },
-    {
-      month: 56,
-      who: { min: 13.9, max: 22.0 },
-      child: { bmi: null }
-    },
-    {
-      month: 60,
-      who: { min: 14.5, max: 24.0 },
-      child: { bmi: null }
-    }
-  ];
-  const midArmGrowthData = [
-    {
-      month: 36,
-      who: { min: 11.8, max: 17.8 },
-      child: { mid_arm: 15 }
-    },
-    {
-      month: 40,
-      who: { min: 12.1, max: 18.5 },
-      child: { mid_arm: 16 }
-    },
-    {
-      month: 44,
-      who: { min: 12.6, max: 19.2 },
-      child: { mid_arm: 17 }
-    },
-    {
-      month: 48,
-      who: { min: 13.0, max: 20.0 },
-      child: { mid_arm: 18 }
-    },
-    {
-      month: 52,
-      who: { min: 13.4, max: 20.8 },
-      child: { mid_arm: null }
-    },
-    {
-      month: 56,
-      who: { min: 13.9, max: 22.0 },
-      child: { mid_arm: null }
-    },
-    {
-      month: 60,
-      who: { min: 14.5, max: 24.0 },
-      child: { mid_arm: null }
-    }
-  ];*/
 
   const [remarks, setRemarks] = useState(''); 
 
@@ -689,13 +451,6 @@ function GrowthTracker() {
           <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
         </Modal.Footer>  
         <Modal.Body>   
-          {/* <select className='form-select mb-3' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value) } >
-            <option value="all">All</option>
-            <option value="height">Height</option>
-            <option value="weight">Weight</option>
-            <option value="bmi">BMI</option>
-            <option value="mid_arm">Mid Arm</option>
-          </select> */}
           <div className='health-chart'>
             {/* <MetricChart labels={labels} metrics={metrics}/> */}
 
@@ -733,7 +488,6 @@ function GrowthTracker() {
           <form className="" name="periodicDataForm" id="periodicDataForm" onSubmit={handleFormSubmit}>
           <div className='form-group mb-3'>
             <label htmlFor='measurement_date'>Measurement Date</label>
-            {/* <input type="date" className='form-control' name="measurement_date" id="measurement_date" /> */}
             <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
           </div>
           <div className='form-group mb-3'>
