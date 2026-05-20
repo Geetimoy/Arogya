@@ -13,7 +13,7 @@ import youngwomenprofile from '../../assets/images/profile-girl.png';
 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
-import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
+import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN, PAGINATION_LIMIT } from "../util/Constants";
 
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
@@ -78,39 +78,92 @@ function Janani(){
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
       let jsonData = {};
-      jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      jsonData["patient_key"]       				= accountKeyForJnaniPrescription;
-      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-      jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["user_lat"]                  = localStorage.getItem('latitude');
-      jsonData["user_long"]                 = localStorage.getItem('longitude');
-      jsonData["search_param"]              = {
-                                                "by_keywords": "",
-																								"limit": "",
-																								"offset": "0",
-																								"order_by_field": "appointment_id",
-																								"order_by_value": "desc"
-                                              }
-      
-      const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData)
-      })
-  
-      let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
-        setAppointmentListForDoctorPresc(result.data.appointments);
+
+      if(decryptedLoginDetails.account_type === '5'){
+
+        jsonData['system_id']                 = systemContext.systemDetails.system_id;
+        jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+        jsonData["patient_key"]       				= accountKeyForJnaniPrescription;
+        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+        jsonData["device_token"]              = DEVICE_TOKEN;
+        jsonData["user_lat"]                  = localStorage.getItem('latitude');
+        jsonData["user_long"]                 = localStorage.getItem('longitude');
+        jsonData["search_param"]              = {
+                                                  "by_keywords": "",
+                                                  "limit": "",
+                                                  "offset": "0",
+                                                  "order_by_field": "appointment_id",
+                                                  "order_by_value": "desc"
+                                                }
+        
+        const response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData)
+        })
+    
+        let result = await response.json();
+        if(result.success){
+          if(result.data && result.data.appointments.length > 0){
+            setAppointmentListForDoctorPresc(result.data.appointments);
+          }
+          else{
+            setAppointmentListForDoctorPresc([]);
+          }
+
+          setShowPrescriptionModalP2(true);
+        } 
+        else{
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        }
+
       }
       else{
-        setAppointmentListForDoctorPresc([]);
+
+        jsonData['system_id']                 = systemContext.systemDetails.system_id;
+        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+        jsonData["patient_key"]       				= accountKeyForJnaniPrescription;
+        jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+        jsonData["device_token"]              = DEVICE_TOKEN;
+        jsonData["user_lat"]                  = localStorage.getItem('latitude');
+        jsonData["user_long"]                 = localStorage.getItem('longitude');
+        jsonData["search_param"]              = {
+                                                  "by_keywords": "",
+                                                  "limit": "",
+                                                  "offset": "0",
+                                                  "order_by_field": "appointment_id",
+                                                  "order_by_value": "desc"
+                                                }
+        
+        const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData)
+        })
+    
+        let result = await response.json();
+        if(result.success){
+          if(result.data && result.data.appointments.length > 0){
+            setAppointmentListForDoctorPresc(result.data.appointments);
+          }
+          else{
+            setAppointmentListForDoctorPresc([]);
+          }
+
+          setShowPrescriptionModalP2(true);
+        } 
+        else{
+          alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+        }
+
       }
 
-      setShowPrescriptionModalP2(true);
     }
   }
   const redirectToUploadDoctorPrescription = () => {
@@ -129,7 +182,51 @@ function Janani(){
   
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
-      let jsonData = {};
+    let jsonData = {};
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["patient_key"]       				= jananiAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "by_keywords": "",
+                                                "limit": "",
+                                                "offset": "0",
+                                                "order_by_field": "appointment_id",
+                                                "order_by_value": "desc"
+                                              }
+      
+      const response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+
+      let result = await response.json();
+      if(result.success){
+        if(result.data && result.data.appointments.length > 0){
+          setTestReportAppointmentList(result.data.appointments);
+        }
+        else{
+          setTestReportAppointmentList([]);
+        }
+
+        setShowTestReportsModal(true);
+        setTestReportJananiKey(jananiAccountKey);
+      }
+      else{
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
+      }
+
+    }
+    else{
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
       jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
@@ -140,10 +237,10 @@ function Janani(){
       jsonData["user_long"]                 = localStorage.getItem('longitude');
       jsonData["search_param"]              = {
                                                 "by_keywords": "",
-																								"limit": "",
-																								"offset": "0",
-																								"order_by_field": "appointment_id",
-																								"order_by_value": "desc"
+                                                "limit": "",
+                                                "offset": "0",
+                                                "order_by_field": "appointment_id",
+                                                "order_by_value": "desc"
                                               }
       
       const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
@@ -153,17 +250,23 @@ function Janani(){
         },
         body: JSON.stringify(jsonData)
       })
-  
+
       let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
-        setTestReportAppointmentList(result.data.appointments);
+      if(result.success){
+        if(result.data && result.data.appointments.length > 0){
+          setTestReportAppointmentList(result.data.appointments);
+        }
+        else{
+          setTestReportAppointmentList([]);
+        }
+        setShowTestReportsModal(true);
+        setTestReportJananiKey(jananiAccountKey);
       }
       else{
-        setTestReportAppointmentList([]);
+        alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
       }
-
-    setShowTestReportsModal(true);
-    setTestReportJananiKey(jananiAccountKey);
+    }
+    
   }
   const selectTestReportAppointment = (event) => {
     setTestReportAppointmentId(event.target.value);
@@ -207,14 +310,7 @@ function Janani(){
     }, 1000)
   }
 
-  // const searchJanani = (e) => {
-  //   const { name, value } = e.target;
-  //   setTimeout(()=>{
-  //     listJanani(value);
-  //   }, 1000)
-  // }
-
-  const listJanani = async (searchKey) => {
+  const listJanani = async (searchKey, customOffset) => {
 
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
@@ -256,17 +352,34 @@ function Janani(){
     let result = await response.json();
 
     if(result.success){
-      setJananiList(result.data);
+      if(result.data.length > 0){
+        setJananiList((prevList) => [...prevList, ...result.data]); // Append new data to existing list
+        setOffset(customOffset + PAGINATION_LIMIT); // Update offset for next load
+        setTotalCount(result.total_count); // Update total count
+        if(jananiList.length + result.data.length >= result.total_count){
+          setLoadMore(false); // Disable load more if all data is loaded
+        }
+        else{
+          setLoadMore(true); // Enable load more if more data is available
+        }
+      }
+      else{
+        setJananiList([]);
+        setLoadMore(false);
+        setTotalCount(0);
+      }
     }
     else{
       setJananiList([]); 
+      setLoadMore(false);
+      setTotalCount(0);
     }
 
   }
 
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
-      listJanani("");
+      listJanani("", 0);
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
@@ -314,7 +427,7 @@ function Janani(){
       setOpenMenuId(0);
       setTimeout(()=>{
         modalCloseProfile();
-        listJanani("");
+        listJanani("", 0);
       }, 1000);
     } 
     else {
@@ -342,99 +455,147 @@ function Janani(){
       }
     }, []);
 
+    
+
   // const handleSaveRating = () => {
   //   localStorage.setItem('userRating', rating);
   //   setSavedRating(rating); // Update the saved rating state
   // };
   const [reviewJananiKey, setReviewJananiKey] = useState('');
   const handleSaveRating = async () => {
-  
-    if (rating === null || rating === undefined || rating === 0) {
-      alertContext.setAlertMessage({ show: true, type: "error", message: "Please give rating!" });
-      return;
+
+  if (rating === null || rating === undefined || rating === 0) {
+    alertContext.setAlertMessage({ show: true, type: "error", message: "Please give rating!" });
+    return;
+  }
+
+  if (!comments || comments.trim() === "") {
+    alertContext.setAlertMessage({ show: true, type: "error", message: "Please enter comments!" });
+    return;
+  }
+
+  try {
+
+    const decryptedLoginDetails = JSON.parse(
+      CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY)
+        .toString(CryptoJS.enc.Utf8)
+    );
+
+    let jsonData = {
+      'system_id': systemContext.systemDetails.system_id,
+
+      // POSTER (logged in user)
+      'poster_acc_type': decryptedLoginDetails.account_type,
+      'poster_acc_key': decryptedLoginDetails.account_key,
+
+      // RECEIVER (janani/patient)
+      'receiver_acc_type': "3", // Janani type (confirm once)
+      'receiver_acc_key': reviewJananiKey,
+
+      'device_type': DEVICE_TYPE,
+      'device_token': DEVICE_TOKEN,
+    
+
+      'user_lat': localStorage.getItem('latitude'),
+      'user_long': localStorage.getItem('longitude'),
+
+      'rating': String(rating), // API expects string
+      'comments': comments
+    };
+
+    console.log("Review Payload:", jsonData); // debug
+
+    const response = await fetch(`${API_URL}/generalPostReview`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if (result.success) {
+      alertContext.setAlertMessage({
+        show: true,
+        type: "success",
+        message: result.msg || "Review submitted successfully!"
+      });
+
+      // reset
+      setRating(0);
+      setComments("");
+      modalClose2();
+
+    } else {
+      alertContext.setAlertMessage({
+        show: true,
+        type: "error",
+        message: result.msg
+      });
     }
-  
-    if (!comments || comments.trim() === "") {
-      alertContext.setAlertMessage({ show: true, type: "error", message: "Please enter comments!" });
-      return;
-    }
-  
+
+  } catch (error) {
+    console.error(error);
+
+    alertContext.setAlertMessage({
+      show: true,
+      type: "error",
+      message: "Something went wrong!"
+    });
+  }
+  };
+  const [reviewList, setReviewList] = useState([]);
+  const [reviewLoading, setReviewLoading] = useState(false);
+
+
+  const fetchReviewList = async (jananiAccountKey) => {
+
     try {
-  
-      const decryptedLoginDetails = JSON.parse(
-        CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY)
-          .toString(CryptoJS.enc.Utf8)
-      );
-  
+
+      setReviewLoading(true);
+
       let jsonData = {
         'system_id': systemContext.systemDetails.system_id,
-  
-        // POSTER (logged in user)
-        'poster_acc_type': decryptedLoginDetails.account_type,
-        'poster_acc_key': decryptedLoginDetails.account_key,
-  
-        // RECEIVER (janani/patient)
-        'receiver_acc_type': "3", // Janani type (confirm once)
-        'receiver_acc_key': reviewJananiKey,
-  
+
+        'account_key': jananiAccountKey,   //  IMPORTANT
+        'user_type': "3",           //  Janani type
+
         'device_type': DEVICE_TYPE,
         'device_token': DEVICE_TOKEN,
-      
-  
+        
         'user_lat': localStorage.getItem('latitude'),
         'user_long': localStorage.getItem('longitude'),
-  
-        'rating': String(rating), // API expects string
-        'comments': comments
       };
-  
-      console.log("Review Payload:", jsonData); // debug
-  
-      const response = await fetch(`${API_URL}/generalPostReview`, {
+
+      const response = await fetch(`${API_URL}/generalReviewList`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(jsonData),
       });
-  
+
       let result = await response.json();
-  
+
       if (result.success) {
-        alertContext.setAlertMessage({
-          show: true,
-          type: "success",
-          message: result.msg || "Review submitted successfully!"
-        });
-  
-        // reset
-        setRating(0);
-        setComments("");
-        modalClose2();
-  
+        setReviewList(result.data || []);
       } else {
-        alertContext.setAlertMessage({
-          show: true,
-          type: "error",
-          message: result.msg
-        });
+        setReviewList([]);
       }
-  
+
     } catch (error) {
       console.error(error);
-  
-      alertContext.setAlertMessage({
-        show: true,
-        type: "error",
-        message: "Something went wrong!"
-      });
+      setReviewList([]);
+    } finally {
+      setReviewLoading(false);
     }
-    };
+  };
 
-   const loadMoreJanani = () => {
+
+  const loadMoreJanani = () => {
     listJanani(searchRef.current.value, offset); // Load more data
   }
-
 
   
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
@@ -560,7 +721,10 @@ function Janani(){
                       (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
 }
-                       <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>
+                     <li><Link onClick={() => {
+      setReviewJananiKey(janani.account_key);
+      fetchReviewList(janani.account_key); // 👈 call here
+      modalShow2(); }} to="#">Write/View Review </Link></li>
                     </ul>
                   </div>
                 }
@@ -575,11 +739,13 @@ function Janani(){
           ))}
 
           {jananiList.length === 0 && <div className='col-12 text-center'>No Records Found</div>}
-
+        
           {loadMore && <div className='col-12 text-center'>
-                      <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={loadMoreJanani}>Load More</Link>
+            <Link to="#" className='btn btn-primary primary-bg-color border-0' onClick={loadMoreJanani}>Load More</Link> 
           </div>}
+
         </div>
+
         <Modal show={showCloseProfileModal} onHide={modalCloseProfile}>
           <Modal.Body>  
             <p>Are you sure you want to close this profile?</p> 

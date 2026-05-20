@@ -119,7 +119,9 @@ function CreateElderPerson(){
     elder_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_education: {required: true, value:"", errorClass:"", errorMessage:""},
-    special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
+    special_notes: {required: false, value:"", errorClass:"", errorMessage:""},
+    blood_group: {required: false, value:"", errorClass:"", errorMessage:""},
+    emergency_contact_no: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -193,7 +195,8 @@ function CreateElderPerson(){
     if(errorCounter === 0){
 
       var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-
+console.log(localStorage.getItem("cred"));
+console.log(decryptedLoginDetails);
       let jsonData = {};
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
@@ -223,6 +226,10 @@ function CreateElderPerson(){
       jsonData["elder_postal_code"]         = formData['elder_postal_code'].value;
       jsonData["elder_landmark"]            = formData['elder_landmark'].value;
       jsonData["elder_city"]                = formData['elder_city'].value;
+
+      jsonData["blood_group"]               = formData['blood_group'].value;
+      jsonData["emergency_contact_no"]      = formData['emergency_contact_no'].value;
+
       jsonData["elder_father_name"]         = formData['elder_father_name'].value;
       jsonData["elder_education"]           = formData['elder_education'].value;;
       jsonData["elder_occupation"]          = formData['elder_occupation'].value;
@@ -354,6 +361,12 @@ function CreateElderPerson(){
             <small className="error-mesg">{formData["elder_age"].errorMessage}</small>
           </div>
 
+          <div className={`form-group ${formData["blood_group"].errorClass}`}>
+            <label htmlFor="blood_group">Blood Group </label>
+            <input type="text" className="form-control" name="blood_group" id="blood_group" placeholder="Blood Group" onChange={handleChange} value={formData["blood_group"].value ? formData["blood_group"].value : ''} />
+            <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is elder's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
@@ -374,6 +387,18 @@ function CreateElderPerson(){
             <input type="tel" className="form-control" onChange={handleChange} value={formData["elder_contact_number"].value ? formData["elder_contact_number"].value : ''} name="elder_contact_number" id="elder_contact_number" placeholder="Phone No" />
             <small className="error-mesg">{formData["elder_contact_number"].errorMessage}</small>
           </div>}
+          
+          <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            <label>Other person to contact  </label>
+            <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
+              <option value="">Select</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Friend">Friend</option>
+            </select>
+            <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
+          </div>
 
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
