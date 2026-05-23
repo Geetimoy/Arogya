@@ -738,8 +738,8 @@ function ChildMalnutrion(){
                         }
                       </li>
                       <li>
-                          {
-                          (decryptedLoginDetails.account_type == '5') &&<Link to={`/childmalnutrition/growth-tracker/${child.account_key}/from-listing`}>Growth Tracker</Link>
+                        {
+                          <Link to={`/childmalnutrition/growth-tracker/${child.account_key}/from-listing`}>Growth Tracker</Link>
                         }
                         </li>
                       {
