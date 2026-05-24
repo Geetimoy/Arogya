@@ -288,8 +288,16 @@ function GrowthTracker() {
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
-      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]         = decryptedLoginDetails.account_key;
+        jsonData["doctor_account_type"]        = decryptedLoginDetails.account_type;
+      }
+      else{
+        jsonData["volunteer_account_type"]      = decryptedLoginDetails.account_key;
+        jsonData["volunteer_account_key"]       = decryptedLoginDetails.account_type;
+      }
+
       jsonData["user_lat"]                  = localStorage.getItem('latitude');
       jsonData["user_long"]                 = localStorage.getItem('longitude');
       jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
@@ -299,14 +307,24 @@ function GrowthTracker() {
       jsonData["remarks"]                   = remarks;
       jsonData["child_cat_value"]           = formData;
 
-
-      const response = await fetch(`${API_URL}/childPeriodicHealthDataAddFromDoctorLogin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
+      if(decryptedLoginDetails.account_type === '5'){
+        var response = await fetch(`${API_URL}/childPeriodicHealthDataAddFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      else{
+        var response = await fetch(`${API_URL}/childPeriodicHealthDataAddFromVolunteerLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
       
       let result = await response.json();
 
