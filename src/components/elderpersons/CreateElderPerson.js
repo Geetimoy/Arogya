@@ -363,7 +363,18 @@ console.log(decryptedLoginDetails);
 
           <div className={`form-group ${formData["blood_group"].errorClass}`}>
             <label htmlFor="blood_group">Blood Group </label>
-            <input type="text" className="form-control" name="blood_group" id="blood_group" placeholder="Blood Group" onChange={handleChange} value={formData["blood_group"].value ? formData["blood_group"].value : ''} />
+            {/* <input type="text" className="form-control" name="blood_group" id="blood_group" placeholder="Blood Group" onChange={handleChange} value={formData["blood_group"].value ? formData["blood_group"].value : ''} /> */}
+            <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
             <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
           </div>
 
