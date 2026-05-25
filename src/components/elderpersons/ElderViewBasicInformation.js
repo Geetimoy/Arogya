@@ -112,7 +112,9 @@ function ElderViewBasicInformation(){
     elder_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
     elder_education: {required: true, value:"", errorClass:"", errorMessage:""},
-    special_note: {required: false, value:"", errorClass:"", errorMessage:""}
+    special_note: {required: false, value:"", errorClass:"", errorMessage:""},
+    blood_group: {required: false, value:"", errorClass:"", errorMessage:""},
+    emergency_contact_no: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -213,6 +215,10 @@ function ElderViewBasicInformation(){
       jsonData["elder_city"]                = formData['elder_city'].value;
       jsonData["elder_father_name"]         = formData['elder_father_name'].value;
       jsonData["elder_education"]           = formData['elder_education'].value;
+
+      jsonData["blood_group"]               = formData['blood_group'].value;
+      jsonData["emergency_contact_no"]      = formData['emergency_contact_no'].value;
+
       jsonData["elder_occupation"]          = formData['elder_occupation'].value;
       jsonData["elder_gender"]              = formData['elder_gender'].value;
       jsonData["elder_is_mobile_phone"]     = formData['elder_is_mobile_phone'].value;
@@ -346,9 +352,11 @@ function ElderViewBasicInformation(){
         formData['elder_state']        = {value:userDetails.elder_city, errorClass:"", errorMessage:""};
         formData['elder_postal_code']  = {value:userDetails.elder_postal_code, errorClass:"", errorMessage:""};
         formData['elder_service_area'] = {value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-        formData['elder_education']  = {value:userDetails.elder_education, errorClass:"", errorMessage:""};
-        
-        formData['special_note']      = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+        formData['elder_education']    = {value:userDetails.elder_education, errorClass:"", errorMessage:""};
+        formData['special_note']       = {value:userDetails.special_notes, errorClass:"", errorMessage:""};
+
+        formData['blood_group']        = {value:userDetails.blood_group || "", errorClass:"", errorMessage:""};
+        formData['emergency_contact_no'] = {value:userDetails.emergency_contact_no || "", errorClass:"", errorMessage:""};
   
         setFormData({...formData, ...formData});
 
@@ -439,6 +447,23 @@ function ElderViewBasicInformation(){
             <input type="text" className="form-control" name="elder_age" id="elder_age" placeholder="Age" onChange={handleChange} value={formData["elder_age"].value ? formData["elder_age"].value : ''} />
             <small className="error-mesg">{formData["elder_age"].errorMessage}</small>
           </div>
+
+          <div className={`form-group ${formData["blood_group"].errorClass}`}>
+            <label htmlFor="blood_group">Blood Group </label>
+            <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+            <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["elder_is_mobile_phone"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is elder's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
@@ -458,6 +483,19 @@ function ElderViewBasicInformation(){
             <input type="tel" className="form-control" onChange={handleChange} value={formData["elder_contact_number"].value ? formData["elder_contact_number"].value : ''} name="elder_contact_number" id="elder_contact_number" placeholder="Phone No" />
             <small className="error-mesg">{formData["elder_contact_number"].errorMessage}</small>
           </div>}
+
+           <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            <label>Other person to contact  </label>
+            <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
+              <option value="">Select</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Friend">Friend</option>
+            </select>
+            <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
+          </div>
+          
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" onChange={handleChange} value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} name="whatsapp" id="whatsapp" placeholder="WhatsApp No" />
