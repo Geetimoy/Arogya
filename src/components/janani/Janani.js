@@ -560,7 +560,10 @@ function Janani(){
                       (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
 }
-                       <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>
+                       <li><Link onClick={() => {
+      setReviewJananiKey(janani.account_key);
+      modalShow2();
+    }} to="#">Write/View Review </Link></li>
                     </ul>
                   </div>
                 }
