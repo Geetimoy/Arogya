@@ -27,7 +27,42 @@ function Janani(){
 
   const [showModal2, setShowModal2] = useState(false); 
   const modalClose2  = () => setShowModal2(false);  
-  const modalShow2   = () => setShowModal2(true);
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewRating, setReviewRating]   = useState('0');
+  const modalShow2   = async (jananiAccountKey) => {
+    setReviewJananiKey(jananiAccountKey);
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_key"]               = jananiAccountKey;
+    jsonData["user_type"]                 = 3;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response = await fetch(`${API_URL}/generalReviewList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    })
+
+    let result = await response.json();
+
+    if(result.success && result.data && result.data.length > 0){
+      setReviewComment(result.data[0].review_comments);
+      setReviewRating(result.data[0].review_rating);
+    }
+    else{
+      setReviewComment('');
+      setReviewRating(0);
+    }
+
+    setShowModal2(true);
+
+  }
 
   const [rating, setRating] = useState(0);
 
@@ -560,10 +595,9 @@ function Janani(){
                       (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
 }
-                       <li><Link onClick={() => {
-      setReviewJananiKey(janani.account_key);
-      modalShow2();
-    }} to="#">Write/View Review </Link></li>
+                        <li><Link onClick={() => {
+                          modalShow2(janani.account_key);
+                        }} to="#">Write/View Review </Link></li>
                     </ul>
                   </div>
                 }
