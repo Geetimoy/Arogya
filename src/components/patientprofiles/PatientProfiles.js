@@ -463,6 +463,11 @@ function Patientprofiles(){
                           (decryptedLoginDetails.account_type == '5') && <Link to={`/patientprofiles/patient-view-basicinfo/${patient.account_key}`}>View Basic Information</Link>
                         }
                       </li>
+                      <li>
+                        {
+                          <Link to={`/patientprofiles/growth-tracker/${patient.account_key}/from-listing`}>Health Data</Link>
+                        }
+                      </li>
                       
                       {
                         (decryptedLoginDetails.account_type !== '5') &&<li><Link to={`/patientprofiles/patient-profile-photo/${patient.account_key}`}>Upload Profile Photo</Link></li>

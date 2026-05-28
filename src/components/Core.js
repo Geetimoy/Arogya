@@ -181,6 +181,8 @@ import DoctorAppointmentSurveyForms from './DoctorAppointmentSurveyForms';
 import DoctorAppointmentUploadSurveyForm from './DoctorAppointmentUploadSurveyForm';
 import ElderPastMeasurmentsHeight from './elderpersons/ElderPastMeasurmentsHeight';
 import YoungWomanPastMeasurmentsHeight from './youngwomens/YoungWomanPastMeasurmentsHeight';
+import PatientPastMeasurmentsHeight from './patientprofiles/PatientPastMeasurmentsHeight';
+import PatientGrowthTracker from './patientprofiles/PatientGrowthTracker';
 
 
 
@@ -425,6 +427,8 @@ export default function Core() {
             <Route path="/patientprofiles/patient-view-medical-history/:accountKey" exact element={<PatientViewMedicalHistory />} />
             <Route path="/patientprofiles/patient-view-periodic-data/:accountKey" exact element={<PatientViewPeriodicData />} />
             <Route path="/patientprofiles/patient-profile-photo/:accountKey" exact element={<PatientProfilePhoto />} />
+            <Route path="/patientprofiles/growth-tracker/:accountKey/:redirectedFrom" exact element={<PatientGrowthTracker />} />
+            <Route path="/patientprofiles/growth-tracker/history/:accountKey/:redirectedFrom/:measuremenType" exact element={<PatientPastMeasurmentsHeight />} />
 
             
             <Route path="/Janani" exact element={<Janani />} />

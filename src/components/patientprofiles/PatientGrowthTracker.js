@@ -14,13 +14,13 @@ import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid
 
 import AppTopNotifications from '../AppTopNotifications';
 import { keyframes } from '@mui/material';
-import MetricChart from '../../util/youngwomen/MetricChart';
+import MetricChart from '../../util/patient/MetricChart';
 import {Modal, Button} from 'react-bootstrap'; 
 
-import HeightGrowthChart from '../../util/youngwomen/HeightGrowthChart';
-import WeightGrowthChart from '../../util/youngwomen/WeightGrowthChart';
-import BMIGrowthChart from '../../util/youngwomen/BMIGrowthChart';
-//import MidArmGrowthChart from '../../util/youngwomen/MidArmGrowthChart';
+import HeightGrowthChart from '../../util/patient/HeightGrowthChart';
+import WeightGrowthChart from '../../util/patient/WeightGrowthChart';
+import BMIGrowthChart from '../../util/patient/BMIGrowthChart';
+//import MidArmGrowthChart from '../../util/patient/MidArmGrowthChart';
 
 import '../../components/childmalnutrition/CreateChildMalnutrition.css';
 import { use } from 'react';
@@ -28,7 +28,7 @@ import { use } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function YoungWomanGrowthTracker() {
+function PatientGrowthTracker() {
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
@@ -298,13 +298,13 @@ function YoungWomanGrowthTracker() {
         jsonData["user_long"]                 = localStorage.getItem('longitude');
         jsonData["data_added_by"]             = decryptedLoginDetails.account_key;
         jsonData["data_added_by_type"]        = decryptedLoginDetails.account_type;
-        jsonData["women_account_key"]         = editAccountKey;
+        jsonData["patient_account_key"]       = editAccountKey;
         jsonData["data_processed_on"]         = dataProcessedOn;
         jsonData["remarks"]                   = remarks;
-        jsonData["women_cat_value"]           = formData;
+        jsonData["patient_cat_value"]         = formData;
   
         if(decryptedLoginDetails.account_type === '5'){
-          var response = await fetch(`${API_URL}/womenPeriodicHealthDataAddFromDoctorLogin`, {
+          var response = await fetch(`${API_URL}/patientPeriodicHealthDataAddFromDoctorLogin`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -313,7 +313,7 @@ function YoungWomanGrowthTracker() {
           });
         }
         else{
-          var response = await fetch(`${API_URL}/womenPeriodicHealthDataAddFromVolunteerLogin`, {
+          var response = await fetch(`${API_URL}/patientPeriodicHealthDataAddFromVolunteerLogin`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -359,7 +359,7 @@ function YoungWomanGrowthTracker() {
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
               {
-                (redirectedFrom === 'from-listing') && <Link to="/youngwomens" className=''>
+                (redirectedFrom === 'from-listing') && <Link to="/patientprofiles" className=''>
                   <FontAwesomeIcon icon={faLongArrowAltLeft} />
                 </Link>
               }
@@ -413,7 +413,7 @@ function YoungWomanGrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].weight && <tr>
                       <td>Weight</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight }</td>
-                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg</span> <Link to={`/youngwomens/growth-tracker/history/${editAccountKey}/${redirectedFrom}/weight`} className='primary-color'>(History)</Link></td> 
+                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].weight_range } Kg</span> <Link to={`/patientprofiles/growth-tracker/history/${editAccountKey}/${redirectedFrom}/weight`} className='primary-color'>(History)</Link></td> 
                     </tr>
                   } 
 
@@ -421,7 +421,7 @@ function YoungWomanGrowthTracker() {
                     latestGrowthData[Object.keys(latestGrowthData)[0]].height && <tr>
                       <td>Height</td>
                       <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height }</td>
-                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm </span><Link to={`/youngwomens/growth-tracker/history/${editAccountKey}/${redirectedFrom}/height`} className='primary-color'>(History)</Link></td> 
+                      <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].height_range } Cm </span><Link to={`/patientprofiles/growth-tracker/history/${editAccountKey}/${redirectedFrom}/height`} className='primary-color'>(History)</Link></td> 
                     </tr>
                   }
 
@@ -429,7 +429,7 @@ function YoungWomanGrowthTracker() {
                       latestGrowthData[Object.keys(latestGrowthData)[0]].bmi && <tr>
                         <td>BMI</td>
                         <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi }</td>
-                        <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } </span><Link to={`/youngwomens/growth-tracker/history/${editAccountKey}/${redirectedFrom}/bmi`} className='primary-color'>(History)</Link></td> 
+                        <td><span>{ latestGrowthData[Object.keys(latestGrowthData)[0]].bmi_range } </span><Link to={`/patientprofiles/growth-tracker/history/${editAccountKey}/${redirectedFrom}/bmi`} className='primary-color'>(History)</Link></td> 
                       </tr>
                   }
                   
@@ -437,7 +437,7 @@ function YoungWomanGrowthTracker() {
                     // latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm && <tr>
                     //   <td>Mid Arm</td>
                     //   <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm }</td>
-                    //   <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm_range } <Link to={`/youngwomens/growth-tracker/history/${editAccountKey}/${redirectedFrom}/mid_arm`} className='primary-color'>(History)</Link></td> 
+                    //   <td>{ latestGrowthData[Object.keys(latestGrowthData)[0]].mid_arm_range } <Link to={`/patientprofiles/growth-tracker/history/${editAccountKey}/${redirectedFrom}/mid_arm`} className='primary-color'>(History)</Link></td> 
                     // </tr>
                   }
                   
@@ -564,4 +564,4 @@ function YoungWomanGrowthTracker() {
 }
 
 
-export default YoungWomanGrowthTracker;
+export default PatientGrowthTracker;
