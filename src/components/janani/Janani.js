@@ -52,12 +52,19 @@ function Janani(){
     let result = await response.json();
 
     if(result.success && result.data && result.data.length > 0){
-      setReviewComment(result.data[0].review_comments);
-      setReviewRating(result.data[0].review_rating);
+      // setReviewComment(result.data[0].review_comments);
+      // setReviewRating(result.data[0].review_rating);
+      setReviewComment(result.data[0].review_comments || '');
+      setReviewRating(Number(result.data[0].review_rating || 0));
+
+      setComments(result.data[0].review_comments || '');
+      setRating(Number(result.data[0].review_rating || 0));
     }
     else{
       setReviewComment('');
       setReviewRating(0);
+      setComments('');
+      setRating(0);
     }
 
     setShowModal2(true);
@@ -703,14 +710,15 @@ function Janani(){
               {/* <span className="">Not at all likely</span> */}
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClick}></Rating>
+                  <Rating sendDataToParent={handleStarClick} ratingValue={rating}></Rating>
                 </div>
               </span>
               {/* <span className="">Extremely likely</span> */}
             </div>
             <div className="form-group">
                   <label htmlFor="comments">Would you like to share any other comments: </label>
-                  <textarea id="" rows="3"  className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler}></textarea>
+                  <textarea rows="3" className="form-control" placeholder="Thanks so much for your help!" name='comments' value={comments} onChange={commentsChangeHandler} />
+                  
                 </div>
           </Modal.Body>  
           <Modal.Footer className='justify-content-center'> 
