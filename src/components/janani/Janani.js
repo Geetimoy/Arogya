@@ -551,8 +551,8 @@ function Janani(){
                         }
                       </li>
                       <li>
-                        {
-                        (decryptedLoginDetails.account_type == '5') &&<Link to={`/janani/growth-tracker/`}>Health Data</Link>
+                      {
+                        <Link to={`/janani/growth-tracker/${janani.account_key}/from-listing`}>Health Data</Link>
                       }
                       </li>
                       {

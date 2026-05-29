@@ -183,6 +183,8 @@ import ElderPastMeasurmentsHeight from './elderpersons/ElderPastMeasurmentsHeigh
 import YoungWomanPastMeasurmentsHeight from './youngwomens/YoungWomanPastMeasurmentsHeight';
 import PatientPastMeasurmentsHeight from './patientprofiles/PatientPastMeasurmentsHeight';
 import PatientGrowthTracker from './patientprofiles/PatientGrowthTracker';
+import JananiGrowthTracker from './janani/JananiGrowthTracker';
+import JananiPastMeasurmentsHeight from './janani/JananiPastMeasurmentsHeight';
 
 
 
@@ -451,6 +453,9 @@ export default function Core() {
             <Route path="/janani/janani-view-medical-history/:accountKey" exact element={<JananiViewMedicalHistory />} />
             <Route path="/janani/janani-view-periodic-data/:accountKey" exact element={<JananiViewPeriodicData />} />
             <Route path="/janani/janani-profile-photo/:accountKey" exact element={<JananiProfilePhoto />} />
+            <Route path="/janani/growth-tracker/:accountKey/:redirectedFrom" exact element={ <JananiGrowthTracker/> } />
+            <Route path="/janani/growth-tracker/history/:accountKey/:redirectedFrom/:measuremenType" exact element={ <JananiPastMeasurmentsHeight/> } />
+
 
             
             <Route path="/Child-Malnutrition" exact element={<ChildMalnutrition />} />
