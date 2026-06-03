@@ -47,7 +47,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         </li>
         <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
           <span className="recharts-tooltip-item-name">
-            Child Height
+            Patient Height
           </span>
           <span className="recharts-tooltip-item-separator">
             {" : "}
@@ -82,7 +82,7 @@ export default function HeightGrowthChart({ data }) {
     month: item.month,
     min: item.who.min,
     max: item.who.max,
-    height: item.child.height
+    height: item.patient.height
   }));
 
   return (
@@ -121,7 +121,7 @@ export default function HeightGrowthChart({ data }) {
             strokeWidth={3}
             dot={{ r: 5 }}
             activeDot={{ r: 7 }}
-            name="Child Height"
+            name="Patient Height"
           />
 
           {/* Reference lines (optional) */}

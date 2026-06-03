@@ -23,7 +23,7 @@ function PatientPastMeasurmentsHeight() {
   const [urlParam, setUrlParam] = useState(useParams());
 
   const [latestGrowthData, setLatestGrowthData] = useState(null);
-  const [womenInfo, setWomenInfo] = useState(null);
+  const [patientInfo, setPatientInfo] = useState(null);
 
   const editAccountKey    = urlParam.accountKey;
   const redirectedFrom    = urlParam.redirectedFrom;
@@ -52,14 +52,14 @@ function PatientPastMeasurmentsHeight() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 32;
+    jsonData["account_type"]              = 3;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
 
-    var response = await fetch(`${API_URL}/getWomenHistorySummary`, {
+    var response = await fetch(`${API_URL}/getPatientHistorySummary`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,11 +72,11 @@ function PatientPastMeasurmentsHeight() {
     if(result.success){
       console.log(result.data);
       setLatestGrowthData(result.data);
-      setWomenInfo(result.wome_info);
+      setPatientInfo(result.patient_info);
     }
     else{
       setLatestGrowthData([]); 
-      setWomenInfo([]);
+      setPatientInfo([]);
     }
 
   }
@@ -135,7 +135,7 @@ function PatientPastMeasurmentsHeight() {
               latestGrowthData.map( (measurement, index) => (
                 <tr key={`weight${index}`}>
                   <td>{Object.keys(measurement)[0]}</td>
-                  <td>{womenInfo.women_age} Years</td>
+                  <td>{patientInfo.patient_age} Years</td>
                   <td>{measurement[Object.keys(measurement)[0]].weight} Kg </td> 
                   <td>{measurement[Object.keys(measurement)[0]].weight_range} Kg </td> 
                 </tr>
@@ -160,7 +160,7 @@ function PatientPastMeasurmentsHeight() {
               latestGrowthData.map( (measurement, index) => (
                 <tr key={`weight${index}`}>
                   <td>{Object.keys(measurement)[0]}</td>
-                  <td>{womenInfo.women_age} Years</td>
+                  <td>{patientInfo.patient_age} Years</td>
                   <td>{measurement[Object.keys(measurement)[0]].height} Cm </td> 
                   <td>{measurement[Object.keys(measurement)[0]].height_range} Cm </td> 
                 </tr>
@@ -185,7 +185,7 @@ function PatientPastMeasurmentsHeight() {
               latestGrowthData.map( (measurement, index) => (
                 <tr key={`bmi${index}`}>
                   <td>{Object.keys(measurement)[0]}</td>
-                  <td>{womenInfo.women_age} Years</td>
+                  <td>{patientInfo.patient_age} Years</td>
                   <td>{measurement[Object.keys(measurement)[0]].bmi} </td> 
                   <td>{measurement[Object.keys(measurement)[0]].bmi_range} </td> 
                 </tr>
@@ -210,7 +210,7 @@ function PatientPastMeasurmentsHeight() {
               latestGrowthData.map( (measurement, index) => (
                 <tr key={`mid_arm${index}`}>
                   <td>{Object.keys(measurement)[0]}</td>
-                  <td>{womenInfo.women_age} Years</td>
+                  <td>{patientInfo.patient_age} Years</td>
                   <td>{measurement[Object.keys(measurement)[0]].mid_arm} </td> 
                   <td>{measurement[Object.keys(measurement)[0]].mid_arm_range} </td> 
                 </tr>

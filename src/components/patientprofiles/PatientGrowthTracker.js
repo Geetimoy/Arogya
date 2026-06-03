@@ -50,14 +50,14 @@ function PatientGrowthTracker() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 32;
+    jsonData["account_type"]              = 3;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
     jsonData["user_lat"]                  = localStorage.getItem('latitude');
     jsonData["user_long"]                 = localStorage.getItem('longitude');
 
-    var response = await fetch(`${API_URL}/getWomenHistorySummary`, {
+    var response = await fetch(`${API_URL}/getPatientHistorySummary`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ function PatientGrowthTracker() {
 
     if(decryptedLoginDetails.account_type == 5){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 32;
+      jsonData["account_type"]              = 3;
       jsonData["account_key"]               = editAccountKey;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -120,7 +120,7 @@ function PatientGrowthTracker() {
     }
     else{
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["account_type"]              = 32;
+      jsonData["account_type"]              = 3;
       jsonData["account_key"]               = editAccountKey;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
@@ -161,7 +161,7 @@ function PatientGrowthTracker() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 32;
+    jsonData["account_type"]              = 3;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -172,7 +172,7 @@ function PatientGrowthTracker() {
     jsonData["growth_param"]              = "all";
 
 
-    var response = await fetch(`${API_URL}/getWomenChartHistory`, {
+    var response = await fetch(`${API_URL}/getPatientChartHistory`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -198,7 +198,7 @@ function PatientGrowthTracker() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 32;
+    jsonData["account_type"]              = 3;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
@@ -208,7 +208,7 @@ function PatientGrowthTracker() {
     jsonData["gender"]                    = (userBasicDetails.gender === 'male') ? 1 : 2;
     jsonData["growth_param"]              = param;
 
-    var response = await fetch(`${API_URL}/getWomenChartHistory`, {
+    var response = await fetch(`${API_URL}/getPatientChartHistory`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -259,14 +259,14 @@ function PatientGrowthTracker() {
   }
 
   const [formData, setFormData] = useState({
-      women_weight: { category: 1, value: "" },
-      women_height: { category: 2, value: "" },
-      women_temperature: { category: 4, value: "" },
-      women_heart_rate: { category: 6, value: "" },
-      women_mid_arm: { category: 8, value: "" },
-      women_blood_pressure: { category: 9, value: "" },
-      women_spo2: { category: 10, value: "" },
-      women_diabetic: { category: 11, value: "" },
+      patient_weight: { category: 1, value: "" },
+      patient_height: { category: 2, value: "" },
+      patient_temperature: { category: 4, value: "" },
+      patient_heart_rate: { category: 6, value: "" },
+      patient_mid_arm: { category: 8, value: "" },
+      patient_blood_pressure: { category: 9, value: "" },
+      patient_spo2: { category: 10, value: "" },
+      patient_diabetic: { category: 11, value: "" },
     });
 
   const handleFormSubmit = async (e) => {
@@ -512,36 +512,36 @@ function PatientGrowthTracker() {
             <DatePicker dateFormat="dd-MM-yyyy" selected={dataProcessedDate} onChange={(date) => onChangeDataProcessedDate(date)} className='form-control' maxDate={new Date()}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='women_height'>Height (in cm)</label>
-            <input type="text" className='form-control' name="women_height" id="women_height" placeholder='Enter Height in cm' onChange={handleChange} value={formData["women_height"] ? formData["women_height"].value : ''}/>
+            <label htmlFor='patient_height'>Height (in cm)</label>
+            <input type="text" className='form-control' name="patient_height" id="patient_height" placeholder='Enter Height in cm' onChange={handleChange} value={formData["patient_height"] ? formData["patient_height"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='women_weight'>Weight (in kg)</label>
-            <input type="text" className='form-control' name="women_weight" id="women_weight" placeholder='Enter Weight in kg' onChange={handleChange} value={formData["women_weight"] ? formData["women_weight"].value : ''}/>
+            <label htmlFor='patient_weight'>Weight (in kg)</label>
+            <input type="text" className='form-control' name="patient_weight" id="patient_weight" placeholder='Enter Weight in kg' onChange={handleChange} value={formData["patient_weight"] ? formData["patient_weight"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='women_temperature'>Body Temperature (in Fahrenheit)</label>
-            <input type="text" className='form-control' name="women_temperature" id="women_temperature" placeholder='Enter Body Temperature in °F' onChange={handleChange} value={formData["women_temperature"] ? formData["women_temperature"].value : ''}/>
+            <label htmlFor='patient_temperature'>Body Temperature (in Fahrenheit)</label>
+            <input type="text" className='form-control' name="patient_temperature" id="patient_temperature" placeholder='Enter Body Temperature in °F' onChange={handleChange} value={formData["patient_temperature"] ? formData["patient_temperature"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='women_spo2'>Blood Oxygen Level SpO2</label>
-            <input type="text" className='form-control' name="women_spo2" id="women_spo2" placeholder='Enter Blood Oxygen Level in %' onChange={handleChange} value={formData["women_spo2"] ? formData["women_spo2"].value : ''}/>
+            <label htmlFor='patient_spo2'>Blood Oxygen Level SpO2</label>
+            <input type="text" className='form-control' name="patient_spo2" id="patient_spo2" placeholder='Enter Blood Oxygen Level in %' onChange={handleChange} value={formData["patient_spo2"] ? formData["patient_spo2"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='women_heart_rate'>Heart Rate (per minute)</label>
-            <input type="text" className='form-control' name="women_heart_rate" id="women_heart_rate" placeholder='Enter Heart Rate per Minute' onChange={handleChange} value={formData["women_heart_rate"] ? formData["women_heart_rate"].value : ''}/>
+            <label htmlFor='patient_heart_rate'>Heart Rate (per minute)</label>
+            <input type="text" className='form-control' name="patient_heart_rate" id="patient_heart_rate" placeholder='Enter Heart Rate per Minute' onChange={handleChange} value={formData["patient_heart_rate"] ? formData["patient_heart_rate"].value : ''}/>
           </div>
           {/* <div className='form-group mb-3'>
             <label htmlFor='child_mid_arm'>Mid Arm length</label>
             <input type="text" className='form-control' name="child_mid_arm" id="child_mid_arm" placeholder='Enter Mid Arm length' />
           </div> */}
           <div className='form-group mb-3'>
-            <label htmlFor='women_blood_pressure'>Blood Pressure</label>
-            <input type="text" className='form-control' name="women_blood_pressure" id="women_blood_pressure" placeholder='Enter Blood Pressure' onChange={handleChange} value={formData["women_blood_pressure"] ? formData["women_blood_pressure"].value : ''}/>
+            <label htmlFor='patient_blood_pressure'>Blood Pressure</label>
+            <input type="text" className='form-control' name="patient_blood_pressure" id="patient_blood_pressure" placeholder='Enter Blood Pressure' onChange={handleChange} value={formData["patient_blood_pressure"] ? formData["patient_blood_pressure"].value : ''}/>
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor='women_diabetic'>Are you Diabetic?  </label>
-            <input type="text" className='form-control' name="women_diabetic" id="women_diabetic" placeholder='Enter Sugar Level' onChange={handleChange} value={formData["women_diabetic"] ? formData["women_diabetic"].value : ''}/>
+            <label htmlFor='patient_diabetic'>Are you Diabetic?  </label>
+            <input type="text" className='form-control' name="patient_diabetic" id="patient_diabetic" placeholder='Enter Sugar Level' onChange={handleChange} value={formData["patient_diabetic"] ? formData["patient_diabetic"].value : ''}/>
           </div>
           <div className="form-group">
             <label htmlFor="describe">Describe / Explain Problems: <span className="text-danger">*</span></label>

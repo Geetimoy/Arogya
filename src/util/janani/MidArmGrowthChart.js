@@ -47,7 +47,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         </li>
         <li className="recharts-tooltip-item" style={{display: "block", paddingTop: "4px", paddingBottom: "4px", color: "rgb(240, 72, 127)" }}>
           <span className="recharts-tooltip-item-name">
-            Child Mid Arm
+            Janani Mid Arm
           </span>
           <span className="recharts-tooltip-item-separator">
             {" : "}
@@ -82,7 +82,7 @@ export default function MidArmGrowthChart({ data }) {
     month: item.month,
     min: item.who.min,
     max: item.who.max,
-    mid_arm: item.child.mid_arm
+    mid_arm: item.janani.mid_arm
   }));
 
   return (
@@ -114,7 +114,7 @@ export default function MidArmGrowthChart({ data }) {
             stroke="none"
           />
 
-          {/* Child Mid Arm */}
+          {/* Janani Mid Arm */}
           <Line
             dataKey="mid_arm"
             stroke="#f0487f"
