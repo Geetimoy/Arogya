@@ -80,13 +80,27 @@ function JananiPrescriptions(){
   const prescriptionType  = urlParam.prescriptionType;
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
-  if(prescriptionType === 'initial'){
-    var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForJanani`;
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+  if(decryptedLoginDetails.account_type === '5'){
+    if(prescriptionType === 'initial'){
+      var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForJananiFromDoctorLogin`;
+    }
+    else if(prescriptionType === 'doctor'){
+      var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForJananiFromDoctorLogin`;
+    }
   }
-  else if(prescriptionType === 'doctor'){
-    var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForJananiFromDoctorLogin`;
+  else{
+    if(prescriptionType === 'initial'){
+      var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForJanani`;
+    }
+    else if(prescriptionType === 'doctor'){
+      var uploadUrl = `/janani/janani-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForJanani`;
+    }
   }
 
   const [isMActive, setIsMActive] = useState(false);
