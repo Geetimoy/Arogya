@@ -52,7 +52,7 @@ function ElderGrowthTracker() {
     let jsonData = {};
 
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["account_type"]              = 33;
+    jsonData["account_type"]              = 34;
     jsonData["account_key"]               = editAccountKey;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]              = DEVICE_TOKEN;
