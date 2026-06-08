@@ -11,7 +11,7 @@ import rgvnlogo from '../assets/images/rgvn-icon.png';
 import b2hlogo from '../assets/images/b2h-icon.png';
 import ukhralogo from '../assets/images/ukhra-icon.png';
 import sevaapurulialogo from '../assets/images/sevaapurulia-icon.png';
-import motinagarlogo from '../assets/images/motinagar-icon.png';
+import geetanagarlogo from '../assets/images/geetanagar-icon.png';
 
 function NgoList(){
   return(
@@ -68,9 +68,9 @@ function NgoList(){
               </div>
               <div className="col-6">
                 <div className="button-box">
-                  <Link to="https://motinagar.serviceplace.org.in/" target="_blank">
-                    <img src={motinagarlogo} alt='' />
-                    <h6>Moti Nagar, Assam </h6>
+                  <Link to="https://geetanagar.serviceplace.org.in/" target="_blank">
+                    <img src={geetanagarlogo} alt='' />
+                    <h6>Geetanagar, Assam </h6>
                   </Link>
                 </div>
               </div>

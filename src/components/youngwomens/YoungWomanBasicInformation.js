@@ -61,7 +61,9 @@ function YoungWomanBasicInformation(){
     toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    special_note: {required: false, value:"", errorClass:"", errorMessage:""}
+    special_note: {required: false, value:"", errorClass:"", errorMessage:""},
+    blood_group: {required: false, value:"", errorClass:"", errorMessage:""},
+    emergency_contact_no: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
@@ -217,6 +219,10 @@ function YoungWomanBasicInformation(){
       formData['drinking_water_type']     = {required:formData['drinking_water_type'].required, value:userDetails.women_drinking_water_type, errorClass:"", errorMessage:""};
       formData['special_note']            = {required:formData['special_note'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
+      formData['blood_group']       = {required:formData['blood_group'].required, value:userDetails.blood_group || "", errorClass:"", errorMessage:""};
+
+      formData['emergency_contact_no']       = {required:formData['emergency_contact_no'].required, value:userDetails.emergency_contact_no || "", errorClass:"", errorMessage:""};
+
       setFormData({...formData, ...formData});
 
     }
@@ -330,6 +336,10 @@ function YoungWomanBasicInformation(){
       jsonData["woman_city"]                = formData['woman_city'].value;
       jsonData["woman_father_name"]         = formData['woman_father_name'].value;
       jsonData["woman_education"]           = formData['woman_education'].value;
+
+      jsonData["blood_group"]               = formData['blood_group'].value;
+      jsonData["emergency_contact_no"]      = formData['emergency_contact_no'].value;
+
       jsonData["woman_school_name"]         = formData['woman_school_name'].value;
       jsonData["woman_school_class"]        = formData['woman_school_class'].value;
       jsonData["woman_school_section"]      = formData['woman_school_section'].value;
@@ -452,6 +462,30 @@ function YoungWomanBasicInformation(){
               <option value="1">Female</option>
             </select>
           </div>
+
+          <div className={`form-group ${formData["woman_age"].errorClass}`}>
+            <label htmlFor="woman_age">Age <span className="text-danger">*</span></label>
+            <input type="text" className="form-control" name="woman_age" id="woman_age" placeholder="Age" value={formData["woman_age"].value ? formData["woman_age"].value : ''} onChange={handleChange}/>
+            <small className="error-mesg">{formData["woman_age"].errorMessage}</small>
+          </div>
+
+          <div className={`form-group ${formData["blood_group"].errorClass}`}>
+            <label htmlFor="blood_group">Blood Group </label>
+           
+            <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+            <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is woman's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
@@ -470,6 +504,19 @@ function YoungWomanBasicInformation(){
             <label htmlFor="woman_contact_number">Phone No <span className="text-danger">*</span></label>
             <input type="tel" className="form-control" name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} onChange={handleChange}/>
           </div>}
+
+          <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            <label>Other person to contact  </label>
+            <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
+              <option value="">Select</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Friend">Friend</option>
+            </select>
+            <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
+          </div>
+          
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} onChange={handleChange}/>
@@ -480,11 +527,7 @@ function YoungWomanBasicInformation(){
             <input type="text" className="form-control" name="woman_email_id" id="woman_email_id" placeholder="Email" value={formData["woman_email_id"].value ? formData["woman_email_id"].value : ''} onChange={handleChange}/>
             {/* <small className="error-mesg">{formData["woman_email_id"].errorMessage}</small> */}
           </div>
-          <div className={`form-group ${formData["woman_age"].errorClass}`}>
-            <label htmlFor="woman_age">Age <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="woman_age" id="woman_age" placeholder="Age" value={formData["woman_age"].value ? formData["woman_age"].value : ''} onChange={handleChange}/>
-            <small className="error-mesg">{formData["woman_age"].errorMessage}</small>
-          </div>
+          
           <div className={`form-group ${formData["woman_address"].errorClass}`}>
             <label htmlFor="woman_address">Address <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="woman_address" id="woman_address" placeholder="Address" value={formData["woman_address"].value ? formData["woman_address"].value : ''} onChange={handleChange}/>

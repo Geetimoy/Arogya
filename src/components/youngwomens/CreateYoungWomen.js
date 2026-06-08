@@ -126,7 +126,9 @@ function CraeteYoungWomen(){
     toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     house_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
-    special_note: {required: false, value:"", errorClass:"", errorMessage:""}
+    special_note: {required: false, value:"", errorClass:"", errorMessage:""},
+    blood_group: {required: false, value:"", errorClass:"", errorMessage:""},
+    emergency_contact_no: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -239,6 +241,10 @@ function CraeteYoungWomen(){
       jsonData["woman_postal_code"]         = formData['woman_postal_code'].value;
       jsonData["woman_landmark"]            = formData['woman_landmark'].value;
       jsonData["woman_city"]                = formData['woman_city'].value;
+
+      jsonData["blood_group"]               = formData['blood_group'].value;
+      jsonData["emergency_contact_no"]      = formData['emergency_contact_no'].value;
+
       jsonData["woman_father_name"]         = formData['woman_father_name'].value;
       jsonData["woman_education"]           = "";
       jsonData["woman_school_name"]         = formData['woman_school_name'].value;
@@ -409,6 +415,23 @@ function CraeteYoungWomen(){
             <input type="text" className="form-control" onChange={handleChange} value={formData["woman_age"].value ? formData["woman_age"].value : ''} name="woman_age" id="woman_age" placeholder="Age" />
             <small className="error-mesg">{formData["woman_age"].errorMessage}</small>
           </div>
+
+          <div className={`form-group ${formData["blood_group"].errorClass}`}>
+            <label htmlFor="blood_group">Blood Group </label>
+            <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+            <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is woman's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
@@ -428,6 +451,19 @@ function CraeteYoungWomen(){
             <input type="tel" className="form-control" onChange={handleChange} value={formData["woman_contact_number"].value ? formData["woman_contact_number"].value : ''} name="woman_contact_number" id="woman_contact_number" placeholder="Phone No" />
             <small className="error-mesg">{formData["woman_contact_number"].errorMessage}</small>
           </div>}
+
+          <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            <label>Other person to contact  </label>
+            <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
+              <option value="">Select</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Friend">Friend</option>
+            </select>
+            <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" onChange={handleChange} value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} name="whatsapp" id="whatsapp" placeholder="WhatsApp No" />
