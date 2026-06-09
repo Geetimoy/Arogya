@@ -62,6 +62,8 @@ function CreateJananiDoctor(){
     janani_postal_code: {required: true, value:"", errorClass:"", errorMessage:""},
     janani_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
     special_note: {required: false, value:"", errorClass:"", errorMessage:""},
+    blood_group: {required: false, value:"", errorClass:"", errorMessage:""},
+    emergency_contact_no: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -264,6 +266,10 @@ function CreateJananiDoctor(){
       jsonData['system_id']                     = systemContext.systemDetails.system_id;
       jsonData["introducer_account_key"]        = decryptedLoginDetails.account_key;
       jsonData["introducer_account_type"]       = decryptedLoginDetails.account_type;
+
+      jsonData["doctor_account_type"]           = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_key"]            = decryptedLoginDetails.account_type;
+      
       jsonData["user_login_id"]                 = decryptedLoginDetails.login_id;
       jsonData["device_type"]                   = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]                  = DEVICE_TOKEN;
@@ -287,6 +293,10 @@ function CreateJananiDoctor(){
       jsonData["janani_postal_code"]            = formData['janani_postal_code'].value;
       jsonData["janani_landmark"]               = formData['janani_landmark'].value;
       jsonData["janani_city"]                   = formData['janani_city'].value;
+
+      jsonData["blood_group"]                   = formData['blood_group'].value;
+      jsonData["emergency_contact_no"]          = formData['emergency_contact_no'].value;
+
       jsonData["is_bpl"]                        = "t";
       jsonData["is_your_personal_number"]       = formData['is_personal_mobile_number'].value;
 
@@ -304,7 +314,7 @@ function CreateJananiDoctor(){
       jsonData["service_area"]                  = '{1,2}';
       jsonData["service_area"]                  = serviceArea;
       
-      const response = await fetch(`${API_URL}/addUpdateJananiProfileFromDoctorLogin`, {
+      const response = await fetch(`${API_URL}/addUpdatejananiProfileFromDoctorLogin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -408,6 +418,24 @@ function CreateJananiDoctor(){
             <input type="text" className="form-control" name="hospital_name" id="hospital_name"  onChange={handleChange} placeholder="Involved Hospital Name" value={formData["hospital_name"].value ? formData["hospital_name"].value : ''} />
             <small className="error-mesg">{formData["hospital_name"].errorMessage}</small>
           </div>
+
+          <div className={`form-group ${formData["blood_group"].errorClass}`}>
+            <label htmlFor="blood_group">Blood Group </label>
+            
+            <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+            <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is janani's personal mobile number? <span className="text-danger">*</span></span> </label>
             <div className="d-flex">
@@ -427,6 +455,19 @@ function CreateJananiDoctor(){
             <input type="tel" className="form-control" name="janani_contact_number" id="janani_contact_number" onChange={handleChange} placeholder="Phone No" value={formData["janani_contact_number"].value ? formData["janani_contact_number"].value : ''} maxLength={10}/>
             <small className="error-mesg">{formData["janani_contact_number"].errorMessage}</small>
           </div>}
+
+          <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            <label>Other person to contact  </label>
+            <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
+              <option value="">Select</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Friend">Friend</option>
+            </select>
+            <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>
             <input type="tel" className="form-control" name="whatsapp" id="whatsapp" onChange={handleChange}  placeholder="WhatsApp No" value={formData["whatsapp"].value ? formData["whatsapp"].value : ''} maxLength={10}/>

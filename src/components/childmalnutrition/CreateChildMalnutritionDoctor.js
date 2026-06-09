@@ -195,7 +195,9 @@ const resetForm = () => {
     drinking_water_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     toilet_type: {required: true, value:"1", errorClass:"", errorMessage:""},
     sub_volunteer: {required: true, value:"", errorClass:"", errorMessage:""},
-    special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
+    special_notes: {required: false, value:"", errorClass:"", errorMessage:""},
+    blood_group: {required: false, value:"", errorClass:"", errorMessage:""},
+    emergency_contact_no: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleFormSubmit = async (e) => {
@@ -243,6 +245,10 @@ const resetForm = () => {
         jsonData["child_address_2"]           = formData['child_address_2'].value;
         jsonData["child_landmark"]            = formData['child_landmark'].value;
         jsonData["child_city"]                = formData['child_city'].value;
+
+        jsonData["blood_group"]               = formData['blood_group'].value;
+        jsonData["emergency_contact_no"]      = formData['emergency_contact_no'].value;
+
         jsonData["child_state"]               = formData['child_state'].value;
         jsonData["child_postal_code"]         = formData['child_pincode'].value;
         jsonData["service_area"]              = serviceArea;
@@ -403,6 +409,22 @@ const resetForm = () => {
             <small className="error-mesg">{formData["child_age"].errorMessage}</small>
           </div>
 
+          <div className={`form-group ${formData["blood_group"].errorClass}`}>
+            <label htmlFor="blood_group">Blood Group </label>
+            <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+            <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["is_your_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is guardian's personal mobile number? <span className="text-danger">*</span></span> </label>
             <select className="form-control" id="is_your_personal_mobile_number" name="is_your_personal_mobile_number" value={formData["is_your_personal_mobile_number"].value} onChange={handleChange}>
@@ -416,6 +438,18 @@ const resetForm = () => {
             <input type="tel" className="form-control" name="child_phone_no" id="child_phone_no" placeholder="Phone No" onChange={handleChange} value={formData["child_phone_no"].value ? formData["child_phone_no"].value : ''}/>
             <small className="error-mesg">{formData["child_phone_no"].errorMessage}</small>
           </div>}
+
+          {/* <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            <label>Other person to contact  </label>
+            <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
+              <option value="">Select</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Friend">Friend</option>
+            </select>
+            <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
+          </div> */}
            
           <div className={`form-group ${formData["child_whatsapp_no"].errorClass}`}>
             <label htmlFor="child_whatsapp_no">WhatsApp No </label>
