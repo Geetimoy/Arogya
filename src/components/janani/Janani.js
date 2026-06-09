@@ -18,6 +18,11 @@ import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Const
 import {Modal, Button} from 'react-bootstrap'; 
 import AppTopNotifications from '../AppTopNotifications';
 
+import MetricChart from '../../util/janani/MetricChart';
+import HeightGrowthChart from '../../util/janani/HeightGrowthChart';
+import WeightGrowthChart from '../../util/janani/WeightGrowthChart';
+import BMIGrowthChart from '../../util/janani/BMIGrowthChart';
+
 function Janani(){
 
   const searchRef = useRef(null);
@@ -481,6 +486,109 @@ function Janani(){
   
   var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
+  const [modalHealthChartShow, setModalHealthChartShow] = useState(false);
+  const modalHealthChartClose  = () => setModalHealthChartShow(false); 
+
+  const [defaultGrowthParam, setDefaultGrowthParam] = useState('all');
+  const [labels, setLabels] = useState([]);
+  const [metrics, setMetrics] = useState([]);
+  const [individualMetricData, setIndividualMetricData] = useState([]);
+
+  const [ userAccountKey, setUserAccountKey ]   = useState("");
+  const [ userAge, setUserAge ]                 = useState("");
+  const [ userGender, setUserGender ]           = useState("");
+  const [ userDisplayName, setUserDisplayName ] = useState("");
+
+  const fetchMetricData = async (userAccountKey, age, gender) => {
+
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 33;
+    jsonData["account_key"]               = userAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["age"]                       = age;
+    jsonData["gender"]                    = gender;
+    jsonData["growth_param"]              = "all";
+
+
+    var response = await fetch(`${API_URL}/getJananiChartHistory`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      setLabels(result.months);
+      setMetrics(result.metrics);
+    }
+    else{
+      setLabels([]);
+      setMetrics([]);
+    }
+    
+  };
+
+  const fetchIndividualMetricData = async (param, userAccountKey, age, gender) => {
+
+    let jsonData = {};
+
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_type"]              = 33;
+    jsonData["account_key"]               = userAccountKey;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["age"]                       = age;
+    jsonData["gender"]                    = gender;
+    jsonData["growth_param"]              = param;
+
+    var response = await fetch(`${API_URL}/getJananiChartHistory`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+    });
+
+    let result = await response.json();
+
+    if(result.success){
+      setIndividualMetricData(result.data);
+    }
+    else{
+      setIndividualMetricData([]);
+    }
+    
+  }
+
+  const changeGrowthTrackerParam = (param, userAccountKey, age, gender) => {
+    setDefaultGrowthParam(param);
+    if(param === 'all'){
+      fetchMetricData(userAccountKey, age, gender);
+    }
+    else{
+      fetchIndividualMetricData(param, userAccountKey, age, gender);
+    }
+  }
+
+  const showChart = (womanName, userAccountKey, age, gender) => {
+    setUserAccountKey(userAccountKey);
+    setUserAge(age);
+    setUserGender(gender);
+    setModalHealthChartShow(true);
+    changeGrowthTrackerParam('all', userAccountKey, age, gender);
+    setUserDisplayName(womanName);
+  }
+
   return(
     <>
       <div className='app-top inner-app-top services-app-top'>
@@ -534,7 +642,7 @@ function Janani(){
             <div className='col-6' key={janani.account_id}>
               <div className='button-box'>
                 <div className='charts'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM464 96H345.94c-21.38 0-32.09 25.85-16.97 40.97l32.4 32.4L288 242.75l-73.37-73.37c-12.5-12.5-32.76-12.5-45.25 0l-68.69 68.69c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.62c6.25 6.25 16.38 6.25 22.63 0L192 237.25l73.37 73.37c12.5 12.5 32.76 12.5 45.25 0l96-96 32.4 32.4c15.12 15.12 40.97 4.41 40.97-16.97V112c.01-8.84-7.15-16-15.99-16z"/></svg>
-                <Link to={`#`} className='primary-color'>  Charts</Link>
+                <Link onClick={() => { showChart(janani.janani_name, janani.account_key, janani.janani_age, janani.janani_gender) }} to={`#`} className='primary-color'>  Charts</Link>
                 </div>
 
                 <div className={`three-dot my-element2 ${openMenuId === janani.account_id ? 'active' : ''}`} onClick={() => handleMenuClick(janani.account_id)}><FontAwesomeIcon icon={faEllipsisV} /></div>
@@ -726,6 +834,45 @@ function Janani(){
             <Button variant="secondary" className='btn primary-bg-color text-light min-width-100 border-0' onClick={modalClose2}>Cancel</Button>  
           </Modal.Footer>  
           
+        </Modal>
+
+        <Modal show={modalHealthChartShow} onHide={modalHealthChartClose} className='growth-chart'>
+          <Modal.Footer className='justify-content-center'> 
+            <h6 className='modal-title'><strong>Name: { userDisplayName }</strong></h6> 
+            <div className='d-flex align-items-center'>
+              
+              <h6 className='modal-title min-width-120'>Growth Chart</h6> 
+              <select className='form-select' value={defaultGrowthParam} onChange={ (e) => changeGrowthTrackerParam(e.target.value, userAccountKey, userAge, userGender) } >
+                <option value="all">All</option>
+                <option value="height">Height</option>
+                <option value="weight">Weight</option>
+                <option value="bmi">BMI</option>
+              </select>
+            </div>
+            <Button variant="secondary" className='btn-delete btn-close' onClick={modalHealthChartClose}></Button>
+          </Modal.Footer>  
+          <Modal.Body>   
+            <div className='health-chart'>
+              {
+                defaultGrowthParam === 'all' && <MetricChart labels={labels} metrics={metrics} />
+              }  
+              {
+                defaultGrowthParam === 'height' && <HeightGrowthChart data={individualMetricData} />
+              }  
+              {
+                defaultGrowthParam === 'weight' && <WeightGrowthChart data={individualMetricData} />
+              }
+              {
+                defaultGrowthParam === 'bmi' && <BMIGrowthChart data={individualMetricData} />
+              }
+              {
+                //defaultGrowthParam === 'mid_arm' && <MidArmGrowthChart data={individualMetricData} />
+              }
+  
+            </div>
+          </Modal.Body>  
+          <Modal.Footer className='justify-content-center'>  
+          </Modal.Footer>  
         </Modal>
 
       </div>
