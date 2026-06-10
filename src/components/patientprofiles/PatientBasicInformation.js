@@ -172,6 +172,9 @@ function PatientBasicInformation(){
       formData['patient_service_area']      = {required:formData['patient_service_area'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
       formData['patient_special_notes']     = {required:formData['patient_special_notes'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
 
+      formData['blood_group']       = {required:formData['blood_group'].required, value:userDetails.blood_group || "", errorClass:"", errorMessage:""};
+      formData['emergency_contact_no']       = {required:formData['emergency_contact_no'].required, value:userDetails.emergency_contact_no || "", errorClass:"", errorMessage:""};
+
       setFormData({...formData, ...formData});
 
     }
@@ -197,7 +200,9 @@ function PatientBasicInformation(){
     patient_state: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_pincode: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_service_area: {required: true, value:"", errorClass:"", errorMessage:""},
-    patient_special_notes: {required: false, value:"", errorClass:"", errorMessage:""}
+    patient_special_notes: {required: false, value:"", errorClass:"", errorMessage:""},
+    blood_group: {required: false, value:"", errorClass:"", errorMessage:""},
+    emergency_contact_no: {required: false, value:"", errorClass:"", errorMessage:""}
   });
 
   const handleChange = (e) => {
@@ -279,6 +284,10 @@ function PatientBasicInformation(){
       jsonData["patient_postal_code"]       = formData['patient_pincode'].value;
       jsonData["patient_landmark"]          = formData['patient_landmark'].value;
       jsonData["patient_city"]              = formData['patient_city'].value;
+
+      jsonData["blood_group"]               = formData['blood_group'].value;
+      jsonData["emergency_contact_no"]      = formData['emergency_contact_no'].value;
+
       jsonData["is_bpl"]                    = formData['patient_is_bpl'].value;
       jsonData["is_your_personal_number"]   = formData['is_personal_mobile_number'].value;
       jsonData["patient_education"]         = formData['patient_education'].value;
@@ -420,6 +429,23 @@ function PatientBasicInformation(){
             <input type="text" className="form-control" name="patient_education" id="patient_education" placeholder="Education" onChange={handleChange} value={formData["patient_education"].value ? formData["patient_education"].value : ''}/>
             <small className="error-mesg">{formData["patient_education"].errorMessage}</small>
           </div>
+
+          <div className={`form-group ${formData["blood_group"].errorClass}`}>
+              <label htmlFor="blood_group">Blood Group </label>
+              <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+                <option value="">Select</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+              <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+            </div>
+
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is patient's personal mobile number? <span className="text-danger">*</span></span> </label>
             <select className="form-control" name="is_personal_mobile_number" id="is_personal_mobile_number" value={formData["is_personal_mobile_number"].value} onChange={handleChange}>
@@ -433,6 +459,19 @@ function PatientBasicInformation(){
             <input type="text" className="form-control" name="patient_phone_no" id="patient_phone_no" placeholder="Phone No" onChange={handleChange} value={formData["patient_phone_no"].value ? formData["patient_phone_no"].value : ''}/>
             <small className="error-mesg">{formData["patient_phone_no"].errorMessage}</small>
           </div>}
+
+          <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            <label>Other person to contact  </label>
+            <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
+              <option value="">Select</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Friend">Friend</option>
+            </select>
+            <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
+          </div>
+
           <div className={`form-group ${formData["patient_whatsapp_no"].errorClass}`}>
             <label htmlFor="name">WhatsApp No </label>
             <input type="text" className="form-control" name="patient_whatsapp_no" id="patient_whatsapp_no" placeholder="WhatsApp No" onChange={handleChange} value={formData["patient_whatsapp_no"].value ? formData["patient_whatsapp_no"].value : ''}/>

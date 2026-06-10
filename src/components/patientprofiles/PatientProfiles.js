@@ -421,8 +421,11 @@ function Patientprofiles(){
         <span>Total - {patientList.length}</span>
           
            {
-                      (decryptedLoginDetails.account_type !== '5') && <Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link>
-                    }
+              (decryptedLoginDetails.account_type !== '5') && <Link to="/patientprofiles/createpatientprofile" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Patient</Link>
+            }
+            {
+              (decryptedLoginDetails.account_type == '5') && <Link to="/patientprofiles-doctor" className='btn btn-sm btn-primary primary-bg-color border-0'>Add Child </Link>
+            }
         </div>
         {/* <div className="d-flex justify-content-between mb-3 mt-3">
         <Link onClick={() => { modalShowSearch(); }} to="#">
