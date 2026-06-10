@@ -72,7 +72,7 @@ function YoungWomanPastMeasurmentsHeight() {
     if(result.success){
       console.log(result.data);
       setLatestGrowthData(result.data);
-      setWomenInfo(result.wome_info);
+      setWomenInfo(result.women_info);
     }
     else{
       setLatestGrowthData([]); 

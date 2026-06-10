@@ -72,7 +72,7 @@ function JananiPastMeasurmentsHeight() {
     if(result.success){
       console.log(result.data);
       setLatestGrowthData(result.data);
-      setJananiInfo(result.wome_info);
+      setJananiInfo(result.janani_info);
     }
     else{
       setLatestGrowthData([]); 
@@ -95,7 +95,7 @@ function JananiPastMeasurmentsHeight() {
         <div className='app-top-box d-flex align-items-center justify-content-between'>
           <div className='app-top-left d-flex align-items-center'>
             <div className='scroll-back'>
-              <Link to={`/patientprofiles/growth-tracker/${editAccountKey}/${redirectedFrom}`} className=''>
+              <Link to={`/janani/growth-tracker/${editAccountKey}/${redirectedFrom}`} className=''>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
@@ -135,7 +135,7 @@ function JananiPastMeasurmentsHeight() {
               latestGrowthData.map( (measurement, index) => (
                 <tr key={`weight${index}`}>
                   <td>{Object.keys(measurement)[0]}</td>
-                  <td>{jananiInfo.janani_age} Years</td>
+                  <td>{jananiInfo.age} Years</td>
                   <td>{measurement[Object.keys(measurement)[0]].weight} Kg </td> 
                   <td>{measurement[Object.keys(measurement)[0]].weight_range} Kg </td> 
                 </tr>
