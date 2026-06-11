@@ -21,6 +21,7 @@ import PatientProfiles from './patientprofiles/PatientProfiles';
 import PatientBasicInformation from './patientprofiles/PatientBasicInformation';
 import ViewPatientDetails from './patientprofiles/ViewPatientDetails';
 import CreatePatientProfile from './patientprofiles/CreatePatientProfile';
+import CreatePatientProfileDoctor from './patientprofiles/CreatePatientProfileDoctor';
 import PatientTestReports from './patientprofiles/PatientTestReports';
 import PatientPrescription from './patientprofiles/PatientPrescription';
 import PatientMedicalHistory from './patientprofiles/PatientMedicalHistory';
@@ -414,6 +415,7 @@ export default function Core() {
             <Route path="/patientprofiles/patient-basicinfo/:accountKey" exact element={<PatientBasicInformation />} />
             <Route path="/patientprofiles/ViewPatientDetails/:accountKey" exact element={<ViewPatientDetails />} />
             <Route path="/patientprofiles/CreatePatientProfile/" exact element={<CreatePatientProfile />} />
+            <Route path="/patientprofiles/CreatePatientProfileDoctor/" exact element={<CreatePatientProfileDoctor />} />
             <Route path="/patientprofiles/patient-test-reports/:patientKey/:appointmentId" exact element={<PatientTestReports />} />
             <Route path="/patientprofiles/patient-upload-test-reports/:patientKey/:appointmentId" exact element={<PatientUploadTestReports/>} />
             <Route path="/patientprofiles/patient-prescription/:accountKey" exact element={<PatientPrescription />} />

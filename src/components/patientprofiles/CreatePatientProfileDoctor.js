@@ -1,12 +1,14 @@
 import { useState, useContext, useEffect } from 'react';
 import CryptoJS from "crypto-js";
 
-import Appfooter from "../AppFooter";
+import Appfooter from '../AppFooter';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faLongArrowAltLeft, faBell } from '@fortawesome/free-solid-svg-icons';
 
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import './CreatePatientProfile.css';
 
 import SystemContext from "../../context/system/SystemContext";
 import AlertContext from '../../context/alert/AlertContext';
@@ -16,16 +18,10 @@ import Select from 'react-select';
 import { API_URL, ENCYPTION_KEY, DEVICE_TYPE, DEVICE_TOKEN } from "../util/Constants";
 import AppTopNotifications from '../AppTopNotifications';
 
-function PatientViewBasicInformation(){
-
-  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+function CreatePatientProfileDoctor(){
 
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
-
-  const [urlParam, setUrlParam] = useState(useParams());
-
-  const editAccountKey = urlParam.accountKey;
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -36,11 +32,13 @@ function PatientViewBasicInformation(){
   const [isMobileNumberVisible, setIsMobileNumberVisible] = useState(true);
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [serviceAreaOption, setServiceAreaOption] = useState([]);
-
-  useEffect(() => {
-  
-  }, [serviceAreaOption])
+  const [serviceAreaOption, setServiceAreaOption] = useState([
+    { label: 'Guwahati Zoo,Fancy bazar', value: '1' },
+    { label: 'Navagraha Temple, Guwahati', value: '2' },
+    { label: 'Umananda Temple, Guwahati', value: '3' },
+    { label: 'Morigaon', value: '4' },
+    { label: 'Saparam Bera', value: '5' }
+  ]);
 
   const getMasterServicesArea = async (e) => {
 
@@ -73,13 +71,17 @@ function PatientViewBasicInformation(){
     }
 
   }
-  
+
   useEffect(() => {
     if(systemContext.systemDetails.system_id){
       getMasterServicesArea();
     }
     // eslint-disable-next-line
   }, [systemContext.systemDetails.system_id]);
+
+  useEffect(() => {
+
+  }, [serviceAreaOption])
 
   const handleChange1 = (values) => {
     var selectedArea = [];
@@ -97,92 +99,8 @@ function PatientViewBasicInformation(){
     setSelectedOptions(values);
   };
 
-  const getUserDetails = async () => {
-
-    let jsonData = {};
-
-    jsonData['system_id']             = systemContext.systemDetails.system_id;
-    jsonData["patient_account_key"]   = editAccountKey;
-    jsonData["patient_account_type"]  = 3;
-    jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
-    jsonData["device_token"]          = DEVICE_TOKEN;
-    jsonData["user_lat"]              = localStorage.getItem('latitude');
-    jsonData["user_long"]             = localStorage.getItem('longitude');
-    jsonData["search_param"]          = {
-                                          "by_keywords": "",
-                                          "limit": "2",
-                                          "offset": "0",
-                                          "order_by_field": "account_id",
-                                          "order_by_value": "desc"
-                                        }
-    
-    const response1 = await fetch(`${API_URL}/patientBasicInformationList`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
-    let result1 = await response1.json();
-
-    if(result1.data.length > 0){
-      let userDetails = result1.data[0];
-      var serviceAreaArray = [];
-      if(userDetails.service_area_ids && userDetails.service_area_ids !== ''){
-        serviceAreaArray = userDetails.service_area_ids.replace(/^\{|\}$/g,'').split(',');
-        console.log(serviceAreaArray);
-        var array1 = new Array();
-        console.log(serviceAreaOption);
-        serviceAreaArray.forEach((item)=>{
-          serviceAreaOption.forEach((opt)=>{
-            if(opt.value === item){
-              array1.push(opt);
-            }
-          })
-        })
-        setSelectedOptions(array1);
-
-      }
-
-      formData['is_consent']                = {required:formData['is_consent'].required, value:userDetails.is_consent, errorClass:"", errorMessage:""};
-      formData['patient_name']              = {required:formData['patient_name'].required, value:userDetails.patient_name, errorClass:"", errorMessage:""};
-      formData['patient_father_name']       = {required:formData['patient_father_name'].required, value:userDetails.patient_father_name, errorClass:"", errorMessage:""};
-      formData['patient_is_bpl']            = {required:formData['patient_is_bpl'].required, value:userDetails.is_under_previledged, errorClass:"", errorMessage:""};
-      formData['patient_gender']            = {required:formData['patient_gender'].required, value:userDetails.patient_gender, errorClass:"", errorMessage:""};
-      formData['patient_age']               = {required:formData['patient_age'].required, value:userDetails.patient_age, errorClass:"", errorMessage:""};
-      formData['patient_education']         = {required:formData['patient_education'].required, value:userDetails.patient_education, errorClass:"", errorMessage:""};
-      formData['is_personal_mobile_number'] = {required:formData['is_personal_mobile_number'].required, value:userDetails.is_your_personal_number, errorClass:"", errorMessage:""};
-      if(userDetails.is_your_personal_number === "t"){
-        setIsMobileNumberVisible(true);
-        formData['patient_phone_no']     = {required:true, value:userDetails.contact_no, errorClass:"", errorMessage:""};
-      }
-      else if(userDetails.is_your_personal_number === "f"){
-        setIsMobileNumberVisible(false);
-        formData['patient_phone_no']     = {required:false, value:"", errorClass:"", errorMessage:""};
-      }
-      
-      formData['patient_whatsapp_no']       = {required:formData['patient_whatsapp_no'].required, value:userDetails.whatsapp_no, errorClass:"", errorMessage:""};
-      formData['patient_email']             = {required:formData['patient_email'].required, value:userDetails.email_id, errorClass:"", errorMessage:""};
-      formData['patient_address']           = {required:formData['patient_address'].required, value:userDetails.patient_addr_1, errorClass:"", errorMessage:""};
-      formData['patient_address_2']         = {required:formData['patient_address_2'].required, value:userDetails.patient_addr_2, errorClass:"", errorMessage:""};
-      formData['patient_landmark']          = {required:formData['patient_landmark'].required, value:userDetails.patient_addr_landmark, errorClass:"", errorMessage:""};
-      formData['patient_city']              = {required:formData['patient_city'].required, value:userDetails.patient_city, errorClass:"", errorMessage:""};
-      formData['patient_state']             = {required:formData['patient_state'].required, value:userDetails.patient_state, errorClass:"", errorMessage:""};
-      formData['patient_pincode']           = {required:formData['patient_pincode'].required, value:userDetails.patient_postal_code, errorClass:"", errorMessage:""};
-      formData['patient_service_area']      = {required:formData['patient_service_area'].required, value:serviceAreaArray.join(","), errorClass:"", errorMessage:""};
-      formData['patient_special_notes']     = {required:formData['patient_special_notes'].required, value:userDetails.special_notes, errorClass:"", errorMessage:""};
-
-      formData['blood_group']       = {required:formData['blood_group'].required, value:userDetails.blood_group || "", errorClass:"", errorMessage:""};
-      formData['emergency_contact_no']       = {required:formData['emergency_contact_no'].required, value:userDetails.emergency_contact_no || "", errorClass:"", errorMessage:""};
-
-      setFormData({...formData, ...formData});
-
-    }
-
-  }
-
   const [formData, setFormData] = useState({
-    is_consent: {required: false, value:"", errorClass:"", errorMessage:""},
+    is_consent: {required:false, value:"2", errorClass:"", errorMessage:""},
     patient_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_father_name: {required: true, value:"", errorClass:"", errorMessage:""},
     patient_is_bpl: {required: true, value:"t", errorClass:"", errorMessage:""},
@@ -207,7 +125,6 @@ function PatientViewBasicInformation(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     if(name === "is_personal_mobile_number"){
       if(value === "t"){
         setIsMobileNumberVisible(true);
@@ -244,6 +161,35 @@ function PatientViewBasicInformation(){
     }
   }
 
+  const resetForm = () => {
+    const fieldName = Object.keys(formData);
+    setSelectedOptions([]);
+    fieldName.forEach((element) => {
+      if(element === "gender"){
+        formData[element].value         = "male";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+      else if(element === "patient_is_bpl"){
+        formData[element].value         = "t";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+      else if(element === "is_consent"){
+        formData[element].value         = "1";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+      else{
+        formData[element].value         = "";
+        formData[element].errorClass    = "";
+        formData[element].errorMessage  = "";
+      }
+      formData[element].required        = formData[element].required;
+    })
+    setFormData({...formData, ...formData});
+  }
+
   const handleFormSubmit = async (e) => {
     e.preventDefault(); 
     let errorCounter = validateForm();console.log(formData);
@@ -255,10 +201,8 @@ function PatientViewBasicInformation(){
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["introducer_account_key"]    = decryptedLoginDetails.account_key;
       jsonData["introducer_account_type"]   = decryptedLoginDetails.account_type;
-      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
-      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
-      jsonData["patient_account_key"]       = editAccountKey;
-      jsonData["patient_account_type"]      = 3;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_type;
       jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
       jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
       jsonData["device_token"]              = DEVICE_TOKEN;
@@ -308,6 +252,7 @@ function PatientViewBasicInformation(){
 
       if(result.success){
         alertContext.setAlertMessage({show:true, type: "success", message: result.msg});
+        resetForm();
       }
       else{
         alertContext.setAlertMessage({show:true, type: "error", message: result.msg});
@@ -336,23 +281,11 @@ function PatientViewBasicInformation(){
           formData[element].errorClass = "";
         }
       }
-      formData[element].required = formData[element].required;
+      formData[element].required        = formData[element].required;
     })
     setFormData({...formData, ...formData});
     return errorCounter;
   }
-
-  useEffect(() => {
-
-    if(systemContext.systemDetails.system_id){
-      if(serviceAreaOption.length > 0){
-        getUserDetails();
-      }
-    }
-
-    // eslint-disable-next-line
-    
-  }, [serviceAreaOption, systemContext.systemDetails.system_id]);
 
   return(
     <>
@@ -364,11 +297,10 @@ function PatientViewBasicInformation(){
                 <FontAwesomeIcon icon={faLongArrowAltLeft} />
               </Link>
             </div>
-            <h5 className='mx-2 mb-0'>{decryptedLoginDetails.account_type !== '5' && 'Update'} Patient Basic Info </h5>
-            
+            <h5 className='mx-2 mb-0'>Create Patient Profile </h5>
           </div>
           <div className='app-top-right d-flex'> 
-            <AppTopNotifications />
+            <AppTopNotifications /> 
             <div className={`my-element2 ${isMActive ? 'active' : ''}`} onClick={handle2Click}><FontAwesomeIcon icon={faEllipsisV} /></div>
             <div className='drop-menu'>
                 <ul>
@@ -387,8 +319,10 @@ function PatientViewBasicInformation(){
       </div>
       <div className='app-body create-patient-profiles'>
        
-        <p><small>To update your profile information</small></p>
+        <p><small>Add Patient Information</small></p>
         <div className='form-check-box'>     
+          {/* <input className="form-check-input" type="checkbox" id="myCheckbox" value="option1"  /> 
+          <label className="form-check-label" htmlFor="myCheckbox">With your consent, this information is to be used for patient health and other legitimate purposes only.</label> */}
           <label className="custom-chk custom-checkbox">With your consent, this information is to be used for patient health and other legitimate purposes only.
             <input type="checkbox" className="required" name="is_consent" value="1" onChange={handleChange} checked={formData["is_consent"].value === "1" ? true : false}/>
             <span className="checkmark"></span>
@@ -432,21 +366,21 @@ function PatientViewBasicInformation(){
             <small className="error-mesg">{formData["patient_education"].errorMessage}</small>
           </div>
 
-          <div className={`form-group ${formData["blood_group"].errorClass}`}>
-              <label htmlFor="blood_group">Blood Group </label>
-              <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
-                <option value="">Select</option>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-              </select>
-              <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
-            </div>
+            <div className={`form-group ${formData["blood_group"].errorClass}`}>
+            <label htmlFor="blood_group">Blood Group </label>
+            <select className="form-control" onChange={handleChange} value={formData["blood_group"].value || ""} name="blood_group" id="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+            <small className="error-mesg">{formData["blood_group"].errorMessage}</small>
+          </div>
 
           <div className={`form-group ${formData["is_personal_mobile_number"].errorClass}`}>
             <label className="no-style"><span className="d-block">Is patient's personal mobile number? <span className="text-danger">*</span></span> </label>
@@ -525,7 +459,7 @@ function PatientViewBasicInformation(){
             <small className="error-mesg">{formData["patient_special_notes"].errorMessage}</small>
           </div>
           <div className='mb-3 mt-3 text-center'>
-            <button type="submit" className='btn primary-bg-color text-light'>Update</button>
+            <button type="submit" className='btn primary-bg-color text-light'>Create Patient Profile</button>
           </div>
         </form>
       </div>
@@ -534,4 +468,5 @@ function PatientViewBasicInformation(){
   );
 }
 
-export default PatientViewBasicInformation;
+
+export default CreatePatientProfileDoctor;
