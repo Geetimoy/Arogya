@@ -432,7 +432,7 @@ function CreateJanani(){
             <small className="error-mesg">{formData["janani_contact_number"].errorMessage}</small>
           </div>}
 
-           <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+           {/* <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
             <label>Other person to contact  </label>
             <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
               <option value="">Select</option>
@@ -442,7 +442,7 @@ function CreateJanani(){
               <option value="Friend">Friend</option>
             </select>
             <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
-          </div>
+          </div> */}
 
           <div className={`form-group ${formData["whatsapp"].errorClass}`}>
             <label htmlFor="whatsapp">WhatsApp No </label>

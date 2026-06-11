@@ -526,7 +526,7 @@ export default function ChildBasicInfo() {
               <small className="error-mesg">{formData["child_phone_no"].errorMessage}</small>
             </div>}
 
-            <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
+            {/* <div className={`form-group ${formData["emergency_contact_no"].errorClass}`}>
             <label>Other person to contact  </label>
             <select className="form-control" onChange={handleChange} value={formData["emergency_contact_no"].value || ""} name="emergency_contact_no" id="emergency_contact_no">
               <option value="">Select</option>
@@ -536,7 +536,7 @@ export default function ChildBasicInfo() {
               <option value="Friend">Friend</option>
             </select>
             <small className="error-mesg">{formData["emergency_contact_no"].errorMessage}</small>
-          </div>
+          </div> */}
 
             <div className={`form-group ${formData["child_whatsapp_no"].errorClass}`}>
               <label htmlFor="child_whatsapp_no">WhatsApp No </label>
