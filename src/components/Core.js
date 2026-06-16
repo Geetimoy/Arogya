@@ -194,9 +194,11 @@ import JananiPastMeasurmentsHeight from './janani/JananiPastMeasurmentsHeight';
 
 
 
+
 export default function Core() {
 
   //const domainName = window.location.hostname;
+  //const domainName = 'rajaniapp.serviceplace.org.in'; //NGO, system_id=5
   //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
   //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
@@ -257,6 +259,11 @@ export default function Core() {
       setSystemId("sevaapurulia.serviceplace.org.in");
       var faviconFolder   = '/sevaapurulia-favicon/';
       var manifestFolder  = '/sevaapurulia-manifest/'
+    }
+    else if(domainName === "rajaniapp.serviceplace.org.in"){
+      setSystemId("rajaniapp.serviceplace.org.in");
+      var faviconFolder   = '/rajani-favicon/';
+      var manifestFolder  = '/rajani-manifest/'
     }
     else{
       setSystemId("telehealth.serviceplace.org.in");
@@ -357,6 +364,10 @@ export default function Core() {
         setPrimaryColor('#c10000');
         setPrimaryBgColor('#c10000');
         break;
+      case 'rajaniapp.serviceplace.org.in':
+        setPrimaryColor('#c10000');
+        setPrimaryBgColor('#c10000');
+        break;
       default:
         setPrimaryColor('#2aa142'); // Default color: black
         break;
@@ -388,6 +399,9 @@ export default function Core() {
   else if (domainName === "sevaapurulia.serviceplace.org.in"){
     containerClass = 'sevaapurulia-container-class';
   } 
+  else if (domainName === "rajaniapp.serviceplace.org.in"){
+    containerClass = 'rajani-container-class';
+  }
   
   const isLoggedIn = loginContext.loginState.is_logged_in;
 
