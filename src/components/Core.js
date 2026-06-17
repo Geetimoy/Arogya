@@ -198,11 +198,11 @@ import JananiPastMeasurmentsHeight from './janani/JananiPastMeasurmentsHeight';
 export default function Core() {
 
   //const domainName = window.location.hostname;
-  //const domainName = 'rajaniapp.serviceplace.org.in'; //NGO, system_id=5
+  const domainName = 'rajaniapp.serviceplace.org.in'; //NGO, system_id=5
   //const domainName = 'sevaapurulia.serviceplace.org.in'; //NGO, system_id=4
   //const domainName = 'ukhraapp.serviceplace.org.in'; //NGO, system_id=3
   //const domainName = 'b2happ.serviceplace.org.in'; //NGO, system_id=1
-  const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
+  //const domainName = 'rgvnapp.serviceplace.org.in';//NGO, system_id=2
   //const domainName = 'telehealth.serviceplace.org.in';//Parent NGO, system_id=0
   const [systemId, setSystemId] = useState(null);
 
@@ -365,8 +365,8 @@ export default function Core() {
         setPrimaryBgColor('#c10000');
         break;
       case 'rajaniapp.serviceplace.org.in':
-        setPrimaryColor('#c10000');
-        setPrimaryBgColor('#c10000');
+        setPrimaryColor('#2aa142');
+        setPrimaryBgColor('#2aa142');
         break;
       default:
         setPrimaryColor('#2aa142'); // Default color: black

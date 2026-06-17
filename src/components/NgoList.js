@@ -11,7 +11,7 @@ import rgvnlogo from '../assets/images/rgvn-icon.png';
 import b2hlogo from '../assets/images/b2h-icon.png';
 import ukhralogo from '../assets/images/ukhra-icon.png';
 import sevaapurulialogo from '../assets/images/sevaapurulia-icon.png';
-import geetanagarlogo from '../assets/images/geetanagar-icon.png';
+import geetanagarlogo from '../assets/images/rajani-icon.png';
 
 function NgoList(){
   return(

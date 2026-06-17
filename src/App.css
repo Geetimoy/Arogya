@@ -396,79 +396,99 @@ body:has(.sevaapurulia-container-class) .modal .primary-bg-color{
 }
 
 /* RGVN */
-.rgvn-container-class .primary-color{
+.rgvn-container-class .primary-color,
+.rajani-container-class .primary-color{
     color: #2aa142; 
 }
 
-.rgvn-container-class .primary-bg-color {
+.rgvn-container-class .primary-bg-color,
+.rajani-container-class .primary-bg-color {
     background-color: #2aa142;
 }
 
-.rgvn-container-class input[type="file"]::-webkit-file-upload-button{
+.rgvn-container-class input[type="file"]::-webkit-file-upload-button,
+.rajani-container-class input[type="file"]::-webkit-file-upload-button{
     background: #2aa142;
 }
 
 .rgvn-container-class .primary-bg-color:hover,
 .rgvn-container-class .primary-bg-color:active,
-.rgvn-container-class input[type="file"]::-webkit-file-upload-button:hover {
+.rgvn-container-class input[type="file"]::-webkit-file-upload-button:hover,
+.rajani-container-class .primary-bg-color:hover,
+.rajani-container-class .primary-bg-color:active,
+.rajani-container-class input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #2aa142;
 }
 
-.rgvn-container-class .btn-outline-info{
+.rgvn-container-class .btn-outline-info,
+.rajani-container-class .btn-outline-info{
     color: #2aa142;
     border-color: #2aa142;
 }
 
-.rgvn-container-class .btn-outline-info:hover{
+.rgvn-container-class .btn-outline-info:hover,
+.rajani-container-class .btn-outline-info:hover{
     background-color: #2aa142;
     border: 1px solid #2aa142;
 }
 
 .rgvn-container-class .btn:first-child:active,
-.rgvn-container-class :not(.btn-check)+.btn:active{
+.rgvn-container-class :not(.btn-check)+.btn:active,
+.rajani-container-class .btn:first-child:active,
+.rajani-container-class :not(.btn-check)+.btn:active{
     background-color: #2aa142;
     border: 1px solid #2aa142;
 }
 
-.rgvn-container-class .feedback-form .normal-box .use-app .btn.active{
+.rgvn-container-class .feedback-form .normal-box .use-app .btn.active,
+.rajani-container-class .feedback-form .normal-box .use-app .btn.active{
     background-color: #2aa142;
     color: #fff;
 }
 
-.rgvn-container-class .rating-symbol .star {
+.rgvn-container-class .rating-symbol .star,
+.rajani-container-class .rating-symbol .star {
     color: #2aa142;
 }
 
-.rgvn-container-class .bookings .button-box span{
+.rgvn-container-class .bookings .button-box span,
+.rajani-container-class .bookings .button-box span{
     color: #2aa142;
 }
 
-.rgvn-container-class .tab-container button.active{
+.rgvn-container-class .tab-container button.active,
+.rajani-container-class .tab-container button.active{
   background: #2aa142;
   color: #fff;
 }
 
-.rgvn-container-class .health-chart a svg{
+.rgvn-container-class .health-chart a svg,
+.rajani-container-class .health-chart a svg{
     fill: #2aa142;
 }
 
-.rgvn-container-class .charts svg{
+.rgvn-container-class .charts svg,
+.rajani-container-class .charts svg{
     fill: #2aa142;
 }
 
-body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color{
+body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color,
+body:has(.rajani-container-class) .modal .modal-footer .primary-bg-color{
     background-color: #2aa142;
 }
 
-body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color:hover{
+body:has(.rgvn-container-class) .modal .modal-footer .primary-bg-color:hover,
+body:has(.rajani-container-class) .modal .modal-footer .primary-bg-color:hover{
     background-color: #2aa142;
 }
 
-body:has(.rgvn-container-class) .modal .rating-symbol .star{
+body:has(.rgvn-container-class) .modal .rating-symbol .star,
+body:has(.rajani-container-class) .modal .rating-symbol .star{
     color: #2aa142;
 }
 
-.rgvn-container-class .tab-container button.active{
+.rgvn-container-class .tab-container button.active,
+.rajani-container-class .tab-container button.active{
   background: #2aa142;
   color: #fff;
 }
