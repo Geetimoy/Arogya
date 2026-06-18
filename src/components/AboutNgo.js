@@ -21,23 +21,23 @@ function AboutNgo(){
 
       //jsonData["page_key"] = localStorage.getItem('page_key');
 
-      if(domainName === "b2happ.serviceplace.org.in"){
+      if(systemContext.systemDetails.system_id === "b2happ.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_B2H";
         jsonData["page_id"]               = 21;
       }
-      else if(domainName === "rgvnapp.serviceplace.org.in"){
+      else if(systemContext.systemDetails.system_id === "rgvnapp.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_RGVN";
         jsonData["page_id"]               = 21;
       }
-      else if(domainName === "ukhraapp.serviceplace.org.in"){
+      else if(systemContext.systemDetails.system_id === "ukhraapp.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_UKHRA";
         jsonData["page_id"]               = 21;
       }
-      else if(domainName === "sevaapurulia.serviceplace.org.in"){
+      else if(systemContext.systemDetails.system_id === "sevaapurulia.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_SEVAPURULIA";
         jsonData["page_id"]               = 21;
       }
-      else if(domainName === "rajaniapp.serviceplace.org.in"){
+      else if(systemContext.systemDetails.system_id === "rajaniapp.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_RAJANI";
         jsonData["page_id"]               = 21;
       }
