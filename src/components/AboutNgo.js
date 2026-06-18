@@ -20,7 +20,7 @@ function AboutNgo(){
       jsonData['user_long']             = localStorage.getItem('longitude');
 
       //jsonData["page_key"] = localStorage.getItem('page_key');
-      jsonData["page_key"]              = "ABOUT_RGVN";
+      jsonData["page_key"]              = "ABOUT_RAJANI";
       // jsonData["system_id"]             = "telehealth.serviceplace.org.in";
       //jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["page_id"]               = 21;
