@@ -39,7 +39,7 @@ function AboutNgo(){
       }
       else if(systemContext.systemDetails.system_id === "rajaniapp.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_RAJANI";
-        jsonData["page_id"]               = 21;
+        jsonData["page_id"]               = 51;
       }
       else{
         jsonData["page_key"]              = "ABOUT_TELEHEALTH";
