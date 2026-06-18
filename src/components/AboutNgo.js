@@ -20,10 +20,32 @@ function AboutNgo(){
       jsonData['user_long']             = localStorage.getItem('longitude');
 
       //jsonData["page_key"] = localStorage.getItem('page_key');
-      jsonData["page_key"]              = "ABOUT_RAJANI";
-      // jsonData["system_id"]             = "telehealth.serviceplace.org.in";
-      //jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      jsonData["page_id"]               = 21;
+
+      if(domainName === "b2happ.serviceplace.org.in"){
+        jsonData["page_key"]              = "ABOUT_B2H";
+        jsonData["page_id"]               = 21;
+      }
+      else if(domainName === "rgvnapp.serviceplace.org.in"){
+        jsonData["page_key"]              = "ABOUT_RGVN";
+        jsonData["page_id"]               = 21;
+      }
+      else if(domainName === "ukhraapp.serviceplace.org.in"){
+        jsonData["page_key"]              = "ABOUT_UKHRA";
+        jsonData["page_id"]               = 21;
+      }
+      else if(domainName === "sevaapurulia.serviceplace.org.in"){
+        jsonData["page_key"]              = "ABOUT_SEVAPURULIA";
+        jsonData["page_id"]               = 21;
+      }
+      else if(domainName === "rajaniapp.serviceplace.org.in"){
+        jsonData["page_key"]              = "ABOUT_RAJANI";
+        jsonData["page_id"]               = 21;
+      }
+      else{
+        jsonData["page_key"]              = "ABOUT_TELEHEALTH";
+        jsonData["page_id"]               = 21;
+      }
+      
 
       // useEffect(() => {
       //   fetchData();
