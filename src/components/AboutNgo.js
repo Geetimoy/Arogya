@@ -23,7 +23,7 @@ function AboutNgo(){
 
       if(systemContext.systemDetails.system_id === "b2happ.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_B2H";
-        jsonData["page_id"]               = 21;
+        jsonData["page_id"]               = 11;
       }
       else if(systemContext.systemDetails.system_id === "rgvnapp.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_RGVN";
@@ -31,11 +31,11 @@ function AboutNgo(){
       }
       else if(systemContext.systemDetails.system_id === "ukhraapp.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_UKHRA";
-        jsonData["page_id"]               = 21;
+        jsonData["page_id"]               = 31;
       }
       else if(systemContext.systemDetails.system_id === "sevaapurulia.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_SEVAPURULIA";
-        jsonData["page_id"]               = 21;
+        jsonData["page_id"]               = 41;
       }
       else if(systemContext.systemDetails.system_id === "rajaniapp.serviceplace.org.in"){
         jsonData["page_key"]              = "ABOUT_RAJANI";
