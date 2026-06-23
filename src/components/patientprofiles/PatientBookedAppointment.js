@@ -57,8 +57,17 @@ function PatientBookedAppointment(){
 
     let jsonData = {};
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-    jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+    }
+    
+
     jsonData["patient_key"]               = editAccountKey;
     jsonData["user_login_id"]             = decryptedLoginDetails.login_id;
     jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
@@ -76,14 +85,26 @@ function PatientBookedAppointment(){
                                               "order_by_field": "appointment_id",
                                               "order_by_value": "desc"
                                             }
-
-    const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    } 
+    else{
+      var response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }                                       
+    
 
     let result = await response.json();
     console.log(result);
