@@ -786,7 +786,7 @@ function ChildMalnutrion(){
                       {
                       (decryptedLoginDetails.account_type !== '5') &&
                       <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${child.account_key}`) }}>Close Profile</Link></li>}
-                      {/* {loginAccountType === '5' && <li><Link onClick={() => { modalReviewShow(child.account_key, child.child_name); }} to="#">Write/View Review </Link></li>} */}
+                      <li><Link onClick={() => { modalReviewShow(child.account_key, child.child_name); }} to="#">Write/View Review </Link></li>
                     </ul>
                   </div>
                 }
