@@ -34,7 +34,8 @@ function Janani(){
       'jananiAccountKey':'',
       'jananiName':''
     });
-const [reviewJananiName, setReviewJananiName] = useState('');
+  const [reviewJananiName, setReviewJananiName] = useState('');
+  const [reviewJananiKey, setReviewJananiKey] = useState('');
   const [showModal2, setShowModal2] = useState(false); 
   const modalClose2  = () => setShowModal2(false);  
   const [reviewComment, setReviewComment] = useState('');
@@ -399,7 +400,7 @@ const [reviewJananiName, setReviewJananiName] = useState('');
   //   localStorage.setItem('userRating', rating);
   //   setSavedRating(rating); // Update the saved rating state
   // };
-  const [reviewJananiKey, setReviewJananiKey] = useState('');
+  
   const handleSaveRating = async () => {
   
     if (rating === null || rating === undefined || rating === 0) {
@@ -819,7 +820,7 @@ const [reviewJananiName, setReviewJananiName] = useState('');
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : {reviewJananiName}</p>
+            <p className='mb-0'>Name : {reviewModalDetails.jananiName}</p>
             <div className="rating-star mb-3">
               {/* <span className="">Not at all likely</span> */}
               <span>

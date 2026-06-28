@@ -14,11 +14,10 @@ const StarRating = ({ sendDataToParent, ratingValue = 0 }) => {
   //   }
   // }, []);
   // Update rating whenever parent sends new value
-   useEffect(() => {
-      setRating(Number(ratingValue || 0));
-    }, [ratingValue]);
+    useEffect(() => {
+        setRating(Number(ratingValue || 0));
+      }, [ratingValue]);
   
-
   const handleStarClick = (selectedRating) => {
     // If the selected rating is equal to the current rating, toggle between half and full stars
     const newRating = selectedRating === rating ? selectedRating - 0.5 : selectedRating;

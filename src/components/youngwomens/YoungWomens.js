@@ -35,9 +35,59 @@ function YoungWomens(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+  const [reviewModalDetails, setReviewModalDetails] = useState({
+      'womenAccountKey':'',
+      'womenName':''
+    });
+
   const [showModal2, setShowModal2] = useState(false); 
-  const modalClose2  = () => setShowModal2(false);  
-  const modalShow2   = () => setShowModal2(true);
+  const modalClose2  = () => setShowModal2(false);
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewRating, setReviewRating]   = useState('0'); 
+  const [reviewWomenKey, setReviewWomenKey] = useState(''); 
+  const [reviewWomenName, setReviewWomenName] = useState('');
+  const modalShow2   = async (womenAccountKey, womenName) => {
+    setReviewWomenKey(womenAccountKey);
+    setReviewWomenName(womenName);
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    jsonData["account_key"]               = womenAccountKey;
+    jsonData["user_type"]                 = 3;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    
+    const response = await fetch(`${API_URL}/generalReviewList`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jsonData)
+    })
+
+    let result = await response.json();
+
+    if(result.success && result.data && result.data.length > 0){
+      // setReviewComment(result.data[0].review_comments);
+      // setReviewRating(result.data[0].review_rating);
+      setReviewComment(result.data[0].review_comments || '');
+      setReviewRating(Number(result.data[0].review_rating || 0));
+
+      setComments(result.data[0].review_comments || '');
+      setRating(Number(result.data[0].review_rating || 0));
+    }
+    else{
+      setReviewComment('');
+      setReviewRating(0);
+      setComments('');
+      setRating(0);
+    }
+
+    setShowModal2(true);
+
+  }
 
   const [rating, setRating] = useState(0);
 
@@ -77,86 +127,86 @@ function YoungWomens(){
 
 
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false); 
-    const modalPrescriptionClose  = () => {
-      setAccountKeyForWomenPrescription('');
-      setShowPrescriptionModal(false);  
-    }
-    const modalPrescriptionShow   = (womenAccountKey) => {
-      setAccountKeyForWomenPrescription(womenAccountKey);
-      setShowPrescriptionModal(true);
-    }
+  const modalPrescriptionClose  = () => {
+    setAccountKeyForWomenPrescription('');
+    setShowPrescriptionModal(false);  
+  }
+  const modalPrescriptionShow   = (womenAccountKey) => {
+    setAccountKeyForWomenPrescription(womenAccountKey);
+    setShowPrescriptionModal(true);
+  }
   
-    const [prescriptionType, setPrescriptionType] = useState('initial');
-    const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
-  
-    const [selectedDoctorAppointment, setSelectedDoctorAppointment] = useState('');
-    const chooseDoctorAppointment = (e) => setSelectedDoctorAppointment(e.target.value);
-  
-    const [appointmentListForDoctorPresc, setAppointmentListForDoctorPresc] = useState([]);
-    const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
-    const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
-    const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
-    if(prescriptionType === 'initial'){ 
-      window.location.href = `/youngwomens/young-woman-prescriptions/${accountKeyForWomenPrescription}/${prescriptionType}`;
+  const [prescriptionType, setPrescriptionType] = useState('initial');
+  const choosePrescriptionType = (e) => setPrescriptionType(e.target.value);
+
+  const [selectedDoctorAppointment, setSelectedDoctorAppointment] = useState('');
+  const chooseDoctorAppointment = (e) => setSelectedDoctorAppointment(e.target.value);
+
+  const [appointmentListForDoctorPresc, setAppointmentListForDoctorPresc] = useState([]);
+  const [showPrescriptionModalP2, setShowPrescriptionModalP2] = useState(false); 
+  const modalPrescriptionCloseP2  = () => setShowPrescriptionModalP2(false);  
+  const modalPrescriptionShowP2   = async () => { console.log(prescriptionType);
+  if(prescriptionType === 'initial'){ 
+    window.location.href = `/youngwomens/young-woman-prescriptions/${accountKeyForWomenPrescription}/${prescriptionType}`;
+  }
+  else{
+
+    var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+    let jsonData = {};
+    jsonData['system_id']                 = systemContext.systemDetails.system_id;
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]    = decryptedLoginDetails.account_type;
     }
     else{
-
-      var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
-
-      let jsonData = {};
-      jsonData['system_id']                 = systemContext.systemDetails.system_id;
-      if(decryptedLoginDetails.account_type === '5'){
-        jsonData["doctor_account_key"]     = decryptedLoginDetails.account_key;
-        jsonData["doctor_account_type"]    = decryptedLoginDetails.account_type;
-      }
-      else{
-        jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
-        jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
-      }
-      jsonData["patient_key"]       				= accountKeyForWomenPrescription;
-      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
-      jsonData["device_token"]              = DEVICE_TOKEN;
-      jsonData["user_lat"]                  = localStorage.getItem('latitude');
-      jsonData["user_long"]                 = localStorage.getItem('longitude');
-      jsonData["search_param"]              = {
-                                                "by_keywords": "",
-																								"limit": "",
-																								"offset": "0",
-																								"order_by_field": "appointment_id",
-																								"order_by_value": "desc"
-                                              }
-      
-      if(decryptedLoginDetails.account_type === '5'){
-        var response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData)
-        })
-      }
-      else{
-        var response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData)
-        })
-      }
-  
-      let result = await response.json();
-      if(result.data && result.data.appointments && result.data.appointments.length > 0){
-        setAppointmentListForDoctorPresc(result.data.appointments);
-        setShowPrescriptionModalP2(true);
-      }
-      else{
-        //setAppointmentListForDoctorPresc([]);
-        alertContext.setAlertMessage({show:true, type: "error", message: `No appointments found!`});
-      }
-
-      
+      jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+      jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
     }
+    jsonData["patient_key"]       				= accountKeyForWomenPrescription;
+    jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+    jsonData["device_token"]              = DEVICE_TOKEN;
+    jsonData["user_lat"]                  = localStorage.getItem('latitude');
+    jsonData["user_long"]                 = localStorage.getItem('longitude');
+    jsonData["search_param"]              = {
+                                              "by_keywords": "",
+                                              "limit": "",
+                                              "offset": "0",
+                                              "order_by_field": "appointment_id",
+                                              "order_by_value": "desc"
+                                            }
+    
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+    }
+    else{
+      var response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+    }
+
+    let result = await response.json();
+    if(result.data && result.data.appointments && result.data.appointments.length > 0){
+      setAppointmentListForDoctorPresc(result.data.appointments);
+      setShowPrescriptionModalP2(true);
+    }
+    else{
+      //setAppointmentListForDoctorPresc([]);
+      alertContext.setAlertMessage({show:true, type: "error", message: `No appointments found!`});
+    }
+
+    
+  }
   }
   const redirectToUploadDoctorPrescription = () => {
     window.location.href = `/youngwomens/young-woman-prescriptions/${accountKeyForWomenPrescription}/${prescriptionType}/${selectedDoctorAppointment}`;
@@ -397,10 +447,94 @@ function YoungWomens(){
       }
     }, []);
 
-  const handleSaveRating = () => {
-    localStorage.setItem('userRating', rating);
-    setSavedRating(rating); // Update the saved rating state
+  // const handleSaveRating = () => {
+  //   localStorage.setItem('userRating', rating);
+  //   setSavedRating(rating); // Update the saved rating state
+  // };
+  const handleSaveRating = async () => {
+    
+      if (rating === null || rating === undefined || rating === 0) {
+        alertContext.setAlertMessage({ show: true, type: "error", message: "Please give rating!" });
+        return;
+      }
+    
+      if (!comments || comments.trim() === "") {
+        alertContext.setAlertMessage({ show: true, type: "error", message: "Please enter comments!" });
+        return;
+      }
+    
+      try {
+    
+        const decryptedLoginDetails = JSON.parse(
+          CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY)
+            .toString(CryptoJS.enc.Utf8)
+        );
+    
+        let jsonData = {
+          'system_id': systemContext.systemDetails.system_id,
+    
+          // POSTER (logged in user)
+          'poster_acc_type': decryptedLoginDetails.account_type,
+          'poster_acc_key': decryptedLoginDetails.account_key,
+    
+          // RECEIVER (women)
+          'receiver_acc_type': "3", // Women type (confirm once)
+          'receiver_acc_key': reviewWomenKey,
+    
+          'device_type': DEVICE_TYPE,
+          'device_token': DEVICE_TOKEN,
+        
+    
+          'user_lat': localStorage.getItem('latitude'),
+          'user_long': localStorage.getItem('longitude'),
+    
+          'rating': String(rating), // API expects string
+          'comments': comments
+        };
+    
+        console.log("Review Payload:", jsonData); // debug
+    
+        const response = await fetch(`${API_URL}/generalPostReview`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+    
+        let result = await response.json();
+    
+        if (result.success) {
+          alertContext.setAlertMessage({
+            show: true,
+            type: "success",
+            message: result.msg || "Review submitted successfully!"
+          });
+    
+          // reset
+          setRating(0);
+          setComments("");
+          modalClose2();
+    
+        } else {
+          alertContext.setAlertMessage({
+            show: true,
+            type: "error",
+            message: result.msg
+          });
+        }
+    
+      } catch (error) {
+        console.error(error);
+    
+        alertContext.setAlertMessage({
+          show: true,
+          type: "error",
+          message: "Something went wrong!"
+        });
+      }
   };
+  
 
   const loadMoreWomen = () => {
     listWomen(searchRef.current.value, offset); // Load more data
@@ -630,7 +764,8 @@ function YoungWomens(){
                       (decryptedLoginDetails.account_type !== '5') &&
                         <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${women.account_key}`) }}>Close Profile </Link></li>
                         }
-                        {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
+                        {/* {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>} */}
+                        <li><Link onClick={() => { modalShow2(women.account_key, women.women_name); }} to="#">Write/View Review </Link></li>
                       </ul>
                     </div>
                   }
@@ -734,12 +869,12 @@ function YoungWomens(){
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : N Mondal</p>
+            <p className='mb-0'>Name : {reviewModalDetails.women_name}</p>
             <div className="rating-star mb-3">
               {/* <span className="">Not at all likely</span> */}
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClick}></Rating>
+                  <Rating sendDataToParent={handleStarClick} ratingValue={rating}></Rating>
                 </div>
               </span>
               {/* <span className="">Extremely likely</span> */}

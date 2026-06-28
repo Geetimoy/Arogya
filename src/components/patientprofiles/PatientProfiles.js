@@ -48,9 +48,60 @@ function Patientprofiles(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+  const [reviewModalDetails, setReviewModalDetails] = useState({
+    'patientAccountKey':'',
+    'patientName':''
+  });
+
   const [showModal2, setShowModal2] = useState(false); 
-  const modalClose2  = () => setShowModal2(false);  
-  const modalShow2   = () => setShowModal2(true);
+  const modalClose2  = () => setShowModal2(false); 
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewRating, setReviewRating]   = useState('0');  
+  const [reviewPatientKey, setReviewPatientKey] = useState(''); 
+  const [reviewPatientName, setReviewPatientName] = useState('');
+  // const modalShow2   = () => setShowModal2(true);
+  const modalShow2   = async (patientAccountKey, patientName) => {
+      setReviewPatientKey(patientAccountKey);
+      setReviewPatientName(patientName);
+  
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_key"]               = patientAccountKey;
+      jsonData["user_type"]                 = 3;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      const response = await fetch(`${API_URL}/generalReviewList`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+  
+      if(result.success && result.data && result.data.length > 0){
+        // setReviewComment(result.data[0].review_comments);
+        // setReviewRating(result.data[0].review_rating);
+        setReviewComment(result.data[0].review_comments || '');
+        setReviewRating(Number(result.data[0].review_rating || 0));
+  
+        setComments(result.data[0].review_comments || '');
+        setRating(Number(result.data[0].review_rating || 0));
+      }
+      else{
+        setReviewComment('');
+        setReviewRating(0);
+        setComments('');
+        setRating(0);
+      }
+  
+      setShowModal2(true);
+  
+    }
 
   const [rating, setRating] = useState(0);
 
@@ -425,10 +476,94 @@ function Patientprofiles(){
       }
     }, []);
 
-  const handleSaveRating = () => {
-    localStorage.setItem('userRating', rating);
-    setSavedRating(rating); // Update the saved rating state
-  };
+  // const handleSaveRating = () => {
+  //   localStorage.setItem('userRating', rating);
+  //   setSavedRating(rating); // Update the saved rating state
+  // };
+
+  const handleSaveRating = async () => {
+      
+        if (rating === null || rating === undefined || rating === 0) {
+          alertContext.setAlertMessage({ show: true, type: "error", message: "Please give rating!" });
+          return;
+        }
+      
+        if (!comments || comments.trim() === "") {
+          alertContext.setAlertMessage({ show: true, type: "error", message: "Please enter comments!" });
+          return;
+        }
+      
+        try {
+      
+          const decryptedLoginDetails = JSON.parse(
+            CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY)
+              .toString(CryptoJS.enc.Utf8)
+          );
+      
+          let jsonData = {
+            'system_id': systemContext.systemDetails.system_id,
+      
+            // POSTER (logged in user)
+            'poster_acc_type': decryptedLoginDetails.account_type,
+            'poster_acc_key': decryptedLoginDetails.account_key,
+      
+            // RECEIVER (patient)
+            'receiver_acc_type': "3", // patient type (confirm once)
+            'receiver_acc_key': reviewPatientKey,
+      
+            'device_type': DEVICE_TYPE,
+            'device_token': DEVICE_TOKEN,
+          
+      
+            'user_lat': localStorage.getItem('latitude'),
+            'user_long': localStorage.getItem('longitude'),
+      
+            'rating': String(rating), // API expects string
+            'comments': comments
+          };
+      
+          console.log("Review Payload:", jsonData); // debug
+      
+          const response = await fetch(`${API_URL}/generalPostReview`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+          });
+      
+          let result = await response.json();
+      
+          if (result.success) {
+            alertContext.setAlertMessage({
+              show: true,
+              type: "success",
+              message: result.msg || "Review submitted successfully!"
+            });
+      
+            // reset
+            setRating(0);
+            setComments("");
+            modalClose2();
+      
+          } else {
+            alertContext.setAlertMessage({
+              show: true,
+              type: "error",
+              message: result.msg
+            });
+          }
+      
+        } catch (error) {
+          console.error(error);
+      
+          alertContext.setAlertMessage({
+            show: true,
+            type: "error",
+            message: "Something went wrong!"
+          });
+        }
+    };
 
   const loadMorePatient = () => {
     listPatient(searchRef.current.value, offset); // Load more data
@@ -669,7 +804,8 @@ function Patientprofiles(){
                       (decryptedLoginDetails.account_type !== '5') && <li><Link to={"#"} onClick={()=>{ openCloseProfileModal(`${patient.account_key}`) }}>Close Profile </Link></li>
                       }
 
-                      {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>}
+                      {/* {loginAccountType === '5' && <li><Link onClick={() => { modalShow2(); }} to="#">Write/View Review </Link></li>} */}
+                      <li><Link onClick={() => { modalShow2(patient.account_key, patient.patient_name); }} to="#">Write/View Review </Link></li>
                     </ul>
                   </div>
                 }
@@ -813,12 +949,12 @@ function Patientprofiles(){
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : N Mondal</p>
+            <p className='mb-0'>Name : {reviewModalDetails.patientName}</p>
             <div className="rating-star mb-3">
               {/* <span className="">Not at all likely</span> */}
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClick}></Rating>
+                  <Rating sendDataToParent={handleStarClick} ratingValue={rating}></Rating>
                 </div>
               </span>
               {/* <span className="">Extremely likely</span> */}

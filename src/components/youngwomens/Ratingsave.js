@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
-const StarRating = ({ sendDataToParent }) => {
+const StarRating = ({ sendDataToParent, ratingValue = 0 }) => {
   const [rating, setRating] = useState(0);
-  const [savedRating, setSavedRating] = useState(0); // Track the saved rating separately
+  // const [savedRating, setSavedRating] = useState(0);  Track the saved rating separately
 
   // Load the saved rating from localStorage when the component mounts
-  useEffect(() => {
-    const savedValue = localStorage.getItem('userRating');
-    if (savedValue) {
-      const parsedValue = parseFloat(savedValue);
-      setRating(parsedValue);
-      setSavedRating(parsedValue); // Also set the saved rating
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedValue = localStorage.getItem('userRating');
+  //   if (savedValue) {
+  //     const parsedValue = parseFloat(savedValue);
+  //     setRating(parsedValue);
+  //     setSavedRating(parsedValue); // Also set the saved rating
+  //   }
+  // }, []);
+  // Update rating whenever parent sends new value
+     useEffect(() => {
+        setRating(Number(ratingValue || 0));
+      }, [ratingValue]);
 
   const handleStarClick = (selectedRating) => {
     // If the selected rating is equal to the current rating, toggle between half and full stars
@@ -21,10 +25,10 @@ const StarRating = ({ sendDataToParent }) => {
     sendDataToParent(newRating);
   };
 
-  const handleSaveRating = () => {
-    localStorage.setItem('userRating', rating);
-    setSavedRating(rating); // Update the saved rating state
-  };
+  // const handleSaveRating = () => {
+  //   localStorage.setItem('userRating', rating);
+  //   setSavedRating(rating); // Update the saved rating state
+  // };
 
   const renderStars = () => {
     const stars = [];
