@@ -30,12 +30,18 @@ function Janani(){
   const systemContext = useContext(SystemContext);
   const alertContext  = useContext(AlertContext);
 
+   const [reviewModalDetails, setReviewModalDetails] = useState({
+      'jananiAccountKey':'',
+      'jananiName':''
+    });
+const [reviewJananiName, setReviewJananiName] = useState('');
   const [showModal2, setShowModal2] = useState(false); 
   const modalClose2  = () => setShowModal2(false);  
   const [reviewComment, setReviewComment] = useState('');
   const [reviewRating, setReviewRating]   = useState('0');
-  const modalShow2   = async (jananiAccountKey) => {
+  const modalShow2   = async (jananiAccountKey, jananiName) => {
     setReviewJananiKey(jananiAccountKey);
+    setReviewJananiName(jananiName);
 
     let jsonData = {};
     jsonData['system_id']                 = systemContext.systemDetails.system_id;
@@ -813,7 +819,7 @@ function Janani(){
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : N Mondal</p>
+            <p className='mb-0'>Name : {reviewJananiName}</p>
             <div className="rating-star mb-3">
               {/* <span className="">Not at all likely</span> */}
               <span>

@@ -40,11 +40,61 @@ function ChildMalnutrion(){
 
   const [showReviewModal, setShowReviewModal]       = useState(false); 
   const modalReviewClose  = () => setShowReviewModal(false);  
+  // const modalReviewShow   = async (child_account_key, child_name) => {
+  //   reviewModalDetails['child_account_key'] = child_account_key;
+  //   reviewModalDetails['child_name']        = child_name;
+  //   setReviewModalDetails({...reviewModalDetails, ...reviewModalDetails});
+  //   setShowReviewModal(true);
+  // }
+  const [reviewChildKey, setReviewChildKey] = useState('');
+   const [reviewComment, setReviewComment] = useState('');
+  const [reviewRating, setReviewRating]   = useState('0');
   const modalReviewShow   = async (child_account_key, child_name) => {
-    reviewModalDetails['child_account_key'] = child_account_key;
-    reviewModalDetails['child_name']        = child_name;
-    setReviewModalDetails({...reviewModalDetails, ...reviewModalDetails});
-    setShowReviewModal(true);
+
+     setReviewModalDetails({
+        child_account_key: child_account_key,
+        child_name: child_name
+      });
+      
+      setReviewChildKey(child_account_key);
+  
+      let jsonData = {};
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["account_key"]               = child_account_key;
+      jsonData["user_type"]                 = 3;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      
+      const response = await fetch(`${API_URL}/generalReviewList`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+  
+      let result = await response.json();
+  
+      if(result.success && result.data && result.data.length > 0){
+        // setReviewComment(result.data[0].review_comments);
+        // setReviewRating(result.data[0].review_rating);
+        setReviewComment(result.data[0].review_comments || '');
+        setReviewRating(Number(result.data[0].review_rating || 0));
+  
+        setComments(result.data[0].review_comments || '');
+        setRating(Number(result.data[0].review_rating || 0));
+      }
+      else{
+        setReviewComment('');
+        setReviewRating(0);
+        setComments('');
+        setRating(0);
+      }
+  
+      setShowReviewModal(true);
+  
   }
 
   const [rating, setRating] = useState(0);
@@ -503,9 +553,93 @@ function ChildMalnutrion(){
       }
     }, []);
 
-  const handleSaveRating = () => {
-    localStorage.setItem('userRating', rating);
-    setSavedRating(rating); // Update the saved rating state
+  // const handleSaveRating = () => {
+  //   localStorage.setItem('userRating', rating);
+  //   setSavedRating(rating); // Update the saved rating state
+  // };
+
+  const handleSaveRating = async () => {
+  
+    if (rating === null || rating === undefined || rating === 0) {
+      alertContext.setAlertMessage({ show: true, type: "error", message: "Please give rating!" });
+      return;
+    }
+  
+    if (!comments || comments.trim() === "") {
+      alertContext.setAlertMessage({ show: true, type: "error", message: "Please enter comments!" });
+      return;
+    }
+  
+    try {
+  
+      const decryptedLoginDetails = JSON.parse(
+        CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY)
+          .toString(CryptoJS.enc.Utf8)
+      );
+  
+      let jsonData = {
+        'system_id': systemContext.systemDetails.system_id,
+  
+        // POSTER (logged in user)
+        'poster_acc_type': decryptedLoginDetails.account_type,
+        'poster_acc_key': decryptedLoginDetails.account_key,
+  
+        // RECEIVER (child/patient)
+        'receiver_acc_type': "3", // Child type (confirm once)
+        'receiver_acc_key': reviewChildKey,
+  
+        'device_type': DEVICE_TYPE,
+        'device_token': DEVICE_TOKEN,
+      
+  
+        'user_lat': localStorage.getItem('latitude'),
+        'user_long': localStorage.getItem('longitude'),
+  
+        'rating': String(rating), // API expects string
+        'comments': comments
+      };
+  
+      console.log("Review Payload:", jsonData); // debug
+  
+      const response = await fetch(`${API_URL}/generalPostReview`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+  
+      let result = await response.json();
+  
+      if (result.success) {
+        alertContext.setAlertMessage({
+          show: true,
+          type: "success",
+          message: result.msg || "Review submitted successfully!"
+        });
+  
+        // reset
+        setRating(0);
+        setComments("");
+        modalReviewClose();
+  
+      } else {
+        alertContext.setAlertMessage({
+          show: true,
+          type: "error",
+          message: result.msg
+        });
+      }
+  
+    } catch (error) {
+      console.error(error);
+  
+      alertContext.setAlertMessage({
+        show: true,
+        type: "error",
+        message: "Something went wrong!"
+      });
+    }
   };
 
   const loadMoreChild = () => {
@@ -896,7 +1030,7 @@ function ChildMalnutrion(){
               {/* <span className="">Not at all likely</span> */}
               <span>
                 <div className="rating-symbol">
-                  <Rating sendDataToParent={handleStarClick}></Rating>
+                  <Rating sendDataToParent={handleStarClick} ratingValue={rating}></Rating>
                 </div>
               </span>
               {/* <span className="">Extremely likely</span> */}
