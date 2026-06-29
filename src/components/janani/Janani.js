@@ -718,7 +718,7 @@ function Janani(){
                       <li><Link to={`#`} onClick={()=>{ openCloseProfileModal(`${janani.account_key}`) }}>Close Profile </Link></li>
 }
                         <li><Link onClick={() => {
-                          modalShow2(janani.account_key);
+                          modalShow2(janani.account_key, janani.janani_name);
                         }} to="#">Write/View Review </Link></li>
                     </ul>
                   </div>
@@ -820,7 +820,7 @@ function Janani(){
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : {reviewModalDetails.jananiName}</p>
+            <p className='mb-0'>Name : {reviewJananiName}</p>
             <div className="rating-star mb-3">
               {/* <span className="">Not at all likely</span> */}
               <span>

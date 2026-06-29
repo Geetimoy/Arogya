@@ -992,7 +992,7 @@ function Patientprofiles(){
           <Modal.Body className='feedback-form'>
             <h5>Servicewise Experience</h5>
             <h6 className='mb-1'>Review & Rating for Patient :</h6>
-            <p className='mb-0'>Name : {reviewModalDetails.patientName}</p>
+            <p className='mb-0'>Name : {reviewPatientName}</p>
             <div className="rating-star mb-3">
               {/* <span className="">Not at all likely</span> */}
               <span>
