@@ -405,7 +405,48 @@ function Patientprofiles(){
 
     var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
 
-      let jsonData = {};
+    let jsonData = {};
+
+    if(decryptedLoginDetails.account_type === '5'){
+
+      jsonData['system_id']                 = systemContext.systemDetails.system_id;
+      jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]       = decryptedLoginDetails.account_type;
+      jsonData["patient_key"]       				= patientAccountKey;
+      jsonData["device_type"]               = DEVICE_TYPE; //getDeviceType();
+      jsonData["device_token"]              = DEVICE_TOKEN;
+      jsonData["user_lat"]                  = localStorage.getItem('latitude');
+      jsonData["user_long"]                 = localStorage.getItem('longitude');
+      jsonData["search_param"]              = {
+                                                "by_keywords": "",
+                                                "limit": "",
+                                                "offset": "0",
+                                                "order_by_field": "appointment_id",
+                                                "order_by_value": "desc"
+                                              }
+      
+      const response = await fetch(`${API_URL}/doctorListMyBookedAppointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+      })
+
+      let result = await response.json();
+      if(result.data && result.data.appointments && result.data.appointments.length > 0){
+        setTestReportAppointmentList(result.data.appointments);
+      }
+      else{
+        setTestReportAppointmentList([]);
+      }
+
+      setShowTestReportsModal(true);
+      setTestReportPatientKey(patientAccountKey);
+
+    }
+    else{
+
       jsonData['system_id']                 = systemContext.systemDetails.system_id;
       jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
       jsonData["volunteer_account_type"]    = decryptedLoginDetails.account_type;
@@ -416,10 +457,10 @@ function Patientprofiles(){
       jsonData["user_long"]                 = localStorage.getItem('longitude');
       jsonData["search_param"]              = {
                                                 "by_keywords": "",
-																								"limit": "",
-																								"offset": "0",
-																								"order_by_field": "appointment_id",
-																								"order_by_value": "desc"
+                                                "limit": "",
+                                                "offset": "0",
+                                                "order_by_field": "appointment_id",
+                                                "order_by_value": "desc"
                                               }
       
       const response = await fetch(`${API_URL}/volunteerListMyBookedAppointments`, {
@@ -429,17 +470,19 @@ function Patientprofiles(){
         },
         body: JSON.stringify(jsonData)
       })
-  
+
       let result = await response.json();
-      if(result.data && result.data.appointments.length > 0){
+      if(result.data && result.data.appointments && result.data.appointments.length > 0){
         setTestReportAppointmentList(result.data.appointments);
       }
       else{
         setTestReportAppointmentList([]);
       }
 
-    setShowTestReportsModal(true);
-    setTestReportPatientKey(patientAccountKey);
+      setShowTestReportsModal(true);
+      setTestReportPatientKey(patientAccountKey);
+    }
+    
   }
   const selectTestReportAppointment = (event) => {
     setTestReportAppointmentId(event.target.value);

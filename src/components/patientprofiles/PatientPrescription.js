@@ -70,15 +70,28 @@ function PatientPrescription(){
   const prescriptionType  = urlParam.prescriptionType;
   const appointmentId     = (urlParam.appointmentId) ? urlParam.appointmentId : '';
 
-  if(prescriptionType === 'initial'){
-    var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForPatient`;
+  var decryptedLoginDetails = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem("cred"), ENCYPTION_KEY).toString(CryptoJS.enc.Utf8));
+
+  if(decryptedLoginDetails.account_type === '5'){
+    if(prescriptionType === 'initial'){
+      var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentFromDoctorLoginForPatient`;
+    }
+    else if(prescriptionType === 'doctor'){
+      var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentFromDoctorLoginForPatient`;
+    }
   }
-  else if(prescriptionType === 'doctor'){
-    var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
-    var fetchUrl  = `fetchInitialAppointmentDocumentForPatient`;
+  else{
+    if(prescriptionType === 'initial'){
+      var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForPatient`;
+    }
+    else if(prescriptionType === 'doctor'){
+      var uploadUrl = `/patientprofiles/patient-upload-prescription/${editAccountKey}/${prescriptionType}/${appointmentId}`;
+      var fetchUrl  = `fetchInitialAppointmentDocumentForPatient`;
+    }
   }
-  
 
   const [isMActive, setIsMActive] = useState(false);
 
@@ -99,8 +112,14 @@ function PatientPrescription(){
 
     let jsonData = {};
     jsonData['system_id']       = systemContext.systemDetails.system_id;
-    jsonData["volunteer_key"]   = decryptedLoginDetails.account_key;
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+    }
+    else{
+      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    }
     jsonData["account_key"]     = editAccountKey;
+    jsonData["appointment_key"] = appointmentId;
     jsonData["account_type"]    = 3;
     jsonData["file_type"]       = prescriptionType;
     jsonData["search_param"]    = {
@@ -429,7 +448,12 @@ function PatientPrescription(){
           jsonData["user_lat"]                = localStorage.getItem('latitude');
           jsonData["user_long"]               = localStorage.getItem('longitude');
           jsonData["appointment_initial_type"]= 0;
-          jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+          if(decryptedLoginDetails.account_type === '5'){
+            jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+          }
+          else{
+            jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+          }
           jsonData["user_account_key"]        = editAccountKey;
           jsonData["user_account_type"]       = 3;
           jsonData["file"]                     = uploadedFileBase64Array[1];
@@ -444,13 +468,24 @@ function PatientPrescription(){
           jsonData["file_extension"]          = 'jpg';
           jsonData["initial_summary"]         = '';
 
-          const response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatient`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jsonData),
-          });
+          if(decryptedLoginDetails.account_type === '5'){
+            var response = await fetch(`${API_URL}/uploadInitialDocumentForPatientFromDoctorLogin`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
+          else{
+            var response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatient`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
 
           let result = await response.json();
 
@@ -512,7 +547,12 @@ function PatientPrescription(){
           jsonData["user_lat"]                  = localStorage.getItem('latitude');
           jsonData["user_long"]                 = localStorage.getItem('longitude');
           jsonData["appointment_initial_type"]  = 1;
-          jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+          if(decryptedLoginDetails.account_type === '5'){
+            jsonData["doctor_account_key"]        = decryptedLoginDetails.account_key;
+          }
+          else{
+            jsonData["volunteer_account_key"]     = decryptedLoginDetails.account_key;
+          }
           jsonData["user_account_key"]          = editAccountKey;
           jsonData["user_account_type"]         = 3;
           jsonData["appointment_key"]           = appointmentId;
@@ -523,13 +563,24 @@ function PatientPrescription(){
           jsonData["recheck_date"]              = recheckDate;
           jsonData["files"]                     = fileUploadArray;
 
-          const response = await fetch(`${API_URL}/uploadAppointmentDocumentForPatient`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jsonData),
-          });
+          if(decryptedLoginDetails.account_type === '5'){
+            var response = await fetch(`${API_URL}/uploadAppointmentDocumentForPatientFromDoctorLogin`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
+          else{
+            var response = await fetch(`${API_URL}/uploadAppointmentDocumentForPatient`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+          }
     
           let result = await response.json();
     

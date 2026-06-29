@@ -62,7 +62,13 @@ function PatientTestReports(){
 
     let jsonData = {};
     jsonData['system_id']               = systemContext.systemDetails.system_id;
-    jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+      jsonData["doctor_account_type"]     = decryptedLoginDetails.account_type;
+    }
+    else{
+      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+    }
     jsonData["account_key"]             = editAccountKey;
     jsonData["account_type"]            = 3;
     jsonData["search_param"]            = {
@@ -74,13 +80,24 @@ function PatientTestReports(){
                                           }
 
 
-    const response = await fetch(`${API_URL}/fetchTestReportForPatient`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/fetchTestReportForPatientFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/fetchTestReportForPatient`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
 
     let result = await response.json();
     console.log(result);
@@ -120,20 +137,36 @@ function PatientTestReports(){
     jsonData['system_id']             = systemContext.systemDetails.system_id;
     jsonData["account_key"]           = editAccountKey;
     jsonData["appointment_key"]       = deleteTestReportApptId;
-    jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;;
+    if(decryptedLoginDetails.account_type === '5'){
+      jsonData["doctor_account_key"]  = decryptedLoginDetails.account_key;;
+    }
+    else{
+      jsonData["volunteer_account_key"] = decryptedLoginDetails.account_key;;
+    }
     jsonData["file_id"]               = deleteTestReportFileId;
     jsonData["device_type"]           = DEVICE_TYPE; //getDeviceType();
     jsonData["device_token"]          = DEVICE_TOKEN;
     jsonData["user_lat"]              = localStorage.getItem('latitude');
     jsonData["user_long"]             = localStorage.getItem('longitude');
 
-    const response = await fetch(`${API_URL}/deleteTestReportForPatient`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+    if(decryptedLoginDetails.account_type === '5'){
+      var response = await fetch(`${API_URL}/deleteTestReportForPatientFromDoctorLogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
+    else{
+      var response = await fetch(`${API_URL}/deleteTestReportForPatient`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+    }
 
     let result = await response.json();
     

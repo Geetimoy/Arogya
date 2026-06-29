@@ -88,7 +88,12 @@ function PatientUploadInitialPrescriptions(){
       jsonData["user_lat"]                = localStorage.getItem('latitude');
       jsonData["user_long"]               = localStorage.getItem('longitude');
       jsonData["appointment_initial_type"]= appointmentInitialType;
-      jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+      if(decryptedLoginDetails.account_type === '5'){
+        jsonData["doctor_account_key"]      = decryptedLoginDetails.account_key;
+      }
+      else{
+        jsonData["volunteer_account_key"]   = decryptedLoginDetails.account_key;
+      }
       jsonData["user_account_key"]        = editAccountKey;
       jsonData["user_account_type"]       = 3;
       jsonData["file"]                    = uploadedFileBase64Array[1];
@@ -98,13 +103,24 @@ function PatientUploadInitialPrescriptions(){
 
       console.log(jsonData);
 
-      const response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatient`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
-      });
+      if(decryptedLoginDetails.account_type === '5'){
+        var response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatientFromDoctorLogin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
+      else{
+        var response = await fetch(`${API_URL}/uploadInitialAppointmentDocumentForPatient`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(jsonData),
+        });
+      }
 
       let result = await response.json();
 
